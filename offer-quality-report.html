@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Quality · US Coupons</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    background: #f4f5f8;
+    color: #111318;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+  }
+
+  /* ═══════════════════════════════════════ TOPBAR */
+  .topbar {
+    background: #16161a;
+    height: 58px;
+    padding: 0 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 300;
+    border-bottom: 1px solid #2a2a30;
+  }
+  .tb-left { display: flex; align-items: center; gap: 14px; }
+  .tb-logo { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .tb-sep  { color: #2e2e36; font-size: 18px; font-weight: 300; }
+  .tb-title { font-size: 13px; color: #5a5a6a; }
+  .tb-right { display: flex; align-items: center; gap: 14px; }
+  .run-chip { font-size: 12px; color: #5a5a6a; display: flex; align-items: center; gap: 7px; }
+  .run-chip strong { color: #9090a0; }
+  .run-dot { width: 7px; height: 7px; border-radius: 50%; background: #30d158; box-shadow: 0 0 6px rgba(48,209,88,0.6); }
+  .how-btn {
+    font-size: 12px; color: #9090a0; background: none;
+    border: 1px solid #2e2e36; border-radius: 7px;
+    padding: 5px 13px; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.01em;
+  }
+  .how-btn:hover { border-color: #5a5a6a; color: #e0e0ea; }
+
+  /* ═══════════════════════════════════════ FORMULA PANEL */
+  .formula-panel {
+    background: #1e1e24; border-bottom: 1px solid #2e2e38;
+    overflow: hidden; max-height: 0;
+    transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+  .formula-panel.open { max-height: 200px; }
+  .formula-inner { padding: 20px 28px; display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 28px; }
+  .fc h4 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #44444e; margin-bottom: 10px; }
+  .fc .fcode {
+    font-family: "SF Mono", "Fira Mono", monospace;
+    font-size: 12px; color: #ffd060; background: #28282e;
+    padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; line-height: 1.55;
+  }
+  .fc p { font-size: 12px; color: #7070808; line-height: 1.65; color: #808090; }
+  .fc table { font-size: 12px; border-collapse: collapse; width: 100%; }
+  .fc td { padding: 3px 0; color: #808090; }
+  .fc td:last-child { text-align: right; font-weight: 700; color: #c0c0d0; }
+
+  /* ═══════════════════════════════════════ FILTER BAR */
+  .filterbar {
+    background: #fff; border-bottom: 1px solid #e8eaee;
+    padding: 0 28px; display: flex; align-items: center;
+    position: sticky; top: 58px; z-index: 200; flex-wrap: wrap;
+  }
+  .fg { display: flex; align-items: center; gap: 6px; padding: 11px 0; border-right: 1px solid #eceef2; padding-right: 18px; margin-right: 18px; }
+  .fg:last-child { border-right: none; margin-left: auto; padding-right: 0; }
+  .fl { font-size: 11px; font-weight: 700; color: #b8bac4; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; margin-right: 2px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 14px; border-radius: 20px;
+    border: 1.5px solid #e8eaee; background: #fff;
+    font-size: 13px; font-weight: 500; color: #44464e;
+    cursor: pointer; transition: all 0.12s; white-space: nowrap; user-select: none;
+  }
+  .pill:hover { border-color: #007aff; color: #007aff; background: #f0f6ff; }
+  .pill.active   { background: #007aff; border-color: #007aff; color: #fff; font-weight: 600; }
+  .pill.ar { background: #ff3b30; border-color: #ff3b30; color: #fff; font-weight: 600; }
+  .pill.ao { background: #ff9500; border-color: #ff9500; color: #fff; font-weight: 600; }
+  .pill.ag { background: #30d158; border-color: #30d158; color: #fff; font-weight: 600; }
+  .av { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .ava { background: #5e5ce6; } .avd { background: #20b0c8; } .avk { background: #30d158; }
+  .dot8 { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dr { background: #ff3b30; } .do { background: #ff9500; } .dg { background: #30d158; }
+  .result-count { font-size: 12px; color: #9090a0; white-space: nowrap; padding: 11px 0; }
+
+  /* ═══════════════════════════════════════ SUMMARY STRIP */
+  .summary { display: flex; gap: 1px; background: #e0e2e8; }
+  .ss { flex: 1; background: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 18px; }
+  .ss-num { font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+  .ss-delta { font-size: 12px; font-weight: 700; border-radius: 5px; padding: 2px 7px; margin-top: 4px; display: inline-block; }
+  .ss-label { font-size: 13px; font-weight: 700; color: #111318; }
+  .ss-sub { font-size: 12px; color: #b0b2bc; margin-top: 2px; }
+  .s-red   .ss-num { color: #ff3b30; } .s-red   .ss-delta { background: #fff0ee; color: #c0392b; }
+  .s-orange .ss-num { color: #ff9500; } .s-orange .ss-delta { background: #fff5e6; color: #a05000; }
+  .s-green .ss-num { color: #30d158; } .s-green .ss-delta { background: #edfbf2; color: #0e7a3a; }
+
+  /* ═══════════════════════════════════════ MAIN */
+  .main { max-width: 1100px; margin: 0 auto; padding: 24px 22px; }
+
+  /* ─── Section header */
+  .sh { display: flex; align-items: center; gap: 12px; margin: 28px 0 12px; }
+  .sh h2 { font-size: 13px; font-weight: 800; color: #44464e; text-transform: uppercase; letter-spacing: 0.08em; }
+  .sh-count { font-size: 13px; color: #b0b2bc; font-weight: 500; }
+  .progress-wrap { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .progress-bar { width: 100px; height: 6px; background: #e8eaee; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #30d158; border-radius: 3px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: #b0b2bc; white-space: nowrap; }
+
+  /* ─── Card */
+  .card {
+    background: #fff; border-radius: 14px; margin-bottom: 10px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05); transform: translateY(-2px); }
+  .card.done { opacity: 0.32; transform: none !important; pointer-events: none; }
+  .card.hidden { display: none !important; }
+
+  .card-top { display: flex; }
+  .cbar { width: 5px; flex-shrink: 0; }
+  .cbar-r { background: linear-gradient(180deg, #ff6b6b, #ff3b30); }
+  .cbar-o { background: linear-gradient(180deg, #ffb340, #ff9500); }
+  .cbar-g { background: linear-gradient(180deg, #5ae07a, #30d158); }
+
+  /* Card main row — NO vertical dividers, just generous gaps */
+  .cmain { flex: 1; padding: 22px 24px; display: flex; align-items: center; gap: 28px; }
+
+  /* ─── Gauge */
+  .gauge-wrap { position: relative; width: 70px; height: 70px; flex-shrink: 0; }
+  .gauge-wrap svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+  .gauge-track { fill: none; stroke: #f0f1f5; stroke-width: 4.5; }
+  .gauge-fill  { fill: none; stroke-width: 4.5; stroke-linecap: round; transition: stroke-dashoffset 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .gfill-r { stroke: #ff3b30; } .gfill-o { stroke: #ff9500; } .gfill-g { stroke: #30d158; }
+  .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+  .gauge-num { font-size: 20px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+  .gauge-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; color: #b0b2bc; }
+  .gnum-r { color: #ff3b30; } .gnum-o { color: #ff9500; } .gnum-g { color: #30d158; }
+
+  /* Delta */
+  .delta { font-size: 11px; font-weight: 700; border-radius: 5px; padding: 2px 7px; white-space: nowrap; display: inline-block; margin-top: 6px; }
+  .delta-up   { background: #fff0ee; color: #c0392b; }
+  .delta-down { background: #edfbf2; color: #0e7a3a; }
+  .delta-flat { background: #f4f5f8; color: #b0b2bc; }
+
+  /* ─── Merchant info */
+  .cinfo { flex: 1.8; min-width: 0; }
+  .cname { font-size: 18px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .cname a { color: #111318; text-decoration: none; transition: color 0.12s; }
+  .cname a:hover { color: #007aff; }
+  .ctags { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .tt0 { background: #fff0ee; color: #c0392b; }
+  .tt1 { background: #eef3ff; color: #1a56c4; }
+  .tsa { background: #edfbf2; color: #0e7a3a; }
+  .tsb { background: #e6f9fc; color: #006070; }
+  .tsc { background: #fff8e6; color: #a06000; }
+  .tsd { background: #fff0ee; color: #c0392b; }
+  .tter { background: #f0f0ff; color: #4040b0; }
+  .asgn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #70708080; color: #8888a0; font-weight: 500; }
+  .asgn .av { width: 20px; height: 20px; font-size: 8px; }
+
+  /* ─── Metrics */
+  .cmetrics { display: flex; gap: 24px; flex-shrink: 0; }
+  .cm { min-width: 82px; }
+  .cm .ml { font-size: 11px; font-weight: 600; color: #b0b2bc; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; white-space: nowrap; }
+  .cm .mv { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 5px; white-space: nowrap; }
+  .cm .mv small { font-size: 12px; font-weight: 500; color: #b0b2bc; letter-spacing: 0; }
+  .cm .ms { font-size: 11px; margin-top: 2px; white-space: nowrap; font-weight: 500; }
+  .vbad  { color: #ff3b30; } .vwarn { color: #ff9500; } .vok { color: #30d158; } .vplain { color: #111318; }
+  .tdown { color: #ff3b30; } .tup { color: #30d158; } .tflat { color: #b0b2bc; }
+
+  /* Mini bar */
+  .mbar-wrap { position: relative; height: 5px; background: #f0f1f5; border-radius: 3px; width: 72px; margin-top: 5px; }
+  .mbar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+  .mbar-r { background: linear-gradient(90deg, #ff8080, #ff3b30); }
+  .mbar-o { background: linear-gradient(90deg, #ffcc80, #ff9500); }
+  .mbar-g { background: linear-gradient(90deg, #80e8a0, #30d158); }
+  .mbar-tick { position: absolute; top: -3px; width: 1.5px; height: 11px; background: rgba(0,0,0,0.12); border-radius: 1px; }
+
+  /* ─── Card actions */
+  .cactions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+  .btn-cc {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 9px;
+    background: #111318; color: #fff;
+    font-size: 13px; font-weight: 600; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s, transform 0.12s;
+    letter-spacing: 0.01em; white-space: nowrap;
+  }
+  .btn-cc:hover { background: #007aff; transform: scale(1.03); }
+  .btn-cc svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  /* Custom toggle switch */
+  .rev-label { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; position: relative; }
+  .rev-label input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .tgl-track {
+    width: 34px; height: 20px; background: #dde0e8; border-radius: 10px;
+    position: relative; flex-shrink: 0; transition: background 0.2s ease;
+  }
+  .tgl-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 14px; height: 14px; background: #fff;
+    border-radius: 50%; transition: transform 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .rev-label input:checked ~ .tgl-track { background: #30d158; }
+  .rev-label input:checked ~ .tgl-track .tgl-thumb { transform: translateX(14px); }
+  .rev-text { font-size: 12px; color: #b0b2bc; transition: color 0.15s; font-weight: 500; }
+  .rev-label:hover .rev-text { color: #8888a0; }
+  /* tooltip */
+  .rev-tip {
+    position: absolute; bottom: 26px; right: 0;
+    background: #1e1e24; color: #d0d0e0; font-size: 11px;
+    padding: 7px 11px; border-radius: 7px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.18s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 10;
+  }
+  .rev-tip::after { content: ''; position: absolute; bottom: -4px; right: 16px; width: 8px; height: 8px; background: #1e1e24; transform: rotate(45deg); }
+  .rev-label:hover .rev-tip { opacity: 1; }
+
+  /* ─── Expand row */
+  .expand-row { border-top: 1px solid #f2f3f7; }
+  .expand-btn {
+    width: 100%; background: none; border: none; padding: 9px 24px;
+    display: flex; align-items: center; gap: 12px; cursor: pointer;
+    transition: background 0.12s; text-align: left;
+  }
+  .expand-btn:hover { background: #f8f9fd; }
+  .expand-btn.open  { background: #f6f7fc; }
+  .exp-chevron {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #f0f1f5; display: flex; align-items: center;
+    justify-content: center; font-size: 10px; color: #9090a0;
+    flex-shrink: 0; transition: transform 0.2s ease, background 0.15s;
+  }
+  .expand-btn.open .exp-chevron { transform: rotate(180deg); background: #eeeeff; color: #4444aa; }
+  .action-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .achip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .ac-rm  { background: #fff0ee; color: #c0392b; }
+  .ac-rw  { background: #fff8e6; color: #a06000; }
+  .ac-st  { background: #fff4ec; color: #a04000; }
+  .ac-imp { background: #edfbf2; color: #0e7a3a; }
+  .ac-dup { background: #eef0ff; color: #3030a0; }
+  .expand-note { font-size: 12px; color: #b0b2bc; margin-left: 4px; font-style: italic; }
+
+  /* ─── Action list */
+  .alist-wrap { overflow: hidden; max-height: 0; transition: max-height 0.28s cubic-bezier(0.4,0,0.2,1); }
+  .alist-wrap.open { max-height: 520px; }
+  .alist { padding: 4px 24px 18px 24px; }
+  .alist ul { list-style: none; }
+  .alist li {
+    display: flex; align-items: flex-start; gap: 11px;
+    padding: 8px 0; border-bottom: 1px solid #f2f3f7;
+    font-size: 13px; color: #44464e; line-height: 1.45;
+  }
+  .alist li:last-child { border-bottom: none; }
+  .ai { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .ai-rm  { background: #fff0ee; color: #c0392b; }
+  .ai-rw  { background: #fff8e6; color: #a06000; }
+  .ai-st  { background: #fff4ec; color: #a04000; }
+  .ai-imp { background: #edfbf2; color: #0e7a3a; }
+  .ai-dup { background: #eef0ff; color: #3030a0; }
+  .ac strong { color: #111318; font-size: 13px; }
+  .ac .sug { font-size: 12px; color: #9090a0; margin-top: 3px; line-height: 1.45; }
+  .ac .sug em { color: #1a56c4; font-style: normal; font-weight: 600; }
+  .score-why {
+    font-size: 11px; color: #c0c2cc; margin-top: 10px;
+    padding-top: 8px; border-top: 1px dashed #eceef2;
+    line-height: 1.6;
+  }
+  .score-why strong { color: #9090a0; }
+
+  /* ═══════════════════════════════════════ HEALTHY TABLE */
+  .hw { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: #f8f9fb; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #b0b2bc; padding: 12px 16px;
+    text-align: left; font-weight: 700; border-bottom: 1px solid #eceef2;
+  }
+  tbody td { padding: 13px 16px; border-bottom: 1px solid #f4f5f8; font-size: 14px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #f8f9fd; }
+  tbody tr.hidden { display: none; }
+
+  /* ═══════════════════════════════════════ MORE / EMPTY */
+  .more-row {
+    padding: 13px 18px; background: #fff; border-radius: 12px;
+    font-size: 13px; color: #b0b2bc; display: flex;
+    justify-content: space-between; align-items: center;
+    border: 1.5px dashed #dde0e8; margin-top: 6px;
+  }
+  .more-row a { color: #007aff; text-decoration: none; font-weight: 600; }
+  .empty {
+    display: none; text-align: center; padding: 40px;
+    color: #b0b2bc; font-size: 14px;
+    background: #fff; border-radius: 14px;
+    border: 1.5px dashed #dde0e8;
+  }
+
+  /* ═══════════════════════════════════════ TOAST */
+  .toast {
+    position: fixed; bottom: 32px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1e1e24; color: #e8e8f0;
+    font-size: 13px; font-weight: 500;
+    padding: 13px 22px; border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+    opacity: 0; transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 999; white-space: nowrap; display: flex; align-items: center; gap: 9px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast-icon { color: #30d158; font-size: 16px; }
+
+  .footer { text-align: center; font-size: 12px; color: #c0c2cc; padding: 32px 0 36px; }
+  .footer strong { color: #9090a0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-logo">Offer Quality</div>
+    <div class="tb-sep">·</div>
+    <div class="tb-title">US Coupons · Week of Mar 10, 2026</div>
+  </div>
+  <div class="tb-right">
+    <div class="run-chip">
+      <span class="run-dot"></span>
+      Scored <strong>Mar 9</strong> &nbsp;·&nbsp; Next <strong>Mar 16</strong> &nbsp;·&nbsp; <strong>847</strong> merchants
+    </div>
+    <button class="how-btn" id="how-btn" onclick="toggleFormula()">ℹ How scores work</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ FORMULA PANEL -->
+<div class="formula-panel" id="formula-panel">
+  <div class="formula-inner">
+    <div class="fc">
+      <h4>Priority Score</h4>
+      <div class="fcode">Score = Tier × SEO Weight × (Filler Penalty + Stale Penalty)</div>
+      <p><strong style="color:#c0c0d0;">SEO Grade</strong> = where to look first. High-grade pages get organic traffic — fixing offers there converts real visitors. <strong style="color:#c0c0d0;">Offer score + filler %</strong> = what to fix in CC once you're there.</p>
+    </div>
+    <div class="fc">
+      <h4>Tier Weight</h4>
+      <table><tr><td>T0</td><td>×3.0</td></tr><tr><td>T1</td><td>×2.0</td></tr><tr><td>T2</td><td>×1.0</td></tr></table>
+    </div>
+    <div class="fc">
+      <h4>SEO Opportunity Weight</h4>
+      <table><tr><td>Grade A</td><td>×2.0</td></tr><tr><td>Grade B</td><td>×1.5</td></tr><tr><td>Grade C</td><td>×1.0</td></tr><tr><td>Grade D/F</td><td>×0.5</td></tr></table>
+    </div>
+    <div class="fc">
+      <h4>Quality Penalties</h4>
+      <table>
+        <tr><td>Filler &gt;30%</td><td>+3</td></tr>
+        <tr><td>Filler 10–30%</td><td>+2</td></tr>
+        <tr><td>Filler 5–10%</td><td>+1</td></tr>
+        <tr><td>Stale &gt;14 days</td><td>+2</td></tr>
+        <tr><td>Stale &gt;7 days</td><td>+1</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ FILTER BAR -->
+<div class="filterbar">
+  <div class="fg">
+    <span class="fl">Priority</span>
+    <span class="pill active" onclick="setFilter('section','all',this)">All</span>
+    <span class="pill" onclick="setFilter('section','a',this)"><span class="dot8 dr"></span> Immediate</span>
+    <span class="pill" onclick="setFilter('section','b',this)"><span class="dot8 do"></span> Review</span>
+    <span class="pill" onclick="setFilter('section','c',this)"><span class="dot8 dg"></span> Healthy</span>
+  </div>
+  <div class="fg">
+    <span class="fl">Assigned to</span>
+    <span class="pill active" onclick="setFilter('owner','all',this)">Everyone</span>
+    <span class="pill" onclick="setFilter('owner','alheli',this)"><span class="av ava">AV</span> Alheli</span>
+    <span class="pill" onclick="setFilter('owner','daniel',this)"><span class="av avd">DD</span> Daniel</span>
+    <span class="pill" onclick="setFilter('owner','karl',this)"><span class="av avk">KS</span> Karl</span>
+  </div>
+  <div class="fg">
+    <span class="fl">Territory</span>
+    <span class="pill active" onclick="setFilter('territory','all',this)">All</span>
+    <span class="pill" onclick="setFilter('territory','us',this)">🇺🇸 US</span>
+    <span class="pill" onclick="setFilter('territory','uk',this)">🇬🇧 UK</span>
+    <span class="pill" onclick="setFilter('territory','fr',this)">🇫🇷 FR</span>
+    <span class="pill" onclick="setFilter('territory','de',this)">🇩🇪 DE</span>
+  </div>
+  <div class="fg">
+    <span class="result-count" id="result-count">Showing all 35 merchants</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SUMMARY STRIP -->
+<div class="summary">
+  <div class="ss s-red">
+    <div>
+      <div class="ss-num">7</div>
+      <div class="ss-delta">↑ +2 vs last week</div>
+    </div>
+    <div>
+      <div class="ss-label">Immediate attention</div>
+      <div class="ss-sub">Score ≥ 12 · Act this week</div>
+    </div>
+  </div>
+  <div class="ss s-orange">
+    <div>
+      <div class="ss-num">28</div>
+      <div class="ss-delta">↓ −3 vs last week</div>
+    </div>
+    <div>
+      <div class="ss-label">Review this week</div>
+      <div class="ss-sub">Score 5–11 · When capacity allows</div>
+    </div>
+  </div>
+  <div class="ss s-green">
+    <div>
+      <div class="ss-num">812</div>
+      <div class="ss-delta">→ flat</div>
+    </div>
+    <div>
+      <div class="ss-label">Healthy</div>
+      <div class="ss-sub">Score &lt; 5 · No action needed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ MAIN -->
+<div class="main">
+
+  <!-- ─── SECTION A ────────────────────── -->
+  <div class="sh">
+    <h2>🔴 Immediate Attention</h2>
+    <span class="sh-count">7 merchants</span>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <span class="progress-label" id="progress-label">0 of 7 reviewed</span>
+    </div>
+  </div>
+
+  <!-- ── TurboTax · Daniel · T0 · SEO A · 30 -->
+  <div class="card" data-owner="daniel" data-section="a" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-r"></div>
+      <div class="cmain">
+
+        <!-- Gauge + delta -->
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-r" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="0"/>
+            </svg>
+            <div class="gauge-center">
+              <div class="gauge-num gnum-r">30</div>
+              <div class="gauge-lbl">Score</div>
+            </div>
+          </div>
+          <div class="delta delta-up" title="Score up +4 vs last week">↑ +4</div>
+        </div>
+
+        <!-- Info -->
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">TurboTax</a></div>
+          <div class="ctags">
+            <span class="tag tt0">T0</span>
+            <span class="tag tsa">SEO A</span>
+            <span class="tag tter">🇺🇸 US</span>
+            <span class="asgn"><span class="av avd">DD</span> Daniel Dantzler</span>
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vbad">3.1<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-r" style="width:31%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vbad">38%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-r" style="width:100%"></div>
+              <div class="mbar-tick" style="left:27%" title="10% threshold"></div>
+              <div class="mbar-tick" style="left:80%" title="30% threshold"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">6 of 17</div>
+          </div>
+          <div class="cm">
+            <div class="ml">Stale &gt;14d</div>
+            <div class="mv vwarn">4</div>
+          </div>
+          <div class="cm">
+            <div class="ml">Revenue / yr</div>
+            <div class="mv vplain">$195k</div>
+            <div class="ms tdown">CTR ↓ −0.8pp</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            Open in CC
+          </a>
+          <label class="rev-label">
+            <input type="checkbox" onchange="markReviewed(this,7)">
+            <div class="tgl-track"><div class="tgl-thumb"></div></div>
+            <span class="rev-text">Mark reviewed</span>
+            <div class="rev-tip">Stays muted until next rescore: Mar 16</div>
+          </label>
+        </div>
+
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips">
+          <span class="achip ac-rm">🗑 3 remove</span>
+          <span class="achip ac-rw">✎ 2 rewrite</span>
+          <span class="achip ac-st">⏱ 4 stale</span>
+          <span class="achip ac-dup">⊕ 1 duplicate</span>
+        </div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 3 spam fillers</strong><div class="sug">"Save Money With TurboTax This Season" &nbsp;·&nbsp; "Get the Best Tax Deal Available" &nbsp;·&nbsp; "Exclusive TurboTax Savings for You"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "TurboTax Deluxe Deal"</strong><div class="sug">→ <em>"TurboTax Deluxe: $20 Off Federal + State Filing"</em></div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "TurboTax Premium Offer"</strong><div class="sug">→ <em>"TurboTax Premium: $10 Off for Investors &amp; Rental Property Owners"</em></div></div></li>
+            <li><span class="ai ai-st">⏱</span><div class="ac"><strong>Set end dates on 4 stale offers</strong><div class="sug">Last updated Feb 20. Verify still valid, add expiry or remove.</div></div></li>
+            <li><span class="ai ai-dup">⊕</span><div class="ac"><strong>Consolidate "TurboTax Free Edition" ×3 duplicates</strong><div class="sug">Same title, 3 active offers. Keep 1, remove 2.</div></div></li>
+          </ul>
+          <div class="score-why">T0 <strong>×3.0</strong> &nbsp;·&nbsp; SEO A <strong>×2.0</strong> &nbsp;·&nbsp; Filler &gt;30% <strong>+3</strong> &nbsp;·&nbsp; Stale &gt;14d <strong>+2</strong> &nbsp;→&nbsp; 3.0 × 2.0 × 5 = <strong>30</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Hotels.com · Alheli · T0 · SEO B · 18 -->
+  <div class="card" data-owner="alheli" data-section="a" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-r"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-r" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="72.9"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-r">18</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-flat">→ flat</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">Hotels.com</a></div>
+          <div class="ctags"><span class="tag tt0">T0</span><span class="tag tsb">SEO B</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av ava">AV</span> Alheli Vergara</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vwarn">4.2<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-o" style="width:42%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vbad">22%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-o" style="width:73%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">2 of 6</div>
+          </div>
+          <div class="cm"><div class="ml">Stale &gt;14d</div><div class="mv vwarn">3</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$57k</div><div class="ms tflat">CTR flat</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 2 remove</span><span class="achip ac-rw">✎ 1 rewrite</span><span class="achip ac-imp">↑ 1 improve</span><span class="achip ac-st">⏱ 3 stale</span></div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 2 spam fillers</strong><div class="sug">"Hotels.com Exclusive Deals" &nbsp;·&nbsp; "Discover Amazing Hotel Savings"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "Hotels.com Sale Offer"</strong><div class="sug">→ <em>"10% Off Your Next Booking with Hotels.com Rewards App"</em></div></div></li>
+            <li><span class="ai ai-imp">↑</span><div class="ac"><strong>Improve "Up to 30% Off Select Hotels"</strong><div class="sug">→ <em>"Up to 30% Off Beach &amp; City Hotels — Limited Dates"</em></div></div></li>
+            <li><span class="ai ai-st">⏱</span><div class="ac"><strong>Set end dates on 3 stale offers</strong><div class="sug">Last updated Feb 17.</div></div></li>
+          </ul>
+          <div class="score-why">T0 <strong>×3.0</strong> &nbsp;·&nbsp; SEO B <strong>×1.5</strong> &nbsp;·&nbsp; Filler 10–30% <strong>+2</strong> &nbsp;·&nbsp; Stale &gt;14d <strong>+2</strong> &nbsp;→&nbsp; 3.0 × 1.5 × 4 = <strong>18</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AliExpress · Alheli · T1 · SEO A · 12 -->
+  <div class="card" data-owner="alheli" data-section="a" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-r"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-r" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="109.3"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-r">12</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-up" title="Score up +3">↑ +3</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">AliExpress</a></div>
+          <div class="ctags"><span class="tag tt1">T1</span><span class="tag tsa">SEO A</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av ava">AV</span> Alheli Vergara</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vbad">3.8<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-r" style="width:38%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vbad">33%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-r" style="width:100%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">3 of 9</div>
+          </div>
+          <div class="cm"><div class="ml">Stale</div><div class="mv vok">0</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$23k</div><div class="ms tup">CTR ↑ +0.3pp</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 3 remove</span><span class="achip ac-rw">✎ 2 rewrite</span></div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 3 spam fillers</strong><div class="sug">"AliExpress Big Sale" &nbsp;·&nbsp; "Shop and Save at AliExpress" &nbsp;·&nbsp; "AliExpress Promo — Don't Miss Out"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "Summer Fashion Sale"</strong><div class="sug">→ <em>"Up to 50% Off Women's Summer Fashion at AliExpress"</em></div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "Electronics Deals"</strong><div class="sug">→ <em>"Up to 40% Off Smartphones, Earbuds &amp; Accessories"</em></div></div></li>
+          </ul>
+          <div class="score-why">T1 <strong>×2.0</strong> &nbsp;·&nbsp; SEO A <strong>×2.0</strong> &nbsp;·&nbsp; Filler &gt;30% <strong>+3</strong> &nbsp;→&nbsp; 2.0 × 2.0 × 3 = <strong>12</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 1-800 Contacts · Daniel · T0 · SEO A · 30 -->
+  <div class="card" data-owner="daniel" data-section="a" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-r"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-r" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="0"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-r">30</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-up">↑ +5</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">1-800 Contacts</a></div>
+          <div class="ctags"><span class="tag tt0">T0</span><span class="tag tsa">SEO A</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av avd">DD</span> Daniel Dantzler</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vbad">2.9<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-r" style="width:29%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vbad">41%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-r" style="width:100%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">5 of 12</div>
+          </div>
+          <div class="cm"><div class="ml">Stale &gt;14d</div><div class="mv vwarn">2</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$88k</div><div class="ms tdown">CTR ↓ −1.1pp</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 5 remove</span><span class="achip ac-rw">✎ 1 rewrite</span><span class="achip ac-st">⏱ 2 stale</span></div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 5 spam fillers</strong><div class="sug">"Best Deals on Contact Lenses" &nbsp;·&nbsp; "Save Big on Contacts" &nbsp;·&nbsp; "Exclusive Offers Await" &nbsp;·&nbsp; "Top Picks for You" &nbsp;·&nbsp; "Don't Miss These Savings"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "Contacts Sale"</strong><div class="sug">→ <em>"$30 Off Your First Order of Contact Lenses at 1-800 Contacts"</em></div></div></li>
+            <li><span class="ai ai-st">⏱</span><div class="ac"><strong>Refresh 2 stale offers</strong><div class="sug">Last updated Feb 18. Set end dates or verify validity.</div></div></li>
+          </ul>
+          <div class="score-why">T0 <strong>×3.0</strong> &nbsp;·&nbsp; SEO A <strong>×2.0</strong> &nbsp;·&nbsp; Filler &gt;30% <strong>+3</strong> &nbsp;·&nbsp; Stale &gt;14d <strong>+2</strong> &nbsp;→&nbsp; 3.0 × 2.0 × 5 = <strong>30</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AT&T · Karl · T0 · SEO B · 13.5 -->
+  <div class="card" data-owner="karl" data-section="a" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-r"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-r" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="100.2"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-r" style="font-size:15px;">13.5</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-down">↓ −2</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">AT&amp;T</a></div>
+          <div class="ctags"><span class="tag tt0">T0</span><span class="tag tsb">SEO B</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av avk">KS</span> Karl Schuster</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vwarn">4.0<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-o" style="width:40%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vwarn">18%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-o" style="width:60%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">2 of 11</div>
+          </div>
+          <div class="cm"><div class="ml">Stale &gt;14d</div><div class="mv vwarn">3</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$142k</div><div class="ms tflat">CTR flat</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 2 remove</span><span class="achip ac-rw">✎ 1 rewrite</span><span class="achip ac-st">⏱ 3 stale</span></div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 2 spam fillers</strong><div class="sug">"AT&amp;T Deals Just for You" &nbsp;·&nbsp; "Explore AT&amp;T Savings"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "AT&amp;T Phone Deals"</strong><div class="sug">→ <em>"Up to $800 Off iPhone 15 When You Trade In with AT&amp;T"</em></div></div></li>
+            <li><span class="ai ai-st">⏱</span><div class="ac"><strong>Refresh 3 stale offers</strong><div class="sug">Last updated Feb 14. Verify plan pricing is still accurate.</div></div></li>
+          </ul>
+          <div class="score-why">T0 <strong>×3.0</strong> &nbsp;·&nbsp; SEO B <strong>×1.5</strong> &nbsp;·&nbsp; Filler 10–30% <strong>+2</strong> &nbsp;·&nbsp; Stale &gt;14d <strong>+1</strong> &nbsp;→&nbsp; 3.0 × 1.5 × 3 = <strong>13.5</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="more-row">
+    <span>+ 2 more in Immediate: <strong>ABCmouse.com</strong> (Karl · T1 · SEO A · 12) &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Avis</strong> (Alheli · T0 · SEO A · 12)</span>
+    <a href="#">Show all →</a>
+  </div>
+  <div class="empty" id="empty-a">No merchants match this filter</div>
+
+  <!-- ─── SECTION B ────────────────────── -->
+  <div class="sh" style="margin-top:36px;">
+    <h2>🟠 Review This Week</h2>
+    <span class="sh-count">28 merchants</span>
+    <span style="margin-left:auto;font-size:12px;color:#b0b2bc;">Score 5–11 · When capacity allows</span>
+  </div>
+
+  <!-- Viator -->
+  <div class="card" data-owner="alheli" data-section="b" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-o"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-o" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="164.0"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-o">3</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-flat">→ flat</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">Viator</a></div>
+          <div class="ctags"><span class="tag tt1">T1</span><span class="tag tsd">SEO D</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av ava">AV</span> Alheli Vergara</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vbad">2.8<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-r" style="width:28%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vbad">31%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-r" style="width:100%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">2 of 5</div>
+          </div>
+          <div class="cm"><div class="ml">Stale</div><div class="mv vok">0</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$23k</div><div class="ms tdown">CTR ↓ −1.2pp</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 2 remove</span><span class="achip ac-rw">✎ 1 rewrite</span></div>
+        <span class="expand-note">Same filler issue as AliExpress — deprioritised because page isn't ranking yet (SEO D)</span>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 2 spam fillers</strong><div class="sug">"Explore the World with Viator" &nbsp;·&nbsp; "Best Travel Experiences Await"</div></div></li>
+            <li><span class="ai ai-rw">✎</span><div class="ac"><strong>Rewrite "Viator Tours Deal"</strong><div class="sug">→ <em>"Save 10% on Guided Tours &amp; Experiences Worldwide"</em></div></div></li>
+          </ul>
+          <div class="score-why">T1 <strong>×2.0</strong> &nbsp;·&nbsp; SEO D <strong>×0.5</strong> &nbsp;·&nbsp; Filler &gt;30% <strong>+3</strong> &nbsp;→&nbsp; 2.0 × 0.5 × 3 = <strong>3</strong> — same content issue as AliExpress (12) but page doesn't rank yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AAA -->
+  <div class="card" data-owner="daniel" data-section="b" data-territory="us">
+    <div class="card-top">
+      <div class="cbar cbar-o"></div>
+      <div class="cmain">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div class="gauge-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle class="gauge-track" cx="35" cy="35" r="29"/>
+              <circle class="gauge-fill gfill-o" cx="35" cy="35" r="29" stroke-dasharray="182.21" stroke-dashoffset="145.8"/>
+            </svg>
+            <div class="gauge-center"><div class="gauge-num gnum-o">6</div><div class="gauge-lbl">Score</div></div>
+          </div>
+          <div class="delta delta-down">↓ −1</div>
+        </div>
+        <div class="cinfo">
+          <div class="cname"><a href="#" target="_blank">AAA</a></div>
+          <div class="ctags"><span class="tag tt1">T1</span><span class="tag tsb">SEO B</span><span class="tag tter">🇺🇸 US</span><span class="asgn"><span class="av avd">DD</span> Daniel Dantzler</span></div>
+        </div>
+        <div class="cmetrics">
+          <div class="cm">
+            <div class="ml">Offer score</div>
+            <div class="mv vwarn">5.1<small>/10</small></div>
+            <div class="mbar-wrap"><div class="mbar-fill mbar-o" style="width:51%"></div></div>
+          </div>
+          <div class="cm">
+            <div class="ml">Spam fillers</div>
+            <div class="mv vwarn">14%</div>
+            <div class="mbar-wrap">
+              <div class="mbar-fill mbar-o" style="width:47%"></div>
+              <div class="mbar-tick" style="left:27%"></div>
+              <div class="mbar-tick" style="left:80%"></div>
+            </div>
+            <div class="ms" style="color:#b0b2bc;">2 of 14</div>
+          </div>
+          <div class="cm"><div class="ml">Stale &gt;7d</div><div class="mv vwarn">1</div></div>
+          <div class="cm"><div class="ml">Revenue / yr</div><div class="mv vplain">$31k</div><div class="ms tup">CTR ↑ +0.5pp</div></div>
+        </div>
+        <div class="cactions">
+          <a class="btn-cc" href="#" target="_blank"><svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a>
+          <label class="rev-label"><input type="checkbox" onchange="markReviewed(this,7)"><div class="tgl-track"><div class="tgl-thumb"></div></div><span class="rev-text">Mark reviewed</span><div class="rev-tip">Stays muted until next rescore: Mar 16</div></label>
+        </div>
+      </div>
+    </div>
+    <div class="expand-row">
+      <button class="expand-btn" onclick="toggleActions(this)">
+        <div class="exp-chevron">▾</div>
+        <div class="action-chips"><span class="achip ac-rm">🗑 2 remove</span><span class="achip ac-st">⏱ 1 verify</span></div>
+      </button>
+      <div class="alist-wrap">
+        <div class="alist">
+          <ul>
+            <li><span class="ai ai-rm">✕</span><div class="ac"><strong>Remove 2 spam fillers</strong><div class="sug">"AAA Membership Deals" &nbsp;·&nbsp; "Save with AAA Today"</div></div></li>
+            <li><span class="ai ai-st">⏱</span><div class="ac"><strong>Verify "AAA Travel Discount"</strong><div class="sug">Last updated Mar 2, no end date set.</div></div></li>
+          </ul>
+          <div class="score-why">T1 <strong>×2.0</strong> &nbsp;·&nbsp; SEO B <strong>×1.5</strong> &nbsp;·&nbsp; Filler 10–30% <strong>+2</strong> &nbsp;→&nbsp; 2.0 × 1.5 × 2 = <strong>6</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="more-row">
+    <span>+ 26 more merchants in Review. Sorted by priority score.</span>
+    <a href="#">Show all 28 →</a>
+  </div>
+  <div class="empty" id="empty-b">No merchants match this filter</div>
+
+  <!-- ─── SECTION C ────────────────────── -->
+  <div class="sh" style="margin-top:36px;">
+    <h2>🟢 Healthy</h2>
+    <span class="sh-count">812 merchants</span>
+    <span style="margin-left:auto;font-size:12px;color:#b0b2bc;">Score &lt; 5 · No action needed · Sample shown</span>
+  </div>
+  <div class="hw">
+    <table>
+      <thead>
+        <tr>
+          <th>Merchant</th><th>Assigned to</th><th>Tier</th><th>SEO</th>
+          <th>Territory</th><th>Avg offer score</th><th>Filler %</th>
+          <th>Stale</th><th>Revenue / yr</th><th>Score</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-owner="daniel" data-section="c" data-territory="us">
+          <td><strong>Babbel</strong></td>
+          <td><span style="display:flex;align-items:center;gap:5px;font-size:13px;"><span class="av avd">DD</span>Daniel Dantzler</span></td>
+          <td><span class="tag tt1">T1</span></td><td><span class="tag tsa">SEO A</span></td><td><span class="tag tter">🇺🇸 US</span></td>
+          <td style="color:#30d158;font-weight:700;">7.8/10</td>
+          <td style="color:#30d158;font-weight:700;">0%</td>
+          <td>0</td><td>$8k</td>
+          <td style="font-weight:800;color:#30d158;font-size:16px;">0</td>
+          <td><a class="btn-cc" href="#" style="padding:6px 12px;font-size:12px;"><svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px;"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a></td>
+        </tr>
+        <tr data-owner="alheli" data-section="c" data-territory="us">
+          <td><strong>Agoda</strong></td>
+          <td><span style="display:flex;align-items:center;gap:5px;font-size:13px;"><span class="av ava">AV</span>Alheli Vergara</span></td>
+          <td><span class="tag tt1">T1</span></td><td><span class="tag tsb">SEO B</span></td><td><span class="tag tter">🇺🇸 US</span></td>
+          <td style="color:#30d158;font-weight:700;">6.9/10</td>
+          <td style="color:#30d158;font-weight:700;">2%</td>
+          <td>0</td><td>$15k</td>
+          <td style="font-weight:800;color:#30d158;font-size:16px;">0</td>
+          <td><a class="btn-cc" href="#" style="padding:6px 12px;font-size:12px;"><svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px;"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a></td>
+        </tr>
+        <tr data-owner="karl" data-section="c" data-territory="us">
+          <td><strong>ABCmouse.com</strong></td>
+          <td><span style="display:flex;align-items:center;gap:5px;font-size:13px;"><span class="av avk">KS</span>Karl Schuster</span></td>
+          <td><span class="tag tt1">T1</span></td><td><span class="tag tsa">SEO A</span></td><td><span class="tag tter">🇺🇸 US</span></td>
+          <td style="color:#30d158;font-weight:700;">7.2/10</td>
+          <td style="color:#30d158;font-weight:700;">0%</td>
+          <td>0</td><td>$6k</td>
+          <td style="font-weight:800;color:#30d158;font-size:16px;">0</td>
+          <td><a class="btn-cc" href="#" style="padding:6px 12px;font-size:12px;"><svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px;"><path d="M2 10L10 2M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Open in CC</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="empty" id="empty-c">No merchants match this filter</div>
+
+  <div class="footer">
+    Offer Quality Pipeline &nbsp;·&nbsp; Scored by Florence/Nico API &nbsp;·&nbsp; Merchant data: BigQuery (Marc, daily) &nbsp;·&nbsp; Questions → <strong>#coupons-offer-quality</strong>
+  </div>
+</div>
+
+<!-- ══════════════════════════ TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toast-msg">Marked as reviewed — muted until Mar 16</span>
+</div>
+
+<script>
+  const state = { section: 'all', owner: 'all', territory: 'all' };
+  const pillGroups = {
+    section:   [...document.querySelectorAll('.fg:nth-child(1) .pill')],
+    owner:     [...document.querySelectorAll('.fg:nth-child(2) .pill')],
+    territory: [...document.querySelectorAll('.fg:nth-child(3) .pill')],
+  };
+  let reviewedCount = 0;
+
+  function toggleFormula() {
+    const p = document.getElementById('formula-panel');
+    const b = document.getElementById('how-btn');
+    p.classList.toggle('open');
+    b.textContent = p.classList.contains('open') ? '✕ Close' : 'ℹ How scores work';
+  }
+
+  function setFilter(type, value, btn) {
+    state[type] = value;
+    pillGroups[type].forEach(p => p.classList.remove('active','ar','ao','ag'));
+    const cls = (type==='section'&&value==='a') ? 'ar'
+              : (type==='section'&&value==='b') ? 'ao'
+              : (type==='section'&&value==='c') ? 'ag' : 'active';
+    btn.classList.add(cls);
+    applyFilters();
+  }
+
+  function applyFilters() {
+    let visible = 0;
+    document.querySelectorAll('.card').forEach(el => {
+      const show = (state.section==='all'   || el.dataset.section   === state.section)
+                && (state.owner==='all'     || el.dataset.owner     === state.owner)
+                && (state.territory==='all' || el.dataset.territory === state.territory);
+      el.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.querySelectorAll('tbody tr').forEach(el => {
+      const show = (state.section==='all'   || el.dataset.section   === state.section)
+                && (state.owner==='all'     || el.dataset.owner     === state.owner)
+                && (state.territory==='all' || el.dataset.territory === state.territory);
+      el.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const ownerLabel = state.owner !== 'all' ? ` · ${state.owner.charAt(0).toUpperCase()+state.owner.slice(1)}'s merchants` : '';
+    document.getElementById('result-count').textContent =
+      visible >= 35 ? 'Showing all 35 merchants'
+                    : `Showing ${visible} of 35 merchants${ownerLabel}`;
+    ['a','b','c'].forEach(sec => {
+      const vc = [...document.querySelectorAll(`.card[data-section="${sec}"]`)].filter(c=>!c.classList.contains('hidden')).length;
+      const vr = [...document.querySelectorAll(`tbody tr[data-section="${sec}"]`)].filter(r=>r.style.display!=='none').length;
+      const e = document.getElementById(`empty-${sec}`);
+      if (e) e.style.display = vc+vr===0 ? 'block' : 'none';
+    });
+  }
+
+  function toggleActions(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+
+  function markReviewed(checkbox, total) {
+    const card = checkbox.closest('.card');
+    if (checkbox.checked) {
+      setTimeout(() => {
+        card.classList.add('done');
+        const moreRow = card.parentNode.querySelector('.more-row');
+        if (moreRow) card.parentNode.insertBefore(card, moreRow);
+        else card.parentNode.appendChild(card);
+      }, 280);
+      reviewedCount = Math.min(reviewedCount + 1, total);
+      showToast('Marked as reviewed — muted until Mar 16');
+    } else {
+      card.classList.remove('done');
+      reviewedCount = Math.max(reviewedCount - 1, 0);
+    }
+    document.getElementById('progress-fill').style.width = (reviewedCount/total*100) + '%';
+    document.getElementById('progress-label').textContent = `${reviewedCount} of ${total} reviewed`;
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._tt);
+    window._tt = setTimeout(() => t.classList.remove('show'), 3200);
+  }
+</script>
+</body>
+</html>
