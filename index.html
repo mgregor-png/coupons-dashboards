@@ -18,7 +18,7 @@
   }
 
   .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
@@ -38,43 +38,90 @@
     color: #86868b;
   }
 
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .section-icon.green { background: rgba(52,199,89,0.1); }
+  .section-icon.purple { background: rgba(175,82,222,0.1); }
+  .section-icon.teal { background: rgba(20,184,166,0.1); }
+  .section-icon.blue { background: rgba(0,122,255,0.1); }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+
+  .section-links {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .section-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: #86868b;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .section-link:hover {
+    color: #1d1d1f;
+    border-color: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.03);
+  }
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
   }
 
   .card {
     background: #fff;
     border-radius: 14px;
-    padding: 28px;
+    padding: 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.03);
     text-decoration: none;
     color: inherit;
     display: block;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-    position: relative;
-    overflow: hidden;
   }
 
-  .card:hover {
+  a.card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
   }
 
-  .card .icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 16px;
-  }
-
-  .card h2 {
-    font-size: 17px;
+  .card h3 {
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 6px;
   }
@@ -93,17 +140,16 @@
     letter-spacing: 0.5px;
     padding: 3px 8px;
     border-radius: 4px;
-    margin-top: 14px;
+    margin-top: 12px;
   }
 
   .tag.live { background: rgba(52,199,89,0.1); color: #28a745; }
   .tag.coming { background: rgba(255,149,0,0.1); color: #e68a00; }
 
-  .icon.green { background: rgba(52,199,89,0.1); }
-  .icon.blue { background: rgba(0,122,255,0.1); }
-  .icon.purple { background: rgba(175,82,222,0.1); }
-  .icon.orange { background: rgba(255,149,0,0.1); }
-  .icon.teal { background: rgba(20,184,166,0.1); }
+  .empty-slot {
+    opacity: 0.45;
+    cursor: default;
+  }
 
   footer {
     margin-top: 64px;
@@ -111,63 +157,118 @@
     font-size: 12px;
     color: #aeaeb2;
   }
+
+  @media (max-width: 600px) {
+    .section-header { flex-wrap: wrap; }
+    .section-links { margin-left: 0; margin-top: 8px; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Coupons Dashboards</h1>
-      <p>New Platform rollout tracking, CTR analysis, and performance monitoring.</p>
+      <p>Dashboards, reports, and deliverables organized by bet.</p>
     </header>
 
-    <div class="grid">
-      <a class="card" href="cos-dashboard.html">
-        <div class="icon blue">📋</div>
-        <h2>CoS Weekly Dashboard</h2>
-        <p>Weekly priorities, calendar, Asana tasks, blockers — personal command center updated each Monday.</p>
-        <span class="tag live">Live</span>
-      </a>
-
-      <a class="card" href="ctr-rollout-report.html">
-        <div class="icon green">📈</div>
-        <h2>CTR Rollout Report</h2>
-        <p>New Platform merchant rollout performance — CTR comparison, revenue impact, and per-merchant breakdown.</p>
-        <span class="tag live">Live</span>
-      </a>
-
-      <a class="card" href="alternative-monetisation-brainstorm-v2.html">
-        <div class="icon teal">💡</div>
-        <h2>App Retention — Alternative Monetisation</h2>
-        <p>Concept brainstorm for Groupon app retention through alternative monetisation strategies.</p>
-        <span class="tag live">Live</span>
-      </a>
-
-      <div class="card" style="opacity: 0.5; cursor: default;">
-        <div class="icon blue">🔬</div>
-        <h2>A/B Test Results</h2>
-        <p>50/50 split test results for top 10 merchants — statistical significance and confidence intervals.</p>
-        <span class="tag coming">Coming soon</span>
+    <!-- NEW PLATFORM -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon green">📈</div>
+        <div class="section-title">New Platform</div>
+        <div class="section-links">
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1211607081597177" target="_blank">Asana Project</a>
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1211602817765316" target="_blank">Team Bets</a>
+        </div>
       </div>
+      <div class="grid">
+        <a class="card" href="ctr-rollout-report.html">
+          <h3>CTR Rollout Report</h3>
+          <p>Merchant rollout performance — CTR comparison, revenue impact, and per-merchant breakdown.</p>
+          <span class="tag live">Live</span>
+        </a>
 
-      <a class="card" href="offer-quality-report.html">
-        <div class="icon purple">⭐</div>
-        <h2>Offer Quality Report</h2>
-        <p>Automated offer quality categorisation — quality scoring, distribution analysis, and merchant-level breakdown.</p>
-        <span class="tag live">Live</span>
-      </a>
+        <div class="card empty-slot">
+          <h3>A/B Test Results</h3>
+          <p>50/50 split test results for top 10 merchants — statistical significance and confidence intervals.</p>
+          <span class="tag coming">Coming soon</span>
+        </div>
 
-      <a class="card" href="offer-quality-email-mock.html">
-        <div class="icon purple">📧</div>
-        <h2>Offer Quality — Email Notification</h2>
-        <p>Weekly rescore notification mock — personalized per content team member with quality trend summaries.</p>
-        <span class="tag live">Live</span>
-      </a>
+        <div class="card empty-slot">
+          <h3>SEO Impact Monitor</h3>
+          <p>Search visibility and ranking changes during platform migration — SOV trends and protected pages.</p>
+          <span class="tag coming">Coming soon</span>
+        </div>
+      </div>
+    </div>
 
-      <div class="card" style="opacity: 0.5; cursor: default;">
-        <div class="icon orange">🌐</div>
-        <h2>SEO Impact Monitor</h2>
-        <p>Search visibility and ranking changes during platform migration — SOV trends and protected pages.</p>
-        <span class="tag coming">Coming soon</span>
+    <!-- AUTOMATED OFFER QUALITY -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon purple">⭐</div>
+        <div class="section-title">Automated Offer Quality</div>
+        <div class="section-links">
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/task/1211586599904363" target="_blank">Asana Bet</a>
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1211602817765316" target="_blank">Team Bets</a>
+        </div>
+      </div>
+      <div class="grid">
+        <a class="card" href="offer-quality-report.html">
+          <h3>Offer Quality Report</h3>
+          <p>Quality scoring, distribution analysis, and merchant-level breakdown.</p>
+          <span class="tag live">Live</span>
+        </a>
+
+        <a class="card" href="offer-quality-email-mock.html">
+          <h3>Email Notification Mock</h3>
+          <p>Weekly rescore notification — personalized per content team member with quality trend summaries.</p>
+          <span class="tag live">Live</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- GROUPON ECOSYSTEM -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon teal">💡</div>
+        <div class="section-title">Groupon Ecosystem</div>
+        <div class="section-links">
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/task/1213745471998935" target="_blank">Asana Task</a>
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1211602817765316" target="_blank">Team Bets</a>
+        </div>
+      </div>
+      <div class="grid">
+        <a class="card" href="alternative-monetisation-brainstorm-v2.html">
+          <h3>App Retention — Alternative Monetisation</h3>
+          <p>Concept brainstorm for Groupon app retention through alternative monetisation strategies.</p>
+          <span class="tag live">Live</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- GENIE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon blue">🔮</div>
+        <div class="section-title">Genie</div>
+        <div class="section-links">
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1212996568683037" target="_blank">Asana Project</a>
+          <a class="section-link" href="https://app.asana.com/1/8437193015852/project/1211602817765316" target="_blank">Team Bets</a>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card empty-slot">
+          <h3>LTV Model</h3>
+          <p>Lifetime value estimation — current state, with Rewards, with Groupon deals.</p>
+          <span class="tag coming">Coming soon</span>
+        </div>
+
+        <div class="card empty-slot">
+          <h3>LP A/B Test</h3>
+          <p>Landing page variant performance — install rate, engagement, and conversion tracking.</p>
+          <span class="tag coming">Coming soon</span>
+        </div>
       </div>
     </div>
 
