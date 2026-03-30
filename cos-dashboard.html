@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoS Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface-inset: #f0f0f2;
+    --separator: rgba(0,0,0,0.08);
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --blue: #007aff;
+    --blue-bg: rgba(0,122,255,0.08);
+    --green: #34c759;
+    --green-bg: rgba(52,199,89,0.08);
+    --orange: #ff9500;
+    --orange-bg: rgba(255,149,0,0.08);
+    --red: #ff3b30;
+    --red-bg: rgba(255,59,48,0.08);
+    --purple: #af52de;
+    --purple-bg: rgba(175,82,222,0.08);
+    --yellow: #ff9f0a;
+    --yellow-bg: rgba(255,159,10,0.08);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-md: 0 4px 14px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.47;
+    padding: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header { margin-bottom: 36px; }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 6px;
+  }
+  header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .header-context {
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .header-date {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: -0.2px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .full-width { grid-column: 1 / -1; }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .card-icon.blue { background: var(--blue-bg); color: var(--blue); }
+  .card-icon.green { background: var(--green-bg); color: var(--green); }
+  .card-icon.orange { background: var(--orange-bg); color: var(--orange); }
+  .card-icon.red { background: var(--red-bg); color: var(--red); }
+  .card-icon.purple { background: var(--purple-bg); color: var(--purple); }
+  .card-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  .card-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* Priority items */
+  .priority-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .priority-item + .priority-item {
+    border-top: 1px solid var(--separator);
+  }
+  .check-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--text-tertiary);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-top: 1px;
+  }
+  .check-circle:hover {
+    border-color: var(--blue);
+    background: var(--blue-bg);
+  }
+  .check-circle.checked {
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+  .check-circle.checked::after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translateY(-1px);
+  }
+  .priority-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: -0.1px;
+    line-height: 1.5;
+  }
+  .priority-text.done {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.1px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag-deadline { background: var(--orange-bg); color: var(--orange); }
+  .tag-waiting { background: var(--purple-bg); color: var(--purple); }
+  .tag-blocked { background: var(--red-bg); color: var(--red); }
+  .tag-done { background: var(--green-bg); color: var(--green); }
+  .tag-carryover { background: var(--yellow-bg); color: var(--yellow); }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+  .section-divider span {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--separator);
+  }
+
+  /* Calendar */
+  .cal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 11px 0;
+  }
+  .cal-item + .cal-item { border-top: 1px solid var(--separator); }
+  .cal-time-col { width: 52px; flex-shrink: 0; padding-top: 1px; }
+  .cal-time {
+    font-size: 14px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.3px;
+  }
+  .cal-dur {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 1px;
+  }
+  .cal-indicator {
+    width: 4px;
+    border-radius: 2px;
+    align-self: stretch;
+    min-height: 32px;
+    flex-shrink: 0;
+  }
+  .cal-body { flex: 1; }
+  .cal-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+  }
+  .cal-note {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .cal-meta {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+
+  /* Day cards */
+  .day-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .day-goals {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--separator);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .day-goals strong {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* Task rows */
+  .task-list-header {
+    display: grid;
+    grid-template-columns: 1fr 90px 80px;
+    gap: 8px;
+    padding: 0 0 8px 0;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .task-list-header span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .task-list-header span:not(:first-child) { text-align: right; }
+  .task-row {
+    display: grid;
+    grid-template-columns: 1fr 90px 80px;
+    gap: 8px;
+    padding: 10px 0;
+    font-size: 13px;
+    align-items: center;
+  }
+  .task-row + .task-row { border-top: 1px solid var(--separator); }
+  .task-row a {
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.1px;
+    transition: color 0.15s ease;
+  }
+  .task-row a:hover { color: var(--blue); }
+  .task-owner { text-align: right; color: var(--text-tertiary); font-size: 12px; }
+  .task-due {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .task-due.overdue { color: var(--red); font-weight: 600; }
+  .task-due.soon { color: var(--orange); font-weight: 600; }
+  .task-due.today { color: var(--blue); font-weight: 600; }
+
+  /* Plan items */
+  .plan-item {
+    padding: 12px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .plan-item + .plan-item { border-top: 1px solid var(--separator); }
+  .plan-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .plan-body { flex: 1; }
+  .plan-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    margin-bottom: 2px;
+  }
+  .plan-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Blocker grid */
+  .blocker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .blocker-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot-lg {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .blocker-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    line-height: 1.5;
+  }
+  .blocker-item + .blocker-item { border-top: 1px solid var(--separator); }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 20px; }
+    .grid { grid-template-columns: 1fr; }
+    .blocker-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>Weekly Dashboard</h1>
+    <div class="header-context">CoS Dashboard</div>
+  </div>
+  <div class="header-date">Monday, March 30 &nbsp;&middot;&nbsp; Office &nbsp;&middot;&nbsp; Week of March 30 &ndash; April 2 &nbsp;&middot;&nbsp; <span style="color: var(--green);">OOO Fri Apr 3 &ndash; Mon Apr 6 (Easter)</span></div>
+</header>
+
+<div class="grid">
+
+  <!-- TODAY'S PRIORITIES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon blue">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Today's Priorities</div>
+        <div class="card-subtitle">Monday &mdash; 5 meetings</div>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="check-circle" data-id="m1"></div>
+      <div class="priority-text">New Platform QA &mdash; confirm rewards setup, tracking, correct implementation on staging</div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m2"></div>
+      <div class="priority-text">BI monitoring dashboard &mdash; needs to be ready today <span class="tag tag-deadline">Deadline</span></div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m3"></div>
+      <div class="priority-text">Review and finalize Q2 quarterly goals + April monthly goals <span class="tag tag-deadline">Due today</span></div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m4"></div>
+      <div class="priority-text">Resolve merchant template / Ian dependency with Minas &mdash; what does eng work on if waiting 3+ weeks?</div>
+    </div>
+
+    <div class="section-divider"><span>Work items</span></div>
+
+    <div class="priority-item">
+      <div class="check-circle" data-id="m5"></div>
+      <div class="priority-text">Get BA report on 10 merchants in 50/50 A/B (live since Mar 18) &mdash; need CTR signal before ramping</div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m6"></div>
+      <div class="priority-text">Finalize Genie MBR priority / LTV estimation (dependency delivered Fri) <span class="tag tag-carryover">Carryover</span></div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m7"></div>
+      <div class="priority-text">Ramp up plan &mdash; review with Minas at standup (17:00)</div>
+    </div>
+
+    <div class="section-divider"><span>Waiting on</span></div>
+
+    <div class="priority-item">
+      <div class="check-circle" data-id="m8"></div>
+      <div class="priority-text">Eon merchant template delivery &mdash; 3+ week wait, need interim plan <span class="tag tag-blocked">Blocked</span></div>
+    </div>
+    <div class="priority-item">
+      <div class="check-circle" data-id="m9"></div>
+      <div class="priority-text">PostHog &mdash; follow up with Core on joint procurement business case <span class="tag tag-waiting">Waiting</span></div>
+    </div>
+  </div>
+
+  <!-- TODAY'S CALENDAR -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon orange">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Today &mdash; Monday</div>
+        <div class="card-subtitle">Office &middot; 5 meetings</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">09:00</div>
+        <div class="cal-dur">2h35m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--green);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Focus time</div>
+        <div class="cal-note">QA staging, BI dashboard, Q2 goals finalization</div>
+      </div>
+      <div class="cal-meta">Solo</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">12:00</div>
+        <div class="cal-dur">1h</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--blue);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Mobile App team planning</div>
+      </div>
+      <div class="cal-meta"></div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">14:30</div>
+        <div class="cal-dur">1h</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--purple);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Product &mdash; Weekly team meeting</div>
+      </div>
+      <div class="cal-meta"></div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">15:30</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--orange);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Martin / James Sync</div>
+      </div>
+      <div class="cal-meta">James</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">17:00</div>
+        <div class="cal-dur">25m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--red);"></div>
+      <div class="cal-body">
+        <div class="cal-title">New Platform x Ian standup</div>
+        <div class="cal-note">Ramp up plan + merchant template dependency</div>
+      </div>
+      <div class="cal-meta">Minas</div>
+    </div>
+  </div>
+
+  <!-- WEEK PRIORITIES -->
+  <div class="card full-width">
+    <div class="card-header">
+      <div class="card-icon green">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">This Week's Priorities</div>
+        <div class="card-subtitle">From weekly goals &mdash; Mar 30 &ndash; Apr 3</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">1</div>
+      <div class="plan-body">
+        <div class="plan-title">New Platform &mdash; QA &amp; Ramp-Up Decision</div>
+        <div class="plan-detail">QA Monday (rewards, tracking, staging). Get BA report on 50/50 A/B (10 merchants, live since Mar 18). BI monitoring dashboard ready Monday. Resolve merchant template / Ian dependency with Minas. Ramp up plan.</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">2</div>
+      <div class="plan-body">
+        <div class="plan-title">Genie &mdash; LTV Estimation</div>
+        <div class="plan-detail">Finalize MBR priority estimation Monday (dependency delivered Fri). LP A/B test &mdash; more time before evaluation. Tableau dashboard tracking.</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">3</div>
+      <div class="plan-body">
+        <div class="plan-title">Groupon Ecosystem &mdash; Finalization</div>
+        <div class="plan-detail">John tests PayPal Honey + Rakuten app. Compile findings for leadership presentation (build on deck shared last Thu). Decide: proceed with seasonal banner A/B?</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">4</div>
+      <div class="plan-body">
+        <div class="plan-title">Automated Offer Quality &mdash; Test US Scoring</div>
+        <div class="plan-detail">Test API with Florence's US merchant data. Validate end-to-end: scoring &rarr; API &rarr; Control Cloud.</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">5</div>
+      <div class="plan-body">
+        <div class="plan-title">Foundry &mdash; Share &amp; Template</div>
+        <div class="plan-detail">Share live automation examples with team. Begin templating CoS setup for other PMs.</div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-number">6</div>
+      <div class="plan-body">
+        <div class="plan-title">Trust Signals &mdash; Check Eng Deadline</div>
+        <div class="plan-detail">Check deadline for historic data projection solution eng is working on.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REST OF WEEK: Tue & Wed -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon purple">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Tue &amp; Wed</div>
+        <div class="card-subtitle">Office &middot; Home</div>
+      </div>
+    </div>
+
+    <div class="day-header">Tuesday Mar 31 &mdash; Office</div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">14:00</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--orange);"></div>
+      <div class="cal-body">
+        <div class="cal-title">New Platform Standup</div>
+      </div>
+      <div class="cal-meta">Minas</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">14:30</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--orange);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Martin / Minas sync</div>
+        <div class="cal-note">Eng backlog revision + Ian dependency</div>
+      </div>
+      <div class="cal-meta">Minas</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">15:30</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--green);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Content &amp; SEO sync</div>
+      </div>
+      <div class="cal-meta">Rebecca</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">16:30</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--red);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Global Coupons WBR</div>
+      </div>
+      <div class="cal-meta">Adam</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">17:00</div>
+        <div class="cal-dur">25m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--blue);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Coupons+AOG / Eng Sync</div>
+      </div>
+      <div class="cal-meta"></div>
+    </div>
+
+    <div class="day-goals">
+      <strong>Goals:</strong> DRI tasks due (New Platform + Genie). MM Updates prep. Phase 2 testing plan. Push eng backlog revision with Minas.
+    </div>
+
+    <div style="height: 16px;"></div>
+    <div class="day-header">Wednesday Apr 1 &mdash; Home</div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">09:00</div>
+        <div class="cal-dur">3h</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--green);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Focus time</div>
+      </div>
+      <div class="cal-meta">Solo</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">16:00</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--purple);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Coupons Management Monthly</div>
+      </div>
+      <div class="cal-meta"></div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">17:00</div>
+        <div class="cal-dur">25m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--red);"></div>
+      <div class="cal-body">
+        <div class="cal-title">New Platform x Ian standup</div>
+      </div>
+      <div class="cal-meta">Minas</div>
+    </div>
+
+    <div class="day-goals">
+      <strong>Goals:</strong> Deep work on Offer Quality US scoring test. Ecosystem leadership deck finalization. Trust Signals eng deadline check.
+    </div>
+  </div>
+
+  <!-- REST OF WEEK: Thu & Fri -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon purple">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Thu &amp; Fri</div>
+        <div class="card-subtitle">Office &middot; OOO (Easter)</div>
+      </div>
+    </div>
+
+    <div class="day-header">Thursday Apr 2 &mdash; Office</div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">10:30</div>
+        <div class="cal-dur">1h</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--blue);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Pre-purchase Grooming / Product Catch-up</div>
+      </div>
+      <div class="cal-meta">James</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">14:00</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--orange);"></div>
+      <div class="cal-body">
+        <div class="cal-title">New Platform Standup</div>
+      </div>
+      <div class="cal-meta">Minas</div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-time-col">
+        <div class="cal-time">16:00</div>
+        <div class="cal-dur">30m</div>
+      </div>
+      <div class="cal-indicator" style="background: var(--purple);"></div>
+      <div class="cal-body">
+        <div class="cal-title">Rebecca 1:1</div>
+        <div class="cal-note">Bloomreach follow-up, seasonal banner decision</div>
+      </div>
+      <div class="cal-meta">Rebecca</div>
+    </div>
+
+    <div class="day-goals">
+      <strong>Goals:</strong> Follow up Bloomreach with Matthias (due Apr 2). Ramp-up progress check. Write 5/15 early (OOO Friday). Weekly scorecard.
+    </div>
+
+    <div style="height: 16px;"></div>
+    <div class="day-header" style="color: var(--green);">Friday Apr 3 &ndash; Monday Apr 6 &mdash; OOO (Easter)</div>
+
+    <div style="padding: 16px 0; font-size: 13px; color: var(--text-tertiary); text-align: center;">
+      Out of office &mdash; all meetings declined
+    </div>
+
+    <div class="day-goals">
+      <strong>Before leaving Thu:</strong> 5/15 written &amp; submitted. MM Updates ready. Key blockers escalated.
+    </div>
+  </div>
+
+  <!-- MY ASANA TASKS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon red">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+      </div>
+      <div>
+        <div class="card-title">My Asana Tasks</div>
+        <div class="card-subtitle">Due this week &amp; overdue</div>
+      </div>
+    </div>
+
+    <div class="task-list-header">
+      <span>Task</span>
+      <span>Project</span>
+      <span>Due</span>
+    </div>
+
+    <div class="task-row">
+      <div>Review and finalize Q2 goals + April monthly goals</div>
+      <div class="task-owner"></div>
+      <div class="task-due today">Mar 30</div>
+    </div>
+    <div class="task-row">
+      <div>DRI - New Coupons Platform</div>
+      <div class="task-owner">New Platform</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>DRI - Genie</div>
+      <div class="task-owner">Genie</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Phase 2 Testing Plan &mdash; 4 more merchants</div>
+      <div class="task-owner">New Platform</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>MM Updates &mdash; Product</div>
+      <div class="task-owner"></div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Trust Signals &mdash; AIO visibility &amp; engagement</div>
+      <div class="task-owner">PRD</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Follow up Bloomreach with Matthias</div>
+      <div class="task-owner"></div>
+      <div class="task-due">Apr 2</div>
+    </div>
+    <div class="task-row">
+      <div>5/15 &mdash; Martin Gregor <span class="tag tag-carryover">Write Thu</span></div>
+      <div class="task-owner">5/15</div>
+      <div class="task-due">Apr 3</div>
+    </div>
+    <div class="task-row">
+      <div>Formalize A/B testing &amp; event implementation process <span class="tag tag-carryover">OOO Fri</span></div>
+      <div class="task-owner"></div>
+      <div class="task-due">Apr 3</div>
+    </div>
+    <div class="task-row">
+      <div>Write detailed CC + DB specification</div>
+      <div class="task-owner">Offer Quality</div>
+      <div class="task-due overdue">Mar 5</div>
+    </div>
+    <div class="task-row">
+      <div>Design screens: Merchant list + Edit offers</div>
+      <div class="task-owner">Offer Quality</div>
+      <div class="task-due overdue">Mar 5</div>
+    </div>
+    <div class="task-row">
+      <div>Set up US PostHog account for rollout</div>
+      <div class="task-owner"></div>
+      <div class="task-due overdue">Mar 25</div>
+    </div>
+  </div>
+
+  <!-- EMERGING & CARRYOVER -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon yellow">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Emerging &amp; End-of-Quarter</div>
+        <div class="card-subtitle">Q1 closes Mar 31</div>
+      </div>
+    </div>
+
+    <div class="task-list-header">
+      <span>Item</span>
+      <span>Context</span>
+      <span>Status</span>
+    </div>
+
+    <div class="task-row">
+      <div>PostHog &mdash; joint procurement business case with Core</div>
+      <div class="task-owner">Infra</div>
+      <div class="task-due soon">Push</div>
+    </div>
+    <div class="task-row">
+      <div>Engineering backlog revision with Minas</div>
+      <div class="task-owner">Eng</div>
+      <div class="task-due"><span class="tag tag-carryover">Carried</span></div>
+    </div>
+    <div class="task-row">
+      <div>Implement Rewards as core driver for user acquisition</div>
+      <div class="task-owner">Genie</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Trust Signals &mdash; extend affiliate network data</div>
+      <div class="task-owner">Trust Sigs</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Genie banners on merchant pages</div>
+      <div class="task-owner">Genie</div>
+      <div class="task-due soon">Mar 31</div>
+    </div>
+    <div class="task-row">
+      <div>Competitor monitoring automation with Florence</div>
+      <div class="task-owner">Ecosystem</div>
+      <div class="task-due">Apr 7</div>
+    </div>
+  </div>
+
+  <!-- BLOCKERS & DECISIONS -->
+  <div class="card full-width">
+    <div class="card-header">
+      <div class="card-icon red">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Blockers &amp; Decisions Needed</div>
+        <div class="card-subtitle">Resolve this week</div>
+      </div>
+    </div>
+
+    <div class="blocker-grid">
+      <div>
+        <div class="blocker-section-title" style="color: var(--red);"><div class="dot-lg" style="background: var(--red);"></div> Blockers</div>
+        <div class="blocker-item">Eon merchant template &mdash; 3+ week wait for Ian delivery. What does eng work on? <span style="font-size: 11px; color: var(--red);">(blocks rollout)</span></div>
+        <div class="blocker-item">BI rollout monitoring dashboard must be live today <span style="font-size: 11px; color: var(--red);">(blocks ramp decision)</span></div>
+        <div class="blocker-item">50/50 A/B CTR signal needed before ramping further <span style="font-size: 11px; color: var(--red);">(blocks Phase 2)</span></div>
+      </div>
+      <div>
+        <div class="blocker-section-title" style="color: var(--orange);"><div class="dot-lg" style="background: var(--orange);"></div> Decisions needed</div>
+        <div class="blocker-item">Seasonal banner A/B &mdash; proceed with 3 copy variants on staging?</div>
+        <div class="blocker-item">PostHog US rollout &mdash; joint procurement with Core or Coupons-only?</div>
+        <div class="blocker-item">Engineering backlog &mdash; push for revision slot with Minas this week</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CoS &middot; Mon Mar 30, 2026 &middot; Regenerate with Claude Code
+</footer>
+
+<script>
+  document.querySelectorAll('.check-circle[data-id]').forEach(circle => {
+    const key = 'cos-dash-' + circle.dataset.id;
+    if (localStorage.getItem(key) === 'true') {
+      circle.classList.add('checked');
+      const text = circle.nextElementSibling;
+      if (text) text.classList.add('done');
+    }
+    circle.addEventListener('click', () => {
+      circle.classList.toggle('checked');
+      const isChecked = circle.classList.contains('checked');
+      localStorage.setItem(key, isChecked);
+      const text = circle.nextElementSibling;
+      if (text) text.classList.toggle('done', isChecked);
+    });
+  });
+</script>
+
+</body>
+</html>
