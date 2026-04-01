@@ -144,93 +144,101 @@
 
 <!-- Current Phase 2 Configuration -->
 <div class="card" style="border-left:4px solid #34c759">
-  <h2 style="margin-bottom:8px">Current Configuration <span style="font-size:12px; font-weight:400; color:#34c759; margin-left:8px;">Phase 2 — LIVE since April 1</span></h2>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
-    <!-- Bucket cards instead of table -->
-    <div style="background:#f5f5f7; border-radius:10px; padding:16px; border-left:4px solid #e5e5ea;">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#6e6e73; margin-bottom:6px;">Legacy Protected</div>
-      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">407 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
-      <div style="font-size:13px; color:#636366;">100% legacy — high-revenue + SEO-critical</div>
-      <a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
-    </div>
-    <div style="background:#f0e6ff; border-radius:10px; padding:16px; border-left:4px solid #7c3aed;">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#7c3aed; margin-bottom:6px;">50/50 A/B Experiment</div>
-      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">41 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
-      <div style="font-size:13px; color:#636366;">50% new / 50% legacy — controlled test</div>
-      <a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
-    </div>
-    <div style="background:#fff3e0; border-radius:10px; padding:16px; border-left:4px solid #ff9500;">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#e65100; margin-bottom:6px;">33% Traffic Split</div>
-      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">~3,033 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
-      <div style="font-size:13px; color:#636366;">33% new / 67% legacy — gradual rollout</div>
-      <a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff; font-size:12px;" target="_blank">All 3,524 merchants &#x2197;</a>
-    </div>
-    <div style="background:#e3f2fd; border-radius:10px; padding:16px; border-left:4px solid #007aff;">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#0d47a1; margin-bottom:6px;">Phase 1 (unchanged)</div>
-      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">54 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
-      <div style="font-size:13px; color:#636366;">Mix of 100% new and 50/50 — as before</div>
-      <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
-    </div>
-  </div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:8px;">
-    <!-- Donut left -->
-    <div style="text-align:center;">
-      <div class="chart-container" style="height:180px;margin-bottom:0"><canvas id="revenueDonut"></canvas></div>
-      <div style="font-size:12px;color:#86868b;margin-top:4px">Revenue Split</div>
-    </div>
-    <!-- Breakdown table right -->
-    <div>
-      <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:8px;">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Bucket</th>
-            <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Revenue</th>
-            <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Traffic</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="background:#f5f5f7;font-weight:700">
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea">Legacy (total)</td>
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">65.2%</td>
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">60.0%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; 407 protected merchants (100% legacy)</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">27.2%</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">17.6%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; Top 41 &rarr; legacy half of 50/50</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">24.9%</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">12.9%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #e5e5ea;font-size:11px">&ndash; ~3,033 remaining &rarr; 67% to legacy</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:11px">12.6%</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:11px">27.8%</td>
-          </tr>
-          <tr style="background:#f0faf3;font-weight:700">
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea">New platform (total)</td>
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">34.8%</td>
-            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">40.0%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; 54 existing merchants (Phase 1)</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">3.7%</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">13.4%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; Top 41 &rarr; new platform half of 50/50</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">24.9%</td>
-            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">12.9%</td>
-          </tr>
-          <tr style="color:#636366">
-            <td style="padding:4px 10px 4px 20px;font-size:11px">&ndash; ~3,033 remaining &rarr; 33% to new</td>
-            <td style="padding:4px 10px;text-align:right;font-size:11px">6.2%</td>
-            <td style="padding:4px 10px;text-align:right;font-size:11px">13.7%</td>
-          </tr>
-        </tbody>
-      </table>
+  <h2 style="margin-bottom:4px">Current Configuration <span style="font-size:12px; font-weight:400; color:#34c759; margin-left:8px;">Phase 2 — LIVE since April 1</span></h2>
+  <p style="font-size:13px; color:#86868b; margin-bottom:16px;">3,524 US merchants &mdash; traffic split across 4 buckets. Net result: <strong style="color:#1d1d1f">~65% revenue / ~60% traffic on legacy</strong>, <strong style="color:#007aff">~35% revenue / ~40% traffic on new platform</strong>.</p>
+
+  <div style="display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start;">
+    <!-- Primary: Breakdown table -->
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Bucket</th>
+          <th style="text-align:center;padding:8px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Merchants</th>
+          <th style="text-align:center;padding:8px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Split</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Revenue</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Traffic</th>
+          <th style="padding:8px 10px;border-bottom:2px solid #e5e5ea;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f5f5f7;font-weight:700;">
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;">Legacy platform (total)</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:center;">&mdash;</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:center;">&mdash;</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:right;">65.2%</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:right;">60.0%</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;"></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;border-bottom:1px solid #f0f0f0;font-size:12px;">&ndash; Protected (100% legacy)</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">407</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">100 / 0</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">27.2%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">17.6%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;font-size:11px;"><a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff;text-decoration:none;" target="_blank">list &#x2197;</a></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;border-bottom:1px solid #f0f0f0;font-size:12px;">&ndash; Top 41 A/B &rarr; legacy half</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">41</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">50 / 50</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">24.9%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">12.9%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;font-size:11px;"><a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff;text-decoration:none;" target="_blank">list &#x2197;</a></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;border-bottom:1px solid #e5e5ea;font-size:12px;">&ndash; Remaining &rarr; 67% to legacy</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #e5e5ea;text-align:center;font-size:12px;">~3,033</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #e5e5ea;text-align:center;font-size:12px;">67 / 33</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:12px;">12.6%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:12px;">27.8%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #e5e5ea;"></td>
+        </tr>
+        <tr style="background:#f0faf3;font-weight:700;">
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;">New platform (total)</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:center;">&mdash;</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:center;">&mdash;</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:right;">34.8%</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;text-align:right;">40.0%</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #e5e5ea;"></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;border-bottom:1px solid #f0f0f0;font-size:12px;">&ndash; Phase 1 merchants (as-is)</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">54</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">mixed</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">3.7%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">13.4%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;font-size:11px;"><a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff;text-decoration:none;" target="_blank">list &#x2197;</a></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;border-bottom:1px solid #f0f0f0;font-size:12px;">&ndash; Top 41 A/B &rarr; new half</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">41</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:center;font-size:12px;">50 / 50</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">24.9%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:12px;">12.9%</td>
+          <td style="padding:5px 10px;border-bottom:1px solid #f0f0f0;"></td>
+        </tr>
+        <tr style="color:#636366;">
+          <td style="padding:5px 10px 5px 22px;font-size:12px;">&ndash; Remaining &rarr; 33% to new</td>
+          <td style="padding:5px 10px;text-align:center;font-size:12px;">~3,033</td>
+          <td style="padding:5px 10px;text-align:center;font-size:12px;">67 / 33</td>
+          <td style="padding:5px 10px;text-align:right;font-size:12px;">6.2%</td>
+          <td style="padding:5px 10px;text-align:right;font-size:12px;">13.7%</td>
+          <td style="padding:5px 10px;"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="font-size:11px; color:#86868b;">
+          <td colspan="6" style="padding:8px 10px 0; border:none;"><a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff;text-decoration:none;" target="_blank">Full merchant list (3,524) &#x2197;</a></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Compact donut pair -->
+    <div style="min-width:150px; text-align:center;">
+      <div style="height:130px;position:relative;"><canvas id="revenueDonut"></canvas></div>
+      <div style="font-size:11px;color:#86868b;margin:2px 0 12px;">Revenue</div>
+      <div style="height:130px;position:relative;"><canvas id="trafficDonut"></canvas></div>
+      <div style="font-size:11px;color:#86868b;margin:2px 0 0;">Traffic</div>
     </div>
   </div>
 </div>
@@ -245,7 +253,7 @@
     </thead>
     <tbody>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 split not working</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Related to Akamai → Cloudflare migration. Fix deployed, 50/50 now working.</td></tr>
-      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards: 50/50 backtab redirect to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Any backtab-type click on 50/50 merchant redirects to legacy. Fix being deployed. Non-offer tile CTAs working (verified on shein).</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards: 50/50 backtab redirect to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#5856d6;font-weight:600">&#x1F7E3; QA</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Fix deployed. Backtab on 50/50 merchants was redirecting to legacy. Non-offer tile CTAs verified working (shein). Needs QA confirmation.</td></tr>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards CTA not redirecting to merchant</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">"Yes I understand" CTA now redirects correctly.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">SEO test pages reverting to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; Monitoring</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard / Routing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">ATT, AliExpress + others. May be related to 50/50 fix — verifying.</td></tr>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 experiment_impression tracking</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Done</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Marcos</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">GTM updated for all 41 merchants. <a href="https://groupondev.atlassian.net/wiki/spaces/COUP/pages/82711478404" style="color:#007aff" target="_blank">Documented</a>. Awaiting BI validation.</td></tr>
@@ -629,45 +637,21 @@ new Chart(document.getElementById('barChart'), {
   }
 });
 
-// Donut charts for rollout config
+// Donut charts for rollout config (compact)
+const donutOpts = {
+  responsive: true, maintainAspectRatio: false,
+  cutout: '55%',
+  plugins: { legend: { display: false } }
+};
 new Chart(document.getElementById('revenueDonut'), {
   type: 'doughnut',
-  data: {
-    labels: ['Legacy (65.2%)', 'New Platform (34.8%)'],
-    datasets: [{
-      data: [65.2, 34.8],
-      backgroundColor: ['#e5e5ea', '#007aff'],
-      borderWidth: 0,
-      borderRadius: 2
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '60%',
-    plugins: {
-      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8 } }
-    }
-  }
+  data: { labels: ['Legacy 65%', 'New 35%'], datasets: [{ data: [65.2, 34.8], backgroundColor: ['#e5e5ea', '#007aff'], borderWidth: 0, borderRadius: 2 }] },
+  options: donutOpts
 });
-
 new Chart(document.getElementById('trafficDonut'), {
   type: 'doughnut',
-  data: {
-    labels: ['Legacy (60%)', 'New Platform (40%)'],
-    datasets: [{
-      data: [60, 40],
-      backgroundColor: ['#e5e5ea', '#34c759'],
-      borderWidth: 0,
-      borderRadius: 2
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '60%',
-    plugins: {
-      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8 } }
-    }
-  }
+  data: { labels: ['Legacy 60%', 'New 40%'], datasets: [{ data: [60, 40], backgroundColor: ['#e5e5ea', '#34c759'], borderWidth: 0, borderRadius: 2 }] },
+  options: donutOpts
 });
 
 // 4. Sparkline grid
