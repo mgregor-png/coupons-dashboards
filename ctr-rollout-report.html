@@ -273,40 +273,75 @@
 <!-- ═══════════════════════════════════════ -->
 <div id="tab-phase2" class="tab-panel">
 
-<!-- Phase 2 Monitoring — real data from BQ -->
+<!-- Stat cards — relative change vs baseline -->
 <div class="card" style="border-left: 4px solid #007aff;">
-  <h2>US CTR by Cohort — Daily Trend</h2>
-  <p class="subtitle" style="margin-bottom:12px">50/50 A/B merchants vs all other US merchants. CTR = Clicks / Unique Views. Source: BigQuery <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">rep.12_offer_dashboard</code>. Data through Mar 31 (commission/transaction data lags 1–2 days).</p>
-  <div class="stats">
-    <div class="stat">
-      <div class="label">50/50 Merchants — Avg CTR (Mar 18–28)</div>
-      <div class="value" style="color:#7c3aed">1.17%</div>
+  <h2>Performance vs Baseline <span style="font-size:12px; font-weight:400; color:#86868b; margin-left:8px;">Baseline: Mar 10–17 · Post: Mar 18–28</span></h2>
+  <p class="subtitle" style="margin-bottom:16px">Relative change from each cohort's own pre-rollout average. Source: BQ <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">rep.12_offer_dashboard</code>. Phase 2 data (Apr 1+) will appear in next refresh.</p>
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:8px;">
+    <!-- Legacy Protected -->
+    <div style="background:#f5f5f7; border-radius:10px; padding:14px; border-top:3px solid #e5e5ea;">
+      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#6e6e73; margin-bottom:8px;">Legacy Protected (407)</div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+10.4%</span></div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#34c759;">+16.9%</span></div>
+      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#ff3b30;">-15.9%</span></div>
     </div>
-    <div class="stat">
-      <div class="label">Other Merchants — Avg CTR (Mar 18–28)</div>
-      <div class="value" style="color:#007aff">3.33%</div>
+    <!-- 50/50 A/B -->
+    <div style="background:#f0e6ff; border-radius:10px; padding:14px; border-top:3px solid #7c3aed;">
+      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#7c3aed; margin-bottom:8px;">50/50 A/B (41)</div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#ff9500;">-4.3%</span></div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#ff3b30;">-12.9%</span></div>
+      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#34c759;">+7.9%</span></div>
     </div>
-    <div class="stat">
-      <div class="label">50/50 Pre-Rollout CTR (Mar 10–17)</div>
-      <div class="value" style="color:#86868b">1.24%</div>
+    <!-- 33/67 Long Tail -->
+    <div style="background:#fff3e0; border-radius:10px; padding:14px; border-top:3px solid #ff9500;">
+      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#e65100; margin-bottom:8px;">33% Split (~3,033)</div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+6.3%</span></div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#34c759;">+28.3%</span></div>
+      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#1d1d1f;">+0.3%</span></div>
     </div>
-    <div class="stat">
-      <div class="label">Other Pre-Rollout CTR (Mar 10–17)</div>
-      <div class="value" style="color:#86868b">3.14%</div>
+    <!-- Phase 1 -->
+    <div style="background:#e3f2fd; border-radius:10px; padding:14px; border-top:3px solid #007aff;">
+      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#0d47a1; margin-bottom:8px;">Phase 1 (54)</div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+18.0%</span></div>
+      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#86868b;">n/a</span></div>
+      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#ff3b30;">-25.7%</span></div>
     </div>
   </div>
+  <div style="font-size:11px; color:#86868b; margin-top:4px;">CTR = Clicks / Unique Views · RPV = Commission / Unique Views (cents) · Traffic = Unique Views change. Phase 1 RPV n/a (no commission tracked for those merchants in this table).</div>
+</div>
+
+<!-- Chart 1: CTR by 4 cohorts -->
+<div class="card">
+  <h2>CTR by Cohort — Daily Trend</h2>
+  <p class="subtitle" style="margin-bottom:12px">4 cohorts: Legacy Protected (control), 50/50 A/B, 33% Split, Phase 1. Red dashed line = Phase 1 rollout (Mar 18). Phase 2 data (Apr 1+) in next refresh.</p>
   <div class="chart-container"><canvas id="phase2CtrChart"></canvas></div>
 </div>
 
+<!-- Chart 2: RPV by cohort -->
 <div class="card">
-  <h2>Daily Commission &amp; Transactions</h2>
-  <p class="subtitle" style="margin-bottom:12px">US Groupon domain. Note: commission data for Mar 29+ is incomplete (processing lag).</p>
-  <div class="chart-container"><canvas id="phase2RevenueChart"></canvas></div>
+  <h2>Revenue per Unique View (RPV) by Cohort</h2>
+  <p class="subtitle" style="margin-bottom:12px">Commission / Unique Views (cents). Catches revenue degradation even when CTR looks stable. Phase 1 excluded (no commission data).</p>
+  <div class="chart-container"><canvas id="phase2RpvChart"></canvas></div>
+</div>
+
+<!-- Chart 3: Unique Views by cohort -->
+<div class="card">
+  <h2>Daily Unique Views by Cohort</h2>
+  <p class="subtitle" style="margin-bottom:12px">Absolute traffic volume per cohort. Declining traffic in any cohort may indicate SEO or routing issues.</p>
+  <div class="chart-container"><canvas id="phase2UvChart"></canvas></div>
+</div>
+
+<!-- Chart 4: Commission by cohort -->
+<div class="card">
+  <h2>Daily Commission by Cohort</h2>
+  <p class="subtitle" style="margin-bottom:12px">Commission ($) per cohort per day. Stacked view shows total revenue contribution. Phase 1 excluded (near-zero commission).</p>
+  <div class="chart-container"><canvas id="phase2CommChart"></canvas></div>
 </div>
 
 <div style="margin-top:12px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:12px; color:#636366; line-height:1.5;">
-  <strong>Tableau live dashboard:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">New Platform Dashboard — Summary</a><br>
-  <strong>Note:</strong> Phase 2 traffic allocation (33%) went live Apr 1 — first Phase 2 data will appear in tomorrow's refresh. Charts above show Phase 1 period + pre-rollout baseline.
+  <strong>Cross-check:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard</a><br>
+  <strong>Data note:</strong> This data shows blended CTR (new + legacy traffic combined per merchant). The dev BQ table (<code style="font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code>) separates platform traffic — chase access for true A/B comparison.<br>
+  <strong>Decision point:</strong> Apr 8-9 after one full week of Phase 2 data. Soft monitoring until then.
 </div>
 
 </div><!-- end tab-phase2 -->
@@ -899,81 +934,92 @@ if (mSearchEl) mSearchEl.addEventListener('input', renderMerchantTable);
 if (mBucketEl) mBucketEl.addEventListener('change', renderMerchantTable);
 
 // ═══════════════════════════════════════
+// Phase 2 Monitoring Charts — 4 cohorts (BQ data)
 // ═══════════════════════════════════════
-// Phase 2 Monitoring Charts (BQ data)
-// ═══════════════════════════════════════
-const P2_DATES = ["Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31"];
-const P2_CTR_5050 = [1.39,1.12,1.05,1.22,1.34,1.44,1.17,1.16,1.25,1.28,0.97,1.29,1.24,1.31,0.77,1.06,1.25,1.26,1.10,1.18,1.29,2.12];
-const P2_CTR_OTHER = [3.34,3.25,3.59,3.20,3.12,2.75,2.78,3.07,3.24,3.59,3.58,3.93,3.53,3.83,3.16,3.25,3.11,3.19,3.00,3.12,3.33,5.71];
-const P2_COMMISSION = [13982.4,15263.35,13606.77,12759.51,16573.64,13546.72,14377.83,14797.35,17055.81,15586.54,15302.81,13628.09,15147.72,15777.84,15648.61,17955.6,17024.62,13710.47,10981.76,3435.24,418.74,71.55];
-const P2_TRANSACTIONS = [2962,2561,1707,1675,1839,1775,1799,1961,2113,2065,2002,1851,1920,1996,1705,1630,1555,1485,1355,375,42,19];
-const P2_ROLLOUT_IDX = 8; // Mar 18
+const P2_DATES = ["Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28"];
+const P2_CTR_LEGACY = [3.809,4.311,5.052,5.15,5.121,5.49,3.773,4.547,5.086,5.109,5.013,5.793,5.518,5.519,4.222,5.068,5.089,5.107,5.033];
+const P2_CTR_5050 = [1.388,1.14,1.064,1.248,1.35,1.43,1.184,1.195,1.283,1.327,1.014,1.34,1.264,1.35,0.807,1.088,1.266,1.289,1.123];
+const P2_CTR_33PCT = [3.274,2.878,3.263,2.81,2.712,2.284,2.532,2.669,2.752,3.068,3.035,3.383,3.043,3.282,2.772,2.966,2.837,2.907,2.731];
+const P2_CTR_PHASE1 = [3.653,4.103,3.817,3.821,3.617,3.818,3.585,3.77,4.586,4.841,5.383,5.365,4.913,5.271,4.737,3.836,3.16,3.478,3.403];
+const P2_RPV_LEGACY = [3.0691,3.9087,3.967,3.3939,5.0974,3.7005,3.236,2.9979,3.3338,3.3827,3.6793,3.9322,3.663,3.5611,4.9312,5.7863,5.6078,5.2977,4.0195];
+const P2_RPV_5050 = [1.0397,0.7895,0.7289,0.8123,0.9623,1.0092,0.8857,0.6871,0.8338,0.7517,0.5203,0.7424,0.8252,0.8521,0.6116,0.8231,0.8588,0.876,0.588];
+const P2_RPV_33PCT = [1.2888,1.4315,1.1919,1.0486,1.3206,0.8513,1.1733,1.0898,1.2069,1.2873,1.3743,1.2561,1.2037,1.4789,1.3929,2.4939,2.4261,1.5312,0.9238];
+const P2_UV_LEGACY = [138958,116155,97630,93043,100208,88158,98867,132445,127685,127155,116720,97744,100946,108220,84027,58312,55884,58235,65791];
+const P2_UV_5050 = [513089,655455,748659,605964,533467,526401,621978,722458,712899,667652,856168,592487,704200,651693,887924,611620,498283,498915,627117];
+const P2_UV_33PCT = [340070,387607,358851,446262,479347,583439,483217,537934,567940,486804,476901,428720,468500,430774,436098,382713,396157,408475,503307];
+const P2_UV_PHASE1 = [52828,50161,57613,63905,75007,66469,61750,63553,58527,48937,47633,50024,52274,44676,46272,35978,33354,37804,46347];
+const P2_COMM_LEGACY = [4264.82,4540.2,3872.97,3157.79,5108.03,3262.32,3199.34,3970.6,4256.75,4301.31,4294.43,3843.51,3697.65,3853.79,4143.53,3374.1,3133.85,3085.13,2644.5];
+const P2_COMM_5050 = [5334.64,5174.69,5456.7,4922.25,5133.63,5312.6,5508.8,4964.12,5944.31,5018.53,4454.53,4398.48,5810.8,5553.4,5430.56,5034.14,4279.43,4370.7,3687.49];
+const P2_COMM_33PCT = [4382.94,5548.46,4277.1,4679.47,6330.23,4966.61,5669.54,5862.63,6854.75,6266.7,6553.85,5385.25,5639.27,6370.65,6074.52,9544.61,9611.34,6254.64,4649.77];
+const P2_ROLLOUT_IDX = 8;
 
-// CTR chart
-const p2CtrCtx = document.getElementById('phase2CtrChart');
-if (p2CtrCtx) {
-  new Chart(p2CtrCtx, {
-    type: 'line',
-    data: {
-      labels: P2_DATES,
-      datasets: [
-        { label: '50/50 A/B Merchants', data: P2_CTR_5050, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.06)', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2.5 },
-        { label: 'Other US Merchants', data: P2_CTR_OTHER, borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,0.06)', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2.5 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      scales: { y: { title: { display: true, text: 'CTR % (Clicks / Unique Views)' }, beginAtZero: false } },
-      plugins: { legend: { position: 'top' } }
-    },
-    plugins: [{
-      id: 'p2rolloutLine',
-      beforeDraw(chart) {
-        const { ctx, chartArea, scales } = chart;
-        if (!scales.x) return;
-        const x = scales.x.getPixelForValue(P2_ROLLOUT_IDX);
-        ctx.save(); ctx.strokeStyle = '#ff3b30'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
-        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
-        ctx.setLineDash([]); ctx.fillStyle = '#ff3b30'; ctx.font = '11px -apple-system, sans-serif';
-        ctx.fillText('Phase 1', x + 4, chartArea.top + 12); ctx.restore();
-      }
-    }]
-  });
-}
+const p2RolloutPlugin = {
+  id: 'p2rollout',
+  beforeDraw(chart) {
+    const { ctx, chartArea, scales } = chart;
+    if (!scales.x) return;
+    const x = scales.x.getPixelForValue(P2_ROLLOUT_IDX);
+    ctx.save(); ctx.strokeStyle = '#ff3b30'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+    ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle = '#ff3b30'; ctx.font = '11px -apple-system, sans-serif';
+    ctx.fillText('Phase 1', x + 4, chartArea.top + 12); ctx.restore();
+  }
+};
+const p2Line = (label, data, color) => ({ label, data, borderColor: color, tension: 0.3, pointRadius: 2.5, borderWidth: 2, fill: false });
 
-// Revenue chart
-const p2RevCtx = document.getElementById('phase2RevenueChart');
-if (p2RevCtx) {
-  new Chart(p2RevCtx, {
-    type: 'bar',
-    data: {
-      labels: P2_DATES,
-      datasets: [
-        { label: 'Commission ($)', data: P2_COMMISSION, backgroundColor: P2_COMMISSION.map((v, i) => i >= 19 ? 'rgba(0,122,255,0.2)' : 'rgba(0,122,255,0.6)'), borderRadius: 3, yAxisID: 'y' },
-        { label: 'Transactions', data: P2_TRANSACTIONS, type: 'line', borderColor: '#34c759', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 2, yAxisID: 'y1' }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      scales: {
-        y: { position: 'left', title: { display: true, text: 'Commission ($)' }, beginAtZero: true },
-        y1: { position: 'right', title: { display: true, text: 'Transactions' }, beginAtZero: true, grid: { drawOnChartArea: false } }
-      },
-      plugins: { legend: { position: 'top' } }
-    },
-    plugins: [{
-      id: 'p2revRolloutLine',
-      beforeDraw(chart) {
-        const { ctx, chartArea, scales } = chart;
-        if (!scales.x) return;
-        const x = scales.x.getPixelForValue(P2_ROLLOUT_IDX);
-        ctx.save(); ctx.strokeStyle = '#ff3b30'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
-        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
-        ctx.setLineDash([]); ctx.restore();
-      }
-    }]
-  });
-}
+// Chart 1: CTR by 4 cohorts
+const p2c1 = document.getElementById('phase2CtrChart');
+if (p2c1) new Chart(p2c1, {
+  type: 'line',
+  data: { labels: P2_DATES, datasets: [
+    p2Line('Legacy Protected (407)', P2_CTR_LEGACY, '#636366'),
+    p2Line('50/50 A/B (41)', P2_CTR_5050, '#7c3aed'),
+    p2Line('33% Split (~3,033)', P2_CTR_33PCT, '#ff9500'),
+    p2Line('Phase 1 (54)', P2_CTR_PHASE1, '#007aff')
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, scales: { y: { title: { display: true, text: 'CTR %' } } }, plugins: { legend: { position: 'top' } } },
+  plugins: [p2RolloutPlugin]
+});
+
+// Chart 2: RPV by 3 cohorts (no Phase 1)
+const p2c2 = document.getElementById('phase2RpvChart');
+if (p2c2) new Chart(p2c2, {
+  type: 'line',
+  data: { labels: P2_DATES, datasets: [
+    p2Line('Legacy Protected', P2_RPV_LEGACY, '#636366'),
+    p2Line('50/50 A/B', P2_RPV_5050, '#7c3aed'),
+    p2Line('33% Split', P2_RPV_33PCT, '#ff9500')
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, scales: { y: { title: { display: true, text: 'RPV (cents per UV)' } } }, plugins: { legend: { position: 'top' } } },
+  plugins: [p2RolloutPlugin]
+});
+
+// Chart 3: Unique Views by 4 cohorts
+const p2c3 = document.getElementById('phase2UvChart');
+if (p2c3) new Chart(p2c3, {
+  type: 'line',
+  data: { labels: P2_DATES, datasets: [
+    p2Line('Legacy Protected', P2_UV_LEGACY, '#636366'),
+    p2Line('50/50 A/B', P2_UV_5050, '#7c3aed'),
+    p2Line('33% Split', P2_UV_33PCT, '#ff9500'),
+    p2Line('Phase 1', P2_UV_PHASE1, '#007aff')
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, scales: { y: { title: { display: true, text: 'Unique Views' } } }, plugins: { legend: { position: 'top' } } },
+  plugins: [p2RolloutPlugin]
+});
+
+// Chart 4: Commission by 3 cohorts (stacked bar)
+const p2c4 = document.getElementById('phase2CommChart');
+if (p2c4) new Chart(p2c4, {
+  type: 'bar',
+  data: { labels: P2_DATES, datasets: [
+    { label: 'Legacy Protected', data: P2_COMM_LEGACY, backgroundColor: 'rgba(99,99,102,0.6)', borderRadius: 2 },
+    { label: '50/50 A/B', data: P2_COMM_5050, backgroundColor: 'rgba(124,58,237,0.6)', borderRadius: 2 },
+    { label: '33% Split', data: P2_COMM_33PCT, backgroundColor: 'rgba(255,149,0,0.6)', borderRadius: 2 }
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Commission ($)' } } }, plugins: { legend: { position: 'top' } } },
+  plugins: [p2RolloutPlugin]
+});
 
 // Tab Navigation
 // ═══════════════════════════════════════
