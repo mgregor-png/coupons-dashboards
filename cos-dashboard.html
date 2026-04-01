@@ -3,32 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoS Dashboard</title>
+<title>CoS Dashboard — 2026-04-01</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
   :root {
     --bg: #f5f5f7;
     --surface: #ffffff;
-    --surface-inset: #f0f0f2;
-    --separator: rgba(0,0,0,0.08);
+    --separator: rgba(0,0,0,0.06);
     --text: #1d1d1f;
     --text-secondary: #6e6e73;
     --text-tertiary: #aeaeb2;
-    --blue: #007aff;
-    --blue-bg: rgba(0,122,255,0.08);
-    --green: #34c759;
-    --green-bg: rgba(52,199,89,0.08);
-    --orange: #ff9500;
-    --orange-bg: rgba(255,149,0,0.08);
-    --red: #ff3b30;
-    --red-bg: rgba(255,59,48,0.08);
-    --purple: #af52de;
-    --purple-bg: rgba(175,82,222,0.08);
-    --yellow: #ff9f0a;
-    --yellow-bg: rgba(255,159,10,0.08);
+    --blue: #007aff;   --blue-bg: rgba(0,122,255,0.08);
+    --green: #34c759;  --green-bg: rgba(52,199,89,0.08);
+    --orange: #ff9500; --orange-bg: rgba(255,149,0,0.08);
+    --red: #ff3b30;    --red-bg: rgba(255,59,48,0.08);
+    --purple: #af52de; --purple-bg: rgba(175,82,222,0.08);
+    --yellow: #ff9f0a; --yellow-bg: rgba(255,159,10,0.08);
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
     --shadow-md: 0 4px 14px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
+    --shadow-hover: 0 8px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
     --radius: 16px;
     --radius-sm: 10px;
   }
@@ -40,42 +34,142 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.47;
-    padding: 40px;
+    padding: 32px 40px;
     max-width: 1440px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
   }
 
-  header { margin-bottom: 36px; }
-  .header-top {
+  /* ── Header Bar ─────────────────────── */
+  .header-bar {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 6px;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
   }
-  header h1 {
-    font-size: 34px;
+  .header-left h1 {
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.5px;
   }
-  .header-context {
-    font-size: 13px;
-    color: var(--text-tertiary);
-  }
   .header-date {
-    font-size: 17px;
-    font-weight: 400;
+    font-size: 14px;
     color: var(--text-secondary);
-    letter-spacing: -0.2px;
+    margin-top: 2px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .header-next-meeting {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
   }
 
-  .grid {
+  /* ── Alert Banner ───────────────────── */
+  .alert-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--red-bg);
+    border: 1px solid rgba(255,59,48,0.15);
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--red);
+  }
+  .alert-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .alert-text {
+    line-height: 1.4;
+  }
+  .alert-text strong {
+    font-weight: 700;
+  }
+
+  /* ── Hero Metrics Row ───────────────── */
+  .hero-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .hero-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  .hero-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .hero-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .hero-icon {
+    font-size: 14px;
+  }
+  .hero-value {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero-deltas {
+    display: flex;
+    gap: 16px;
+  }
+  .hero-delta-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .hero-delta-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .hero-delta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  .hero-delta.positive { color: var(--green); }
+  .hero-delta.negative { color: var(--red); }
+  .hero-delta.neutral { color: var(--text-tertiary); }
+
+  /* ── Two Column Row ─────────────────── */
+  .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    margin-bottom: 20px;
   }
-  .full-width { grid-column: 1 / -1; }
 
+  /* ── Cards ───────────────────────────── */
   .card {
     background: var(--surface);
     border-radius: var(--radius);
@@ -83,13 +177,18 @@
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.2s ease;
   }
-  .card:hover { box-shadow: var(--shadow-md); }
+  .card:hover { box-shadow: var(--shadow-hover); }
 
   .card-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
   }
   .card-icon {
     width: 32px;
@@ -98,57 +197,293 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 15px;
     flex-shrink: 0;
   }
-  .card-icon.blue { background: var(--blue-bg); color: var(--blue); }
-  .card-icon.green { background: var(--green-bg); color: var(--green); }
+  .card-icon.blue   { background: var(--blue-bg);   color: var(--blue); }
+  .card-icon.green  { background: var(--green-bg);  color: var(--green); }
   .card-icon.orange { background: var(--orange-bg); color: var(--orange); }
-  .card-icon.red { background: var(--red-bg); color: var(--red); }
+  .card-icon.red    { background: var(--red-bg);    color: var(--red); }
   .card-icon.purple { background: var(--purple-bg); color: var(--purple); }
   .card-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+
   .card-title {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
     letter-spacing: -0.2px;
   }
-  .card-subtitle {
-    font-size: 12px;
+  .card-badge {
+    font-size: 11px;
+    font-weight: 600;
     color: var(--text-tertiary);
+    background: var(--bg);
+    padding: 3px 10px;
+    border-radius: 20px;
   }
 
-  /* Priority items */
-  .priority-item {
+  /* ── Focus Items ─────────────────────── */
+  .focus-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
-    padding: 12px 0;
+    padding: 10px 0;
   }
-  .priority-item + .priority-item {
-    border-top: 1px solid var(--separator);
+  .focus-item + .focus-item { border-top: 1px solid var(--separator); }
+  .focus-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
-  .check-circle {
+  .focus-text {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+    color: var(--text);
+  }
+  .focus-empty {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    padding: 16px 0;
+    text-align: center;
+  }
+
+  /* ── Compact Calendar ────────────────── */
+  .cal-compact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+  }
+  .cal-compact + .cal-compact { border-top: 1px solid var(--separator); }
+  .cal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cal-compact-time {
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+    min-width: 42px;
+  }
+  .cal-compact-title {
+    font-size: 13px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ── Mini Table ──────────────────────── */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .mini-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 0 8px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .mini-table th:not(:first-child) { text-align: right; }
+  .mini-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--separator);
+    font-variant-numeric: tabular-nums;
+  }
+  .mini-table td:first-child {
+    font-weight: 500;
+  }
+  .mini-table td:not(:first-child) {
+    text-align: right;
+    color: var(--text-secondary);
+  }
+  .mini-table tr:last-child td { border-bottom: none; }
+
+  /* ── Bar Chart ───────────────────────── */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+  }
+  .bar-row + .bar-row { border-top: 1px solid var(--separator); }
+  .bar-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    min-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .bar-value {
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    min-width: 56px;
+    text-align: right;
+  }
+
+  /* ── Collapsed Sections Bar ──────────── */
+  .collapsed-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .collapse-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, background 0.15s ease;
+    user-select: none;
+    flex: 1;
+    min-width: 140px;
+  }
+  .collapse-chip:hover {
+    box-shadow: var(--shadow-md);
+    background: var(--bg);
+  }
+  .collapse-chip.active {
+    box-shadow: var(--shadow-md);
+  }
+  .chip-icon {
+    font-size: 16px;
+  }
+  .chip-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .chip-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: auto;
+  }
+  .chip-count.has-items {
+    color: var(--blue);
+    background: var(--blue-bg);
+  }
+  .chip-count.overdue {
+    color: var(--red);
+    background: var(--red-bg);
+  }
+  .collapse-content {
+    display: none;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+    animation: slideDown 0.2s ease;
+  }
+  .collapse-content.visible {
+    display: block;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Project Tabs ─────────────────────── */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tab:hover {
+    background: var(--bg);
+    color: var(--text);
+  }
+  .tab.active {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,122,255,0.25);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+
+  /* ── Interactive Focus Checkboxes ───── */
+  .focus-check {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    border: 2px solid var(--text-tertiary);
-    flex-shrink: 0;
+    border: 2px solid var(--blue);
+    background: transparent;
     cursor: pointer;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    margin-top: 1px;
   }
-  .check-circle:hover {
-    border-color: var(--blue);
+  .focus-check:hover {
     background: var(--blue-bg);
   }
-  .check-circle.checked {
-    border-color: var(--blue);
+  .focus-check.done {
     background: var(--blue);
+    border-color: var(--blue);
   }
-  .check-circle.checked::after {
+  .focus-check.done::after {
     content: '';
     width: 6px;
     height: 10px;
@@ -156,39 +491,68 @@
     border-width: 0 2px 2px 0;
     transform: rotate(45deg) translateY(-1px);
   }
-  .priority-text {
-    flex: 1;
-    font-size: 14px;
-    color: var(--text);
-    letter-spacing: -0.1px;
+  .focus-text.completed {
+    text-decoration: line-through;
+    color: var(--text-tertiary);
+  }
+
+  /* ── Collapsible Sections ─────────────── */
+  .section-toggle {
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-toggle .collapse-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: 6px;
+  }
+  .section-toggle.collapsed .collapse-arrow {
+    transform: rotate(-90deg);
+  }
+  .section-body {
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    overflow: hidden;
+  }
+  .section-body.hidden {
+    max-height: 0 !important;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+
+  /* ── Legacy card styles for expanded sections ── */
+  .card.card-blue    { border-left: 4px solid var(--blue); }
+  .card.card-green   { border-left: 4px solid var(--green); }
+  .card.card-orange  { border-left: 4px solid var(--orange); }
+  .card.card-red     { border-left: 4px solid var(--red); }
+  .card.card-purple  { border-left: 4px solid var(--purple); }
+  .card.card-yellow  { border-left: 4px solid var(--yellow); }
+
+  /* ── Empty State ─────────────────────── */
+  .empty-state {
+    text-align: center;
+    padding: 24px 16px;
+  }
+  .empty-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    opacity: 0.4;
+  }
+  .empty-text {
+    font-size: 13px;
+    color: var(--text-tertiary);
     line-height: 1.5;
   }
-  .priority-text.done {
-    color: var(--text-tertiary);
-    text-decoration: line-through;
-  }
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 6px;
-    letter-spacing: 0.1px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-  .tag-deadline { background: var(--orange-bg); color: var(--orange); }
-  .tag-waiting { background: var(--purple-bg); color: var(--purple); }
-  .tag-blocked { background: var(--red-bg); color: var(--red); }
-  .tag-done { background: var(--green-bg); color: var(--green); }
-  .tag-carryover { background: var(--yellow-bg); color: var(--yellow); }
 
+  /* ── Section Dividers ────────────────── */
   .section-divider {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 8px;
+    margin-top: 12px;
     padding-top: 8px;
   }
   .section-divider span {
@@ -204,24 +568,180 @@
     background: var(--separator);
   }
 
-  /* Calendar */
+  /* ── Focus / Plan Items ──────────────── */
+  .plan-item {
+    padding: 12px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .plan-item + .plan-item { border-top: 1px solid var(--separator); }
+  .plan-number {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .plan-body { flex: 1; }
+  .plan-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    line-height: 1.5;
+  }
+
+  .tagged-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tagged-item + .tagged-item { border-top: 1px solid var(--separator); }
+
+  /* ── Status Pills ────────────────────── */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  .pill-default  { background: rgba(142,142,147,0.12); color: #8e8e93; }
+  .pill-warning  { background: var(--yellow-bg); color: var(--yellow); }
+  .pill-info     { background: var(--blue-bg); color: var(--blue); }
+  .pill-success  { background: var(--green-bg); color: var(--green); }
+  .pill-danger   { background: var(--red-bg); color: var(--red); }
+  .pill-purple   { background: var(--purple-bg); color: var(--purple); }
+  .pill-orange   { background: var(--orange-bg); color: var(--orange); }
+
+  /* ── Priority Badges ─────────────────── */
+  .priority-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+  }
+  .priority-red    { background: var(--red-bg); color: var(--red); }
+  .priority-orange { background: var(--orange-bg); color: var(--orange); }
+  .priority-blue   { background: var(--blue-bg); color: var(--blue); }
+  .priority-purple { background: var(--purple-bg); color: var(--purple); }
+  .priority-green  { background: var(--green-bg); color: var(--green); }
+
+  .priority-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--separator);
+  }
+  .priority-group-header:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+  .priority-group-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.1px;
+  }
+
+  /* ── Priority Checkboxes ─────────────── */
+  .priority-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+  }
+  .priority-item + .priority-item {
+    border-top: 1px solid var(--separator);
+  }
+  .check-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--text-tertiary);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .check-circle.checked {
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+  .check-circle.checked::after {
+    content: '';
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translateY(-1px);
+  }
+  .priority-text {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: -0.1px;
+    line-height: 1.5;
+  }
+  .priority-text.done {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+  }
+
+  /* ── Calendar Items (expanded) ──────── */
+  .allday-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--separator);
+  }
+
   .cal-item {
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 11px 0;
+    padding: 10px 0;
   }
   .cal-item + .cal-item { border-top: 1px solid var(--separator); }
-  .cal-time-col { width: 52px; flex-shrink: 0; padding-top: 1px; }
+  .cal-time-col {
+    width: 52px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
   .cal-time {
     font-size: 14px;
     font-weight: 500;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.3px;
   }
-  .cal-dur {
+  .cal-end-time {
     font-size: 11px;
     color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
     margin-top: 1px;
   }
   .cal-indicator {
@@ -231,7 +751,7 @@
     min-height: 32px;
     flex-shrink: 0;
   }
-  .cal-body { flex: 1; }
+  .cal-body { flex: 1; min-width: 0; }
   .cal-title {
     font-size: 14px;
     font-weight: 500;
@@ -242,42 +762,16 @@
     color: var(--text-secondary);
     margin-top: 2px;
   }
-  .cal-meta {
-    font-size: 12px;
-    color: var(--text-tertiary);
-    white-space: nowrap;
-    padding-top: 1px;
-  }
-
-  /* Day cards */
-  .day-header {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--separator);
-  }
-  .day-goals {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--separator);
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-  .day-goals strong {
-    font-weight: 600;
-    color: var(--text);
+  .cal-location {
     font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
   }
 
-  /* Task rows */
+  /* ── Task List (Asana) ───────────────── */
   .task-list-header {
     display: grid;
-    grid-template-columns: 1fr 90px 80px;
+    grid-template-columns: 1fr 100px 70px;
     gap: 8px;
     padding: 0 0 8px 0;
     margin-bottom: 4px;
@@ -291,11 +785,12 @@
     letter-spacing: 0.5px;
   }
   .task-list-header span:not(:first-child) { text-align: right; }
+
   .task-row {
     display: grid;
-    grid-template-columns: 1fr 90px 80px;
+    grid-template-columns: 1fr 100px 70px;
     gap: 8px;
-    padding: 10px 0;
+    padding: 9px 0;
     font-size: 13px;
     align-items: center;
   }
@@ -304,10 +799,19 @@
     color: var(--text);
     text-decoration: none;
     letter-spacing: -0.1px;
-    transition: color 0.15s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .task-row a:hover { color: var(--blue); }
-  .task-owner { text-align: right; color: var(--text-tertiary); font-size: 12px; }
+  .task-project {
+    text-align: right;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .task-due {
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -315,687 +819,1636 @@
     font-size: 12px;
     color: var(--text-secondary);
   }
-  .task-due.overdue { color: var(--red); font-weight: 600; }
-  .task-due.soon { color: var(--orange); font-weight: 600; }
-  .task-due.today { color: var(--blue); font-weight: 600; }
+  .due-overdue { color: var(--red); font-weight: 600; }
+  .due-today   { color: var(--blue); font-weight: 600; }
+  .due-soon    { color: var(--orange); font-weight: 600; }
 
-  /* Plan items */
-  .plan-item {
-    padding: 12px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .plan-item + .plan-item { border-top: 1px solid var(--separator); }
-  .plan-number {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--blue-bg);
-    color: var(--blue);
-    font-size: 12px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .plan-body { flex: 1; }
-  .plan-title {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: -0.1px;
-    margin-bottom: 2px;
-  }
-  .plan-detail {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  /* Blocker grid */
-  .blocker-grid {
+  /* ── Jira ─────────────────────────────── */
+  .jira-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 24px;
   }
-  .blocker-section-title {
+  .jira-section-title {
     font-size: 12px;
     font-weight: 600;
+    color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .jira-row {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .jira-row:last-child { border-bottom: none; }
+  .jira-key-col {
     display: flex;
     align-items: center;
     gap: 6px;
+    margin-bottom: 3px;
   }
-  .dot-lg {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
+  .jira-key-col a {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
   }
-  .blocker-item {
+  .jira-key-col a:hover { text-decoration: underline; }
+  .jira-summary {
     font-size: 13px;
-    color: var(--text-secondary);
-    padding: 8px 0;
-    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.1px;
+    margin-bottom: 5px;
+    line-height: 1.4;
   }
-  .blocker-item + .blocker-item { border-top: 1px solid var(--separator); }
-
-  footer {
-    margin-top: 32px;
-    text-align: center;
+  .jira-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .jira-project-tag {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: var(--bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .jira-assignee {
     font-size: 11px;
     color: var(--text-tertiary);
   }
+  .updated-badge {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
 
+  /* ── GChat ────────────────────────────── */
+  .chat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .chat-item + .chat-item { border-top: 1px solid var(--separator); }
+  .chat-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+    min-width: 42px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .chat-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Inbox ────────────────────────────── */
+  .inbox-count {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .inbox-item {
+    padding: 10px 0;
+  }
+  .inbox-item + .inbox-item { border-top: 1px solid var(--separator); }
+  .inbox-subject {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.1px;
+    margin-bottom: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .inbox-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .inbox-sender {
+    font-size: 12px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .inbox-date {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  
+
+  /* ── Footer ──────────────────────────── */
+  footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    padding-bottom: 60px;
+  }
+
+  /* ── Responsive ──────────────────────── */
   @media (max-width: 900px) {
-    body { padding: 20px; }
-    .grid { grid-template-columns: 1fr; }
-    .blocker-grid { grid-template-columns: 1fr; }
+    body { padding: 16px; }
+    .hero-row { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .jira-grid { grid-template-columns: 1fr; }
+    .collapsed-bar { flex-direction: column; }
+    .hero-value { font-size: 28px; }
+    .chat-panel { width: calc(100vw - 32px); right: 16px; }
+  }
+  @media (max-width: 500px) {
+    .hero-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-top">
-    <h1>Weekly Dashboard</h1>
-    <div class="header-context">CoS Dashboard</div>
+<!-- ═══ Header Bar ═══ -->
+<div class="header-bar">
+  <div class="header-left">
+    <h1>Dashboard</h1>
+    <div class="header-date">Wednesday, April 1, 2026</div>
   </div>
-  <div class="header-date">Tuesday, March 31 &nbsp;&middot;&nbsp; Office &nbsp;&middot;&nbsp; Week of March 30 &ndash; April 2 &nbsp;&middot;&nbsp; <span style="color: var(--green);">OOO Fri Apr 3 &ndash; Mon Apr 6 (Easter)</span></div>
-</header>
-
-<div class="grid">
-
-  <!-- TODAY'S PRIORITIES -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon blue">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Today's Priorities</div>
-        <div class="card-subtitle">Tuesday &mdash; 7 meetings, Q1 last day</div>
-      </div>
+  <div class="header-right">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="lastRefresh">Generated 13:29</span>
+      <button disabled style="display:none" id="refreshBtn" style="background:var(--blue);color:white;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s">Refresh</button>
     </div>
-
-    <div class="priority-item">
-      <div class="check-circle" data-id="t1"></div>
-      <div class="priority-text">50/50 traffic split tracking sync (10:30) &mdash; review BI monitoring report, ramp-up go/no-go <span class="tag tag-deadline">Critical</span></div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t2"></div>
-      <div class="priority-text">Martin / Minas sync (14:30) &mdash; eng backlog revision, Ian dependency, homepage design review with Jakob</div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t3"></div>
-      <div class="priority-text">DRI tasks due today: New Platform + Genie <span class="tag tag-deadline">Q1 close</span></div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t4"></div>
-      <div class="priority-text">MM Updates &mdash; Product (due today)</div>
-    </div>
-
-    <div class="section-divider"><span>Work items</span></div>
-
-    <div class="priority-item">
-      <div class="check-circle" data-id="t5"></div>
-      <div class="priority-text">Phase 2 Testing Plan &mdash; engagement test on 4 more merchants</div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t6"></div>
-      <div class="priority-text">Rewards deployed to prod &mdash; verify working + Lukas routing PR</div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t7"></div>
-      <div class="priority-text">Legacy CTA investigation &mdash; "get gift card" change (James posting in Coupons chat)</div>
-    </div>
-
-    <div class="section-divider"><span>Waiting on</span></div>
-
-    <div class="priority-item">
-      <div class="check-circle" data-id="t8"></div>
-      <div class="priority-text">BQ prod cut-over today &mdash; prj-grp-coupons-prod-8892 <span class="tag tag-waiting">Waiting</span></div>
-    </div>
-    <div class="priority-item">
-      <div class="check-circle" data-id="t9"></div>
-      <div class="priority-text">Ian homepage design &mdash; paused pending Jakob (core) review <span class="tag tag-blocked">Blocked</span></div>
-    </div>
+    <div class="header-next-meeting">Next: 09:00 &mdash; Focus time &middot; <span style="color:var(--text-tertiary)">auto-refresh 15m</span></div>
   </div>
-
-  <!-- TODAY'S CALENDAR -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon orange">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Today &mdash; Tuesday</div>
-        <div class="card-subtitle">Office &middot; 7 meetings</div>
-      </div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">10:30</div>
-        <div class="cal-dur">25m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--red);"></div>
-      <div class="cal-body">
-        <div class="cal-title">50/50 traffic split tracking</div>
-        <div class="cal-note">BI report review &mdash; ramp-up decision</div>
-      </div>
-      <div class="cal-meta">Mark + team</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">11:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--green);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Coupons product / data catch-up</div>
-      </div>
-      <div class="cal-meta">Mark B</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">14:00</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--orange);"></div>
-      <div class="cal-body">
-        <div class="cal-title">New Platform Standup</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">14:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--orange);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Martin / Minas sync</div>
-        <div class="cal-note">Eng backlog revision + Ian dependency</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">15:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--green);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Content &amp; SEO sync</div>
-      </div>
-      <div class="cal-meta">Rebecca</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">16:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--red);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Global Coupons WBR</div>
-      </div>
-      <div class="cal-meta">Adam</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">17:00</div>
-        <div class="cal-dur">25m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--blue);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Coupons+AOG / Eng Sync</div>
-      </div>
-      <div class="cal-meta"></div>
-    </div>
-  </div>
-
-  <!-- WEEK PRIORITIES -->
-  <div class="card full-width">
-    <div class="card-header">
-      <div class="card-icon green">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">This Week's Priorities</div>
-        <div class="card-subtitle">From weekly goals &mdash; Mar 30 &ndash; Apr 3</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">1</div>
-      <div class="plan-body">
-        <div class="plan-title">New Platform &mdash; QA &amp; Ramp-Up Decision</div>
-        <div class="plan-detail">QA Monday (rewards, tracking, staging). Get BA report on 50/50 A/B (10 merchants, live since Mar 18). BI monitoring dashboard ready Monday. Resolve merchant template / Ian dependency with Minas. Ramp up plan.</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">2</div>
-      <div class="plan-body">
-        <div class="plan-title">Genie &mdash; LTV Estimation</div>
-        <div class="plan-detail">Finalize MBR priority estimation Monday (dependency delivered Fri). LP A/B test &mdash; more time before evaluation. Tableau dashboard tracking.</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">3</div>
-      <div class="plan-body">
-        <div class="plan-title">Groupon Ecosystem &mdash; Finalization</div>
-        <div class="plan-detail">John tests PayPal Honey + Rakuten app. Compile findings for leadership presentation (build on deck shared last Thu). Decide: proceed with seasonal banner A/B?</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">4</div>
-      <div class="plan-body">
-        <div class="plan-title">Automated Offer Quality &mdash; Test US Scoring</div>
-        <div class="plan-detail">Test API with Florence's US merchant data. Validate end-to-end: scoring &rarr; API &rarr; Control Cloud.</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">5</div>
-      <div class="plan-body">
-        <div class="plan-title">Foundry &mdash; Share &amp; Template</div>
-        <div class="plan-detail">Share live automation examples with team. Begin templating CoS setup for other PMs.</div>
-      </div>
-    </div>
-
-    <div class="plan-item">
-      <div class="plan-number">6</div>
-      <div class="plan-body">
-        <div class="plan-title">Trust Signals &mdash; Check Eng Deadline</div>
-        <div class="plan-detail">Check deadline for historic data projection solution eng is working on.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- REST OF WEEK: Tue & Wed -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon purple">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Tue &amp; Wed</div>
-        <div class="card-subtitle">Office &middot; Home</div>
-      </div>
-    </div>
-
-    <div class="day-header">Tuesday Mar 31 &mdash; Office</div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">14:00</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--orange);"></div>
-      <div class="cal-body">
-        <div class="cal-title">New Platform Standup</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">14:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--orange);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Martin / Minas sync</div>
-        <div class="cal-note">Eng backlog revision + Ian dependency</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">15:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--green);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Content &amp; SEO sync</div>
-      </div>
-      <div class="cal-meta">Rebecca</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">16:30</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--red);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Global Coupons WBR</div>
-      </div>
-      <div class="cal-meta">Adam</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">17:00</div>
-        <div class="cal-dur">25m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--blue);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Coupons+AOG / Eng Sync</div>
-      </div>
-      <div class="cal-meta"></div>
-    </div>
-
-    <div class="day-goals">
-      <strong>Goals:</strong> DRI tasks due (New Platform + Genie). MM Updates prep. Phase 2 testing plan. Push eng backlog revision with Minas.
-    </div>
-
-    <div style="height: 16px;"></div>
-    <div class="day-header">Wednesday Apr 1 &mdash; Home</div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">09:00</div>
-        <div class="cal-dur">3h</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--green);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Focus time</div>
-      </div>
-      <div class="cal-meta">Solo</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">16:00</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--purple);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Coupons Management Monthly</div>
-      </div>
-      <div class="cal-meta"></div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">17:00</div>
-        <div class="cal-dur">25m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--red);"></div>
-      <div class="cal-body">
-        <div class="cal-title">New Platform x Ian standup</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="day-goals">
-      <strong>Goals:</strong> Deep work on Offer Quality US scoring test. Ecosystem leadership deck finalization. Trust Signals eng deadline check.
-    </div>
-  </div>
-
-  <!-- REST OF WEEK: Thu & Fri -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon purple">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Thu &amp; Fri</div>
-        <div class="card-subtitle">Office &middot; OOO (Easter)</div>
-      </div>
-    </div>
-
-    <div class="day-header">Thursday Apr 2 &mdash; Office</div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">10:30</div>
-        <div class="cal-dur">1h</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--blue);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Pre-purchase Grooming / Product Catch-up</div>
-      </div>
-      <div class="cal-meta">James</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">14:00</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--orange);"></div>
-      <div class="cal-body">
-        <div class="cal-title">New Platform Standup</div>
-      </div>
-      <div class="cal-meta">Minas</div>
-    </div>
-
-    <div class="cal-item">
-      <div class="cal-time-col">
-        <div class="cal-time">16:00</div>
-        <div class="cal-dur">30m</div>
-      </div>
-      <div class="cal-indicator" style="background: var(--purple);"></div>
-      <div class="cal-body">
-        <div class="cal-title">Rebecca 1:1</div>
-        <div class="cal-note">Bloomreach follow-up, seasonal banner decision</div>
-      </div>
-      <div class="cal-meta">Rebecca</div>
-    </div>
-
-    <div class="day-goals">
-      <strong>Goals:</strong> Follow up Bloomreach with Matthias (due Apr 2). Ramp-up progress check. Write 5/15 early (OOO Friday). Weekly scorecard.
-    </div>
-
-    <div style="height: 16px;"></div>
-    <div class="day-header" style="color: var(--green);">Friday Apr 3 &ndash; Monday Apr 6 &mdash; OOO (Easter)</div>
-
-    <div style="padding: 16px 0; font-size: 13px; color: var(--text-tertiary); text-align: center;">
-      Out of office &mdash; all meetings declined
-    </div>
-
-    <div class="day-goals">
-      <strong>Before leaving Thu:</strong> 5/15 written &amp; submitted. MM Updates ready. Key blockers escalated.
-    </div>
-  </div>
-
-  <!-- MY ASANA TASKS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon red">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg>
-      </div>
-      <div>
-        <div class="card-title">My Asana Tasks</div>
-        <div class="card-subtitle">Due this week &amp; overdue</div>
-      </div>
-    </div>
-
-    <div class="task-list-header">
-      <span>Task</span>
-      <span>Project</span>
-      <span>Due</span>
-    </div>
-
-    <div class="task-row">
-      <div>Review and finalize Q2 goals + April monthly goals</div>
-      <div class="task-owner"></div>
-      <div class="task-due today">Mar 30</div>
-    </div>
-    <div class="task-row">
-      <div>DRI - New Coupons Platform</div>
-      <div class="task-owner">New Platform</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>DRI - Genie</div>
-      <div class="task-owner">Genie</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Phase 2 Testing Plan &mdash; 4 more merchants</div>
-      <div class="task-owner">New Platform</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>MM Updates &mdash; Product</div>
-      <div class="task-owner"></div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Trust Signals &mdash; AIO visibility &amp; engagement</div>
-      <div class="task-owner">PRD</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Follow up Bloomreach with Matthias</div>
-      <div class="task-owner"></div>
-      <div class="task-due">Apr 2</div>
-    </div>
-    <div class="task-row">
-      <div>5/15 &mdash; Martin Gregor <span class="tag tag-carryover">Write Thu</span></div>
-      <div class="task-owner">5/15</div>
-      <div class="task-due">Apr 3</div>
-    </div>
-    <div class="task-row">
-      <div>Formalize A/B testing &amp; event implementation process <span class="tag tag-carryover">OOO Fri</span></div>
-      <div class="task-owner"></div>
-      <div class="task-due">Apr 3</div>
-    </div>
-    <div class="task-row">
-      <div>Write detailed CC + DB specification</div>
-      <div class="task-owner">Offer Quality</div>
-      <div class="task-due overdue">Mar 5</div>
-    </div>
-    <div class="task-row">
-      <div>Design screens: Merchant list + Edit offers</div>
-      <div class="task-owner">Offer Quality</div>
-      <div class="task-due overdue">Mar 5</div>
-    </div>
-    <div class="task-row">
-      <div>Set up US PostHog account for rollout</div>
-      <div class="task-owner"></div>
-      <div class="task-due overdue">Mar 25</div>
-    </div>
-  </div>
-
-  <!-- EMERGING & CARRYOVER -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon yellow">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Emerging &amp; End-of-Quarter</div>
-        <div class="card-subtitle">Q1 closes Mar 31</div>
-      </div>
-    </div>
-
-    <div class="task-list-header">
-      <span>Item</span>
-      <span>Context</span>
-      <span>Status</span>
-    </div>
-
-    <div class="task-row">
-      <div>PostHog &mdash; joint procurement business case with Core</div>
-      <div class="task-owner">Infra</div>
-      <div class="task-due soon">Push</div>
-    </div>
-    <div class="task-row">
-      <div>Engineering backlog revision with Minas</div>
-      <div class="task-owner">Eng</div>
-      <div class="task-due"><span class="tag tag-carryover">Carried</span></div>
-    </div>
-    <div class="task-row">
-      <div>Implement Rewards as core driver for user acquisition</div>
-      <div class="task-owner">Genie</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Trust Signals &mdash; extend affiliate network data</div>
-      <div class="task-owner">Trust Sigs</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Genie banners on merchant pages</div>
-      <div class="task-owner">Genie</div>
-      <div class="task-due soon">Mar 31</div>
-    </div>
-    <div class="task-row">
-      <div>Competitor monitoring automation with Florence</div>
-      <div class="task-owner">Ecosystem</div>
-      <div class="task-due">Apr 7</div>
-    </div>
-  </div>
-
-  <!-- BLOCKERS & DECISIONS -->
-  <div class="card full-width">
-    <div class="card-header">
-      <div class="card-icon red">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Blockers &amp; Decisions Needed</div>
-        <div class="card-subtitle">Resolve this week</div>
-      </div>
-    </div>
-
-    <div class="blocker-grid">
-      <div>
-        <div class="blocker-section-title" style="color: var(--red);"><div class="dot-lg" style="background: var(--red);"></div> Blockers</div>
-        <div class="blocker-item">Eon merchant template &mdash; 3+ week wait for Ian delivery. What does eng work on? <span style="font-size: 11px; color: var(--red);">(blocks rollout)</span></div>
-        <div class="blocker-item">BI rollout monitoring dashboard must be live today <span style="font-size: 11px; color: var(--red);">(blocks ramp decision)</span></div>
-        <div class="blocker-item">50/50 A/B CTR signal needed before ramping further <span style="font-size: 11px; color: var(--red);">(blocks Phase 2)</span></div>
-      </div>
-      <div>
-        <div class="blocker-section-title" style="color: var(--orange);"><div class="dot-lg" style="background: var(--orange);"></div> Decisions needed</div>
-        <div class="blocker-item">Seasonal banner A/B &mdash; proceed with 3 copy variants on staging?</div>
-        <div class="blocker-item">PostHog US rollout &mdash; joint procurement with Core or Coupons-only?</div>
-        <div class="blocker-item">Engineering backlog &mdash; push for revision slot with Minas this week</div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<footer>
-  CoS &middot; Tue Mar 31, 2026 &middot; Regenerate with Claude Code
-</footer>
+<div style="background:rgba(0,122,255,0.08);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#007aff;text-align:center">Static snapshot from 2026-04-01 — live version at localhost:8847</div>
+<!-- ═══ Project Tabs ═══ -->
+<div class="tab-bar">
+  <button class="tab active" onclick="switchTab('overview')">Overview</button>
+  <button class="tab" onclick="switchTab('new-platform')">New Platform</button>
+  <button class="tab" onclick="switchTab('genie')">Genie</button>
+</div>
+
+<!-- ═══ Tab: Overview ═══ -->
+<div class="tab-content active" id="tab-overview">
+
+<!-- Alert Banner (only if anomalies) -->
+<div class="alert-banner">
+  <span class="alert-icon">&#9888;</span>
+  <span class="alert-text">Intl anomalies: <strong>NL</strong> sessions -55%, commission -100% &nbsp;&middot;&nbsp; <strong>UK</strong> sessions -59%, commission -91% &nbsp;&middot;&nbsp; <strong>IE</strong> sessions -59%, commission -89% &nbsp;&middot;&nbsp; <strong>FR</strong> commission -85% +5 more</span>
+</div>
+
+<!-- Hero Metrics — always visible -->
+<div class="card" style="margin-bottom:20px;padding:16px 20px;background:transparent;box-shadow:none">
+  <div class="section-toggle" onclick="collapseSection(this)" data-section="hero">
+    <span style="font-size:14px;font-weight:700">US Market Pulse</span>
+    <span class="collapse-arrow">&#9660;</span>
+  </div>
+  <div class="section-body" data-id="hero">
+    <div style="margin-top:12px"><div class="hero-row">
+  <div class="hero-card">
+  <div class="hero-label"><span class="hero-icon">&#128065;</span>Sessions</div>
+  <div class="hero-value">55,359</div>
+  <div class="hero-deltas">
+    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;22%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;13%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;10%</span></div>
+  </div>
+  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
+  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
+  <polygon points="2.0,32.0 12.2,27.6 22.4,28.6 32.7,30.4 42.9,22.6 53.1,16.9 63.3,28.8 73.6,28.8 83.8,22.0 94.0,19.3 104.2,11.7 114.4,6.9 124.7,4.0 134.9,15.8 145.1,10.5 155.3,11.5 165.6,20.8 175.8,22.7 186.0,29.3 196.2,27.1 206.4,32.4 216.7,27.9 226.9,28.8 237.1,35.5 247.3,31.6 257.6,10.9 267.8,13.7 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
+  <polyline points="2.0,32.0 12.2,27.6 22.4,28.6 32.7,30.4 42.9,22.6 53.1,16.9 63.3,28.8 73.6,28.8 83.8,22.0 94.0,19.3 104.2,11.7 114.4,6.9 124.7,4.0 134.9,15.8 145.1,10.5 155.3,11.5 165.6,20.8 175.8,22.7 186.0,29.3 196.2,27.1 206.4,32.4 216.7,27.9 226.9,28.8 237.1,35.5 247.3,31.6 257.6,10.9 267.8,13.7 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
+  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
+  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="32.0"><title>2026-03-03: 63,461</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="27.6"><title>2026-03-04: 65,227</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="28.6"><title>2026-03-05: 64,852</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="30.4"><title>2026-03-06: 64,126</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="22.6"><title>2026-03-07: 67,273</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="16.9"><title>2026-03-08: 69,563</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="28.8"><title>2026-03-09: 64,775</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="28.8"><title>2026-03-10: 64,749</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="22.0"><title>2026-03-11: 67,527</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="19.3"><title>2026-03-12: 68,617</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="11.7"><title>2026-03-13: 71,693</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="6.9"><title>2026-03-14: 73,626</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="4.0"><title>2026-03-15: 74,809</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="15.8"><title>2026-03-16: 70,008</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="10.5"><title>2026-03-17: 72,173</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="11.5"><title>2026-03-18: 71,757</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="20.8"><title>2026-03-19: 68,006</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="22.7"><title>2026-03-20: 67,239</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="29.3"><title>2026-03-21: 64,551</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="27.1"><title>2026-03-22: 65,460</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="32.4"><title>2026-03-23: 63,281</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="27.9"><title>2026-03-24: 65,131</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="28.8"><title>2026-03-25: 64,749</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="35.5"><title>2026-03-26: 62,041</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="31.6"><title>2026-03-27: 63,614</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="10.9"><title>2026-03-28: 72,008</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="13.7"><title>2026-03-29: 70,860</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: 55,359</title></rect>
+</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
+</div>
+  <div class="hero-card">
+  <div class="hero-label"><span class="hero-icon">&#128073;</span>CTR</div>
+  <div class="hero-value">37.2%</div>
+  <div class="hero-deltas">
+    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;1.2%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;5.8%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;8.9%</span></div>
+  </div>
+  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
+  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
+  <polygon points="2.0,34.3 12.2,36.8 22.4,30.0 32.7,19.2 42.9,23.8 53.1,23.7 63.3,23.7 73.6,30.4 83.8,38.6 94.0,33.7 104.2,34.0 114.4,32.7 124.7,31.4 134.9,30.5 145.1,14.2 155.3,13.7 165.6,13.4 175.8,14.5 186.0,7.5 196.2,9.7 206.4,4.0 216.7,26.1 226.9,51.9 237.1,52.0 247.3,47.3 257.6,47.0 267.8,39.1 278.0,47.8 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
+  <polyline points="2.0,34.3 12.2,36.8 22.4,30.0 32.7,19.2 42.9,23.8 53.1,23.7 63.3,23.7 73.6,30.4 83.8,38.6 94.0,33.7 104.2,34.0 114.4,32.7 124.7,31.4 134.9,30.5 145.1,14.2 155.3,13.7 165.6,13.4 175.8,14.5 186.0,7.5 196.2,9.7 206.4,4.0 216.7,26.1 226.9,51.9 237.1,52.0 247.3,47.3 257.6,47.0 267.8,39.1 278.0,47.8" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="278.0" cy="47.8" r="3" fill="#ff3b30" />
+  <circle cx="278.0" cy="47.8" r="6" fill="#ff3b30" opacity="0.2" />
+  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="34.3"><title>2026-03-03: 38.98%</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="36.8"><title>2026-03-04: 38.64%</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="30.0"><title>2026-03-05: 39.55%</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="19.2"><title>2026-03-06: 40.98%</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="23.8"><title>2026-03-07: 40.37%</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="23.7"><title>2026-03-08: 40.39%</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="23.7"><title>2026-03-09: 40.39%</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="30.4"><title>2026-03-10: 39.49%</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="38.6"><title>2026-03-11: 38.39%</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="33.7"><title>2026-03-12: 39.06%</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="34.0"><title>2026-03-13: 39.01%</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="32.7"><title>2026-03-14: 39.18%</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="31.4"><title>2026-03-15: 39.36%</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="30.5"><title>2026-03-16: 39.49%</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="14.2"><title>2026-03-17: 41.65%</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="13.7"><title>2026-03-18: 41.72%</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="13.4"><title>2026-03-19: 41.76%</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="14.5"><title>2026-03-20: 41.61%</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="7.5"><title>2026-03-21: 42.54%</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="9.7"><title>2026-03-22: 42.26%</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="4.0"><title>2026-03-23: 43.01%</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="26.1"><title>2026-03-24: 40.07%</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="51.9"><title>2026-03-25: 36.63%</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="52.0"><title>2026-03-26: 36.61%</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="47.3"><title>2026-03-27: 37.24%</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="47.0"><title>2026-03-28: 37.28%</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="39.1"><title>2026-03-29: 38.34%</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="47.8"><title>2026-03-30: 37.17%</title></rect>
+</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
+</div>
+  <div class="hero-card">
+  <div class="hero-label"><span class="hero-icon">&#128176;</span>Commission</div>
+  <div class="hero-value">$22,267</div>
+  <div class="hero-deltas">
+    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;15%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;16%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;21%</span></div>
+  </div>
+  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
+  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
+  <polygon points="2.0,32.4 12.2,7.8 22.4,26.4 32.7,26.6 42.9,28.5 53.1,36.0 63.3,24.1 73.6,25.5 83.8,16.1 94.0,21.1 104.2,23.3 114.4,19.0 124.7,29.4 134.9,4.8 145.1,11.5 155.3,13.5 165.6,23.8 175.8,27.2 186.0,44.1 196.2,29.0 206.4,25.0 216.7,15.3 226.9,4.0 237.1,5.6 247.3,10.2 257.6,33.3 267.8,26.2 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
+  <polyline points="2.0,32.4 12.2,7.8 22.4,26.4 32.7,26.6 42.9,28.5 53.1,36.0 63.3,24.1 73.6,25.5 83.8,16.1 94.0,21.1 104.2,23.3 114.4,19.0 124.7,29.4 134.9,4.8 145.1,11.5 155.3,13.5 165.6,23.8 175.8,27.2 186.0,44.1 196.2,29.0 206.4,25.0 216.7,15.3 226.9,4.0 237.1,5.6 247.3,10.2 257.6,33.3 267.8,26.2 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
+  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
+  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="32.4"><title>2026-03-03: $25,314</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="7.8"><title>2026-03-04: $29,127</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="26.4"><title>2026-03-05: $26,236</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="26.6"><title>2026-03-06: $26,212</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="28.5"><title>2026-03-07: $25,919</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="36.0"><title>2026-03-08: $24,754</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="24.1"><title>2026-03-09: $26,600</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="25.5"><title>2026-03-10: $26,388</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="16.1"><title>2026-03-11: $27,839</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="21.1"><title>2026-03-12: $27,066</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="23.3"><title>2026-03-13: $26,727</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="19.0"><title>2026-03-14: $27,392</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="29.4"><title>2026-03-15: $25,784</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="4.8"><title>2026-03-16: $29,606</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="11.5"><title>2026-03-17: $28,554</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="13.5"><title>2026-03-18: $28,242</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="23.8"><title>2026-03-19: $26,650</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="27.2"><title>2026-03-20: $26,112</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="44.1"><title>2026-03-21: $23,499</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="29.0"><title>2026-03-22: $25,846</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="25.0"><title>2026-03-23: $26,461</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="15.3"><title>2026-03-24: $27,967</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="4.0"><title>2026-03-25: $29,724</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="5.6"><title>2026-03-26: $29,473</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="10.2"><title>2026-03-27: $28,758</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="33.3"><title>2026-03-28: $25,173</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="26.2"><title>2026-03-29: $26,272</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: $22,267</title></rect>
+</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
+</div>
+  <div class="hero-card">
+  <div class="hero-label"><span class="hero-icon">&#128179;</span>Transactions</div>
+  <div class="hero-value">3,806</div>
+  <div class="hero-deltas">
+    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;22%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;20%</span></div>
+    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;29%</span></div>
+  </div>
+  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
+  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
+  <polygon points="2.0,46.8 12.2,41.0 22.4,34.4 32.7,39.8 42.9,34.0 53.1,31.3 63.3,19.8 73.6,4.0 83.8,18.0 94.0,38.3 104.2,31.2 114.4,14.2 124.7,23.6 134.9,22.9 145.1,20.6 155.3,16.7 165.6,21.1 175.8,27.8 186.0,34.2 196.2,26.1 206.4,25.0 216.7,41.2 226.9,37.5 237.1,41.1 247.3,36.3 257.6,14.8 267.8,20.7 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
+  <polyline points="2.0,46.8 12.2,41.0 22.4,34.4 32.7,39.8 42.9,34.0 53.1,31.3 63.3,19.8 73.6,4.0 83.8,18.0 94.0,38.3 104.2,31.2 114.4,14.2 124.7,23.6 134.9,22.9 145.1,20.6 155.3,16.7 165.6,21.1 175.8,27.8 186.0,34.2 196.2,26.1 206.4,25.0 216.7,41.2 226.9,37.5 237.1,41.1 247.3,36.3 257.6,14.8 267.8,20.7 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
+  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
+  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="46.8"><title>2026-03-03: 3,987</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="41.0"><title>2026-03-04: 4,189</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="34.4"><title>2026-03-05: 4,420</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="39.8"><title>2026-03-06: 4,233</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="34.0"><title>2026-03-07: 4,433</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="31.3"><title>2026-03-08: 4,530</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="19.8"><title>2026-03-09: 4,930</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="4.0"><title>2026-03-10: 5,482</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="18.0"><title>2026-03-11: 4,993</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="38.3"><title>2026-03-12: 4,283</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="31.2"><title>2026-03-13: 4,532</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="14.2"><title>2026-03-14: 5,127</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="23.6"><title>2026-03-15: 4,797</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="22.9"><title>2026-03-16: 4,821</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="20.6"><title>2026-03-17: 4,904</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="16.7"><title>2026-03-18: 5,040</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="21.1"><title>2026-03-19: 4,885</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="27.8"><title>2026-03-20: 4,652</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="34.2"><title>2026-03-21: 4,426</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="26.1"><title>2026-03-22: 4,709</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="25.0"><title>2026-03-23: 4,750</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="41.2"><title>2026-03-24: 4,183</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="37.5"><title>2026-03-25: 4,312</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="41.1"><title>2026-03-26: 4,188</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="36.3"><title>2026-03-27: 4,353</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="14.8"><title>2026-03-28: 5,105</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="20.7"><title>2026-03-29: 4,898</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: 3,806</title></rect>
+</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
+</div>
+</div></div>
+  </div>
+</div>
+
+<!-- Focus + Calendar -->
+<div class="two-col">
+  <div class="card">
+    <div class="section-toggle" onclick="collapseSection(this)" data-section="focus">
+      <div class="card-header" style="margin-bottom:0">
+        <div class="card-header-left">
+          <div class="card-icon blue">&#127919;</div>
+          <div class="card-title">Today's Focus</div>
+        </div>
+        <span class="collapse-arrow">&#9660;</span>
+      </div>
+    </div>
+    <div class="section-body" data-id="focus" style="margin-top:16px">
+      <div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-1" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-1">QA Monday: confirm rewards setup, tracking, correct implementation</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-2" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-2">Get BA results from 10-merchant A/B test (running since Mar 18)</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-3" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-3">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-toggle" onclick="collapseSection(this)" data-section="calendar">
+      <div class="card-header" style="margin-bottom:0">
+        <div class="card-header-left">
+          <div class="card-icon orange">&#128197;</div>
+          <div class="card-title">Calendar</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="card-badge">5 events</span>
+          <span class="collapse-arrow">&#9660;</span>
+        </div>
+      </div>
+    </div>
+    <div class="section-body" data-id="calendar" style="margin-top:16px">
+      <div class="cal-compact"><span class="cal-dot" style="background:var(--purple)"></span><span class="cal-compact-time">All day</span><span class="cal-compact-title">Home</span></div>
+<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">09:00</span><span class="cal-compact-title">Focus time</span></div>
+<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">12:00</span><span class="cal-compact-title">[MTG-1052] Mobile App team grooming</span></div>
+<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">14:30</span><span class="cal-compact-title">Martin / Minas sync</span></div>
+<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">16:00</span><span class="cal-compact-title">Coupons Management - Monthly meeting</span></div>
+<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">17:00</span><span class="cal-compact-title">New Platform x Ian - standup</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Weekly Priorities -->
+<div class="card" style="margin-bottom:20px">
+  <div class="section-toggle" onclick="collapseSection(this)" data-section="weekly">
+    <div class="card-header" style="margin-bottom:0">
+      <div class="card-header-left">
+        <div class="card-icon green">&#128203;</div>
+        <div class="card-title">Weekly Priorities</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="card-badge">Week of 1 Apr</span>
+        <span class="collapse-arrow">&#9660;</span>
+      </div>
+    </div>
+  </div>
+  <div class="section-body" data-id="weekly" style="margin-top:16px">
+    <div class="priority-group-header">
+  <span class="priority-badge priority-red">P1</span>
+  <span class="priority-group-title">New Platform — QA &amp; Scale</span>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">QA Monday: confirm rewards setup, tracking, correct implementation</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Get BA results from 10-merchant A/B test (running since Mar 18)</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Continue pattern-based monitoring (Tableau dashboard live)</div>
+</div>
+<div class="priority-group-header">
+  <span class="priority-badge priority-orange">P2</span>
+  <span class="priority-group-title">Automated Offer Quality — Test US Scoring</span>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Test Florence&#x27;s US merchant offer scoring end-to-end with new API</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Validate API integration</div>
+</div>
+<div class="priority-group-header">
+  <span class="priority-badge priority-blue">P3</span>
+  <span class="priority-group-title">Groupon Ecosystem — Extension Viability</span>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">John tests PayPal Honey + reference app</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Compile findings for leadership presentation on extension viability</div>
+</div>
+<div class="priority-group-header">
+  <span class="priority-badge priority-purple">P4</span>
+  <span class="priority-group-title">Trust Signals — Fix for New Platform</span>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Implement historic data projection for activity signals on pre-cached platform</div>
+</div>
+<div class="priority-group-header">
+  <span class="priority-badge priority-green">P5</span>
+  <span class="priority-group-title">Foundry — Share &amp; Template</span>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Share live automation examples with team</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Begin templating CoS setup for other PMs</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Backlog revision: execute Asana changes with Minas (deprioritized)</div>
+</div>
+<div class="priority-item">
+  <div class="check-circle"></div>
+  <div class="priority-text">Genie seasonal banner — evaluate priority</div>
+</div>
+  </div>
+</div>
+
+<!-- Asana / Jira / GChat / Gmail -->
+<div class="collapsed-bar">
+  <div class="collapse-chip" onclick="toggleSection('asana')">
+    <span class="chip-icon">&#9989;</span>
+    <span class="chip-label">Asana</span>
+    <span class="chip-count has-items">122</span>
+  </div>
+  <div class="collapse-chip" onclick="toggleSection('jira')">
+    <span class="chip-icon">&#128736;</span>
+    <span class="chip-label">Jira</span>
+    <span class="chip-count has-items">10</span>
+  </div>
+  <div class="collapse-chip" onclick="toggleSection('gchat')">
+    <span class="chip-icon">&#128172;</span>
+    <span class="chip-label">GChat</span>
+    <span class="chip-count">0</span>
+  </div>
+  <div class="collapse-chip" onclick="toggleSection('gmail')">
+    <span class="chip-icon">&#9993;</span>
+    <span class="chip-label">Gmail</span>
+    <span class="chip-count">0</span>
+  </div>
+</div>
+
+<div id="section-asana" class="collapse-content">
+  <div style="display:flex;gap:6px;margin-bottom:12px"><span class="status-pill pill-danger">71 overdue</span><span class="status-pill pill-default">121 total</span></div>
+<div class="section-divider"><span>Overdue</span></div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211410600272387" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Florence 121 Martin</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">187d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210471664273637" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Post-Redemption screen upgrade</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due due-overdue">183d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211623402927666" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mark B Data 121</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">169d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211451990705222" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] AI Title rewriter</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due due-overdue">162d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212243231537988" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - first priority - show 8% converstions from landing page</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">104d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212526835756340" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Post Updates in Product Updates</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">103d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211834720461437" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Implement Network data into CC</a>
+  </div>
+  <span class="status-pill pill-purple" style="font-size:9px">Design</span>
+  <span class="task-due due-overdue">100d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212200905783917" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check if we got refund from Upwork </a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">93d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211506561953213" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2025 / Q4 KPI: Finalize Front-End of New Coupons Platform and Validate POC</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">91d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211506561953202" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2025 / Q4 KPI: Launch High-Impact Experiments to Increase Revenue via Engagement</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">91d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211834720461439" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Create Custom Definitions for New Events in GA4</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">89d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210914234423401" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Understand US NA BISEO</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">89d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211806107578559" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Create Dashboard to review User Traffic and Engagement</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">86d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211948330539646" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - what it means using Groupon core Login</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">84d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212342295669919" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Let me be added to Coupons_CZ@groupon.com </a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">82d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211717109252383" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">New GTM tags for VC ad placements</a>
+  </div>
+  <span class="status-pill pill-green" style="font-size:9px">Content</span>
+  <span class="task-due due-overdue">75d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211911690021034" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">advertisement first, then presentation of coupon code </a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">68d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212743189115199" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Genie extension improvements - landing page</a>
+  </div>
+  <span class="status-pill pill-orange" style="font-size:9px">Reviews</span>
+  <span class="task-due due-overdue">64d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212816193322100" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - link into webstore data</a>
+  </div>
+  <span class="status-pill pill-yellow" style="font-size:9px">Data</span>
+  <span class="task-due due-overdue">63d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212018962892547" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Autoapply - Agent config creation and CAA</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">61d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212998885351465" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">POC SEO test - 15 more merchants</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">51d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213370006623628" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review Genie popup tracking setup and that we can see all events and utms for later analysis</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">33d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212073053503093" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Add Linkshare and Partnerize networks so we reach 88% of transaction coverage (currently 78%)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">33d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213241207808969" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Expired offers, change to less then 5 offers</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">33d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211792653381251" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Blog - discovery + what to do</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">33d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211703678024212" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Build data model for network transaction data Phase 2</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">33d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213355099944458" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review the logic of Merchant level signals</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">30d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213347898817651" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">INTL Implementation Signoff</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">29d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211095529062485" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Align on Expy vs Growthbook path for Coupons experimentation</a>
+  </div>
+  <span class="status-pill pill-yellow" style="font-size:9px">Data</span>
+  <span class="task-due due-overdue">27d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213355099944473" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coordinate timing with BI (Marc) and align with Content on frequency and usage.</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">27d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213355099944472" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Write detailed Control Cloud + DB specification based on the agreed payload and flows.</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">27d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212765669439428" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Design sceens for Merchant list + Edit offers in CC</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">27d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211877271388973" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">PostHog - Deployment</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due due-overdue">26d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212815356369656" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">BI Product requests</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">26d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213566188941247" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Connect with relevant department to setup official billin of Posthog</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">23d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213554194082662" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Grant Viktor and Minas Admin access to our Chrome Web Store Publisher Group</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">22d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213537181538158" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Narrow down scope for eng team + deliver all ready for dev designs</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">20d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213531860798643" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Evaluate Popup traffic and its impact on install rate/new users</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">20d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213610630742742" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">MS Clarity - Coupons</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">20d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213241215455338" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up a cron job to fetch  Chrome store rating daily</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">20d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213632035055349" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Fill in report links — [Coupons] Genie Reports task</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">19d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213631638443599" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Foundry Phase 0 — confirm 15 min daily AI usage in 5/15</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">19d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213631209220891" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review [Coupons] New Platform Bet Project — fix open issues</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">19d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213643676882761" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Backlog review &amp; cleanup — continue with Claude</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">16d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213710034157152" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Followup on https://app.asana.com/1/8437193015852/project/1211463746859353/task/1213507655155629?focus=true</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">14d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212294034465022" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">SEO Data support - issue 3</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">12d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213658648851385" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Online Report as an Action layer</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">12d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210708124489236" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">anna multisport </a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">8d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210708124489235" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Automatic offer categorization - dashboard + scope + CC design</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">8d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213793033055832" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up separate US PostHog account for groupon.com rollout</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">7d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213786935399604" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Follow up on &quot;Develop Scoring API Endpoint &amp; Scoring History Database Table&quot;</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">6d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213785059242263" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Notify John&#x27;s team: deal bar won&#x27;t display on newly rolled out pages initially</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">6d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213745493919075" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">LT, LTV data</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213745471998935" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Creative solution on alternative monetisation of Groupon users</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213507655155631" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Promo mock up for approval with Marketing</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213786827282607" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">see parental task</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213833265890438" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5/15 — Martin Gregor — 2026-03-27</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213821781173646" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Share Safari extension brainstorming output with team</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213821537044309" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Validate Safari extension technical feasibility (iOS 15+)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213631649111064" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Foundry Phase 1 — map own AI workflows in Google Sheet</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">5d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213784877416936" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Brainstorm: app frequency &amp; core purchases via affiliate publisher features</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">4d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213835464936079" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review and finalize Q2 quarterly goals + April monthly goals</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">2d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213560213808593" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">MM Updates - 2026-04-01 - Product</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213340696502837" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Phase 2 Testing Plan - Engagement test on 4 more merchants</a>
+  </div>
+  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212996568683046" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">DRI - Genie</a>
+  </div>
+  <span class="status-pill pill-purple" style="font-size:9px">Genie</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212514974586672" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie Banners on Merchant pages and Post redemption screens</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212298912009523" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Implement Rewards as the core driver for user acquisition</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212260791614261" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Extend Affiliate Network Data and Phase 2 Signals</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211607081597186" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">DRI - New Coupons Platform</a>
+  </div>
+  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211370232617961" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Non Merchant pages dashboard followup for Data team</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210872961847839" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals to support AIO visibility and Improve User Engagement</a>
+  </div>
+  <span class="status-pill pill-green" style="font-size:9px">1:1s</span>
+  <span class="task-due due-overdue">1d ago</span>
+</div>
+<div class="section-divider"><span>Tomorrow</span></div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213821781036164" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Follow up with Matthias on Bloomreach login credentials &amp; docs</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due due-soon">Tomorrow</span>
+</div>
+<div class="section-divider"><span>This Week</span></div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213835384094534" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Martin Gregor - 2026-4-03</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due">3 Apr</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213785059399141" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Formalize A/B testing &amp; event implementation process (Martin + Mark + Eng)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due">3 Apr</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213863567127909" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Collect Groupon app user data for &quot;Save Everywhere&quot; ROI model</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due">4 Apr</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213784937438178" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Explore competitor monitoring automation with Florence (weekly screenshots, change detection)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due">7 Apr</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213486601374091" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Header Sign-off - round #2 - main designer</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due">8 Apr</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211372105890904" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Quality Score for Merchant Content</a>
+  </div>
+  <span class="status-pill pill-green" style="font-size:9px">Content</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210421134990305" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">GPN - GTM &amp; GA4 Event Fixing &amp; Implementation</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210715504890565" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5/15 - Martin Gregor</a>
+  </div>
+  <span class="status-pill pill-green" style="font-size:9px">5/15</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212070162489794" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Implement Merchant level Trust Signals to Legacy</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213829825950448" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up competitor monitoring on paid (SEO)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213821450363529" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Prepare Safari extension high-level presentation for leadership</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213699781226645" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Estimated cost (Coupons PostHog - Full Platform Rollout)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213789633096057" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Rollout Risk: 3,000 pages missing components for 6–8 weeks — proposal to parallelize</a>
+  </div>
+  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213455778989973" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Posthog - Billing</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213699605491160" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">QA Report: /coupons-ui/ vs /coupons/ — 50 merchant comparison (2026-03-17)</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213546316945681" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">&quot;Expiring Soon&quot; Carousel</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213546316945685" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">&quot;Favorite&quot; Store Front</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213027304898803" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Seasonal Banner</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213355099944467" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Technical Implementation Plan</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213610630742751" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons/AOG Eng team cooperation</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213610630742739" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Project Foundry - MG</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213537181538153" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Becky 121</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212001686693392" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Cross-Surface Deal Integration</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">Bets</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211602817765330" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">All Phases rollout to all markets</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210786636452426" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Add Trust Signals to Merchant pages</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212070162489777" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Add merchant-level and list-level trust signal fields to Control Cloud</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211806109829561" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"> New Coupons Platform (UI Redesign &amp; Optimization)</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">P&amp;E</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1213012495862508" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check legal/affiliate constraints per merchant for auto-apply</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1212876770064950" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie GA4 data access + dashboard</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211637153919294" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Coupons as a Sevice for AI Integration </a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211626970504856" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Smart Traffic Routing</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211716977665888" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Implement Marker.io Widget in Coupons page for Streamlined User Feedback Collection</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211949769771985" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Groupon Deals on Coupons site for shared Merchants</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211937414456660" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Match evolving user behavior with LLM usage</a>
+  </div>
+  <span class="status-pill pill-green" style="font-size:9px">SEO</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211911690021043" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">background colour A/B test</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211602817765328" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Build Tableau Dashboard</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211491510643067" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check w Content team Categorization and how we work with categories</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211588777644861" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review and ensure compliance with Microsoft Clarity cookie consent requirements</a>
+  </div>
+  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211195610238807" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Define common strategy for Localized LPs among Groupon x Coupons</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211147187498786" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Updated system to improve Merchant ratings</a>
+  </div>
+  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211076529572922" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">A/B Testing cheat sheet</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210786636452510" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📢 Voice of Customer</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211076529572927" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🧪 Goal 2: Define the Scope of an A/B Testing Solution for Coupons</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1211076529572929" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🎯 Goal 1: Define the 2025 / 2026 Coupons Product Roadmap</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210786636452532" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🥷 Improve my skills </a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210987636908766" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Florence question</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210867167963329" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Q3 Summary</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210739593722256" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Questions</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
+  <div style="flex:1;min-width:0">
+    <a href="https://app.asana.com/0/0/1210725767763960" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Becky 1:1 get explained</a>
+  </div>
+  <span class="status-pill pill-default" style="font-size:9px">General</span>
+  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
+</div>
+</div>
+<div id="section-jira" class="collapse-content">
+  <div class="jira-grid">
+  <div class="jira-section">
+    <div class="jira-section-title">Assigned to Me (5)</div>
+    <div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/MTG-1007" target="_blank">MTG-1007</a></div>
+  <div class="jira-summary">Sprint Ceremonies &amp; Project-related meetings</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Meetings</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/MBNXT-31098" target="_blank">MBNXT-31098</a></div>
+  <div class="jira-summary">[Mobile] - Coupons Deal - Failed to load first two images</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Mobile Next</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7357" target="_blank">VC-7357</a></div>
+  <div class="jira-summary">BE - Enable backend support for new platform template components</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Coupons</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7163" target="_blank">VC-7163</a></div>
+  <div class="jira-summary">[vc-api] Move TrustSignal into Offer and Merchant responses</div>
+  <div class="jira-meta"><span class="status-pill pill-info">Review</span> <span class="jira-project-tag">Coupons</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-6640" target="_blank">VC-6640</a></div>
+  <div class="jira-summary">Fix the home depot section on the merchant page</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Coupons</span></div>
+</div>
+  </div>
+  <div class="jira-section">
+    <div class="jira-section-title">Reported by Me (5)</div>
+    <div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7410" target="_blank">VC-7410</a> <span class="updated-badge">updated</span></div>
+  <div class="jira-summary">Rewards integration review</div>
+  <div class="jira-meta"><span class="status-pill pill-warning">In Progress</span> <span class="jira-project-tag">Coupons</span><span class="jira-assignee">Richard Downes</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7355" target="_blank">VC-7355</a></div>
+  <div class="jira-summary">FE - Integrate remaining merchant template components</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Coupons</span><span class="jira-assignee">Minas Arustamyan</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-6007" target="_blank">VC-6007</a></div>
+  <div class="jira-summary">Trust Signals GPN</div>
+  <div class="jira-meta"><span class="status-pill pill-warning">In Progress</span> <span class="jira-project-tag">Coupons</span><span class="jira-assignee">Minas Arustamyan</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7357" target="_blank">VC-7357</a></div>
+  <div class="jira-summary">BE - Enable backend support for new platform template components</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Coupons</span><span class="jira-assignee">Martin Gregor</span></div>
+</div>
+<div class="jira-row">
+  <div class="jira-key-col"><a href="https://groupondev.atlassian.net/browse/VC-7313" target="_blank">VC-7313</a></div>
+  <div class="jira-summary">Add bCookie session identifier to Genie tracking events</div>
+  <div class="jira-meta"><span class="status-pill pill-default">To Do</span> <span class="jira-project-tag">Coupons</span><span class="jira-assignee">Akshay Katoch</span></div>
+</div>
+  </div>
+</div>
+</div>
+<div id="section-gchat" class="collapse-content">
+  <div class="empty-state"><div class="empty-text">No recent messages</div></div>
+</div>
+<div id="section-gmail" class="collapse-content">
+  <div class="empty-state"><div class="empty-icon">&#9993;</div><div class="empty-text">Inbox zero!</div></div>
+</div>
+
+<!-- Merchants + Channel Mix -->
+<div class="two-col">
+  <div class="card">
+    <div class="section-toggle" onclick="collapseSection(this)" data-section="merchants">
+      <div class="card-header" style="margin-bottom:0">
+        <div class="card-header-left">
+          <div class="card-icon purple">&#127941;</div>
+          <div class="card-title">Top Merchants</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="card-badge">7d</span>
+          <span class="collapse-arrow">&#9660;</span>
+        </div>
+      </div>
+    </div>
+    <div class="section-body" data-id="merchants" style="margin-top:16px">
+      <table class="mini-table"><thead><tr><th>Merchant</th><th>Commission</th><th>CTR</th></tr></thead><tbody>
+<tr><td>Chime</td><td>$16,000</td><td>43.6%</td></tr>
+<tr><td>eBay</td><td>$7,691</td><td>61.1%</td></tr>
+<tr><td>Expedia</td><td>$6,151</td><td>50.1%</td></tr>
+<tr><td>Viator</td><td>$5,537</td><td>51.2%</td></tr>
+<tr><td>Lowe&#x27;s</td><td>$4,456</td><td>54.7%</td></tr>
+</tbody></table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-toggle" onclick="collapseSection(this)" data-section="channels">
+      <div class="card-header" style="margin-bottom:0">
+        <div class="card-header-left">
+          <div class="card-icon green">&#128202;</div>
+          <div class="card-title">Channel Mix</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="card-badge">Commission</span>
+          <span class="collapse-arrow">&#9660;</span>
+        </div>
+      </div>
+    </div>
+    <div class="section-body" data-id="channels" style="margin-top:16px">
+      <div class="bar-row">
+  <span class="bar-label">Organic</span>
+  <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--blue)"></div></div>
+  <span class="bar-value">$136,054</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Direct</span>
+  <div class="bar-track"><div class="bar-fill" style="width:13%;background:var(--green)"></div></div>
+  <span class="bar-value">$18,182</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">PPC</span>
+  <div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--orange)"></div></div>
+  <span class="bar-value">$10,271</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Email</span>
+  <div class="bar-track"><div class="bar-fill" style="width:2%;background:var(--purple)"></div></div>
+  <span class="bar-value">$3,009</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Referral</span>
+  <div class="bar-track"><div class="bar-fill" style="width:1%;background:var(--red)"></div></div>
+  <span class="bar-value">$868</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Affiliate</span>
+  <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--yellow)"></div></div>
+  <span class="bar-value">$356</span>
+</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-overview -->
+
+<!-- ═══ Tab: New Platform ═══ -->
+<div class="tab-content" id="tab-new-platform">
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon orange">&#128640;</div>
+        <div class="card-title">New Platform Rollout</div>
+      </div>
+    </div>
+    <div class="focus-empty">Project-specific BQ queries coming soon.<br>Use the chat widget to ask about New Platform data.</div>
+  </div>
+</div>
+
+<!-- ═══ Tab: Genie ═══ -->
+<div class="tab-content" id="tab-genie">
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon purple">&#129520;</div>
+        <div class="card-title">Genie Browser Extension</div>
+      </div>
+    </div>
+    <div class="focus-empty">Project-specific BQ queries coming soon.<br>Use the chat widget to ask about Genie data.</div>
+  </div>
+</div>
+
+<footer>CoS Dashboard &middot; Auto-generated by daily-dashboard.sh</footer>
+
+<!-- ═══ Chat Widget ═══ -->
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-panel-header">
+    <span class="status-dot" id="chatStatus"></span>
+    CoS Assistant
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg system">Ask me anything about your dashboard data.</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" id="chatSend" onclick="sendChat()">&#9654;</button>
+  </div>
+</div>
 
 <script>
-  document.querySelectorAll('.check-circle[data-id]').forEach(circle => {
-    const key = 'cos-dash-' + circle.dataset.id;
-    if (localStorage.getItem(key) === 'true') {
-      circle.classList.add('checked');
-      const text = circle.nextElementSibling;
-      if (text) text.classList.add('done');
+  // ── Tab switching ──
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ── Collapsible sections (persists to localStorage) ──
+  function collapseSection(toggle) {
+    const sectionId = toggle.dataset.section;
+    const body = document.querySelector('.section-body[data-id="' + sectionId + '"]');
+    const isHidden = body.classList.toggle('hidden');
+    toggle.classList.toggle('collapsed', isHidden);
+    localStorage.setItem('collapse-' + sectionId, isHidden ? 'true' : 'false');
+  }
+
+  // Restore collapsed states on load
+  document.querySelectorAll('.section-toggle[data-section]').forEach(toggle => {
+    const id = toggle.dataset.section;
+    if (localStorage.getItem('collapse-' + id) === 'true') {
+      toggle.classList.add('collapsed');
+      const body = document.querySelector('.section-body[data-id="' + id + '"]');
+      if (body) body.classList.add('hidden');
     }
-    circle.addEventListener('click', () => {
-      circle.classList.toggle('checked');
-      const isChecked = circle.classList.contains('checked');
-      localStorage.setItem(key, isChecked);
-      const text = circle.nextElementSibling;
-      if (text) text.classList.toggle('done', isChecked);
-    });
   });
+
+  // ── Focus item toggle (persists to localStorage) ──
+  function toggleFocus(el) {
+    const id = el.dataset.id;
+    const isDone = el.classList.toggle('done');
+    localStorage.setItem(id, isDone ? 'true' : 'false');
+    const text = el.parentElement.querySelector('.focus-text[data-id="' + id + '"]');
+    if (text) text.classList.toggle('completed', isDone);
+  }
+
+  // Restore focus state on load
+  document.querySelectorAll('.focus-check[data-id]').forEach(el => {
+    const id = el.dataset.id;
+    if (localStorage.getItem(id) === 'true') {
+      el.classList.add('done');
+      const text = el.parentElement.querySelector('.focus-text[data-id="' + id + '"]');
+      if (text) text.classList.add('completed');
+    }
+  });
+
+  // ── Collapsed sections toggle ──
+  function toggleSection(id) {
+    const el = document.getElementById('section-' + id);
+    if (el.classList.contains('visible')) {
+      el.classList.remove('visible');
+    } else {
+      document.querySelectorAll('.collapse-content').forEach(c => c.classList.remove('visible'));
+      el.classList.add('visible');
+    }
+  }
+
+  // Chat widget
+  let chatOpen = false;
+  function toggleChat() {
+    chatOpen = !chatOpen;
+    document.getElementById('chatPanel').classList.toggle('visible', chatOpen);
+    document.getElementById('chatFab').classList.toggle('open', chatOpen);
+    if (chatOpen) {
+      document.getElementById('chatInput').focus();
+    }
+  }
+
+  async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const messages = document.getElementById('chatMessages');
+    const sendBtn = document.getElementById('chatSend');
+    const statusDot = document.getElementById('chatStatus');
+
+    // Add user message
+    const userBubble = document.createElement('div');
+    userBubble.className = 'chat-msg user';
+    userBubble.textContent = msg;
+    messages.appendChild(userBubble);
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Show connecting state
+    sendBtn.disabled = true;
+    statusDot.className = 'status-dot connecting';
+
+    try {
+      const resp = await fetch('http://localhost:8847/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg })
+      });
+
+      if (!resp.ok) throw new Error('Server error: ' + resp.status);
+
+      const data = await resp.json();
+      const asstBubble = document.createElement('div');
+      asstBubble.className = 'chat-msg assistant';
+      asstBubble.textContent = data.response || data.message || JSON.stringify(data);
+      messages.appendChild(asstBubble);
+      statusDot.className = 'status-dot';
+    } catch (err) {
+      const errBubble = document.createElement('div');
+      errBubble.className = 'chat-msg system';
+      errBubble.textContent = 'Could not connect. Is the server running on :8847?';
+      messages.appendChild(errBubble);
+      statusDot.className = 'status-dot error';
+      // Reset error state after 3s
+      setTimeout(() => { statusDot.className = 'status-dot'; }, 3000);
+    } finally {
+      sendBtn.disabled = false;
+      messages.scrollTop = messages.scrollHeight;
+    }
+  }
+
+  // ── Dashboard refresh ──
+  async function refreshDashboard() {
+    const btn = document.getElementById('refreshBtn');
+    const label = document.getElementById('lastRefresh');
+    btn.disabled = true;
+    btn.textContent = 'Refreshing...';
+    btn.style.opacity = '0.6';
+    try {
+      const resp = await fetch('/api/refresh');
+      const data = await resp.json();
+      if (data.render === 'ok') {
+        label.textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+        // Reload the page to show new data
+        setTimeout(() => location.reload(), 500);
+      } else {
+        label.textContent = 'Refresh failed';
+        btn.textContent = 'Retry';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    } catch(e) {
+      label.textContent = 'Refresh error';
+      btn.textContent = 'Retry';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }
+
+  // Auto-refresh every 15 minutes
+  setInterval(() => {
+    refreshDashboard();
+  }, 15 * 60 * 1000);
 </script>
 
 </body>
