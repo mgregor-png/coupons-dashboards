@@ -277,36 +277,7 @@
 <div class="card" style="border-left: 4px solid #007aff;">
   <h2>Performance vs Baseline <span style="font-size:12px; font-weight:400; color:#86868b; margin-left:8px;">Baseline: Mar 10–17 · Post: Mar 18–28</span></h2>
   <p class="subtitle" style="margin-bottom:16px">Relative change from each cohort's own pre-rollout average. Source: BQ <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">rep.12_offer_dashboard</code>. Phase 2 data (Apr 1+) will appear in next refresh.</p>
-  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:8px;">
-    <!-- Legacy Protected -->
-    <div style="background:#f5f5f7; border-radius:10px; padding:14px; border-top:3px solid #e5e5ea;">
-      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#6e6e73; margin-bottom:8px;">Legacy Protected (407)</div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+10.4%</span></div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#34c759;">+16.9%</span></div>
-      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#ff3b30;">-15.9%</span></div>
-    </div>
-    <!-- 50/50 A/B -->
-    <div style="background:#f0e6ff; border-radius:10px; padding:14px; border-top:3px solid #7c3aed;">
-      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#7c3aed; margin-bottom:8px;">50/50 A/B (41)</div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#ff9500;">-4.3%</span></div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#ff3b30;">-12.9%</span></div>
-      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#34c759;">+7.9%</span></div>
-    </div>
-    <!-- 33/67 Long Tail -->
-    <div style="background:#fff3e0; border-radius:10px; padding:14px; border-top:3px solid #ff9500;">
-      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#e65100; margin-bottom:8px;">33% Split (~3,033)</div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+6.3%</span></div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#34c759;">+28.3%</span></div>
-      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#1d1d1f;">+0.3%</span></div>
-    </div>
-    <!-- Phase 1 -->
-    <div style="background:#e3f2fd; border-radius:10px; padding:14px; border-top:3px solid #007aff;">
-      <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#0d47a1; margin-bottom:8px;">Phase 1 (54)</div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:#34c759;">+18.0%</span></div>
-      <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:#86868b;">n/a</span></div>
-      <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:#ff3b30;">-25.7%</span></div>
-    </div>
-  </div>
+  <div id="p2StatCards" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:8px;"></div>
   <div style="font-size:11px; color:#86868b; margin-top:4px;">CTR = Clicks / Unique Views · RPV = Commission / Unique Views (cents) · Traffic = Unique Views change. Phase 1 RPV n/a (no commission tracked for those merchants in this table).</div>
 </div>
 
@@ -936,21 +907,23 @@ if (mBucketEl) mBucketEl.addEventListener('change', renderMerchantTable);
 // ═══════════════════════════════════════
 // Phase 2 Monitoring Charts — 4 cohorts (BQ data)
 // ═══════════════════════════════════════
-const P2_DATES = ["Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28"];
-const P2_CTR_LEGACY = [3.809,4.311,5.052,5.15,5.121,5.49,3.773,4.547,5.086,5.109,5.013,5.793,5.518,5.519,4.222,5.068,5.089,5.107,5.033];
-const P2_CTR_5050 = [1.388,1.14,1.064,1.248,1.35,1.43,1.184,1.195,1.283,1.327,1.014,1.34,1.264,1.35,0.807,1.088,1.266,1.289,1.123];
-const P2_CTR_33PCT = [3.274,2.878,3.263,2.81,2.712,2.284,2.532,2.669,2.752,3.068,3.035,3.383,3.043,3.282,2.772,2.966,2.837,2.907,2.731];
-const P2_CTR_PHASE1 = [3.653,4.103,3.817,3.821,3.617,3.818,3.585,3.77,4.586,4.841,5.383,5.365,4.913,5.271,4.737,3.836,3.16,3.478,3.403];
-const P2_RPV_LEGACY = [3.0691,3.9087,3.967,3.3939,5.0974,3.7005,3.236,2.9979,3.3338,3.3827,3.6793,3.9322,3.663,3.5611,4.9312,5.7863,5.6078,5.2977,4.0195];
-const P2_RPV_5050 = [1.0397,0.7895,0.7289,0.8123,0.9623,1.0092,0.8857,0.6871,0.8338,0.7517,0.5203,0.7424,0.8252,0.8521,0.6116,0.8231,0.8588,0.876,0.588];
-const P2_RPV_33PCT = [1.2888,1.4315,1.1919,1.0486,1.3206,0.8513,1.1733,1.0898,1.2069,1.2873,1.3743,1.2561,1.2037,1.4789,1.3929,2.4939,2.4261,1.5312,0.9238];
-const P2_UV_LEGACY = [138958,116155,97630,93043,100208,88158,98867,132445,127685,127155,116720,97744,100946,108220,84027,58312,55884,58235,65791];
-const P2_UV_5050 = [513089,655455,748659,605964,533467,526401,621978,722458,712899,667652,856168,592487,704200,651693,887924,611620,498283,498915,627117];
-const P2_UV_33PCT = [340070,387607,358851,446262,479347,583439,483217,537934,567940,486804,476901,428720,468500,430774,436098,382713,396157,408475,503307];
-const P2_UV_PHASE1 = [52828,50161,57613,63905,75007,66469,61750,63553,58527,48937,47633,50024,52274,44676,46272,35978,33354,37804,46347];
-const P2_COMM_LEGACY = [4264.82,4540.2,3872.97,3157.79,5108.03,3262.32,3199.34,3970.6,4256.75,4301.31,4294.43,3843.51,3697.65,3853.79,4143.53,3374.1,3133.85,3085.13,2644.5];
-const P2_COMM_5050 = [5334.64,5174.69,5456.7,4922.25,5133.63,5312.6,5508.8,4964.12,5944.31,5018.53,4454.53,4398.48,5810.8,5553.4,5430.56,5034.14,4279.43,4370.7,3687.49];
-const P2_COMM_33PCT = [4382.94,5548.46,4277.1,4679.47,6330.23,4966.61,5669.54,5862.63,6854.75,6266.7,6553.85,5385.25,5639.27,6370.65,6074.52,9544.61,9611.34,6254.64,4649.77];
+const P2_DATES = ["Mar 10", "Mar 11", "Mar 12", "Mar 13", "Mar 14", "Mar 15", "Mar 16", "Mar 17", "Mar 18", "Mar 19", "Mar 20", "Mar 21", "Mar 22", "Mar 23", "Mar 24", "Mar 25", "Mar 26", "Mar 27", "Mar 28", "Mar 29", "Mar 30", "Mar 31"];
+const P2_CTR_LEGACY = [3.809, 4.311, 5.052, 5.15, 5.121, 5.49, 3.773, 4.547, 5.086, 5.109, 5.013, 5.793, 5.518, 5.519, 4.222, 5.068, 5.089, 5.107, 5.033, 4.939, 4.961, 8.398];
+const P2_RPV_LEGACY = [3.0691, 3.9087, 3.967, 3.3939, 5.0974, 3.7005, 3.236, 2.9979, 3.3338, 3.3827, 3.6793, 3.9322, 3.663, 3.5611, 4.9312, 5.7863, 5.6078, 5.2977, 4.0195, 1.9026, 0.0324, 0.0274];
+const P2_UV_LEGACY = [138958, 116155, 97630, 93043, 100208, 88158, 98867, 132445, 127685, 127155, 116720, 97744, 100946, 108220, 84027, 58312, 55884, 58235, 65791, 68682, 57650, 11658];
+const P2_COMM_LEGACY = [4264.82, 4540.2, 3872.97, 3157.79, 5108.03, 3262.32, 3199.34, 3970.6, 4256.75, 4301.31, 4294.43, 3843.51, 3697.65, 3853.79, 4143.53, 3374.1, 3133.85, 3085.13, 2644.5, 1306.75, 18.67, 3.2];
+const P2_CTR_5050 = [1.388, 1.14, 1.064, 1.248, 1.35, 1.43, 1.184, 1.195, 1.283, 1.327, 1.014, 1.34, 1.264, 1.35, 0.807, 1.088, 1.266, 1.289, 1.123, 1.2, 1.308, 2.157];
+const P2_RPV_5050 = [1.0397, 0.7895, 0.7289, 0.8123, 0.9623, 1.0092, 0.8857, 0.6871, 0.8338, 0.7517, 0.5203, 0.7424, 0.8252, 0.8521, 0.6116, 0.8231, 0.8588, 0.876, 0.588, 0.1561, 0.0673, 0.061];
+const P2_UV_5050 = [513089, 655455, 748659, 605964, 533467, 526401, 621978, 722458, 712899, 667652, 856168, 592487, 704200, 651693, 887924, 611620, 498283, 498915, 627117, 613794, 452405, 89761];
+const P2_COMM_5050 = [5334.64, 5174.69, 5456.7, 4922.25, 5133.63, 5312.6, 5508.8, 4964.12, 5944.31, 5018.53, 4454.53, 4398.48, 5810.8, 5553.4, 5430.56, 5034.14, 4279.43, 4370.7, 3687.49, 957.89, 304.57, 54.79];
+const P2_CTR_PHASE1 = [3.653, 4.103, 3.817, 3.821, 3.617, 3.818, 3.585, 3.77, 4.586, 4.841, 5.383, 5.365, 4.913, 5.271, 4.737, 3.836, 3.16, 3.478, 3.403, 3.413, 3.084, 7.18];
+const P2_RPV_PHASE1 = [0.0, 0.0, 0.0, 0.0, 0.0023, 0.0078, 0.0002, 0.0, 0.0, 0.0, 0.0, 0.0017, 0.0, 0.0, 0.0, 0.0076, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+const P2_UV_PHASE1 = [52828, 50161, 57613, 63905, 75007, 66469, 61750, 63553, 58527, 48937, 47633, 50024, 52274, 44676, 46272, 35978, 33354, 37804, 46347, 43867, 29989, 3426];
+const P2_COMM_PHASE1 = [0.0, 0.0, 0.0, 0.0, 1.75, 5.19, 0.15, 0.0, 0.0, 0.0, 0.0, 0.85, 0.0, 0.0, 0.0, 2.75, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+const P2_CTR_33PCT = [3.274, 2.878, 3.263, 2.81, 2.712, 2.284, 2.532, 2.669, 2.752, 3.068, 3.035, 3.383, 3.043, 3.282, 2.772, 2.966, 2.837, 2.907, 2.731, 2.865, 3.118, 5.187];
+const P2_RPV_33PCT = [1.2888, 1.4315, 1.1919, 1.0486, 1.3206, 0.8513, 1.1733, 1.0898, 1.2069, 1.2873, 1.3743, 1.2561, 1.2037, 1.4789, 1.3929, 2.4939, 2.4261, 1.5312, 0.9238, 0.2435, 0.0292, 0.0204];
+const P2_UV_33PCT = [340070, 387607, 358851, 446262, 479347, 583439, 483217, 537934, 567940, 486804, 476901, 428720, 468500, 430774, 436098, 382713, 396157, 408475, 503307, 480775, 327247, 66398];
+const P2_COMM_33PCT = [4382.94, 5548.46, 4277.1, 4679.47, 6330.23, 4966.61, 5669.54, 5862.63, 6854.75, 6266.7, 6553.85, 5385.25, 5639.27, 6370.65, 6074.52, 9544.61, 9611.34, 6254.64, 4649.77, 1170.6, 95.5, 13.56];
 const P2_ROLLOUT_IDX = 8;
 
 const p2RolloutPlugin = {
@@ -1020,6 +993,43 @@ if (p2c4) new Chart(p2c4, {
   options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Commission ($)' } } }, plugins: { legend: { position: 'top' } } },
   plugins: [p2RolloutPlugin]
 });
+
+// Dynamic stat cards from data
+(function() {
+  const cohorts = [
+    { key: 'LEGACY', ctr: P2_CTR_LEGACY, rpv: P2_RPV_LEGACY, uv: P2_UV_LEGACY, label: 'Legacy Protected (407)', bg: '#f5f5f7', border: '#e5e5ea', labelColor: '#6e6e73' },
+    { key: '5050', ctr: P2_CTR_5050, rpv: P2_RPV_5050, uv: P2_UV_5050, label: '50/50 A/B (41)', bg: '#f0e6ff', border: '#7c3aed', labelColor: '#7c3aed' },
+    { key: '33PCT', ctr: P2_CTR_33PCT, rpv: P2_RPV_33PCT, uv: P2_UV_33PCT, label: '33% Split (~3,033)', bg: '#fff3e0', border: '#ff9500', labelColor: '#e65100' },
+    { key: 'PHASE1', ctr: P2_CTR_PHASE1, rpv: P2_RPV_PHASE1, uv: P2_UV_PHASE1, label: 'Phase 1 (54)', bg: '#e3f2fd', border: '#007aff', labelColor: '#0d47a1' }
+  ];
+  const avg = arr => arr.reduce((a,b) => a+b, 0) / arr.length;
+  const delta = (pre, post) => pre > 0 ? ((post - pre) / pre * 100) : 0;
+  const color = v => v > 5 ? '#34c759' : v < -5 ? '#ff3b30' : v < 0 ? '#ff9500' : '#1d1d1f';
+  const fmt = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+
+  const container = document.getElementById('p2StatCards');
+  if (!container) return;
+
+  cohorts.forEach(c => {
+    const pre = c.ctr.slice(0, 8), post = c.ctr.slice(8);
+    const ctrD = delta(avg(pre), avg(post));
+    const preRpv = c.rpv.slice(0, 8), postRpv = c.rpv.slice(8);
+    const rpvD = delta(avg(preRpv), avg(postRpv));
+    const preUv = c.uv.slice(0, 8), postUv = c.uv.slice(8);
+    const uvD = delta(avg(preUv), avg(postUv));
+    const isPhase1 = c.key === 'PHASE1';
+    const rpvLabel = isPhase1 ? 'n/a' : fmt(rpvD);
+    const rpvColor = isPhase1 ? '#86868b' : color(rpvD);
+
+    container.innerHTML += `
+      <div style="background:${c.bg}; border-radius:10px; padding:14px; border-top:3px solid ${c.border};">
+        <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:${c.labelColor}; margin-bottom:8px;">${c.label}</div>
+        <div style="font-size:11px; color:#636366; margin-bottom:4px;">CTR <span style="float:right; font-weight:700; color:${color(ctrD)};">${fmt(ctrD)}</span></div>
+        <div style="font-size:11px; color:#636366; margin-bottom:4px;">RPV <span style="float:right; font-weight:700; color:${rpvColor};">${rpvLabel}</span></div>
+        <div style="font-size:11px; color:#636366;">Traffic <span style="float:right; font-weight:700; color:${color(uvD)};">${fmt(uvD)}</span></div>
+      </div>`;
+  });
+})();
 
 // Tab Navigation
 // ═══════════════════════════════════════

@@ -1,0 +1,48 @@
+name: Refresh Phase 2 Data
+
+on:
+  schedule:
+    # Run daily at 7:00 UTC (9:00 CET) — after BQ data refreshes overnight
+    - cron: '0 7 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Run data refresh
+        run: python scripts/refresh-data.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          CHANGES=$(git diff --cached --stat)
+          if [ -n "$CHANGES" ]; then
+            git commit -m "Auto-refresh Phase 2 data $(date -u +%Y-%m-%d)
+
+          Data updated from BigQuery rep.12_offer_dashboard.
+          Triggered by: ${{ github.event_name }}"
+            git push
+            echo "✅ Data refreshed and pushed"
+          else
+            echo "ℹ️ No data changes detected"
+          fi
