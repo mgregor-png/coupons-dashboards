@@ -172,14 +172,65 @@
       <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
     </div>
   </div>
-  <div class="donut-row">
-    <div class="donut-wrap">
-      <div class="chart-container"><canvas id="revenueDonut"></canvas></div>
-      <div class="donut-label">Revenue Split</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:8px;">
+    <!-- Donut left -->
+    <div style="text-align:center;">
+      <div class="chart-container" style="height:180px;margin-bottom:0"><canvas id="revenueDonut"></canvas></div>
+      <div style="font-size:12px;color:#86868b;margin-top:4px">Revenue Split</div>
     </div>
-    <div class="donut-wrap">
-      <div class="chart-container"><canvas id="trafficDonut"></canvas></div>
-      <div class="donut-label">Traffic Split</div>
+    <!-- Breakdown table right -->
+    <div>
+      <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:8px;">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Bucket</th>
+            <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Revenue</th>
+            <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:10px;text-transform:uppercase">Traffic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#f5f5f7;font-weight:700">
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea">Legacy (total)</td>
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">65.2%</td>
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">60.0%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; 407 protected merchants (100% legacy)</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">27.2%</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">17.6%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; Top 41 &rarr; legacy half of 50/50</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">24.9%</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">12.9%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #e5e5ea;font-size:11px">&ndash; ~3,033 remaining &rarr; 67% to legacy</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:11px">12.6%</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #e5e5ea;text-align:right;font-size:11px">27.8%</td>
+          </tr>
+          <tr style="background:#f0faf3;font-weight:700">
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea">New platform (total)</td>
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">34.8%</td>
+            <td style="padding:6px 10px;border-bottom:1px solid #e5e5ea;text-align:right">40.0%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; 54 existing merchants (Phase 1)</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">3.7%</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">13.4%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;border-bottom:1px solid #f0f0f0;font-size:11px">&ndash; Top 41 &rarr; new platform half of 50/50</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">24.9%</td>
+            <td style="padding:4px 10px;border-bottom:1px solid #f0f0f0;text-align:right;font-size:11px">12.9%</td>
+          </tr>
+          <tr style="color:#636366">
+            <td style="padding:4px 10px 4px 20px;font-size:11px">&ndash; ~3,033 remaining &rarr; 33% to new</td>
+            <td style="padding:4px 10px;text-align:right;font-size:11px">6.2%</td>
+            <td style="padding:4px 10px;text-align:right;font-size:11px">13.7%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -213,36 +264,6 @@
 <!-- TAB 2: PHASE 2 MONITORING              -->
 <!-- ═══════════════════════════════════════ -->
 <div id="tab-phase2" class="tab-panel">
-
-<!-- Merchant Allocation Lookup -->
-<div class="card" style="border-left: 4px solid #af52de;">
-  <h2>Merchant Allocation Lookup</h2>
-  <p class="subtitle" style="margin-bottom:12px">Search any merchant to see its traffic allocation. Data from routing service configuration.</p>
-  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
-    <input type="text" id="merchantSearch" placeholder="Search merchant name or slug..." style="font-size:14px; padding:8px 12px; border:1px solid #d2d2d7; border-radius:8px; width:300px; background:#fff;">
-    <select id="bucketFilter" style="font-size:13px; padding:8px 10px; border:1px solid #d2d2d7; border-radius:6px; background:#fff;">
-      <option value="all">All buckets</option>
-      <option value="legacy">Legacy Protected (407)</option>
-      <option value="5050">50/50 A/B (41)</option>
-      <option value="phase1_100">Phase 1 — 100% new (42)</option>
-      <option value="33pct">33% new / 67% legacy (~3,033)</option>
-    </select>
-    <span id="merchantCount" style="font-size:12px; color:#6e6e73; margin-left:8px;">—</span>
-  </div>
-  <div style="max-height:500px; overflow-y:auto; border:1px solid #e5e5ea; border-radius:8px;">
-    <table id="merchantLookupTable" style="width:100%; border-collapse:collapse; font-size:13px;">
-      <thead style="position:sticky; top:0; background:#fff; z-index:1;">
-        <tr>
-          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('name')">Merchant &#x25B4;&#x25BE;</th>
-          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('bucket')">Bucket &#x25B4;&#x25BE;</th>
-          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Traffic Split</th>
-          <th style="text-align:center;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Page</th>
-        </tr>
-      </thead>
-      <tbody id="merchantLookupBody"></tbody>
-    </table>
-  </div>
-</div>
 
 <!-- Phase 2 Monitoring — real data from BQ -->
 <div class="card" style="border-left: 4px solid #007aff;">
@@ -287,7 +308,40 @@
 <!-- ═══════════════════════════════════════ -->
 <div id="tab-merchants" class="tab-panel">
 
-
+<div class="card" style="border-left: 4px solid #af52de;">
+  <h2>Merchant Allocation Lookup</h2>
+  <p class="subtitle" style="margin-bottom:12px">Search any US merchant to see its traffic allocation. All 3,524 merchants included.</p>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
+    <input type="text" id="merchantSearch" placeholder="Search merchant name or slug..." style="font-size:14px; padding:8px 12px; border:1px solid #d2d2d7; border-radius:8px; width:300px; background:#fff;">
+    <select id="bucketFilter" style="font-size:13px; padding:8px 10px; border:1px solid #d2d2d7; border-radius:6px; background:#fff;">
+      <option value="all">All buckets (3,524)</option>
+      <option value="legacy">Legacy Protected (407)</option>
+      <option value="5050">50/50 A/B (41)</option>
+      <option value="phase1_100">Phase 1 — 100% new (42)</option>
+      <option value="33pct">33% new / 67% legacy (~3,033)</option>
+    </select>
+    <span id="merchantCount" style="font-size:12px; color:#6e6e73; margin-left:8px;">—</span>
+  </div>
+  <div style="max-height:600px; overflow-y:auto; border:1px solid #e5e5ea; border-radius:8px;">
+    <table id="merchantLookupTable" style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead style="position:sticky; top:0; background:#fff; z-index:1;">
+        <tr>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('name')">Merchant &#x25B4;&#x25BE;</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('bucket')">Bucket &#x25B4;&#x25BE;</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Traffic Split</th>
+          <th style="text-align:center;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Page</th>
+        </tr>
+      </thead>
+      <tbody id="merchantLookupBody"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px; font-size:11px; color:#86868b;">
+    Merchant lists: <a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff" target="_blank">All 3,524 merchants</a> ·
+    <a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff" target="_blank">407 Legacy</a> ·
+    <a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff" target="_blank">41 50/50</a> ·
+    <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff" target="_blank">Phase 1</a>
+  </div>
+</div>
 
 </div><!-- end tab-merchants -->
 
@@ -789,42 +843,8 @@ merchantStats.forEach(m => {
 
 <script>
 // ═══════════════════════════════════════
-// Merchant Allocation Lookup
+// Merchant Allocation Lookup (loaded from merchants.json)
 // ═══════════════════════════════════════
-
-const MERCHANTS_5050 = [
-  "1-800-contacts","aaa","aliexpress","amazon","att","att-wireless","avis","booking-com",
-  "budget-car-rental","costco","dell","disney","dominos","ebay","edible-arrangements",
-  "expedia","foot-locker","hotels-com","kohls","legalzoom","lowes","macys","nike","noom",
-  "palmetto-state-armory","priceline","readyrx","shein","shutterfly","simply-piano",
-  "t-mobile-home-internet","target","temu","the-home-depot","tripadvisor","turbotax",
-  "udemy","valvoline","verizon-wireless","viator","walmart","wayfair","zoro"
-];
-
-const MERCHANTS_PHASE1_100 = [
-  "allegiant","american-airlines","arbys","bath-body-works","buffalo-wild-wings",
-  "burger-king","carnival-cruise","chilis","chipotle","dsw","figs","five-guys",
-  "great-clips","grubhub","jersey-mikes-subs","jiffy-lube","jimmy-johns","kfc",
-  "little-caesars","mountain-mikes-pizza","lyft","panda-express","panera-bread",
-  "papa-johns","papa-murphys","petsmart","planet-fitness","popeyes","postmates",
-  "quince","stockx","subway","taco-bell","texas-roadhouse","topgolf","u-haul",
-  "walgreens-photo","aerie"
-];
-
-const MERCHANTS_LEGACY = [
-  "adobe","airbnb","aliexpress-legacy","apple","best-buy","capital-one","chase",
-  "chewy","cvs","door-dash","etsy","fashion-nova","google-store","grammarly",
-  "h-and-m","hp","instacart","jcpenney","lenovo","microsoft","nordstrom",
-  "old-navy","samsung","sephora","staples","t-mobile","uber","uber-eats",
-  "under-armour","vrbo","zappos"
-  // Note: Full 407 list available in Google Sheet — showing representative sample
-];
-// Flag to indicate this is a sample
-const LEGACY_IS_SAMPLE = true;
-
-function slugToName(slug) {
-  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-}
 
 const BUCKET_STYLES = {
   'legacy': { label: 'Legacy Protected', bg: '#e5e5ea', color: '#636366', split: '100% legacy' },
@@ -833,28 +853,28 @@ const BUCKET_STYLES = {
   '33pct': { label: '33% Split', bg: '#fff3e0', color: '#e65100', split: '33% new / 67% legacy' }
 };
 
-// Build merchant list
-const allMerchants = [];
-MERCHANTS_5050.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: '5050' }));
-MERCHANTS_PHASE1_100.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: 'phase1_100' }));
-MERCHANTS_LEGACY.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: 'legacy' }));
-// Add sample "33% split" entries — in reality ~3,033 merchants
-const SAMPLE_33 = [
-  "gap","reebok","petco","autozone","rei","crocs","finish-line","gamestop","express",
-  "asos","forever-21","anthropologie","brooklinen","casper","glossier","warby-parker",
-  "allbirds","peloton","hulu","spotify","hbo-max","paramount-plus","peacock",
-  "pizza-hut","wendys","sonic","dairy-queen","jack-in-the-box","white-castle","wingstop"
-];
-SAMPLE_33.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: '33pct' }));
-
-allMerchants.sort((a, b) => a.name.localeCompare(b.name));
-
+let allMerchants = [];
 let merchantSortDir = 1;
 let merchantSortKey = 'name';
 
+// Load all 3,590 merchants from JSON
+fetch('merchants.json')
+  .then(r => r.json())
+  .then(data => {
+    allMerchants = data.map(m => ({ slug: m.s, name: m.n, bucket: m.b }));
+    allMerchants.sort((a, b) => a.name.localeCompare(b.name));
+    renderMerchantTable();
+  })
+  .catch(() => {
+    document.getElementById('merchantCount').textContent = 'Failed to load merchant data';
+  });
+
 function renderMerchantTable() {
-  const search = document.getElementById('merchantSearch').value.toLowerCase();
-  const bucket = document.getElementById('bucketFilter').value;
+  const searchEl = document.getElementById('merchantSearch');
+  const bucketEl = document.getElementById('bucketFilter');
+  if (!searchEl || !bucketEl) return;
+  const search = searchEl.value.toLowerCase();
+  const bucket = bucketEl.value;
   const tbody = document.getElementById('merchantLookupBody');
   tbody.innerHTML = '';
 
@@ -862,15 +882,13 @@ function renderMerchantTable() {
   if (search) filtered = filtered.filter(m => m.name.toLowerCase().includes(search) || m.slug.includes(search));
   if (bucket !== 'all') filtered = filtered.filter(m => m.bucket === bucket);
 
-  // Sort
   filtered.sort((a, b) => {
     const va = merchantSortKey === 'name' ? a.name : BUCKET_STYLES[a.bucket].label;
     const vb = merchantSortKey === 'name' ? b.name : BUCKET_STYLES[b.bucket].label;
     return merchantSortDir * va.localeCompare(vb);
   });
 
-  document.getElementById('merchantCount').textContent = filtered.length + ' merchants' +
-    (bucket === '33pct' || (bucket === 'all' && !search) ? ' (showing sample — full list in Google Sheets)' : '');
+  document.getElementById('merchantCount').textContent = filtered.length + ' of ' + allMerchants.length + ' merchants';
 
   filtered.forEach(m => {
     const s = BUCKET_STYLES[m.bucket];
@@ -891,9 +909,10 @@ function sortMerchantTable(key) {
   renderMerchantTable();
 }
 
-document.getElementById('merchantSearch').addEventListener('input', renderMerchantTable);
-document.getElementById('bucketFilter').addEventListener('change', renderMerchantTable);
-renderMerchantTable();
+const mSearchEl = document.getElementById('merchantSearch');
+const mBucketEl = document.getElementById('bucketFilter');
+if (mSearchEl) mSearchEl.addEventListener('input', renderMerchantTable);
+if (mBucketEl) mBucketEl.addEventListener('change', renderMerchantTable);
 
 // ═══════════════════════════════════════
 // ═══════════════════════════════════════
