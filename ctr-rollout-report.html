@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Platform CTR — Rollout Report</title>
+<title>New Platform Rollout — US Coupons</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,7 +14,7 @@
   .card h2 { font-size: 17px; font-weight: 600; margin-bottom: 16px; }
   .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
   .stat { background: #f5f5f7; border-radius: 8px; padding: 14px 18px; min-width: 160px; }
-  .stat .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; margin-bottom: 4px; }
+  .stat .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6e6e73; margin-bottom: 4px; }
   .stat .value { font-size: 24px; font-weight: 600; }
   .stat .value.up { color: #34c759; }
   .stat .value.down { color: #ff3b30; }
@@ -32,7 +32,7 @@
   .badge.up { background: #d1f5d9; color: #1a7f37; }
   .badge.down { background: #fdd; color: #cf222e; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e5e5ea; font-weight: 600; color: #86868b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e5e5ea; font-weight: 600; color: #6e6e73; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
   td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
   tr:hover td { background: #f5f5f7; }
   .num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -99,14 +99,229 @@
   .test-box.secondary { border: 2px solid #ff9500; }
   details.card summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
   details.card summary::-webkit-details-marker { display: none; }
-  details.card summary::before { content: '\25B6'; font-size: 10px; transition: transform 0.2s; color: #86868b; }
+  details.card summary { padding: 8px 4px; border-radius: 6px; transition: background 0.15s; }
+  details.card summary:hover { background: #f5f5f7; }
+  details.card summary::before { content: '\25B6'; font-size: 12px; transition: transform 0.2s; color: #86868b; min-width: 16px; }
   details.card[open] summary::before { transform: rotate(90deg); }
+
+  @media (max-width: 768px) {
+    .test-grid { grid-template-columns: 1fr; }
+    .donut-row { flex-direction: column; align-items: center; }
+    .rollout-table { font-size: 12px; }
+    .rollout-table th, .rollout-table td { padding: 6px 8px; }
+    body { padding: 12px; }
+  }
 </style>
 </head>
 <body>
 
-<h1>New Platform Rollout — US CTR Performance</h1>
-<p class="subtitle">Phase 1: 48 merchants (Mar 18) · Phase 2: 3,500+ merchants (Apr 1, planned) · Data: Tableau · Updated March 27</p>
+<h1>New Platform Rollout — US Coupons</h1>
+<p class="subtitle">Phased migration from legacy to new merchant template · Phase 2 live — 3,524 merchants · April 1, 2026</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 1: ROLLOUT OVERVIEW (for all stakeholders) -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<!-- Rollout Strategy Timeline -->
+<div class="card" style="border-left: 4px solid #5856d6;">
+  <h2>Rollout Strategy</h2>
+  <p style="font-size:13px; color:#424245; line-height:1.6; margin-bottom:20px;">
+    We're migrating US coupon merchant pages from legacy to a new platform in controlled phases, validating performance at each stage before increasing exposure.
+  </p>
+
+  <!-- Phase timeline -->
+  <div style="display:grid; grid-template-columns:120px 1fr; gap:0; font-size:13px;">
+
+    <!-- POC -->
+    <div style="padding:12px; font-weight:600; color:#86868b; border-bottom:1px solid #e5e5ea; background:#f5f5f7;">
+      <div>POC</div>
+      <div style="font-size:11px; font-weight:400;">Jan – Mar 14</div>
+    </div>
+    <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6;">
+      <strong>4 merchants</strong> on 100% new platform. Validated core functionality, page rendering, and caching. Confirmed no critical issues — platform ready for broader testing.
+    </div>
+
+    <!-- Phase 1 -->
+    <div style="padding:12px; font-weight:600; color:#86868b; border-bottom:1px solid #e5e5ea; background:#f5f5f7;">
+      <div>Phase 1</div>
+      <div style="font-size:11px; font-weight:400;">Mar 18</div>
+    </div>
+    <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6;">
+      <strong>48 → 54 merchants</strong> — started with 48 (38 at 100% new, 10 at 50/50 split), expanded to 54. First controlled performance measurement. Results: aggregate CTR stable, site speed improvements confirmed. <span style="color:#34c759; font-weight:600;">&#x2713; Completed</span>
+    </div>
+
+    <!-- Phase 2 — current -->
+    <div style="padding:12px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #e5e5ea; background:#d1f5d9;">
+      <div>Phase 2</div>
+      <div style="font-size:11px; font-weight:400;">Apr 1 — NOW</div>
+    </div>
+    <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6; background:#f0faf3;">
+      <strong>3,524 merchants</strong> — expanded to all US merchants with conservative traffic allocation:<br>
+      &bull; <strong>407 merchants</strong> kept on 100% legacy (high-revenue + SEO-critical protection)<br>
+      &bull; <strong>41 merchants</strong> on 50/50 A/B split (top revenue — controlled experiment)<br>
+      &bull; <strong>~3,033 merchants</strong> receive 33% traffic on new platform, 67% on legacy<br>
+      &bull; Phase 1 merchants continue unchanged<br>
+      <span style="color:#34c759; font-weight:600;">&#x2713; Deployed</span> — monitoring for CTR, revenue, and error signals.
+    </div>
+
+    <!-- Phase 3 — next -->
+    <div style="padding:12px; font-weight:600; color:#86868b; background:#f5f5f7;">
+      <div>Phase 3</div>
+      <div style="font-size:11px; font-weight:400;">TBD</div>
+    </div>
+    <div style="padding:12px; line-height:1.6; color:#636366;">
+      <strong>Increase traffic allocation</strong> — if Phase 2 signals are positive (CTR neutral or better, no revenue impact), increase the 33% split to 66% or 100% for the long-tail merchants. Gradually reduce the legacy-protected bucket. Decision based on 1–2 weeks of Phase 2 data.
+    </div>
+
+  </div>
+</div>
+
+<!-- Current Phase 2 Configuration -->
+<div class="card rollout-config" style="border-left:4px solid #34c759">
+  <h2>Current Configuration — Phase 2</h2>
+  <table class="rollout-table">
+    <thead>
+      <tr><th>Bucket</th><th>Merchants</th><th class="num">Revenue Share</th><th class="num">Traffic Share</th><th>Treatment</th><th>Merchant List</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Legacy Protected</strong></td><td>407</td><td class="num">27.2%</td><td class="num">17.6%</td><td>100% legacy</td><td><a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
+      <tr><td><strong>50/50 A/B Experiment</strong></td><td>41</td><td class="num">~52%</td><td class="num">~30%</td><td>50/50 new vs legacy</td><td><a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
+      <tr><td><strong>Phase 1 (unchanged)</strong></td><td>54</td><td class="num">4.2%</td><td class="num">15.0%</td><td>As before (mix of 100% and 50/50)</td><td><a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
+      <tr style="background:#f5f5f7"><td><strong>33% Traffic Split</strong></td><td>~3,033</td><td class="num">18.8%</td><td class="num">41.5%</td><td><strong>33% new / 67% legacy</strong></td><td><a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff" target="_blank">All 3,524 merchants</a></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; font-size:12px; color:#34c759; font-weight:600; display:flex; align-items:center; gap:6px;">&#x2705; Phase 2 expansion LIVE — deployed April 1, 2026</div>
+  <div class="donut-row">
+    <div class="donut-wrap">
+      <div class="chart-container"><canvas id="revenueDonut"></canvas></div>
+      <div class="donut-label">Revenue Split (post-expansion)</div>
+    </div>
+    <div class="donut-wrap">
+      <div class="chart-container"><canvas id="trafficDonut"></canvas></div>
+      <div class="donut-label">Traffic Split (post-expansion)</div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 2 Live Status — first for launch day urgency -->
+<div class="card" style="border-left: 4px solid #ff3b30;">
+  <h2>Phase 2 Live Status — April 1</h2>
+  <p class="subtitle" style="margin-bottom:16px">3,524 US merchants deployed. Issues being resolved. Updated 11:20 CET.</p>
+  <table style="width:100%; border-collapse:collapse; font-size:13px;">
+    <thead>
+      <tr><th style="text-align:left;padding:8px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Issue</th><th style="text-align:left;padding:8px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Status</th><th style="text-align:left;padding:8px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Owner</th><th style="text-align:left;padding:8px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Impact</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 split not working</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Related to Akamai → Cloudflare migration. Fix deployed, 50/50 now working.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards: 50/50 backtab redirect to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Any backtab-type click on 50/50 merchant redirects to legacy. Fix being deployed. Non-offer tile CTAs working (verified on shein).</td></tr>
+      <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards CTA not redirecting to merchant</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">"Yes I understand" CTA now redirects correctly.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">SEO test pages reverting to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; Monitoring</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard / Routing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">ATT, AliExpress + others. May be related to 50/50 fix — verifying.</td></tr>
+      <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 experiment_impression tracking</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Done</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Marcos</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">GTM updated for all 41 merchants. <a href="https://groupondev.atlassian.net/wiki/spaces/COUP/pages/82711478404" style="color:#007aff" target="_blank">Documented</a>. Awaiting BI validation.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rich content missing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Jakub</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">jiffy-lube + others missing headings/sidebar. Backend data update in progress.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">BI database switchover</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#86868b;font-weight:600">&#x26A0;&#xFE0F; Caution</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Mark / BI</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Dashboards/reports may fail intermittently this week.</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:16px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:13px; line-height:1.6;">
+    <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1–2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
+  </div>
+</div>
+
+<!-- What We're Measuring -->
+<div class="card test-framing">
+  <h2>What We're Measuring</h2>
+  <div class="test-grid">
+    <div class="test-box primary">
+      <h3>Platform Performance Test (50/50 Split)</h3>
+      <div class="test-purpose">
+        Top 30 revenue merchants run 50/50 legacy vs new platform. This is the <strong>controlled experiment</strong> — same merchants, same time, same offers. Controls for seasonality and offer quality.
+      </div>
+      <div class="test-note">This is the definitive signal for platform impact on CTR and revenue.</div>
+    </div>
+    <div class="test-box secondary">
+      <h3>Gradual Rollout (33% Traffic Split)</h3>
+      <div class="test-purpose">
+        ~3,033 remaining merchants receive 33% of traffic on new platform, 67% on legacy. Provides broad exposure for monitoring while limiting risk. The <strong>407 legacy-protected merchants serve as a control group</strong> for aggregate comparison.
+      </div>
+      <div class="test-note">Compare aggregate CTR of 33% cohort vs legacy-protected cohort to detect platform-level issues.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Merchant Allocation Lookup -->
+<div class="card" style="border-left: 4px solid #af52de;">
+  <h2>Merchant Allocation Lookup</h2>
+  <p class="subtitle" style="margin-bottom:12px">Search any merchant to see its traffic allocation. Data from routing service configuration.</p>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
+    <input type="text" id="merchantSearch" placeholder="Search merchant name or slug..." style="font-size:14px; padding:8px 12px; border:1px solid #d2d2d7; border-radius:8px; width:300px; background:#fff;">
+    <select id="bucketFilter" style="font-size:13px; padding:8px 10px; border:1px solid #d2d2d7; border-radius:6px; background:#fff;">
+      <option value="all">All buckets</option>
+      <option value="legacy">Legacy Protected (407)</option>
+      <option value="5050">50/50 A/B (41)</option>
+      <option value="phase1_100">Phase 1 — 100% new (42)</option>
+      <option value="33pct">33% new / 67% legacy (~3,033)</option>
+    </select>
+    <span id="merchantCount" style="font-size:12px; color:#6e6e73; margin-left:8px;">—</span>
+  </div>
+  <div style="max-height:500px; overflow-y:auto; border:1px solid #e5e5ea; border-radius:8px;">
+    <table id="merchantLookupTable" style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead style="position:sticky; top:0; background:#fff; z-index:1;">
+        <tr>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('name')">Merchant &#x25B4;&#x25BE;</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase;cursor:pointer" onclick="sortMerchantTable('bucket')">Bucket &#x25B4;&#x25BE;</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Traffic Split</th>
+          <th style="text-align:center;padding:10px 12px;border-bottom:2px solid #e5e5ea;font-weight:600;color:#6e6e73;font-size:11px;text-transform:uppercase">Page</th>
+        </tr>
+      </thead>
+      <tbody id="merchantLookupBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Phase 2 Monitoring — placeholder for live data -->
+<div class="card" style="border-left: 4px solid #007aff;">
+  <h2>Phase 2 Monitoring</h2>
+  <p class="subtitle" style="margin-bottom:16px">Live data from BigQuery + Tableau. Tracking aggregate cohort performance by bucket.</p>
+  <div class="stats">
+    <div class="stat awaiting">
+      <div class="label">50/50 A/B — CTR (new vs legacy)</div>
+      <div class="value">—</div>
+      <div class="note">Awaiting tracking fix (Marcos)</div>
+    </div>
+    <div class="stat awaiting">
+      <div class="label">33% Cohort — Aggregate CTR</div>
+      <div class="value">—</div>
+      <div class="note">Data available ~Apr 2</div>
+    </div>
+    <div class="stat awaiting">
+      <div class="label">Legacy Protected — Aggregate CTR</div>
+      <div class="value">—</div>
+      <div class="note">Control group baseline</div>
+    </div>
+    <div class="stat awaiting">
+      <div class="label">Revenue per Session (new vs legacy)</div>
+      <div class="value">—</div>
+      <div class="note">From BQ metrics table</div>
+    </div>
+  </div>
+  <div class="placeholder-chart" style="height:200px">Phase 2 cohort comparison charts will populate as data flows from BigQuery<br><br>
+    <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">View live data in Tableau Dashboard</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 2: PHASE 1 DETAILED ANALYSIS (for PM)  -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<div style="margin-top:40px; padding-top:20px; border-top:2px solid #e5e5ea;">
+  <div style="padding:12px 16px; background:#fff3e0; border-radius:8px; border:1px solid #ffe0b2; margin-bottom:16px; font-size:13px; color:#e65100; font-weight:600;">
+    Historical reference — charts below show Phase 1 data only (48 merchants, Mar 18–24). For current Phase 2 monitoring, see sections above.
+  </div>
+</div>
+
+<details style="margin-bottom:20px;">
+  <summary style="cursor:pointer; font-size:17px; font-weight:600; color:#86868b; padding:8px 0; list-style:none; display:flex; align-items:center; gap:8px;">
+    <span style="font-size:10px; transition:transform 0.2s;">&#x25B6;</span> Phase 1 Analysis (48 merchants, Mar 18–24)
+  </summary>
 
 <!-- DMMM Measurement Framework -->
 <div class="card framework">
@@ -116,7 +331,7 @@
       <div class="fk">Goal</div>
       <div class="fv">Validate new platform doesn't degrade CTR before scaling to 100% of US merchants</div>
       <div class="fk">Tactics</div>
-      <div class="fv">Phased rollout: 4 &rarr; 54 &rarr; 3,500+ merchants. 50/50 experiments on top 30 revenue merchants. Legacy protection for 407 high-value merchants.</div>
+      <div class="fv">Phased rollout: 4 &rarr; 54 &rarr; 3,524 merchants. 50/50 experiments on top 30 revenue merchants. Legacy protection for 407 high-value merchants.</div>
       <div class="fk">KPIs</div>
       <div class="fv">CTR (primary), CWV (LCP, INP, CLS), bounce rate, error rates, SEO rankings</div>
       <div class="fk">Targets</div>
@@ -125,7 +340,7 @@
       <div class="fv">
         (1) <strong>Code Position 1:</strong> has P1 code vs no P1 code<br>
         (2) <strong>Content Quality:</strong> quality offers vs spam/filler<br>
-        (3) <strong>Traffic Allocation:</strong> 100% / 50-50 / legacy<br>
+        (3) <strong>Traffic Allocation:</strong> 100% / 50-50 / 33-67 / legacy<br>
         (4) <strong>Revenue Tier</strong>
       </div>
     </div>
@@ -133,58 +348,6 @@
   </details>
 </div>
 
-<!-- Rollout Configuration -->
-<div class="card rollout-config">
-  <details>
-    <summary>Rollout Configuration — Phase 2 Expansion</summary>
-    <table class="rollout-table">
-      <thead>
-        <tr><th>Bucket</th><th>Merchants</th><th class="num">Revenue Share</th><th class="num">Traffic Share</th><th>Treatment</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Legacy Protected</td><td>407</td><td class="num">27.2%</td><td class="num">17.6%</td><td>100% legacy</td></tr>
-        <tr><td>Existing on New Platform</td><td>54 (42x100%, 12x50/50)</td><td class="num">4.2%</td><td class="num">15.0%</td><td>Unchanged</td></tr>
-        <tr><td>Top 30 Revenue (new)</td><td>30</td><td class="num">49.8%</td><td class="num">25.9%</td><td>50/50 experiment</td></tr>
-        <tr><td>Remaining</td><td>~3,001</td><td class="num">18.8%</td><td class="num">41.5%</td><td>33% new / 67% legacy</td></tr>
-      </tbody>
-    </table>
-    <div class="rollout-note">Expansion not yet live — targeted for Tuesday Apr 1, 2026</div>
-    <div class="donut-row">
-      <div class="donut-wrap">
-        <div class="chart-container"><canvas id="revenueDonut"></canvas></div>
-        <div class="donut-label">Revenue Split (post-expansion)</div>
-      </div>
-      <div class="donut-wrap">
-        <div class="chart-container"><canvas id="trafficDonut"></canvas></div>
-        <div class="donut-label">Traffic Split (post-expansion)</div>
-      </div>
-    </div>
-  </details>
-</div>
-
-<!-- Two-Test Framing -->
-<div class="card test-framing">
-  <h2>What We're Measuring</h2>
-  <div class="test-grid">
-    <div class="test-box primary">
-      <h3>Platform Performance Test (50/50 Split)</h3>
-      <div class="test-purpose">
-        Top 30 revenue merchants run 50/50 legacy vs new platform. This is the <strong>controlled experiment</strong> — same merchants, same time, same offers. Controls for seasonality and offer quality.
-      </div>
-      <div class="test-note">This is the definitive signal for platform impact on CTR.</div>
-    </div>
-    <div class="test-box secondary">
-      <h3>SEO Test (Whole-Page Rollout)</h3>
-      <div class="test-purpose">
-        48 merchants on 100% new platform. Required for SEO measurement — search engines need to see the full new page. Before/after comparison is <strong>confounded</strong> by offer quality changes and seasonality.
-      </div>
-      <div class="test-note">Aggregate (mass) signal is usable. Individual merchant WoW is not reliable without context.</div>
-    </div>
-  </div>
-</div>
-
-<!-- Existing stat cards -->
-<!-- Aggregate cohort stats — primary view -->
 <div class="stats">
   <div class="stat">
     <div class="label">All 48 Merchants Aggregate CTR (WoW)</div>
@@ -208,25 +371,6 @@
   </div>
 </div>
 
-<!-- P1 Content Segment stat cards -->
-<div class="stats">
-  <div class="stat awaiting">
-    <div class="label">With P1 Code (WoW)</div>
-    <div class="value">—</div>
-    <div class="note">Awaiting P1 data</div>
-  </div>
-  <div class="stat awaiting">
-    <div class="label">Without P1 Code (WoW)</div>
-    <div class="value">—</div>
-    <div class="note">Awaiting P1 data</div>
-  </div>
-  <div class="stat awaiting">
-    <div class="label">Unknown Content Status</div>
-    <div class="value" id="stat-unknown">—</div>
-    <div class="note">Awaiting P1 data</div>
-  </div>
-</div>
-
 <div class="card">
   <h2>CTR Trend by Traffic Allocation</h2>
   <p class="subtitle" style="margin-bottom:12px">50/50 split (10 merchants) = platform test · 100% new (38 merchants) = SEO test · site-wide US baseline.</p>
@@ -237,13 +381,6 @@
   <h2>Overall US CTR — Daily Trend</h2>
   <p class="subtitle" style="margin-bottom:12px">All US merchants combined. Red dashed line = rollout date (Mar 18).</p>
   <div class="chart-container"><canvas id="headlineChart"></canvas></div>
-</div>
-
-<!-- P1 Content Segment Chart (placeholder) -->
-<div class="card">
-  <h2>CTR by Content Segment</h2>
-  <p class="subtitle" style="margin-bottom:12px">Breakdown by Code Position 1 status: stable, degraded, no code, improved.</p>
-  <div class="placeholder-chart">Add P1 code data to activate this chart</div>
 </div>
 
 <details class="card">
@@ -368,7 +505,8 @@ elAgg.className = 'value ' + (aggChange >= 0 ? 'up' : 'down');
 
 // P1 unknown count
 const unknownCount = merchantStats.filter(m => m.p1_status === 'unknown').length;
-document.getElementById('stat-unknown').textContent = unknownCount + ' / ' + merchantStats.length;
+const elUnknown = document.getElementById('stat-unknown');
+if (elUnknown) elUnknown.textContent = unknownCount + ' / ' + merchantStats.length;
 
 // Rollout annotation plugin
 const rolloutLine = {
@@ -598,8 +736,130 @@ merchantStats.forEach(m => {
   tbody.appendChild(tr);
 });
 </script>
+
+</details><!-- end Phase 1 collapsible -->
+
+<script>
+// ═══════════════════════════════════════
+// Merchant Allocation Lookup
+// ═══════════════════════════════════════
+
+const MERCHANTS_5050 = [
+  "1-800-contacts","aaa","aliexpress","amazon","att","att-wireless","avis","booking-com",
+  "budget-car-rental","costco","dell","disney","dominos","ebay","edible-arrangements",
+  "expedia","foot-locker","hotels-com","kohls","legalzoom","lowes","macys","nike","noom",
+  "palmetto-state-armory","priceline","readyrx","shein","shutterfly","simply-piano",
+  "t-mobile-home-internet","target","temu","the-home-depot","tripadvisor","turbotax",
+  "udemy","valvoline","verizon-wireless","viator","walmart","wayfair","zoro"
+];
+
+const MERCHANTS_PHASE1_100 = [
+  "allegiant","american-airlines","arbys","bath-body-works","buffalo-wild-wings",
+  "burger-king","carnival-cruise","chilis","chipotle","dsw","figs","five-guys",
+  "great-clips","grubhub","jersey-mikes-subs","jiffy-lube","jimmy-johns","kfc",
+  "little-caesars","mountain-mikes-pizza","lyft","panda-express","panera-bread",
+  "papa-johns","papa-murphys","petsmart","planet-fitness","popeyes","postmates",
+  "quince","stockx","subway","taco-bell","texas-roadhouse","topgolf","u-haul",
+  "walgreens-photo","aerie"
+];
+
+const MERCHANTS_LEGACY = [
+  "adobe","airbnb","aliexpress-legacy","apple","best-buy","capital-one","chase",
+  "chewy","cvs","door-dash","etsy","fashion-nova","google-store","grammarly",
+  "h-and-m","hp","instacart","jcpenney","lenovo","microsoft","nordstrom",
+  "old-navy","samsung","sephora","staples","t-mobile","uber","uber-eats",
+  "under-armour","vrbo","zappos"
+  // Note: Full 407 list available in Google Sheet — showing representative sample
+];
+// Flag to indicate this is a sample
+const LEGACY_IS_SAMPLE = true;
+
+function slugToName(slug) {
+  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+const BUCKET_STYLES = {
+  'legacy': { label: 'Legacy Protected', bg: '#e5e5ea', color: '#636366', split: '100% legacy' },
+  '5050': { label: '50/50 A/B', bg: '#f0e6ff', color: '#7c3aed', split: '50% new / 50% legacy' },
+  'phase1_100': { label: 'Phase 1 (100%)', bg: '#e3f2fd', color: '#0d47a1', split: '100% new platform' },
+  '33pct': { label: '33% Split', bg: '#fff3e0', color: '#e65100', split: '33% new / 67% legacy' }
+};
+
+// Build merchant list
+const allMerchants = [];
+MERCHANTS_5050.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: '5050' }));
+MERCHANTS_PHASE1_100.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: 'phase1_100' }));
+MERCHANTS_LEGACY.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: 'legacy' }));
+// Add sample "33% split" entries — in reality ~3,033 merchants
+const SAMPLE_33 = [
+  "gap","reebok","petco","autozone","rei","crocs","finish-line","gamestop","express",
+  "asos","forever-21","anthropologie","brooklinen","casper","glossier","warby-parker",
+  "allbirds","peloton","hulu","spotify","hbo-max","paramount-plus","peacock",
+  "pizza-hut","wendys","sonic","dairy-queen","jack-in-the-box","white-castle","wingstop"
+];
+SAMPLE_33.forEach(s => allMerchants.push({ slug: s, name: slugToName(s), bucket: '33pct' }));
+
+allMerchants.sort((a, b) => a.name.localeCompare(b.name));
+
+let merchantSortDir = 1;
+let merchantSortKey = 'name';
+
+function renderMerchantTable() {
+  const search = document.getElementById('merchantSearch').value.toLowerCase();
+  const bucket = document.getElementById('bucketFilter').value;
+  const tbody = document.getElementById('merchantLookupBody');
+  tbody.innerHTML = '';
+
+  let filtered = allMerchants;
+  if (search) filtered = filtered.filter(m => m.name.toLowerCase().includes(search) || m.slug.includes(search));
+  if (bucket !== 'all') filtered = filtered.filter(m => m.bucket === bucket);
+
+  // Sort
+  filtered.sort((a, b) => {
+    const va = merchantSortKey === 'name' ? a.name : BUCKET_STYLES[a.bucket].label;
+    const vb = merchantSortKey === 'name' ? b.name : BUCKET_STYLES[b.bucket].label;
+    return merchantSortDir * va.localeCompare(vb);
+  });
+
+  document.getElementById('merchantCount').textContent = filtered.length + ' merchants' +
+    (bucket === '33pct' || (bucket === 'all' && !search) ? ' (showing sample — full list in Google Sheets)' : '');
+
+  filtered.forEach(m => {
+    const s = BUCKET_STYLES[m.bucket];
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-weight:500">${m.name}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:${s.bg};color:${s.color}">${s.label}</span></td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">${s.split}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center"><a href="https://www.groupon.com/coupons/${m.slug}" target="_blank" style="color:#007aff;text-decoration:none;font-size:12px">Visit &#x2197;</a></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function sortMerchantTable(key) {
+  if (merchantSortKey === key) merchantSortDir *= -1;
+  else { merchantSortKey = key; merchantSortDir = 1; }
+  renderMerchantTable();
+}
+
+document.getElementById('merchantSearch').addEventListener('input', renderMerchantTable);
+document.getElementById('bucketFilter').addEventListener('change', renderMerchantTable);
+renderMerchantTable();
+</script>
+
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.
+  <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
+  <strong>Data sources:</strong><br>
+  &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
+  &bull; <strong>BigQuery:</strong> <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code> — traffic splits, revenue, commission, transactions (auto-fed from merchant sheet)<br>
+  &bull; <strong>Legacy Protected (407):</strong> <a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff">100% legacy merchants</a><br>
+  &bull; <strong>Top 30 Revenue (50/50):</strong> <a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff">50/50 A/B split merchants</a><br>
+  &bull; <strong>Phase 1 merchants:</strong> <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff">Original rollout merchants</a> — do not rename tab (BQ auto-feed)<br>
+  &bull; <strong>Merchant backend list:</strong> <a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff">All 3,524 Supported US Merchants</a> (Jakub, Mar 31)<br>
+  <br>
+  <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
+  <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
 </div>
 </body>
 </html>
