@@ -105,10 +105,11 @@
   details.card[open] summary::before { transform: rotate(90deg); }
 
   /* Tab navigation */
-  .tab-nav { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid #e5e5ea; position: sticky; top: 0; background: #f5f5f7; z-index: 100; padding-top: 4px; }
-  .tab-btn { padding: 12px 20px; font-size: 14px; font-weight: 600; color: #86868b; background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; white-space: nowrap; }
-  .tab-btn:hover { color: #1d1d1f; background: rgba(0,0,0,0.02); }
-  .tab-btn.active { color: #007aff; border-bottom-color: #007aff; }
+  .tab-nav { display: flex; gap: 4px; margin-bottom: 24px; position: sticky; top: 0; background: #f5f5f7; z-index: 100; padding: 8px 0 0 0; }
+  .tab-btn { padding: 10px 20px; font-size: 14px; font-weight: 600; color: #636366; background: #e5e5ea; border: none; cursor: pointer; border-radius: 10px 10px 0 0; transition: all 0.15s; white-space: nowrap; position: relative; }
+  .tab-btn:hover { color: #1d1d1f; background: #d2d2d7; }
+  .tab-btn.active { color: #1d1d1f; background: #fff; box-shadow: 0 -2px 8px rgba(0,0,0,0.06); }
+  .tab-btn .tab-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: 6px; vertical-align: middle; }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
@@ -129,10 +130,11 @@
 
 <!-- Tab Navigation -->
 <nav class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
-  <button class="tab-btn" onclick="switchTab('phase2')">Phase 2 Monitoring</button>
-  <button class="tab-btn" onclick="switchTab('phase1')">Phase 1 Analysis</button>
-  <button class="tab-btn" onclick="switchTab('strategy')">Rollout Strategy</button>
+  <button class="tab-btn active" onclick="switchTab('overview', this)">Overview <span class="tab-badge" style="background:#34c759;color:#fff">LIVE</span></button>
+  <button class="tab-btn" onclick="switchTab('phase2', this)">Phase 2 Monitoring</button>
+  <button class="tab-btn" onclick="switchTab('merchants', this)">Merchant Lookup</button>
+  <button class="tab-btn" onclick="switchTab('phase1', this)">Phase 1 Analysis</button>
+  <button class="tab-btn" onclick="switchTab('strategy', this)">Rollout Strategy</button>
 </nav>
 
 <!-- ═══════════════════════════════════════ -->
@@ -141,28 +143,43 @@
 <div id="tab-overview" class="tab-panel active">
 
 <!-- Current Phase 2 Configuration -->
-<div class="card rollout-config" style="border-left:4px solid #34c759">
-  <h2>Current Configuration — Phase 2</h2>
-  <table class="rollout-table">
-    <thead>
-      <tr><th>Bucket</th><th>Merchants</th><th class="num">Revenue Share</th><th class="num">Traffic Share</th><th>Treatment</th><th>Merchant List</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>Legacy Protected</strong></td><td>407</td><td class="num">27.2%</td><td class="num">17.6%</td><td>100% legacy</td><td><a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
-      <tr><td><strong>50/50 A/B Experiment</strong></td><td>41</td><td class="num">~52%</td><td class="num">~30%</td><td>50/50 new vs legacy</td><td><a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
-      <tr><td><strong>Phase 1 (unchanged)</strong></td><td>54</td><td class="num">4.2%</td><td class="num">15.0%</td><td>As before (mix of 100% and 50/50)</td><td><a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff" target="_blank">View list</a></td></tr>
-      <tr style="background:#f5f5f7"><td><strong>33% Traffic Split</strong></td><td>~3,033</td><td class="num">18.8%</td><td class="num">41.5%</td><td><strong>33% new / 67% legacy</strong></td><td><a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff" target="_blank">All 3,524 merchants</a></td></tr>
-    </tbody>
-  </table>
-  <div style="margin-top:12px; font-size:12px; color:#34c759; font-weight:600; display:flex; align-items:center; gap:6px;">&#x2705; Phase 2 expansion LIVE — deployed April 1, 2026</div>
+<div class="card" style="border-left:4px solid #34c759">
+  <h2 style="margin-bottom:8px">Current Configuration <span style="font-size:12px; font-weight:400; color:#34c759; margin-left:8px;">Phase 2 — LIVE since April 1</span></h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+    <!-- Bucket cards instead of table -->
+    <div style="background:#f5f5f7; border-radius:10px; padding:16px; border-left:4px solid #e5e5ea;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#6e6e73; margin-bottom:6px;">Legacy Protected</div>
+      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">407 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
+      <div style="font-size:13px; color:#636366;">100% legacy — high-revenue + SEO-critical</div>
+      <a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
+    </div>
+    <div style="background:#f0e6ff; border-radius:10px; padding:16px; border-left:4px solid #7c3aed;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#7c3aed; margin-bottom:6px;">50/50 A/B Experiment</div>
+      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">41 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
+      <div style="font-size:13px; color:#636366;">50% new / 50% legacy — controlled test</div>
+      <a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
+    </div>
+    <div style="background:#fff3e0; border-radius:10px; padding:16px; border-left:4px solid #ff9500;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#e65100; margin-bottom:6px;">33% Traffic Split</div>
+      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">~3,033 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
+      <div style="font-size:13px; color:#636366;">33% new / 67% legacy — gradual rollout</div>
+      <a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff; font-size:12px;" target="_blank">All 3,524 merchants &#x2197;</a>
+    </div>
+    <div style="background:#e3f2fd; border-radius:10px; padding:16px; border-left:4px solid #007aff;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#0d47a1; margin-bottom:6px;">Phase 1 (unchanged)</div>
+      <div style="font-size:28px; font-weight:700; margin-bottom:4px;">54 <span style="font-size:14px; font-weight:400; color:#86868b;">merchants</span></div>
+      <div style="font-size:13px; color:#636366;">Mix of 100% new and 50/50 — as before</div>
+      <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff; font-size:12px;" target="_blank">View merchant list &#x2197;</a>
+    </div>
+  </div>
   <div class="donut-row">
     <div class="donut-wrap">
       <div class="chart-container"><canvas id="revenueDonut"></canvas></div>
-      <div class="donut-label">Revenue Split (post-expansion)</div>
+      <div class="donut-label">Revenue Split</div>
     </div>
     <div class="donut-wrap">
       <div class="chart-container"><canvas id="trafficDonut"></canvas></div>
-      <div class="donut-label">Traffic Split (post-expansion)</div>
+      <div class="donut-label">Traffic Split</div>
     </div>
   </div>
 </div>
@@ -227,41 +244,55 @@
   </div>
 </div>
 
-<!-- Phase 2 Monitoring — placeholder for live data -->
+<!-- Phase 2 Monitoring — real data from BQ -->
 <div class="card" style="border-left: 4px solid #007aff;">
-  <h2>Phase 2 Monitoring</h2>
-  <p class="subtitle" style="margin-bottom:16px">Live data from BigQuery + Tableau. Tracking aggregate cohort performance by bucket.</p>
+  <h2>US CTR by Cohort — Daily Trend</h2>
+  <p class="subtitle" style="margin-bottom:12px">50/50 A/B merchants vs all other US merchants. CTR = Clicks / Unique Views. Source: BigQuery <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">rep.12_offer_dashboard</code>. Data through Mar 31 (commission/transaction data lags 1–2 days).</p>
   <div class="stats">
-    <div class="stat awaiting">
-      <div class="label">50/50 A/B — CTR (new vs legacy)</div>
-      <div class="value">—</div>
-      <div class="note">Awaiting tracking fix (Marcos)</div>
+    <div class="stat">
+      <div class="label">50/50 Merchants — Avg CTR (Mar 18–28)</div>
+      <div class="value" style="color:#7c3aed">1.17%</div>
     </div>
-    <div class="stat awaiting">
-      <div class="label">33% Cohort — Aggregate CTR</div>
-      <div class="value">—</div>
-      <div class="note">Data available ~Apr 2</div>
+    <div class="stat">
+      <div class="label">Other Merchants — Avg CTR (Mar 18–28)</div>
+      <div class="value" style="color:#007aff">3.33%</div>
     </div>
-    <div class="stat awaiting">
-      <div class="label">Legacy Protected — Aggregate CTR</div>
-      <div class="value">—</div>
-      <div class="note">Control group baseline</div>
+    <div class="stat">
+      <div class="label">50/50 Pre-Rollout CTR (Mar 10–17)</div>
+      <div class="value" style="color:#86868b">1.24%</div>
     </div>
-    <div class="stat awaiting">
-      <div class="label">Revenue per Session (new vs legacy)</div>
-      <div class="value">—</div>
-      <div class="note">From BQ metrics table</div>
+    <div class="stat">
+      <div class="label">Other Pre-Rollout CTR (Mar 10–17)</div>
+      <div class="value" style="color:#86868b">3.14%</div>
     </div>
   </div>
-  <div class="placeholder-chart" style="height:200px">Phase 2 cohort comparison charts will populate as data flows from BigQuery<br><br>
-    <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">View live data in Tableau Dashboard</a>
-  </div>
+  <div class="chart-container"><canvas id="phase2CtrChart"></canvas></div>
+</div>
+
+<div class="card">
+  <h2>Daily Commission &amp; Transactions</h2>
+  <p class="subtitle" style="margin-bottom:12px">US Groupon domain. Note: commission data for Mar 29+ is incomplete (processing lag).</p>
+  <div class="chart-container"><canvas id="phase2RevenueChart"></canvas></div>
+</div>
+
+<div style="margin-top:12px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:12px; color:#636366; line-height:1.5;">
+  <strong>Tableau live dashboard:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">New Platform Dashboard — Summary</a><br>
+  <strong>Note:</strong> Phase 2 traffic allocation (33%) went live Apr 1 — first Phase 2 data will appear in tomorrow's refresh. Charts above show Phase 1 period + pre-rollout baseline.
 </div>
 
 </div><!-- end tab-phase2 -->
 
 <!-- ═══════════════════════════════════════ -->
-<!-- TAB 3: PHASE 1 ANALYSIS                -->
+<!-- TAB: MERCHANT LOOKUP                    -->
+<!-- ═══════════════════════════════════════ -->
+<div id="tab-merchants" class="tab-panel">
+
+
+
+</div><!-- end tab-merchants -->
+
+<!-- ═══════════════════════════════════════ -->
+<!-- TAB: PHASE 1 ANALYSIS                  -->
 <!-- ═══════════════════════════════════════ -->
 <div id="tab-phase1" class="tab-panel">
 
@@ -865,15 +896,91 @@ document.getElementById('bucketFilter').addEventListener('change', renderMerchan
 renderMerchantTable();
 
 // ═══════════════════════════════════════
+// ═══════════════════════════════════════
+// Phase 2 Monitoring Charts (BQ data)
+// ═══════════════════════════════════════
+const P2_DATES = ["Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31"];
+const P2_CTR_5050 = [1.39,1.12,1.05,1.22,1.34,1.44,1.17,1.16,1.25,1.28,0.97,1.29,1.24,1.31,0.77,1.06,1.25,1.26,1.10,1.18,1.29,2.12];
+const P2_CTR_OTHER = [3.34,3.25,3.59,3.20,3.12,2.75,2.78,3.07,3.24,3.59,3.58,3.93,3.53,3.83,3.16,3.25,3.11,3.19,3.00,3.12,3.33,5.71];
+const P2_COMMISSION = [13982.4,15263.35,13606.77,12759.51,16573.64,13546.72,14377.83,14797.35,17055.81,15586.54,15302.81,13628.09,15147.72,15777.84,15648.61,17955.6,17024.62,13710.47,10981.76,3435.24,418.74,71.55];
+const P2_TRANSACTIONS = [2962,2561,1707,1675,1839,1775,1799,1961,2113,2065,2002,1851,1920,1996,1705,1630,1555,1485,1355,375,42,19];
+const P2_ROLLOUT_IDX = 8; // Mar 18
+
+// CTR chart
+const p2CtrCtx = document.getElementById('phase2CtrChart');
+if (p2CtrCtx) {
+  new Chart(p2CtrCtx, {
+    type: 'line',
+    data: {
+      labels: P2_DATES,
+      datasets: [
+        { label: '50/50 A/B Merchants', data: P2_CTR_5050, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.06)', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2.5 },
+        { label: 'Other US Merchants', data: P2_CTR_OTHER, borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,0.06)', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2.5 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { title: { display: true, text: 'CTR % (Clicks / Unique Views)' }, beginAtZero: false } },
+      plugins: { legend: { position: 'top' } }
+    },
+    plugins: [{
+      id: 'p2rolloutLine',
+      beforeDraw(chart) {
+        const { ctx, chartArea, scales } = chart;
+        if (!scales.x) return;
+        const x = scales.x.getPixelForValue(P2_ROLLOUT_IDX);
+        ctx.save(); ctx.strokeStyle = '#ff3b30'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]); ctx.fillStyle = '#ff3b30'; ctx.font = '11px -apple-system, sans-serif';
+        ctx.fillText('Phase 1', x + 4, chartArea.top + 12); ctx.restore();
+      }
+    }]
+  });
+}
+
+// Revenue chart
+const p2RevCtx = document.getElementById('phase2RevenueChart');
+if (p2RevCtx) {
+  new Chart(p2RevCtx, {
+    type: 'bar',
+    data: {
+      labels: P2_DATES,
+      datasets: [
+        { label: 'Commission ($)', data: P2_COMMISSION, backgroundColor: P2_COMMISSION.map((v, i) => i >= 19 ? 'rgba(0,122,255,0.2)' : 'rgba(0,122,255,0.6)'), borderRadius: 3, yAxisID: 'y' },
+        { label: 'Transactions', data: P2_TRANSACTIONS, type: 'line', borderColor: '#34c759', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 2, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { position: 'left', title: { display: true, text: 'Commission ($)' }, beginAtZero: true },
+        y1: { position: 'right', title: { display: true, text: 'Transactions' }, beginAtZero: true, grid: { drawOnChartArea: false } }
+      },
+      plugins: { legend: { position: 'top' } }
+    },
+    plugins: [{
+      id: 'p2revRolloutLine',
+      beforeDraw(chart) {
+        const { ctx, chartArea, scales } = chart;
+        if (!scales.x) return;
+        const x = scales.x.getPixelForValue(P2_ROLLOUT_IDX);
+        ctx.save(); ctx.strokeStyle = '#ff3b30'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]); ctx.restore();
+      }
+    }]
+  });
+}
+
 // Tab Navigation
 // ═══════════════════════════════════════
-function switchTab(tabId) {
+function switchTab(tabId, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tabId).classList.add('active');
-  event.target.classList.add('active');
-  // Trigger chart resize for Phase 1 charts that were hidden
-  if (tabId === 'phase1') {
+  btn.classList.add('active');
+  // Trigger chart resize for charts that were hidden
+  if (tabId === 'phase1' || tabId === 'phase2') {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
   }
 }
