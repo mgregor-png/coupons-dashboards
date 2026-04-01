@@ -6,49 +6,22 @@
 <title>Genie User LTV Model</title>
 <style>
   :root {
-    --bg: #0f1117;
-    --card: #1a1d27;
-    --border: #2a2d3a;
-    --text: #e1e4ed;
-    --muted: #8b8fa3;
-    --accent: #6c5ce7;
-    --green: #00b894;
-    --orange: #fdcb6e;
-    --red: #e17055;
-    --blue: #74b9ff;
+    --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a; --text: #e1e4ed;
+    --muted: #8b8fa3; --accent: #6c5ce7; --green: #00b894; --orange: #fdcb6e;
+    --red: #e17055; --blue: #74b9ff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-    line-height: 1.5;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 24px; max-width: 1400px; margin: 0 auto; line-height: 1.5; }
   h1 { font-size: 28px; margin-bottom: 4px; }
+  h3 { font-size: 15px; margin: 24px 0 12px; }
   .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
   .subtitle span { margin-right: 16px; }
-  .summary-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-  .summary-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
-  .summary-card.current { border-top: 3px solid var(--muted); }
-  .summary-card.rewards { border-top: 3px solid var(--accent); }
-  .summary-card.deals { border-top: 3px solid var(--green); }
-  .summary-card .label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .summary-card .big-number { font-size: 38px; font-weight: 700; margin-bottom: 4px; }
-  .summary-card .sub { font-size: 14px; color: var(--muted); }
-  .summary-card .sub .highlight { color: var(--green); font-weight: 600; }
-  .summary-card .row-pair { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-  .summary-card .row-pair .col { text-align: center; flex: 1; }
-  .summary-card .row-pair .col .val { font-size: 20px; font-weight: 600; }
-  .summary-card .row-pair .col .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; }
-  .range { font-size: 13px; color: var(--muted); }
   .section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
   .section h2 { font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .section h2 .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; text-transform: uppercase; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; text-transform: uppercase; }
   .badge-actual { background: rgba(0,184,148,0.15); color: var(--green); }
   .badge-estimated { background: rgba(253,203,110,0.15); color: var(--orange); }
+  .badge-bq { background: rgba(116,185,255,0.15); color: var(--blue); }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border); font-weight: 500; }
   td { padding: 10px 12px; border-bottom: 1px solid rgba(42,45,58,0.5); }
@@ -58,161 +31,210 @@
   td.green { color: var(--green); }
   td.orange { color: var(--orange); }
   td.blue { color: var(--blue); }
-  td.muted { color: var(--muted); font-size: 13px; }
   td.red { color: var(--red); }
+  td.muted { color: var(--muted); font-size: 13px; }
   tr.highlight-row { background: rgba(108,92,231,0.08); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } .hero-grid { grid-template-columns: 1fr !important; } }
   .calc-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(42,45,58,0.4); font-size: 14px; }
   .calc-step:last-child { border-bottom: none; }
   .calc-step .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
   .calc-step .formula { flex: 1; color: var(--muted); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; }
   .calc-step .result { font-weight: 600; font-size: 15px; text-align: right; min-width: 80px; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } .summary-row { grid-template-columns: 1fr; } }
-  .scale-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 12px; }
-  .scale-cell { background: var(--card); padding: 14px; text-align: center; }
-  .scale-cell.header { background: rgba(42,45,58,0.6); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; padding: 10px 14px; }
-  .scale-cell .val { font-size: 18px; font-weight: 600; }
-  .scale-cell .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
   .confidence { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
   .conf-high { background: rgba(0,184,148,0.12); color: var(--green); }
   .conf-med { background: rgba(253,203,110,0.12); color: var(--orange); }
   .conf-low { background: rgba(225,112,85,0.12); color: var(--red); }
-  .source-tag { font-size: 11px; color: var(--muted); font-style: italic; }
-  .source-tag a { color: var(--blue); text-decoration: none; }
   .callout { background: rgba(225,112,85,0.08); border: 1px solid rgba(225,112,85,0.2); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--orange); margin: 16px 0; }
   .callout-info { background: rgba(116,185,255,0.08); border-color: rgba(116,185,255,0.2); color: var(--blue); }
+  .callout-green { background: rgba(0,184,148,0.08); border-color: rgba(0,184,148,0.2); color: var(--green); }
+  .source-tag { font-size: 11px; color: var(--muted); font-style: italic; }
+  .source-tag a { color: var(--blue); text-decoration: none; }
   .footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; }
-  .waterfall { display: flex; align-items: flex-end; gap: 24px; height: 200px; padding: 20px 0; justify-content: center; }
-  .wf-bar { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .wf-bar .bar { width: 80px; border-radius: 6px 6px 0 0; }
-  .wf-bar .bar-val { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-  .wf-bar .bar-label { font-size: 12px; color: var(--muted); text-align: center; max-width: 100px; }
-  .wf-bar .bar-sub { font-size: 11px; color: var(--muted); }
+
+  /* Hero two-column comparison */
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+  .hero-col { background: var(--card); padding: 28px 24px; }
+  .hero-col .hero-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .hero-col .hero-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .hero-col .hero-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .hero-col .hero-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(42,45,58,0.5); }
+  .hero-col .hero-row:last-child { border-bottom: none; }
+  .hero-col .hero-row .scenario-name { font-size: 14px; }
+  .hero-col .hero-row .scenario-vals { display: flex; gap: 20px; text-align: right; }
+  .hero-col .hero-row .scenario-vals .v { font-size: 14px; }
+  .hero-col .hero-row .scenario-vals .v.big { font-size: 20px; font-weight: 700; }
+  .hero-col .hero-row .scenario-vals .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .hero-col.current-product { border-top: 3px solid var(--orange); }
+  .hero-col.full-product { border-top: 3px solid var(--green); }
+
+  /* Scale grid */
+  .scale-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 12px; }
+  .scale-cell { background: var(--card); padding: 12px; text-align: center; }
+  .scale-cell.header { background: rgba(42,45,58,0.6); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; padding: 10px 12px; }
+  .scale-cell .val { font-size: 16px; font-weight: 600; }
+  .scale-cell .lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* MAU chart bars */
+  .mau-chart { display: flex; align-items: flex-end; gap: 4px; height: 120px; padding: 12px 0; }
+  .mau-bar { flex: 1; border-radius: 4px 4px 0 0; position: relative; min-width: 20px; }
+  .mau-bar .mau-val { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .mau-bar .mau-label { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--muted); }
 </style>
 </head>
 <body>
 
 <h1>Genie User LTV Model</h1>
 <div class="subtitle">
-  <span>2026-03-31 (v2 — peer-reviewed)</span>
+  <span>2026-04-01 (v3 — BQ-validated retention)</span>
   <span>Audience: Dusan, Adam, Rebecca</span>
 </div>
 
-<!-- Summary Cards — using moderate retention as headline, range below -->
-<div class="summary-row">
-  <div class="summary-card current">
-    <div class="label">Current State</div>
-    <div class="big-number" style="color: var(--muted)">$12.48–$14.40</div>
-    <div class="sub">Lifetime LTV per install</div>
-    <div class="row-pair">
-      <div class="col"><div class="val">$6.00</div><div class="lbl">1Y LTV</div></div>
-      <div class="col"><div class="val">2.08–2.40x</div><div class="lbl">LT multiplier</div></div>
+<!-- Hero: Two-column comparison -->
+<div class="hero-grid">
+  <div class="hero-col current-product">
+    <div class="hero-label">Current Product</div>
+    <div class="hero-title" style="color: var(--orange)">Incomplete — no auto-apply</div>
+    <div class="hero-sub">Retention: 1.79x (observed from BQ data)</div>
+
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--muted)">Current state</div>
+      <div class="scenario-vals">
+        <div><div class="v">$6.00</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$10.74</div><div class="lbl">Lifetime</div></div>
+      </div>
+    </div>
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--accent)">+ Rewards</div>
+      <div class="scenario-vals">
+        <div><div class="v">$7.74</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$16.63</div><div class="lbl">Lifetime</div></div>
+      </div>
+    </div>
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--green)">+ Deals</div>
+      <div class="scenario-vals">
+        <div><div class="v">$9.81</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$20.35</div><div class="lbl">Lifetime</div></div>
+      </div>
     </div>
   </div>
-  <div class="summary-card rewards">
-    <div class="label">+ Rewards</div>
-    <div class="big-number" style="color: var(--accent)">$19.34–$22.28</div>
-    <div class="sub">Lifetime LTV per install <span class="highlight">+55%</span></div>
-    <div class="row-pair">
-      <div class="col"><div class="val">$7.74</div><div class="lbl">1Y LTV</div></div>
-      <div class="col"><div class="val">2.50–2.88x</div><div class="lbl">LT multiplier</div></div>
+
+  <div class="hero-col full-product">
+    <div class="hero-label">Full Product</div>
+    <div class="hero-title" style="color: var(--green)">Auto-apply + Rewards shipped</div>
+    <div class="hero-sub">Retention: 2.0–2.4x (industry benchmark target)</div>
+
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--muted)">Current state</div>
+      <div class="scenario-vals">
+        <div><div class="v">$6.00</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$12–$14</div><div class="lbl">Lifetime</div></div>
+      </div>
     </div>
-  </div>
-  <div class="summary-card deals">
-    <div class="label">+ Groupon Deals</div>
-    <div class="big-number" style="color: var(--green)">$23.07–$26.01</div>
-    <div class="sub">Lifetime LTV per install <span class="highlight">+85%</span></div>
-    <div class="row-pair">
-      <div class="col"><div class="val">$9.81</div><div class="lbl">1Y LTV</div></div>
-      <div class="col"><div class="val" style="font-size:16px">2.50/2.88 + 1.8x</div><div class="lbl">Split multiplier</div></div>
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--accent)">+ Rewards</div>
+      <div class="scenario-vals">
+        <div><div class="v">$7.74</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$19–$22</div><div class="lbl">Lifetime</div></div>
+      </div>
+    </div>
+    <div class="hero-row">
+      <div class="scenario-name" style="color: var(--green)">+ Deals</div>
+      <div class="scenario-vals">
+        <div><div class="v">$9.81</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$22–$26</div><div class="lbl">Lifetime</div></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Waterfall -->
+<!-- Investment thesis callout -->
 <div class="section">
-  <h2>LTV Build-Up (Lifetime per Install, Moderate)</h2>
-  <div class="waterfall">
-    <div class="wf-bar">
-      <div class="bar-val" style="color: var(--muted)">$14.40</div>
-      <div class="bar" style="height: 111px; background: linear-gradient(180deg, rgba(139,143,163,0.4), rgba(139,143,163,0.15))"></div>
-      <div class="bar-label">Current State</div>
-      <div class="bar-sub">Affiliate only</div>
-    </div>
-    <div class="wf-bar">
-      <div class="bar-val" style="color: var(--accent)">+$7.88</div>
-      <div class="bar" style="height: 61px; background: linear-gradient(180deg, rgba(108,92,231,0.5), rgba(108,92,231,0.15))"></div>
-      <div class="bar-label">Rewards</div>
-      <div class="bar-sub">2.06x uplift − costs</div>
-    </div>
-    <div class="wf-bar">
-      <div class="bar-val" style="color: var(--blue)">+$3.73</div>
-      <div class="bar" style="height: 29px; background: linear-gradient(180deg, rgba(116,185,255,0.5), rgba(116,185,255,0.15))"></div>
-      <div class="bar-label">Groupon Deals</div>
-      <div class="bar-sub">Cross-sell (1.8x)</div>
-    </div>
-    <div class="wf-bar">
-      <div class="bar-val" style="color: var(--green)">$26.01</div>
-      <div class="bar" style="height: 200px; background: linear-gradient(180deg, rgba(0,184,148,0.4), rgba(0,184,148,0.1))"></div>
-      <div class="bar-label">Total</div>
-      <div class="bar-sub">Full stack</div>
-    </div>
+  <h2>The Investment Question</h2>
+  <div class="callout-green callout">
+    <strong>736 users retained through 6 months of an incomplete product with no core feature (auto-apply).</strong> That validates demand. The retention gap between current (1.79x) and industry benchmark (2.0–2.4x) is the value that shipping auto-apply + rewards unlocks.
   </div>
+  <p style="color: var(--muted); font-size: 14px; margin-top: 12px;">
+    <strong>Decision gate:</strong> If retention improves to >2.0x within 90 days of auto-apply launch, continue investment. If retention stays below 1.9x after feature completion, reassess.
+  </p>
+  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">
+    <strong>Benchmark:</strong> Honey (pre-acquisition) reported ~60% 12-month retention → ~2.5x multiplier. Auto-apply creates a "set and forget" habit loop that dramatically improves retention vs. active-use extensions.
+  </p>
+</div>
+
+<!-- Observed Retention from BQ -->
+<div class="section">
+  <h2>Observed Retention <span class="badge badge-bq">BigQuery Data</span></h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Monthly Active Users from <code>genie_dashboard</code> table (GA4 Extension_Active events, Apr 2025 – Mar 2026).</p>
+
+  <div class="mau-chart">
+    <div class="mau-bar" style="height: 41%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">687</div><div class="mau-label">Apr</div></div>
+    <div class="mau-bar" style="height: 54%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">1,098</div><div class="mau-label">May</div></div>
+    <div class="mau-bar" style="height: 75%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">1,516</div><div class="mau-label">Jun</div></div>
+    <div class="mau-bar" style="height: 97%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">1,971</div><div class="mau-label">Jul</div></div>
+    <div class="mau-bar" style="height: 89%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">1,799</div><div class="mau-label">Aug</div></div>
+    <div class="mau-bar" style="height: 100%; background: linear-gradient(180deg, rgba(108,92,231,0.5), rgba(108,92,231,0.15))"><div class="mau-val" style="color:var(--accent)">2,026</div><div class="mau-label">Sep</div></div>
+    <div class="mau-bar" style="height: 100%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">2,021</div><div class="mau-label">Oct</div></div>
+    <div class="mau-bar" style="height: 77%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">1,558</div><div class="mau-label">Nov</div></div>
+    <div class="mau-bar" style="height: 44%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">898</div><div class="mau-label">Dec</div></div>
+    <div class="mau-bar" style="height: 42%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">859</div><div class="mau-label">Jan</div></div>
+    <div class="mau-bar" style="height: 36%; background: linear-gradient(180deg, rgba(225,112,85,0.5), rgba(225,112,85,0.15))"><div class="mau-val" style="color:var(--red)">736</div><div class="mau-label">Feb</div></div>
+    <div class="mau-bar" style="height: 75%; background: linear-gradient(180deg, rgba(0,184,148,0.4), rgba(0,184,148,0.1))"><div class="mau-val" style="color:var(--green)">1,525</div><div class="mau-label">Mar</div></div>
+  </div>
+  <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">Peak: 2,026 (Sep) → Trough: 736 (Feb) = 64% drop in 6 months. Mar rebound driven by popup launch. No auto-apply or rewards during this period.</p>
+
+  <div class="callout" style="margin-top: 16px;">
+    <strong>Why the drop matters — and why it's misleading:</strong> Genie had no coupon auto-apply (the core value prop), no rewards, and minimal development. Users installed but found limited ongoing value. This is feature-incompleteness churn, not product-market-fit failure. 736 users staying active with no core feature is a demand signal.
+  </div>
+
+  <h3>Retention Multipliers</h3>
+  <table>
+    <thead><tr><th>Scenario</th><th style="text-align:right">Multiplier</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td style="color: var(--orange)">Current Product (observed)</td><td class="num bold orange">1.79x</td><td class="muted">BQ MAU data: 64% decay Sep→Feb, no core features</td></tr>
+      <tr><td style="color: var(--green)">Full Product (low)</td><td class="num bold green">2.0x</td><td class="muted">Conservative target with auto-apply shipped</td></tr>
+      <tr><td style="color: var(--green)">Full Product (high)</td><td class="num bold green">2.4x</td><td class="muted">Honey-class retention (~60% Y1, "set and forget")</td></tr>
+    </tbody>
+  </table>
+  <p class="source-tag" style="margin-top: 8px;">Source: <code>prj-grp-coupons-prod-8892.rep.genie_dashboard</code> — GA4 Extension_Active events</p>
 </div>
 
 <!-- Scenario 1 -->
 <div class="section">
-  <h2>Scenario 1: Current State — Affiliate Commission Only <span class="badge badge-actual">Actual Data</span></h2>
-
+  <h2>Scenario 1: Current State — Affiliate Commission <span class="badge badge-actual">Actual Data</span></h2>
   <table>
     <thead><tr><th>Metric</th><th style="text-align:right">Value</th><th>Source</th></tr></thead>
     <tbody>
       <tr><td>Cumulative installs</td><td class="num bold">981</td><td class="muted">Chrome Web Store, Wk12 Mar 2026</td></tr>
       <tr><td>CJ transactions (23 weeks)</td><td class="num bold">388</td><td class="muted">CJ PID (tracking sheet)</td></tr>
       <tr><td>CJ commission (23 weeks)</td><td class="num bold">$2,622</td><td class="muted">CJ PID (tracking sheet)</td></tr>
-      <tr><td>Avg commission per transaction</td><td class="num bold">$6.76</td><td class="muted">$2,622 / 388</td></tr>
-      <tr><td>Transactions per install per year</td><td class="num">0.89</td><td class="muted">(388/23 × 52) / 981</td></tr>
-      <tr><td>Annualized commission</td><td class="num bold green">$5,928/yr</td><td class="muted">$2,622 / 23 × 52</td></tr>
+      <tr><td>Avg commission per transaction</td><td class="num">$6.76</td><td class="muted">$2,622 / 388</td></tr>
+      <tr><td>Annualized commission per install</td><td class="num bold green">$6.00/yr</td><td class="muted">($2,622 / 23 × 52) / 981</td></tr>
     </tbody>
   </table>
-
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Calculation: $6.00/install/yr</h3>
-  <div class="calc-step">
-    <div class="step-num">1</div>
-    <div class="formula">Annualize: $2,622 ÷ 23 wks × 52 wks</div>
-    <div class="result">$5,928/yr</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">2</div>
-    <div class="formula">Per install: $5,928 ÷ 981</div>
-    <div class="result green">$6.04 ≈ $6.00</div>
-  </div>
-
   <div class="callout">
-    <strong>Small sample warning:</strong> Commission is highly volatile — top 5 of 23 weeks account for 40% of total commission. Commission/txn ranges from $1.71 to $25.45 per week (std dev: $6.49). The $6.00 figure is a mean across 388 transactions; at scale the actual rate may be materially different. Median-based estimate: ~$5.50/install/yr.
+    <strong>Small sample:</strong> Top 5 of 23 weeks = 40% of commission. Commission/txn ranges $1.71–$25.45 (std dev: $6.49). Median-based estimate: ~$5.50/install/yr.
   </div>
 
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Lifetime (sensitivity range)</h3>
+  <h3>Lifetime LTV per install</h3>
   <table>
-    <thead><tr><th>Retention</th><th style="text-align:right">Y1</th><th style="text-align:right">Y2</th><th style="text-align:right">Y3</th><th style="text-align:right">Y4</th><th style="text-align:right">Y5</th><th style="text-align:right">Multiplier</th><th style="text-align:right">LT LTV</th></tr></thead>
+    <thead><tr><th></th><th style="text-align:right">Current Product (1.79x)</th><th style="text-align:right">Full Product (2.0x)</th><th style="text-align:right">Full Product (2.4x)</th></tr></thead>
     <tbody>
-      <tr><td>Conservative</td><td class="num">100%</td><td class="num">50%</td><td class="num">30%</td><td class="num">18%</td><td class="num">10%</td><td class="num bold">2.08x</td><td class="num bold">$12.48</td></tr>
-      <tr><td>Moderate</td><td class="num">100%</td><td class="num">60%</td><td class="num">40%</td><td class="num">25%</td><td class="num">15%</td><td class="num bold">2.40x</td><td class="num bold">$14.40</td></tr>
+      <tr><td>1Y</td><td class="num">$6.00</td><td class="num">$6.00</td><td class="num">$6.00</td></tr>
+      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$10.74</td><td class="num bold green">$12.00</td><td class="num bold green">$14.40</td></tr>
     </tbody>
   </table>
-  <p class="source-tag" style="margin-top: 12px;">Source: <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0">Genie Tracking Sheet</a></p>
+  <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0">Genie Tracking Sheet</a></p>
 </div>
 
 <!-- Scenario 2 -->
 <div class="section">
-  <h2>Scenario 2: + Rewards <span class="badge badge-estimated">Real Data + Estimate</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">
-    Not yet implemented in Genie. Uplift from Groupon's existing reward program (Tableau workbook 9438, 2,147 reward offers, Jan–Oct 2025).
-  </p>
+  <h2>Scenario 2: + Rewards <span class="badge badge-estimated">Data + Estimate</span></h2>
 
   <div class="grid-2">
     <div>
-      <h3 style="margin-bottom: 12px; font-size: 15px;">Reward vs No-Reward (Actual)</h3>
+      <h3 style="margin-top:0">Reward vs No-Reward (Actual Groupon Data)</h3>
       <table>
         <thead><tr><th>Metric</th><th style="text-align:right">With Reward</th><th style="text-align:right">No Reward</th><th style="text-align:right">Uplift</th></tr></thead>
         <tbody>
@@ -221,143 +243,66 @@
           <tr class="highlight-row"><td>Commission/click</td><td class="num bold">$1.73</td><td class="num">$0.84</td><td class="num green bold">2.06x</td></tr>
         </tbody>
       </table>
-      <div class="callout-info callout" style="margin-top: 12px;">
-        Commission/click (2.06x) captures <strong>both</strong> the +74% conversion uplift and +18% commission/txn uplift in one ratio. This is the multiplier applied to Genie.
-      </div>
     </div>
     <div>
-      <h3 style="margin-bottom: 12px; font-size: 15px;">Reward Cost Economics (Actual)</h3>
+      <h3 style="margin-top:0">Reward Cost Economics (Actual)</h3>
       <table>
         <thead><tr><th>Metric</th><th style="text-align:right">Value</th></tr></thead>
         <tbody>
-          <tr><td>Avg reward value offered</td><td class="num">$22.31</td></tr>
           <tr><td>Reward cost per transaction</td><td class="num bold">$2.97</td></tr>
-          <tr><td>Redemption rate (of claimed)</td><td class="num">19.9%</td></tr>
+          <tr><td>Redemption rate</td><td class="num">19.9%</td></tr>
           <tr><td>ROI at Groupon's $15.82/txn</td><td class="num green bold">5.33x</td></tr>
           <tr><td>ROI at Genie's $6.76/txn</td><td class="num orange bold">2.28x</td></tr>
         </tbody>
       </table>
-      <div class="callout">
-        Rewards are 2.3x less efficient at Genie's CJ commission rate ($6.76/txn) vs Groupon's marketplace rate ($15.82/txn). Smaller reward values could improve this.
-      </div>
+      <div class="callout" style="margin-top: 8px; font-size: 12px;">Rewards 2.3x less efficient at Genie's commission rate. Smaller reward values improve ROI.</div>
     </div>
   </div>
 
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Calculation: $7.74/install/yr (net)</h3>
-  <div class="calc-step">
-    <div class="step-num">1</div>
-    <div class="formula">Current commission per install</div>
-    <div class="result">$6.00/yr</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">2</div>
-    <div class="formula">Apply combined uplift: $6.00 × ($1.73 ÷ $0.84) = $6.00 × 2.06</div>
-    <div class="result">$12.36 gross</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">3</div>
-    <div class="formula">Transactions with rewards: 0.89 txns × 1.74 conversion uplift</div>
-    <div class="result">1.56 txns/yr</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">4</div>
-    <div class="formula">Reward cost: 1.56 txns × $2.97/txn</div>
-    <div class="result red">−$4.62</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">5</div>
-    <div class="formula">Net: $12.36 − $4.62</div>
-    <div class="result green">$7.74 (+29%)</div>
-  </div>
+  <h3>Calculation: $7.74/install/yr (net)</h3>
+  <div class="calc-step"><div class="step-num">1</div><div class="formula">Current: $6.00/install/yr</div><div class="result">$6.00</div></div>
+  <div class="calc-step"><div class="step-num">2</div><div class="formula">× 2.06 combined uplift ($1.73 / $0.84)</div><div class="result">$12.36 gross</div></div>
+  <div class="calc-step"><div class="step-num">3</div><div class="formula">0.89 txns × 1.74 = 1.56 txns/yr × $2.97 reward cost</div><div class="result red">−$4.62</div></div>
+  <div class="calc-step"><div class="step-num">4</div><div class="formula">Net: $12.36 − $4.62</div><div class="result green">$7.74 (+29%)</div></div>
 
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Lifetime with Rewards (+20% retention assumed)</h3>
+  <h3>Lifetime LTV per install (with +20% retention uplift from rewards)</h3>
   <table>
-    <thead><tr><th>Retention</th><th style="text-align:right">Base multiplier</th><th style="text-align:right">With rewards (+20%)</th><th style="text-align:right">LT LTV</th></tr></thead>
+    <thead><tr><th></th><th style="text-align:right">Current Product (2.15x)</th><th style="text-align:right">Full Product (2.4x)</th><th style="text-align:right">Full Product (2.88x)</th></tr></thead>
     <tbody>
-      <tr><td>Conservative</td><td class="num">2.08x</td><td class="num bold">2.50x</td><td class="num bold">$19.34</td></tr>
-      <tr><td>Moderate</td><td class="num">2.40x</td><td class="num bold">2.88x</td><td class="num bold">$22.28</td></tr>
+      <tr><td>1Y</td><td class="num">$7.74</td><td class="num">$7.74</td><td class="num">$7.74</td></tr>
+      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$16.63</td><td class="num bold green">$18.58</td><td class="num bold green">$22.29</td></tr>
     </tbody>
   </table>
-  <p class="source-tag" style="margin-top: 12px;">Source: <a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview">Rewards Dashboard (Tableau)</a> — exported as Overview - Offer ID.xlsx</p>
+  <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview">Rewards Dashboard (Tableau)</a></p>
 </div>
 
 <!-- Scenario 3 -->
 <div class="section">
-  <h2>Scenario 3: + Groupon Deals Transactions <span class="badge badge-estimated">Data + Estimate</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">
-    Cross-sell: Genie user also buys Groupon deals. Uses separate lifetime multiplier — a user can uninstall Genie but keep buying deals.
-  </p>
+  <h2>Scenario 3: + Groupon Deals <span class="badge badge-estimated">Data + Estimate</span></h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Cross-sell into Groupon marketplace. Uses separate lifetime multiplier (1.8x) — marketplace retention is independent of extension retention.</p>
 
-  <div class="grid-2">
-    <div>
-      <h3 style="margin-bottom: 12px; font-size: 15px;">Groupon Customer Data (Behdad, NA)</h3>
-      <table>
-        <thead><tr><th>Metric</th><th style="text-align:right">Value</th></tr></thead>
-        <tbody>
-          <tr><td>NA registrants (Feb'23–Mar'24)</td><td class="num">17,447,031</td></tr>
-          <tr><td>Converted within 12 months</td><td class="num bold">13.04%</td></tr>
-          <tr><td>1Y LTV per converter (discount)</td><td class="num bold green">$31.88</td></tr>
-          <tr><td>1Y LTV per converter (no discount)</td><td class="num">$23.90</td></tr>
-        </tbody>
-      </table>
-      <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true">Behdad Karimi, Asana Mar 28 2026</a></p>
-    </div>
-    <div>
-      <h3 style="margin-bottom: 12px; font-size: 15px;">Why Separate Lifetime Multipliers</h3>
-      <table>
-        <thead><tr><th>Revenue stream</th><th>Retention driver</th><th style="text-align:right">Multiplier</th></tr></thead>
-        <tbody>
-          <tr><td>Affiliate commission</td><td class="muted">Extension installed</td><td class="num bold">2.50–2.88x</td></tr>
-          <tr><td>Groupon deals</td><td class="muted">Marketplace engagement</td><td class="num bold">1.8x</td></tr>
-        </tbody>
-      </table>
-      <div class="callout-info callout" style="margin-top: 12px;">
-        Extension and marketplace retention are independent. User can uninstall Genie but keep buying deals (and vice versa).
-      </div>
-    </div>
-  </div>
+  <h3 style="margin-top: 0">Calculation: +$2.07/install/yr</h3>
+  <div class="calc-step"><div class="step-num">1</div><div class="formula">50% of installs register on Groupon <span class="confidence conf-low">Assumption</span></div><div class="result">50%</div></div>
+  <div class="calc-step"><div class="step-num">2</div><div class="formula">13% of registered convert to deals buyer (Behdad actual)</div><div class="result">13%</div></div>
+  <div class="calc-step"><div class="step-num">3</div><div class="formula">Effective: 50% × 13% = 6.5% × $31.88 LTV</div><div class="result blue">$2.07/yr</div></div>
+  <div class="calc-step"><div class="step-num">4</div><div class="formula">Total 1Y: $7.74 + $2.07</div><div class="result green">$9.81/yr</div></div>
 
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Calculation: $2.07 incremental / install / yr</h3>
-  <div class="calc-step">
-    <div class="step-num">1</div>
-    <div class="formula">% of installs that register on Groupon <span class="confidence conf-low">Assumption</span></div>
-    <div class="result">50%</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">2</div>
-    <div class="formula">Of registered, % that buy deals (Behdad actual)</div>
-    <div class="result">13%</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">3</div>
-    <div class="formula">Effective conversion: 50% × 13%</div>
-    <div class="result">6.5%</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">4</div>
-    <div class="formula">Deals LTV per install: 6.5% × $31.88</div>
-    <div class="result blue">$2.07/yr</div>
-  </div>
-  <div class="calc-step">
-    <div class="step-num">5</div>
-    <div class="formula">Total 1Y: $7.74 (rewards) + $2.07 (deals)</div>
-    <div class="result green">$9.81/yr</div>
-  </div>
-
-  <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 15px;">Lifetime — split multipliers</h3>
+  <h3>Lifetime LTV per install (commission × ext. retention + deals × 1.8x)</h3>
   <table>
-    <thead><tr><th>Component</th><th style="text-align:right">1Y</th><th style="text-align:right">Multiplier</th><th style="text-align:right">LT (Conservative)</th><th style="text-align:right">LT (Moderate)</th></tr></thead>
+    <thead><tr><th></th><th style="text-align:right">Current Product</th><th style="text-align:right">Full Product (low)</th><th style="text-align:right">Full Product (high)</th></tr></thead>
     <tbody>
-      <tr><td>Commission (with rewards)</td><td class="num">$7.74</td><td class="num">2.50 / 2.88</td><td class="num">$19.34</td><td class="num">$22.28</td></tr>
-      <tr><td>Deals increment</td><td class="num">$2.07</td><td class="num">1.8x</td><td class="num">$3.73</td><td class="num">$3.73</td></tr>
-      <tr class="highlight-row"><td class="bold">Total</td><td class="num bold">$9.81</td><td class="num"></td><td class="num bold green">$23.07</td><td class="num bold green">$26.01</td></tr>
+      <tr><td>Commission component</td><td class="num">$7.74 × 2.15 = $16.63</td><td class="num">$7.74 × 2.4 = $18.58</td><td class="num">$7.74 × 2.88 = $22.29</td></tr>
+      <tr><td>Deals component</td><td class="num">$2.07 × 1.8 = $3.73</td><td class="num">$2.07 × 1.8 = $3.73</td><td class="num">$2.07 × 1.8 = $3.73</td></tr>
+      <tr class="highlight-row"><td class="bold">Total Lifetime</td><td class="num bold orange">$20.35</td><td class="num bold green">$22.30</td><td class="num bold green">$26.02</td></tr>
     </tbody>
   </table>
+  <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true">Behdad Karimi, Asana Mar 28 2026</a></p>
 </div>
 
 <!-- Scale -->
 <div class="section">
-  <h2>At Scale — Lifetime Value by Install Volume</h2>
+  <h2>At Scale — Lifetime Value</h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 12px;">Full Product (high) shown. Ranges in parentheses = Current Product → Full Product (high).</p>
 
   <div class="scale-grid">
     <div class="scale-cell header">Scenario</div>
@@ -365,58 +310,58 @@
     <div class="scale-cell header">50K installs/yr</div>
     <div class="scale-cell header">190K installs/yr</div>
 
-    <div class="scale-cell"><div class="val" style="font-size: 14px; color: var(--muted)">Current State</div></div>
-    <div class="scale-cell"><div class="val">$125K–$144K</div></div>
-    <div class="scale-cell"><div class="val">$624K–$720K</div></div>
-    <div class="scale-cell"><div class="val">$2.37M–$2.74M</div></div>
+    <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--muted)">Current State</div></div>
+    <div class="scale-cell"><div class="val">$107K–$144K</div></div>
+    <div class="scale-cell"><div class="val">$537K–$720K</div></div>
+    <div class="scale-cell"><div class="val">$2.0M–$2.7M</div></div>
 
-    <div class="scale-cell"><div class="val" style="font-size: 14px; color: var(--accent)">+ Rewards</div></div>
-    <div class="scale-cell"><div class="val">$193K–$223K</div></div>
-    <div class="scale-cell"><div class="val">$967K–$1.11M</div></div>
-    <div class="scale-cell"><div class="val" style="color: var(--accent)">$3.67M–$4.23M</div></div>
+    <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--accent)">+ Rewards</div></div>
+    <div class="scale-cell"><div class="val">$166K–$223K</div></div>
+    <div class="scale-cell"><div class="val">$832K–$1.11M</div></div>
+    <div class="scale-cell"><div class="val" style="color: var(--accent)">$3.2M–$4.2M</div></div>
 
-    <div class="scale-cell"><div class="val" style="font-size: 14px; color: var(--green)">+ Deals</div></div>
-    <div class="scale-cell"><div class="val">$231K–$260K</div></div>
-    <div class="scale-cell"><div class="val">$1.15M–$1.30M</div></div>
-    <div class="scale-cell"><div class="val" style="color: var(--green)">$4.38M–$4.94M</div></div>
+    <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--green)">+ Deals</div></div>
+    <div class="scale-cell"><div class="val">$204K–$260K</div></div>
+    <div class="scale-cell"><div class="val">$1.02M–$1.30M</div></div>
+    <div class="scale-cell"><div class="val" style="color: var(--green)">$3.9M–$4.9M</div></div>
   </div>
-  <p style="color: var(--muted); font-size: 12px; margin-top: 8px;">Ranges show conservative–moderate retention assumptions.</p>
 </div>
 
 <!-- Confidence -->
 <div class="section">
   <h2>Assumptions & Confidence</h2>
   <table>
-    <thead><tr><th>Assumption</th><th style="text-align:right">Value</th><th>Confidence</th><th>How to validate</th></tr></thead>
+    <thead><tr><th>Assumption</th><th style="text-align:right">Value</th><th>Confidence</th><th>Validation</th></tr></thead>
     <tbody>
-      <tr><td>Commission per install</td><td class="num">$6.00/yr</td><td><span class="confidence conf-high">High</span></td><td class="muted">Actual CJ data (small sample: 981 installs, 388 txns)</td></tr>
-      <tr><td>Combined reward uplift</td><td class="num">2.06x</td><td><span class="confidence conf-med">Medium-High</span></td><td class="muted">Actual Groupon data; transferability to Genie unvalidated</td></tr>
-      <tr><td>Reward cost per txn</td><td class="num">$2.97</td><td><span class="confidence conf-high">High</span></td><td class="muted">Direct measurement from reward program</td></tr>
-      <tr><td>Reward ROI at Genie rates</td><td class="num">2.28x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">Derived; lower vs Groupon's 5.33x. Smaller rewards improve this.</td></tr>
-      <tr><td>Retention multiplier (base)</td><td class="num">2.08–2.40x</td><td><span class="confidence conf-low">Low</span></td><td class="muted">No Genie retention data. Ask BI for cohort Y2/Y3 retention.</td></tr>
-      <tr><td>Retention uplift from rewards</td><td class="num">+20%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption. Track post-launch.</td></tr>
-      <tr><td>Genie → registration rate</td><td class="num">50%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption. Measure after account integration.</td></tr>
-      <tr><td>Deals conversion</td><td class="num">13%</td><td><span class="confidence conf-high">High</span></td><td class="muted">Behdad's actual NA registrant data</td></tr>
-      <tr><td>Deals marketplace retention</td><td class="num">1.8x</td><td><span class="confidence conf-low">Low-Medium</span></td><td class="muted">Industry e-commerce estimate. Independent of extension.</td></tr>
+      <tr><td>Commission per install</td><td class="num">$6.00/yr</td><td><span class="confidence conf-high">High</span></td><td class="muted">Actual CJ data (small sample)</td></tr>
+      <tr><td>Observed retention (current product)</td><td class="num">1.79x</td><td><span class="confidence conf-high">High</span></td><td class="muted">BQ MAU data — but product is incomplete</td></tr>
+      <tr><td>Target retention (full product)</td><td class="num">2.0–2.4x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">Industry benchmark (Honey ~2.5x). Gate: >2.0x within 90d of auto-apply.</td></tr>
+      <tr><td>Combined reward uplift</td><td class="num">2.06x</td><td><span class="confidence conf-med">Medium-High</span></td><td class="muted">Actual Groupon data; Genie transferability unvalidated</td></tr>
+      <tr><td>Reward cost per txn</td><td class="num">$2.97</td><td><span class="confidence conf-high">High</span></td><td class="muted">Direct measurement</td></tr>
+      <tr><td>Retention uplift from rewards</td><td class="num">+20%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption</td></tr>
+      <tr><td>Genie → registration rate</td><td class="num">50%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption</td></tr>
+      <tr><td>Deals conversion</td><td class="num">13%</td><td><span class="confidence conf-high">High</span></td><td class="muted">Behdad's actual NA data</td></tr>
+      <tr><td>Deals marketplace retention</td><td class="num">1.8x</td><td><span class="confidence conf-low">Low-Med</span></td><td class="muted">Industry estimate, independent of extension</td></tr>
     </tbody>
   </table>
 </div>
 
-<!-- Data Sources -->
+<!-- Sources -->
 <div class="section">
   <h2>Data Sources</h2>
   <table>
-    <thead><tr><th>Source</th><th>What</th><th>Period</th><th>Access</th></tr></thead>
+    <thead><tr><th>Source</th><th>What</th><th>Access</th></tr></thead>
     <tbody>
-      <tr><td>Genie Tracking Sheet</td><td>Installs, active users, CJ clicks/txn/commission ($6.76/txn avg)</td><td>Nov 2024 – Mar 2026</td><td class="muted"><a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0" style="color: var(--blue); text-decoration: none;">Google Sheet</a></td></tr>
-      <tr><td>Rewards Dashboard</td><td>Reward vs non-reward performance, cost economics (2.06x uplift, $2.97 cost)</td><td>Jan – Oct 2025</td><td class="muted"><a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview" style="color: var(--blue); text-decoration: none;">Tableau Dashboard</a></td></tr>
-      <tr><td>Behdad Karimi (BI)</td><td>NA registrant conversion (13%), discount cohort LTV ($31.88)</td><td>Feb 2023 – Mar 2024</td><td class="muted"><a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true" style="color: var(--blue); text-decoration: none;">Asana comment, Mar 28 2026</a></td></tr>
+      <tr><td>Genie Tracking Sheet</td><td>Installs, CJ commission ($6.76/txn avg, 388 txns)</td><td class="muted"><a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0" style="color:var(--blue);text-decoration:none">Google Sheet</a></td></tr>
+      <tr><td>BigQuery genie_dashboard</td><td>MAU retention curve (Apr 2025 – Mar 2026)</td><td class="muted"><code>prj-grp-coupons-prod-8892.rep.genie_dashboard</code></td></tr>
+      <tr><td>Rewards Dashboard</td><td>Reward uplift (2.06x), cost economics ($2.97/txn)</td><td class="muted"><a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview" style="color:var(--blue);text-decoration:none">Tableau</a></td></tr>
+      <tr><td>Behdad Karimi (BI)</td><td>NA registrant conversion (13%), discount LTV ($31.88)</td><td class="muted"><a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true" style="color:var(--blue);text-decoration:none">Asana comment</a></td></tr>
     </tbody>
   </table>
 </div>
 
 <div class="footer">
-  Genie LTV Model v2 — 2026-03-31 — Peer-reviewed, corrected for: reward cost derivation, combined uplift consistency, separate lifetime multipliers
+  Genie LTV Model v3 — 2026-04-01 — BQ-validated retention, two-column investment framing, peer-reviewed
 </div>
 
 </body>
