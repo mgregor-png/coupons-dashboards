@@ -131,9 +131,11 @@
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
-  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-02 10:44 CET</span>
+  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-02 15:34 CET</span>
 </div>
 <!-- END REFRESH BUTTONS -->
+
+
 
 
 
@@ -170,6 +172,27 @@
   </details>
 </div>
 <!-- END EXEC SUMMARY -->
+<!-- BEGIN POSTHOG_UX -->
+<div class="card" style="border-left:4px solid #ff9500">
+  <details open>
+    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px">
+      <span style="font-size:10px;color:#ff9500">&#9658;</span>
+      <h2 style="display:inline;font-size:17px;font-weight:600">UX Quality &#8212; PostHog (new platform only)</h2>
+      <span style="font-size:11px;color:#86868b;margin-left:auto">— pageviews · last 7 days</span>
+    </summary>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px">
+      <div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">LCP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">504.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">FCP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">424.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">INP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">80.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">CLS</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">0.0167</div><div style="font-size:11px;color:#86868b">p75 · good</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+      <div style="background:#fff3e0;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Dead Click Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">6.67</div><div style="font-size:11px;color:#86868b">last 7 days</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Rage Click Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">0.52</div><div style="font-size:11px;color:#86868b">last 7 days</div></div><div style="background:#f2f2f7;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Bounce Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">67.25</div><div style="font-size:11px;color:#86868b">last 7 days</div></div>
+    </div>
+    <div style="margin-top:16px"><h3 style="font-size:14px;font-weight:600;margin-bottom:8px">Top Dead Clicks — elements users click with no response</h3><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">#</th><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">Element</th><th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">Count</th></tr></thead><tbody><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">1</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 1094}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">1094</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">2</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Deals&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 45}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">45</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">3</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Codes&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 43}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">43</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">4</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;NO CODE NEEDED&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 42}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">42</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">5</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;All Offers&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 22}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">22</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">6</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Bath &amp; Body Works Coupons &amp; Promo Code March 2026&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 11}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">11</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">7</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Code&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 10}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">10</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">8</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;4&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 9}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">9</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">9</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;1&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 7}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">7</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">10</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;5&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 7}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">7</td></tr></tbody></table></div>
+  </details>
+</div>
+<!-- END POSTHOG_UX -->
+
+
+
 
 
 
@@ -962,6 +985,8 @@ const P2_CTR_HEADLINE = [39.493, 38.394, 39.056, 39.009, 39.182, 39.362, 39.486,
 
 
 
+
+
 const p2RolloutPlugin = {
   id: 'p2rollout',
   beforeDraw(chart) {
@@ -1083,7 +1108,7 @@ function switchTab(tabId, btn) {
 </script>
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Last updated:</strong> 2026-04-02 10:44 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
+  <strong>Last updated:</strong> 2026-04-02 15:34 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: 2026-04-02</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
   <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
   &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
@@ -1096,6 +1121,10 @@ function switchTab(tabId, btn) {
   <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
   <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
 </div>
+
+
+
+
 
 
 
