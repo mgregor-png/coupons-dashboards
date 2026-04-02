@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoS Dashboard — 2026-04-01</title>
+<title>CoS Dashboard — 2026-04-02</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -282,6 +282,41 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .cal-event.past {
+    opacity: 0.4;
+  }
+  .cal-event.past .cal-compact-title {
+    text-decoration: line-through;
+  }
+  .cal-event.now {
+    background: var(--blue-bg);
+    border-radius: 8px;
+    padding: 8px 10px !important;
+    margin: -1px -10px;
+  }
+  .cal-event.now .cal-compact-time {
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .cal-event.now .cal-compact-title {
+    font-weight: 600;
+    color: var(--blue);
+  }
+  .cal-event.next {
+    background: var(--green-bg);
+    border-radius: 8px;
+    padding: 8px 10px !important;
+    margin: -1px -10px;
+  }
+  .cal-event.next .cal-compact-time {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .cal-event.next .cal-compact-title {
+    font-weight: 600;
   }
 
   /* ── Mini Table ──────────────────────── */
@@ -995,18 +1030,18 @@
 <div class="header-bar">
   <div class="header-left">
     <h1>Dashboard</h1>
-    <div class="header-date">Wednesday, April 1, 2026</div>
+    <div class="header-date">Thursday, April 2, 2026</div>
   </div>
   <div class="header-right">
     <div style="display:flex;align-items:center;gap:10px">
-      <span id="lastRefresh">Generated 13:29</span>
+      <span id="lastRefresh">Generated 08:49</span>
       <button disabled style="display:none" id="refreshBtn" style="background:var(--blue);color:white;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s">Refresh</button>
     </div>
-    <div class="header-next-meeting">Next: 09:00 &mdash; Focus time &middot; <span style="color:var(--text-tertiary)">auto-refresh 15m</span></div>
+    <div class="header-next-meeting"> &middot; <span style="color:var(--text-tertiary)">auto-refresh 15m</span></div>
   </div>
 </div>
 
-<div style="background:rgba(0,122,255,0.08);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#007aff;text-align:center">Static snapshot from 2026-04-01 — live version at localhost:8847</div>
+<div style="background:rgba(0,122,255,0.08);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#007aff;text-align:center">Static snapshot from 2026-04-02 — live version at localhost:8847</div>
 <!-- ═══ Project Tabs ═══ -->
 <div class="tab-bar">
   <button class="tab active" onclick="switchTab('overview')">Overview</button>
@@ -1018,10 +1053,7 @@
 <div class="tab-content active" id="tab-overview">
 
 <!-- Alert Banner (only if anomalies) -->
-<div class="alert-banner">
-  <span class="alert-icon">&#9888;</span>
-  <span class="alert-text">Intl anomalies: <strong>NL</strong> sessions -55%, commission -100% &nbsp;&middot;&nbsp; <strong>UK</strong> sessions -59%, commission -91% &nbsp;&middot;&nbsp; <strong>IE</strong> sessions -59%, commission -89% &nbsp;&middot;&nbsp; <strong>FR</strong> commission -85% +5 more</span>
-</div>
+
 
 <!-- Hero Metrics — always visible -->
 <div class="card" style="margin-bottom:20px;padding:16px 20px;background:transparent;box-shadow:none">
@@ -1116,9 +1148,9 @@
       </div>
     </div>
     <div class="section-body" data-id="focus" style="margin-top:16px">
-      <div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-1" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-1">QA Monday: confirm rewards setup, tracking, correct implementation</span></div>
-<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-2" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-2">Get BA results from 10-merchant A/B test (running since Mar 18)</span></div>
-<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-01-3" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-01-3">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</span></div>
+      <div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-1" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-1">QA Monday: confirm rewards setup, tracking, correct implementation</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-2" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-2">Get BA results from 10-merchant A/B test (running since Mar 18)</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-3" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-3">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</span></div>
     </div>
   </div>
   <div class="card">
@@ -1129,18 +1161,14 @@
           <div class="card-title">Calendar</div>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
-          <span class="card-badge">5 events</span>
+          <span id="liveClock" style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;color:var(--text)"></span>
+          <span class="card-badge">0 events</span>
           <span class="collapse-arrow">&#9660;</span>
         </div>
       </div>
     </div>
     <div class="section-body" data-id="calendar" style="margin-top:16px">
-      <div class="cal-compact"><span class="cal-dot" style="background:var(--purple)"></span><span class="cal-compact-time">All day</span><span class="cal-compact-title">Home</span></div>
-<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">09:00</span><span class="cal-compact-title">Focus time</span></div>
-<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">12:00</span><span class="cal-compact-title">[MTG-1052] Mobile App team grooming</span></div>
-<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">14:30</span><span class="cal-compact-title">Martin / Minas sync</span></div>
-<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">16:00</span><span class="cal-compact-title">Coupons Management - Monthly meeting</span></div>
-<div class="cal-compact"><span class="cal-dot" style="background:var(--blue)"></span><span class="cal-compact-time">17:00</span><span class="cal-compact-title">New Platform x Ian - standup</span></div>
+      <div class="focus-empty">No events today</div>
     </div>
   </div>
 </div>
@@ -1154,7 +1182,7 @@
         <div class="card-title">Weekly Priorities</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <span class="card-badge">Week of 1 Apr</span>
+        <span class="card-badge">Week of 2 Apr</span>
         <span class="collapse-arrow">&#9660;</span>
       </div>
     </div>
@@ -1165,72 +1193,72 @@
   <span class="priority-group-title">New Platform — QA &amp; Scale</span>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">QA Monday: confirm rewards setup, tracking, correct implementation</div>
+  <div class="check-circle" data-id="wp-53077cae" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-53077cae">QA Monday: confirm rewards setup, tracking, correct implementation</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Get BA results from 10-merchant A/B test (running since Mar 18)</div>
+  <div class="check-circle" data-id="wp-1919179a" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-1919179a">Get BA results from 10-merchant A/B test (running since Mar 18)</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</div>
+  <div class="check-circle" data-id="wp-606da482" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-606da482">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Continue pattern-based monitoring (Tableau dashboard live)</div>
+  <div class="check-circle" data-id="wp-bace5e10" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-bace5e10">Continue pattern-based monitoring (Tableau dashboard live)</div>
 </div>
 <div class="priority-group-header">
   <span class="priority-badge priority-orange">P2</span>
   <span class="priority-group-title">Automated Offer Quality — Test US Scoring</span>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Test Florence&#x27;s US merchant offer scoring end-to-end with new API</div>
+  <div class="check-circle" data-id="wp-c0e20294" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-c0e20294">Test Florence&#x27;s US merchant offer scoring end-to-end with new API</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Validate API integration</div>
+  <div class="check-circle" data-id="wp-698af84f" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-698af84f">Validate API integration</div>
 </div>
 <div class="priority-group-header">
   <span class="priority-badge priority-blue">P3</span>
   <span class="priority-group-title">Groupon Ecosystem — Extension Viability</span>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">John tests PayPal Honey + reference app</div>
+  <div class="check-circle" data-id="wp-fd0fe21c" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-fd0fe21c">John tests PayPal Honey + reference app</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Compile findings for leadership presentation on extension viability</div>
+  <div class="check-circle" data-id="wp-bf9766d7" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-bf9766d7">Compile findings for leadership presentation on extension viability</div>
 </div>
 <div class="priority-group-header">
   <span class="priority-badge priority-purple">P4</span>
   <span class="priority-group-title">Trust Signals — Fix for New Platform</span>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Implement historic data projection for activity signals on pre-cached platform</div>
+  <div class="check-circle" data-id="wp-0ba7c814" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-0ba7c814">Implement historic data projection for activity signals on pre-cached platform</div>
 </div>
 <div class="priority-group-header">
   <span class="priority-badge priority-green">P5</span>
   <span class="priority-group-title">Foundry — Share &amp; Template</span>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Share live automation examples with team</div>
+  <div class="check-circle" data-id="wp-2dba9e6d" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-2dba9e6d">Share live automation examples with team</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Begin templating CoS setup for other PMs</div>
+  <div class="check-circle" data-id="wp-b8810554" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-b8810554">Begin templating CoS setup for other PMs</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Backlog revision: execute Asana changes with Minas (deprioritized)</div>
+  <div class="check-circle" data-id="wp-57e72a97" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-57e72a97">Backlog revision: execute Asana changes with Minas (deprioritized)</div>
 </div>
 <div class="priority-item">
-  <div class="check-circle"></div>
-  <div class="priority-text">Genie seasonal banner — evaluate priority</div>
+  <div class="check-circle" data-id="wp-36b7b36a" onclick="togglePriority(this)" style="cursor:pointer"></div>
+  <div class="priority-text" data-id="wp-36b7b36a">Genie seasonal banner — evaluate priority</div>
 </div>
   </div>
 </div>
@@ -1240,7 +1268,7 @@
   <div class="collapse-chip" onclick="toggleSection('asana')">
     <span class="chip-icon">&#9989;</span>
     <span class="chip-label">Asana</span>
-    <span class="chip-count has-items">122</span>
+    <span class="chip-count">0</span>
   </div>
   <div class="collapse-chip" onclick="toggleSection('jira')">
     <span class="chip-icon">&#128736;</span>
@@ -1260,857 +1288,7 @@
 </div>
 
 <div id="section-asana" class="collapse-content">
-  <div style="display:flex;gap:6px;margin-bottom:12px"><span class="status-pill pill-danger">71 overdue</span><span class="status-pill pill-default">121 total</span></div>
-<div class="section-divider"><span>Overdue</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211410600272387" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Florence 121 Martin</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">187d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210471664273637" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Post-Redemption screen upgrade</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due due-overdue">183d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211623402927666" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mark B Data 121</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">169d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211451990705222" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] AI Title rewriter</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due due-overdue">162d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212243231537988" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - first priority - show 8% converstions from landing page</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">104d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212526835756340" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Post Updates in Product Updates</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">103d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211834720461437" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Implement Network data into CC</a>
-  </div>
-  <span class="status-pill pill-purple" style="font-size:9px">Design</span>
-  <span class="task-due due-overdue">100d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212200905783917" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check if we got refund from Upwork </a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">93d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211506561953213" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2025 / Q4 KPI: Finalize Front-End of New Coupons Platform and Validate POC</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">91d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211506561953202" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2025 / Q4 KPI: Launch High-Impact Experiments to Increase Revenue via Engagement</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">91d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211834720461439" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Create Custom Definitions for New Events in GA4</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">89d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210914234423401" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Understand US NA BISEO</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">89d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211806107578559" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Create Dashboard to review User Traffic and Engagement</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">86d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211948330539646" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - what it means using Groupon core Login</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">84d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212342295669919" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Let me be added to Coupons_CZ@groupon.com </a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">82d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211717109252383" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">New GTM tags for VC ad placements</a>
-  </div>
-  <span class="status-pill pill-green" style="font-size:9px">Content</span>
-  <span class="task-due due-overdue">75d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211911690021034" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">advertisement first, then presentation of coupon code </a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">68d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212743189115199" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Genie extension improvements - landing page</a>
-  </div>
-  <span class="status-pill pill-orange" style="font-size:9px">Reviews</span>
-  <span class="task-due due-overdue">64d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212816193322100" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie - link into webstore data</a>
-  </div>
-  <span class="status-pill pill-yellow" style="font-size:9px">Data</span>
-  <span class="task-due due-overdue">63d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212018962892547" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Autoapply - Agent config creation and CAA</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">61d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212998885351465" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">POC SEO test - 15 more merchants</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">51d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213370006623628" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review Genie popup tracking setup and that we can see all events and utms for later analysis</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">33d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212073053503093" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Add Linkshare and Partnerize networks so we reach 88% of transaction coverage (currently 78%)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">33d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213241207808969" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Expired offers, change to less then 5 offers</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">33d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211792653381251" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Blog - discovery + what to do</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">33d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211703678024212" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Build data model for network transaction data Phase 2</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">33d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213355099944458" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review the logic of Merchant level signals</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">30d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213347898817651" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">INTL Implementation Signoff</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">29d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211095529062485" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Align on Expy vs Growthbook path for Coupons experimentation</a>
-  </div>
-  <span class="status-pill pill-yellow" style="font-size:9px">Data</span>
-  <span class="task-due due-overdue">27d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213355099944473" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coordinate timing with BI (Marc) and align with Content on frequency and usage.</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">27d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213355099944472" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Write detailed Control Cloud + DB specification based on the agreed payload and flows.</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">27d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212765669439428" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Design sceens for Merchant list + Edit offers in CC</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">27d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211877271388973" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">PostHog - Deployment</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due due-overdue">26d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212815356369656" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">BI Product requests</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">26d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213566188941247" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Connect with relevant department to setup official billin of Posthog</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">23d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213554194082662" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Grant Viktor and Minas Admin access to our Chrome Web Store Publisher Group</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">22d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213537181538158" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Narrow down scope for eng team + deliver all ready for dev designs</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">20d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213531860798643" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Evaluate Popup traffic and its impact on install rate/new users</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">20d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213610630742742" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">MS Clarity - Coupons</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">20d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213241215455338" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up a cron job to fetch  Chrome store rating daily</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">20d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213632035055349" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Fill in report links — [Coupons] Genie Reports task</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">19d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213631638443599" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Foundry Phase 0 — confirm 15 min daily AI usage in 5/15</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">19d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213631209220891" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review [Coupons] New Platform Bet Project — fix open issues</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">19d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213643676882761" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Backlog review &amp; cleanup — continue with Claude</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">16d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213710034157152" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Followup on https://app.asana.com/1/8437193015852/project/1211463746859353/task/1213507655155629?focus=true</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">14d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212294034465022" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">SEO Data support - issue 3</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">12d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213658648851385" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Online Report as an Action layer</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">12d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210708124489236" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">anna multisport </a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">8d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210708124489235" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Automatic offer categorization - dashboard + scope + CC design</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">8d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213793033055832" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up separate US PostHog account for groupon.com rollout</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">7d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213786935399604" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Follow up on &quot;Develop Scoring API Endpoint &amp; Scoring History Database Table&quot;</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">6d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213785059242263" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Notify John&#x27;s team: deal bar won&#x27;t display on newly rolled out pages initially</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">6d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213745493919075" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">LT, LTV data</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213745471998935" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Creative solution on alternative monetisation of Groupon users</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213507655155631" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Promo mock up for approval with Marketing</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213786827282607" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">see parental task</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213833265890438" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5/15 — Martin Gregor — 2026-03-27</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213821781173646" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Share Safari extension brainstorming output with team</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213821537044309" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Validate Safari extension technical feasibility (iOS 15+)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213631649111064" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Foundry Phase 1 — map own AI workflows in Google Sheet</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">5d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213784877416936" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Brainstorm: app frequency &amp; core purchases via affiliate publisher features</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">4d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213835464936079" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review and finalize Q2 quarterly goals + April monthly goals</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">2d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213560213808593" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">MM Updates - 2026-04-01 - Product</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213340696502837" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Phase 2 Testing Plan - Engagement test on 4 more merchants</a>
-  </div>
-  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212996568683046" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">DRI - Genie</a>
-  </div>
-  <span class="status-pill pill-purple" style="font-size:9px">Genie</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212514974586672" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie Banners on Merchant pages and Post redemption screens</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212298912009523" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Implement Rewards as the core driver for user acquisition</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212260791614261" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Extend Affiliate Network Data and Phase 2 Signals</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211607081597186" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">DRI - New Coupons Platform</a>
-  </div>
-  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211370232617961" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Non Merchant pages dashboard followup for Data team</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210872961847839" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals to support AIO visibility and Improve User Engagement</a>
-  </div>
-  <span class="status-pill pill-green" style="font-size:9px">1:1s</span>
-  <span class="task-due due-overdue">1d ago</span>
-</div>
-<div class="section-divider"><span>Tomorrow</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213821781036164" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Follow up with Matthias on Bloomreach login credentials &amp; docs</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due due-soon">Tomorrow</span>
-</div>
-<div class="section-divider"><span>This Week</span></div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213835384094534" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Martin Gregor - 2026-4-03</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due">3 Apr</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213785059399141" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Formalize A/B testing &amp; event implementation process (Martin + Mark + Eng)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due">3 Apr</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213863567127909" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Collect Groupon app user data for &quot;Save Everywhere&quot; ROI model</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due">4 Apr</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213784937438178" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Explore competitor monitoring automation with Florence (weekly screenshots, change detection)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due">7 Apr</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213486601374091" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons Header Sign-off - round #2 - main designer</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due">8 Apr</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211372105890904" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Quality Score for Merchant Content</a>
-  </div>
-  <span class="status-pill pill-green" style="font-size:9px">Content</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210421134990305" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">GPN - GTM &amp; GA4 Event Fixing &amp; Implementation</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210715504890565" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5/15 - Martin Gregor</a>
-  </div>
-  <span class="status-pill pill-green" style="font-size:9px">5/15</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212070162489794" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Implement Merchant level Trust Signals to Legacy</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213829825950448" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Set up competitor monitoring on paid (SEO)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213821450363529" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Prepare Safari extension high-level presentation for leadership</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213699781226645" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Estimated cost (Coupons PostHog - Full Platform Rollout)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213789633096057" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Rollout Risk: 3,000 pages missing components for 6–8 weeks — proposal to parallelize</a>
-  </div>
-  <span class="status-pill pill-orange" style="font-size:9px">New Platform</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213455778989973" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Posthog - Billing</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213699605491160" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">QA Report: /coupons-ui/ vs /coupons/ — 50 merchant comparison (2026-03-17)</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213546316945681" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">&quot;Expiring Soon&quot; Carousel</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213546316945685" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">&quot;Favorite&quot; Store Front</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213027304898803" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Seasonal Banner</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213355099944467" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Technical Implementation Plan</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213610630742751" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Coupons/AOG Eng team cooperation</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213610630742739" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Project Foundry - MG</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213537181538153" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Becky 121</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212001686693392" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Cross-Surface Deal Integration</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">Bets</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211602817765330" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">All Phases rollout to all markets</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210786636452426" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Add Trust Signals to Merchant pages</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212070162489777" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Trust Signals - Add merchant-level and list-level trust signal fields to Control Cloud</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211806109829561" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"> New Coupons Platform (UI Redesign &amp; Optimization)</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">P&amp;E</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1213012495862508" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check legal/affiliate constraints per merchant for auto-apply</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1212876770064950" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Genie GA4 data access + dashboard</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211637153919294" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Coupons as a Sevice for AI Integration </a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211626970504856" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[Coupons] Smart Traffic Routing</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211716977665888" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Implement Marker.io Widget in Coupons page for Streamlined User Feedback Collection</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211949769771985" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Groupon Deals on Coupons site for shared Merchants</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211937414456660" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Match evolving user behavior with LLM usage</a>
-  </div>
-  <span class="status-pill pill-green" style="font-size:9px">SEO</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211911690021043" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">background colour A/B test</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211602817765328" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Build Tableau Dashboard</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211491510643067" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Check w Content team Categorization and how we work with categories</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211588777644861" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Review and ensure compliance with Microsoft Clarity cookie consent requirements</a>
-  </div>
-  <span class="status-pill pill-red" style="font-size:9px">Engineering</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211195610238807" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Define common strategy for Localized LPs among Groupon x Coupons</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211147187498786" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Updated system to improve Merchant ratings</a>
-  </div>
-  <span class="status-pill pill-blue" style="font-size:9px">PRDs</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211076529572922" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">A/B Testing cheat sheet</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210786636452510" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📢 Voice of Customer</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211076529572927" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🧪 Goal 2: Define the Scope of an A/B Testing Solution for Coupons</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1211076529572929" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🎯 Goal 1: Define the 2025 / 2026 Coupons Product Roadmap</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210786636452532" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">🥷 Improve my skills </a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210987636908766" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Florence question</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210867167963329" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Q3 Summary</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210739593722256" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Questions</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--separator)">
-  <div style="flex:1;min-width:0">
-    <a href="https://app.asana.com/0/0/1210725767763960" target="_blank" style="font-size:13px;color:var(--text);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Becky 1:1 get explained</a>
-  </div>
-  <span class="status-pill pill-default" style="font-size:9px">General</span>
-  <span class="task-due" style="color:var(--text-tertiary)">No date</span>
-</div>
+  <div class="empty-state"><div class="empty-text">No tasks found</div></div>
 </div>
 <div id="section-jira" class="collapse-content">
   <div class="jira-grid">
@@ -2196,11 +1374,11 @@
     </div>
     <div class="section-body" data-id="merchants" style="margin-top:16px">
       <table class="mini-table"><thead><tr><th>Merchant</th><th>Commission</th><th>CTR</th></tr></thead><tbody>
-<tr><td>Chime</td><td>$16,000</td><td>43.6%</td></tr>
-<tr><td>eBay</td><td>$7,691</td><td>61.1%</td></tr>
-<tr><td>Expedia</td><td>$6,151</td><td>50.1%</td></tr>
-<tr><td>Viator</td><td>$5,537</td><td>51.2%</td></tr>
-<tr><td>Lowe&#x27;s</td><td>$4,456</td><td>54.7%</td></tr>
+<tr><td>Chime</td><td>$10,500</td><td>42.9%</td></tr>
+<tr><td>eBay</td><td>$6,535</td><td>63.4%</td></tr>
+<tr><td>Expedia</td><td>$5,285</td><td>50.2%</td></tr>
+<tr><td>Viator</td><td>$4,732</td><td>52.3%</td></tr>
+<tr><td>H&amp;R Block</td><td>$3,686</td><td>40.2%</td></tr>
 </tbody></table>
     </div>
   </div>
@@ -2221,32 +1399,32 @@
       <div class="bar-row">
   <span class="bar-label">Organic</span>
   <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--blue)"></div></div>
-  <span class="bar-value">$136,054</span>
+  <span class="bar-value">$113,588</span>
 </div>
 <div class="bar-row">
   <span class="bar-label">Direct</span>
-  <div class="bar-track"><div class="bar-fill" style="width:13%;background:var(--green)"></div></div>
-  <span class="bar-value">$18,182</span>
+  <div class="bar-track"><div class="bar-fill" style="width:12%;background:var(--green)"></div></div>
+  <span class="bar-value">$13,334</span>
 </div>
 <div class="bar-row">
   <span class="bar-label">PPC</span>
   <div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--orange)"></div></div>
-  <span class="bar-value">$10,271</span>
+  <span class="bar-value">$8,548</span>
 </div>
 <div class="bar-row">
   <span class="bar-label">Email</span>
   <div class="bar-track"><div class="bar-fill" style="width:2%;background:var(--purple)"></div></div>
-  <span class="bar-value">$3,009</span>
+  <span class="bar-value">$2,515</span>
 </div>
 <div class="bar-row">
   <span class="bar-label">Referral</span>
   <div class="bar-track"><div class="bar-fill" style="width:1%;background:var(--red)"></div></div>
-  <span class="bar-value">$868</span>
+  <span class="bar-value">$749</span>
 </div>
 <div class="bar-row">
   <span class="bar-label">Affiliate</span>
   <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--yellow)"></div></div>
-  <span class="bar-value">$356</span>
+  <span class="bar-value">$280</span>
 </div>
     </div>
   </div>
@@ -2333,6 +1511,8 @@
     localStorage.setItem(id, isDone ? 'true' : 'false');
     const text = el.parentElement.querySelector('.focus-text[data-id="' + id + '"]');
     if (text) text.classList.toggle('completed', isDone);
+    const label = text ? text.textContent : id;
+    fetch('/api/activity', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id:id, type:'focus', label:label, done:isDone})}).catch(()=>{});
   }
 
   // Restore focus state on load
@@ -2342,6 +1522,27 @@
       el.classList.add('done');
       const text = el.parentElement.querySelector('.focus-text[data-id="' + id + '"]');
       if (text) text.classList.add('completed');
+    }
+  });
+
+  // ── Weekly priority toggle (persists to localStorage) ──
+  function togglePriority(el) {
+    const id = el.dataset.id;
+    const isDone = el.classList.toggle('checked');
+    localStorage.setItem(id, isDone ? 'true' : 'false');
+    const text = el.parentElement.querySelector('.priority-text[data-id="' + id + '"]');
+    if (text) text.classList.toggle('done', isDone);
+    const label = text ? text.textContent : id;
+    fetch('/api/activity', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id:id, type:'priority', label:label, done:isDone})}).catch(()=>{});
+  }
+
+  // Restore priority check state on load
+  document.querySelectorAll('.check-circle[data-id]').forEach(el => {
+    const id = el.dataset.id;
+    if (localStorage.getItem(id) === 'true') {
+      el.classList.add('checked');
+      const text = el.parentElement.querySelector('.priority-text[data-id="' + id + '"]');
+      if (text) text.classList.add('done');
     }
   });
 
@@ -2416,6 +1617,41 @@
       messages.scrollTop = messages.scrollHeight;
     }
   }
+
+  // ── Live calendar: dim past, highlight current & next ──
+  function updateCalendarLive() {
+    const now = new Date();
+    const events = document.querySelectorAll('.cal-event');
+    let foundNext = false;
+    events.forEach(el => {
+      el.classList.remove('past', 'now', 'next');
+      const startStr = el.dataset.start;
+      const endStr = el.dataset.end;
+      if (!startStr) return;
+      const start = new Date(startStr);
+      const end = endStr ? new Date(endStr) : new Date(start.getTime() + 30*60000);
+      if (now >= end) {
+        el.classList.add('past');
+      } else if (now >= start && now < end) {
+        el.classList.add('now');
+        foundNext = false; // reset so "next" is the one AFTER current
+      } else if (!foundNext) {
+        el.classList.add('next');
+        foundNext = true;
+      }
+    });
+  }
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const el = document.getElementById('liveClock');
+    if (el) el.textContent = h + ':' + m;
+  }
+  updateCalendarLive();
+  updateClock();
+  setInterval(updateCalendarLive, 60000);
+  setInterval(updateClock, 10000);
 
   // ── Dashboard refresh ──
   async function refreshDashboard() {
