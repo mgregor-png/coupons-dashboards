@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turning Free Traffic Into Higher LTV — Groupon Ecosystem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a14;
+    --surface: #13132a;
+    --surface-hover: #1a1a38;
+    --border: #252548;
+    --text: #e8e8f0;
+    --text-muted: #9090aa;
+    --text-dim: #606078;
+  }
+
+  html.light {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface-hover: #f0f0f2;
+    --border: #d8d8dc;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --text-dim: #aeaeb2;
+    --coral: #e0443a;
+    --amber: #d48a00;
+    --teal: #1a9e8f;
+    --green: #28a745;
+    --blue: #0066cc;
+    --purple: #7c3aed;
+  }
+  html.light .stat { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  html.light .card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  html.light .path-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  html.light .highlight-box { border-width: 1px; }
+  html.light .tag-est { background: rgba(212,138,0,0.1); color: #a06800; }
+  html.light .tag-known { background: rgba(40,167,69,0.1); color: #1a7a34; }
+  html.light .tag-test { background: rgba(224,68,58,0.1); color: #b83430; }
+  html.light .funnel-step { border-bottom-color: rgba(0,0,0,0.06); }
+  html.light .detail-content { background: rgba(0,102,204,0.03); border-color: rgba(0,102,204,0.1); }
+  html.light .header h1 { background: linear-gradient(135deg, #e0443a, #d48a00); -webkit-background-clip: text; background-clip: text; }
+
+  .theme-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .theme-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--amber); color: var(--text); }
+  .theme-btn.active { border-color: var(--amber); color: var(--amber); background: rgba(251,191,36,0.08); }
+    --coral: #ff6b6b;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 650px; margin: 0 auto; }
+  .header .meta { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.75rem; }
+
+  .section {
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(37,37,72,0.5);
+  }
+  .section:first-of-type { border-top: none; padding-top: 0; }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+  .section-label.coral { color: var(--coral); }
+  .section-label.amber { color: var(--amber); }
+  .section-label.teal { color: var(--teal); }
+  .section-label.green { color: var(--green); }
+  .section-label.blue { color: var(--blue); }
+  .section-label.purple { color: var(--purple); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .card p, .card li { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .card ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .card li { margin-bottom: 0.3rem; }
+  .card li strong { color: var(--text); }
+
+  .highlight-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+  }
+  .highlight-box.coral-box { background: rgba(255,107,107,0.06); border-color: rgba(255,107,107,0.15); }
+  .highlight-box.teal-box { background: rgba(45,212,191,0.06); border-color: rgba(45,212,191,0.15); }
+  .highlight-box.green-box { background: rgba(74,222,128,0.06); border-color: rgba(74,222,128,0.15); }
+  .highlight-box.muted-box { background: rgba(144,144,170,0.06); border-color: rgba(144,144,170,0.15); }
+  .highlight-box.blue-box { background: rgba(96,165,250,0.06); border-color: rgba(96,165,250,0.15); }
+  .highlight-box.purple-box { background: rgba(167,139,250,0.06); border-color: rgba(167,139,250,0.15); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .stat {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .stat .number { font-size: 1.5rem; font-weight: 800; display: block; }
+  .stat .label { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.25rem; }
+  .est { font-size: 0.55rem; color: var(--text-dim); display: block; }
+
+  /* PATH CARDS */
+  .path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .path-grid { grid-template-columns: 1fr; } }
+
+  .path-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .path-card .path-letter {
+    font-size: 3rem;
+    font-weight: 900;
+    position: absolute;
+    top: -0.2rem;
+    right: 0.75rem;
+    opacity: 0.1;
+  }
+  .path-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .path-card .path-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.78rem;
+    border-bottom: 1px solid rgba(37,37,72,0.4);
+  }
+  .funnel-step:nth-child(odd) { background: rgba(255,255,255,0.015); }
+  .funnel-step:last-child { border-bottom: none; }
+  .funnel-step .step-label { color: var(--text-muted); }
+  .funnel-step .step-value { font-weight: 700; }
+  .funnel-step .step-value.est-val { color: var(--amber); }
+  .funnel-step .step-value.known-val { color: var(--green); }
+
+  .path-result {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .tag-est {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--amber);
+    background: rgba(251,191,36,0.12);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag-known {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--green);
+    background: rgba(74,222,128,0.12);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag-test {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--coral);
+    background: rgba(255,107,107,0.12);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+
+  /* EXPANDABLE */
+  details { margin-top: 0.75rem; }
+  details summary {
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--blue);
+    list-style: none;
+  }
+  details summary::before { content: '+ '; }
+  details[open] summary::before { content: '- '; }
+  details .detail-content {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(96,165,250,0.04);
+    border: 1px solid rgba(96,165,250,0.1);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* COMPARISON TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+  th { text-align: left; font-weight: 600; padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--border); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(37,37,72,0.5); color: var(--text-muted); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  tr.row-highlight td { background: rgba(251,191,36,0.06); }
+
+  /* Recommended path highlight in comparison table */
+  tr.recommended td { border-left: 3px solid var(--green); }
+
+  .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .link-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .link-card:hover { background: var(--surface-hover); border-color: var(--amber); }
+  .link-card .link-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+  .link-card .link-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+  .question-list { list-style: none; padding: 0; }
+  .question-list li {
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .question-list li strong { color: var(--text); }
+  .q-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+  }
+  .q-tag.tech { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .q-tag.biz { background: rgba(251,191,36,0.15); color: var(--amber); }
+
+  /* VALUE LADDER */
+  .value-ladder {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 0.4rem;
+    margin: 1.5rem 0;
+    align-items: stretch;
+  }
+  @media (max-width: 700px) { .value-ladder { grid-template-columns: 1fr; } }
+  .ladder-step {
+    text-align: center;
+    padding: 1.25rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    position: relative;
+  }
+  .ladder-step.step-coral { background: linear-gradient(180deg, rgba(255,107,107,0.1) 0%, var(--surface) 100%); }
+  .ladder-step.step-amber { background: linear-gradient(180deg, rgba(251,191,36,0.1) 0%, var(--surface) 100%); }
+  .ladder-step.step-teal { background: linear-gradient(180deg, rgba(45,212,191,0.1) 0%, var(--surface) 100%); }
+  .ladder-step.step-green { background: linear-gradient(180deg, rgba(74,222,128,0.1) 0%, var(--surface) 100%); }
+  .ladder-step.step-purple { background: linear-gradient(180deg, rgba(167,139,250,0.1) 0%, var(--surface) 100%); }
+  .ladder-step .number { font-size: 1.8rem; font-weight: 800; display: block; margin-bottom: 0.25rem; }
+  .ladder-step .step-title { font-size: 0.72rem; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+  .ladder-step .step-desc { font-size: 0.68rem; color: var(--text-dim); display: block; line-height: 1.4; }
+  .ladder-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+  @media (max-width: 700px) { .ladder-arrow { transform: rotate(90deg); } }
+
+  /* TWO-COLUMN LAYOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .col-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .col-box h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .col-box li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.3rem; }
+  .col-box ul { padding-left: 1.1rem; }
+
+  /* ASK GRID */
+  .ask-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .ask-grid { grid-template-columns: 1fr; } }
+  .ask-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    position: relative;
+  }
+  .ask-card strong { color: var(--text); }
+  .ask-card .ask-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--bg);
+    font-size: 0.78rem;
+    font-weight: 800;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  .ask-card .ask-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    display: inline;
+    vertical-align: middle;
+  }
+
+  /* Confidence dots */
+  .conf-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .conf-high { background: var(--green); }
+  .conf-medium { background: var(--amber); }
+  .conf-low { background: var(--coral); }
+
+  /* Revenue highlight */
+  .revenue-big {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">MBR Decision Framework &middot; April 2026</div>
+  <h1>Turning Free Traffic Into Higher LTV</h1>
+  <div class="subtitle">~30M US sessions of free coupons traffic. Today we capture $0.43/session. Here's how to capture more.</div>
+  <div class="meta">Martin Gregor &middot; Coupons &amp; Ecosystem &middot; For Adam Slaby &amp; Dusan</div>
+</div>
+
+<div class="section" style="border-top: none; padding-top: 0;">
+  <div class="highlight-box" style="border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.08); padding: 1.75rem; border-left: 4px solid var(--amber);">
+    <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.75rem; font-weight: 600;"><strong>~30M US sessions per year at $0.43 each.</strong> Our coupons traffic is massively undermonetized.</p>
+    <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.8;">We've mapped 4 paths to capture more value — from registration ($3.83/user, proven) to Safari extension ($9.81/user, needs validation). Two low-risk tests can validate <strong style="color: var(--green);">$6-20M in incremental annual revenue</strong>.</p>
+    <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.8;"><strong style="color: var(--text);">The ask:</strong> A 2-week iOS engineering spike for Safari extension feasibility + an A/B test on registration gating. Combined cost: minimal. Combined upside if validated: transformative.</p>
+  </div>
+</div>
+
+<!-- ===== HOW THIS ANSWERS THE BRIEF ===== -->
+<div class="section">
+  <div class="section-label purple">How This Answers the Brief</div>
+  <div class="card" style="padding: 1.25rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+
+      <a href="#save-everywhere" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--coral); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--coral); margin-bottom: 0.3rem;">Double monetisation of core users &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks earned off-platform ($9.81/yr per extension user) + redeemed on core deals = incremental revenue from users who currently buy 1x/yr. Safari extension turns passive app users into active earners.</div>
+      </a>
+
+      <a href="#save-everywhere" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--amber); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 0.3rem;">Open app more frequently &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks balance ("$14.20 earned"), brand alerts, price watchdog, weekly digest = <strong style="color: var(--text);">3+ weekly touchpoints</strong> vs current ~1.5x/month. Every off-platform interaction creates a reason to open the app.</div>
+      </a>
+
+      <a href="#save-everywhere" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--green); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 0.3rem;">New product vertical for core &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);"><strong style="color: var(--text);">"Save Everywhere"</strong> = savings companion layer on top of deals. Not a separate product &mdash; an extension of the app's value proposition. Users earn from any shopping, spend on local experiences.</div>
+      </a>
+
+      <a href="#cashback" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--teal); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 0.3rem;">Goods replacement &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Affiliate coupons + cashback fill the revenue gap with a <strong style="color: var(--text);">higher-margin, zero-inventory model</strong>. Same price-sensitive audience, different monetisation mechanic. No supply chain, no returns.</div>
+      </a>
+
+      <a href="#layers" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--purple); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple); margin-bottom: 0.3rem;">Drive more users to app &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Every off-platform interaction (Safari extension, Genie, coupons registration) bridges back to the app via Bucks. <strong style="color: var(--text);">Bucks can only be redeemed in the app</strong> &mdash; the pull-back mechanism.</div>
+      </a>
+
+      <a href="#complements" style="text-decoration: none; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--blue); display: block; transition: background 0.2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--surface-hover)'">
+        <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 0.3rem;">Improve retention &amp; purchase frequency &darr;</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks expiry (90 days) creates urgency. Brand following creates return triggers. Cashback layer rewards repeat purchases. <strong style="color: var(--text);">Complements Viktor's in-app personalization</strong> &mdash; we bring users back, Viktor makes the experience relevant.</div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: WHAT WE HAVE ===== -->
+<div class="section">
+  <div class="section-label coral">What We Have &mdash; Free Coupons Traffic</div>
+  <div class="card">
+    <p>Groupon.com/coupons drives ~30M US sessions per year through organic SEO &mdash; zero marketing spend. Users come with clear savings intent: they want a code for a specific brand. Today we monetize this traffic through affiliate commissions only.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--green);">~30M</span>
+        <span class="label">US Annual Sessions (2025)</span>
+        <span class="est">BQ verified &mdash; 29.6M</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">$12.6M</span>
+        <span class="label">US Annual Commission (2025)</span>
+        <span class="est">BQ verified</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">$0.43</span>
+        <span class="label">Revenue Per Session</span>
+        <span class="est">BQ verified &mdash; US 2025</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">50.1%</span>
+        <span class="label">Click-Through Rate (2025)</span>
+        <span class="est">BQ verified &mdash; US</span>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--green);">540K</span>
+        <span class="label">Annual registrations</span>
+        <span class="est">Rebecca's ROI model &mdash; to verify against GA4</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">$3.83</span>
+        <span class="label">Value per registration</span>
+        <span class="est">BI data &mdash; KNOWN</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">~2.5M/mo</span>
+        <span class="label">US Monthly Sessions</span>
+        <span class="est">BQ verified &mdash; 29.6M/12</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">~1.8%</span>
+        <span class="label">Registration rate</span>
+        <span class="est">Calculated: 45K registrations/mo &divide; 2.5M sessions</span>
+      </div>
+    </div>
+
+    <div class="highlight-box coral-box" style="font-size: 0.82rem;">
+      <strong>Declining trend:</strong> US sessions dropped from 35.8M (2024) to 29.6M (2025) &mdash; a <strong>17% decline</strong>. Q1 2026 annualizes at ~23.5M, suggesting further erosion. Commission revenue follows: $14.7M (2024) &rarr; $12.6M (2025) &rarr; ~$8.8M projected (2026). <strong style="color: var(--text);">This makes the case urgent: our core affiliate revenue is shrinking. We must find new ways to monetize this traffic before it erodes further.</strong>
+    </div>
+
+    <div class="highlight-box green-box" style="font-size: 0.82rem;">
+      This is <strong>free traffic with high commercial intent</strong>. Every session is a user actively looking to save money on a purchase they're about to make. The question: <span style="color: var(--text);">can we capture more than $0.43 of that intent?</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: THE GAP ===== -->
+<div class="section">
+  <div class="section-label coral">The Gap &mdash; Why $0.43 Is Not Enough</div>
+  <div class="card">
+    <p>Users grab a code and leave. <strong style="color: var(--text);">99% never register. We have zero off-platform presence.</strong> Meanwhile, every major competitor has built an ecosystem that turns one-time visitors into $10-30/yr relationships.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1rem 0;">
+      <div style="text-align: center; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--coral); letter-spacing: 0.1em;">Honey</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">13M users, Safari ext in PayPal app. <span style="color: var(--coral);">In crisis &mdash; lost 8M users, lawsuit.</span></div>
+      </div>
+      <div style="text-align: center; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--green); letter-spacing: 0.1em;">Rakuten</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">17M US members, $3.7B cashback paid. Balance = retention.</div>
+      </div>
+      <div style="text-align: center; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--green); letter-spacing: 0.1em;">Capital One</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">10M+ users, #2 Safari app. Bundled in banking app.</div>
+      </div>
+      <div style="text-align: center; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+        <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--amber); letter-spacing: 0.1em;">RetailMeNot</div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">Same model as us. <span style="color: var(--coral);">18% revenue decline.</span> Added cashback as hedge.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="font-size: 0.85rem; border-color: rgba(251,191,36,0.25); background: rgba(251,191,36,0.06);">
+      <strong>Market timing:</strong> Honey's crisis (class action, -8M users) created a <strong>vacuum in the extension market</strong>. RetailMeNot is declining. Groupon has a unique window &mdash; 30M+ app installs for instant distribution, trusted brand, and a local deals angle no competitor has.
+      <span style="display: block; margin-top: 0.5rem; font-size: 0.78rem;"><a href="competitor-research-2026-04-08.html" style="color: var(--blue);">Full competitor research (7 players, detailed) &rarr;</a></span>
+    </div>
+  </div>
+</div>
+
+<a id="value-ladder"></a>
+<!-- ===== SECTION 3: THE VALUE LADDER ===== -->
+<div class="section">
+  <div class="section-label amber">The Value Ladder &mdash; From $0.43 to $31+</div>
+  <div class="card">
+    <p>Each step up the ladder captures more of the user's lifetime value. The further we move a user, the more they're worth.</p>
+
+    <div class="value-ladder">
+      <div class="ladder-step step-coral" style="border-color: rgba(255,107,107,0.4);">
+        <span class="number" style="color: var(--coral);">$0.43</span>
+        <span class="step-title" style="color: var(--coral);">One-time coupon use</span>
+        <span class="step-desc">Today: anonymous user grabs code, leaves</span>
+      </div>
+      <div class="ladder-arrow">&rarr;</div>
+      <div class="ladder-step step-amber" style="border-color: rgba(251,191,36,0.4);">
+        <span class="number" style="color: var(--amber);">$3.83</span>
+        <span class="step-title" style="color: var(--amber);">Registration</span>
+        <span class="step-desc">User creates account &rarr; 12% convert to purchaser within 12mo</span>
+      </div>
+      <div class="ladder-arrow">&rarr;</div>
+      <div class="ladder-step step-teal" style="border-color: rgba(45,212,191,0.4);">
+        <span class="number" style="color: var(--teal);">$6.00</span>
+        <span class="step-title" style="color: var(--teal);">Extension user</span>
+        <span class="step-desc">Desktop Genie: $6/user/yr affiliate commission (actual data)</span>
+      </div>
+      <div class="ladder-arrow">&rarr;</div>
+      <div class="ladder-step step-green" style="border-color: rgba(74,222,128,0.4);">
+        <span class="number" style="color: var(--green);">$9.81</span>
+        <span class="step-title" style="color: var(--green);">Extension + Bucks</span>
+        <span class="step-desc">Add Groupon Bucks + deal cross-sell (LTV model)</span>
+      </div>
+      <div class="ladder-arrow">&rarr;</div>
+      <div class="ladder-step step-purple" style="border-color: rgba(167,139,250,0.4);">
+        <span class="number" style="color: var(--purple);">$31.88</span>
+        <span class="step-title" style="color: var(--purple);">Core customer</span>
+        <span class="step-desc">Full Groupon customer 1Y LTV (BI data, discount cohort)</span>
+      </div>
+    </div>
+
+    <div class="highlight-box green-box" style="font-size: 0.82rem;">
+      Each step up the ladder is independently valuable. Moving just 5% of traffic from step 1 to step 2 (registration) adds $740K/yr. Moving 1% to step 5 (core customer) adds $1.5M/yr. The paths below show how.
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3B: THE BROKEN JOURNEY ===== -->
+<div class="section">
+  <div class="section-label coral">What This Looks Like in Practice</div>
+  <div class="card">
+    <h3>The Anonymous User's Journey &mdash; Today</h3>
+    <p style="margin-bottom: 1.25rem;">This is what happens to a typical coupons visitor right now. Every step is a missed opportunity.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem;">
+      <div style="padding: 1rem 0.75rem; background: var(--surface-hover); border-radius: 10px; border-top: 3px solid var(--purple); text-align: center;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple); margin-bottom: 0.5rem;">1. They Arrive</div>
+        <div style="font-size: 0.82rem; color: var(--text); font-weight: 600;">Google &rarr; coupon page</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">High intent: searching for "[brand] coupon code"</div>
+        <div style="margin-top: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--green);">2.5M/mo</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim);">US monthly sessions</div>
+      </div>
+
+      <div style="padding: 1rem 0.75rem; background: var(--surface-hover); border-radius: 10px; border-top: 3px solid var(--coral); text-align: center;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); margin-bottom: 0.5rem;">2. They Grab</div>
+        <div style="font-size: 0.82rem; color: var(--text); font-weight: 600;">Copy code, click out</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">50% CTR &mdash; they came for one thing and got it</div>
+        <div style="margin-top: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--coral);">$0.43</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim);">We earn per session</div>
+      </div>
+
+      <div style="padding: 1rem 0.75rem; background: var(--surface-hover); border-radius: 10px; border-top: 3px solid var(--coral); text-align: center;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); margin-bottom: 0.5rem;">3. They Leave</div>
+        <div style="font-size: 0.82rem; color: var(--text); font-weight: 600;">No reason to stay</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">No account, no saved codes, no follow-up. We don't know who they are.</div>
+        <div style="margin-top: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--coral);">99%</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim);">Leave without registering</div>
+      </div>
+
+      <div style="padding: 1rem 0.75rem; background: var(--surface-hover); border-radius: 10px; border-top: 3px solid var(--coral); text-align: center;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); margin-bottom: 0.5rem;">4. They Forget</div>
+        <div style="font-size: 0.82rem; color: var(--text); font-weight: 600;">No touchpoint exists</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">No extension, no app, no push notifications. Zero off-platform presence.</div>
+        <div style="margin-top: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--coral);">0</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim);">Touchpoints after they leave</div>
+      </div>
+
+      <div style="padding: 1rem 0.75rem; background: var(--surface-hover); border-radius: 10px; border-top: 3px solid var(--text-dim); text-align: center;">
+        <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.5rem;">5. They Shop</div>
+        <div style="font-size: 0.82rem; color: var(--text); font-weight: 600;">Without us</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">They go to Nike, Amazon, Target &mdash; and Honey/Rakuten are there. We're not.</div>
+        <div style="margin-top: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--text-dim);">$10-30</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim);">Value captured by competitors</div>
+      </div>
+    </div>
+
+    <div class="highlight-box coral-box" style="font-size: 0.85rem; margin-top: 1rem; text-align: center;">
+      <strong>We see them once. Competitors see them everywhere.</strong><br>
+      The user came with savings intent, gave us a signal, and we let them walk away with $0.43. Honey, Rakuten, and Capital One follow them home.
+    </div>
+  </div>
+</div>
+
+<a id="layers"></a>
+<!-- ===== SECTION 4: THREE LAYERS ===== -->
+<div class="section">
+  <div class="section-label amber">Three Layers &mdash; Convert, Extend, Retain</div>
+
+  <div class="card" style="margin-bottom: 1.5rem;">
+    <p>These aren't independent paths &mdash; they're <strong style="color: var(--text);">layers that build on each other.</strong> Each layer needs the one below it to work.</p>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin: 1.25rem 0; flex-wrap: wrap;">
+      <div style="text-align: center; padding: 1rem 1.5rem; background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.25); border-radius: 10px; min-width: 180px;">
+        <div style="font-size: 1.2rem; font-weight: 800; color: var(--purple);">1. Convert</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">Registration + Rewards<br>Anonymous &rarr; Known</div>
+      </div>
+      <div style="color: var(--text-dim); font-size: 1.3rem;">&rarr;</div>
+      <div style="text-align: center; padding: 1rem 1.5rem; background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.25); border-radius: 10px; min-width: 180px;">
+        <div style="font-size: 1.2rem; font-weight: 800; color: var(--teal);">2. Extend</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">Genie + Safari Extension<br>On-site &rarr; Always-on</div>
+      </div>
+      <div style="color: var(--text-dim); font-size: 1.3rem;">&rarr;</div>
+      <div style="text-align: center; padding: 1rem 1.5rem; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); border-radius: 10px; min-width: 180px;">
+        <div style="font-size: 1.2rem; font-weight: 800; color: var(--amber);">3. Retain</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">Cashback + Bucks Balance<br>One-time &rarr; Repeat</div>
+      </div>
+    </div>
+    <p style="font-size: 0.82rem; color: var(--text-dim); text-align: center;">Extensions without rewards = limited ($6/user). Cashback without identity = impossible. Registration is the foundation.<br><strong style="color: var(--text-muted);">Key insight: 61% of coupons traffic is mobile</strong> &mdash; Genie (desktop) reaches only 39%. Safari extension unlocks the majority.</p>
+  </div>
+
+  <div class="path-grid">
+
+    <!-- LAYER 1: CONVERT -->
+    <div class="path-card" style="border-color: rgba(167,139,250,0.3); border-top: 3px solid var(--purple);">
+      <div class="path-letter" style="color: var(--purple);">1</div>
+      <h4 style="color: var(--purple);">Convert: Registration + Rewards</h4>
+      <div class="path-desc"><strong>The foundation.</strong> Turn anonymous coupons visitors into known Groupon users. Registration is the mechanism, rewards are the reason. Everything else depends on this.</div>
+
+      <div class="funnel-step">
+        <span class="step-label">Monthly coupons web sessions (US)</span>
+        <span class="step-value known-val">~2.5M <span class="tag-known">BQ VERIFIED</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Current registration rate (email only)</span>
+        <span class="step-value known-val">~1.8% <span class="tag-known">CALCULATED</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Registrant &rarr; purchaser (12mo)</span>
+        <span class="step-value known-val">12% <span class="tag-known">BEHDAD DATA</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">1Y LTV per converted registrant</span>
+        <span class="step-value known-val">$31.88 <span class="tag-known">BI DATA</span></span>
+      </div>
+      <div class="funnel-step" style="border-bottom: none;">
+        <span class="step-label">Value per registration</span>
+        <span class="step-value known-val">$3.83 <span class="tag-known">CALCULATED</span></span>
+      </div>
+      <div class="funnel-step" style="background: rgba(255,107,107,0.04); border-radius: 4px; margin-top: 0.25rem;">
+        <span class="step-label" style="color: var(--coral);">Blocker: No user login on Coupons</span>
+        <span class="step-value est-val">Needs auth integration <span class="tag-test">DEPENDENCY</span></span>
+      </div>
+
+      <div class="path-result" style="background: rgba(167,139,250,0.1); color: var(--purple); border: 1px solid rgba(167,139,250,0.2);">
+        Current: 540K reg/yr &times; $3.83 = $2.1M/yr. At 3% registration: $4.6M/yr
+      </div>
+
+      <details>
+        <summary>Registration path &mdash; phased approach, blockers &amp; incentives</summary>
+        <div class="detail-content">
+          <strong>Current funnel:</strong> 2.5M monthly US sessions &rarr; ~1.8% register (email only, 540K/yr) &rarr; 12% purchase within 12mo &rarr; <strong>$3.83 net value per registration.</strong><br><br>
+
+          <div style="background: rgba(255,107,107,0.06); border: 1px solid rgba(255,107,107,0.15); border-radius: 8px; padding: 0.75rem; margin: 0.5rem 0;">
+            <strong style="color: var(--coral);">Key blocker: No user login on Coupons.</strong> Today we only collect emails &mdash; no account system, no login, no profile. We need to integrate Groupon's existing auth system into coupons pages, plus build coupons-specific features (saved codes, followed brands, Bucks balance).
+          </div>
+
+          <strong>Phased implementation:</strong>
+          <table style="font-size: 0.78rem; margin: 0.75rem 0;">
+            <tr><th>Phase</th><th>What</th><th>Effort</th><th>What You Get</th></tr>
+            <tr>
+              <td style="color: var(--green);"><strong>1. Lightweight</strong></td>
+              <td>"Sign in with Groupon" button + gift card incentive. No coupons features yet.</td>
+              <td>2-3 weeks eng</td>
+              <td>Identity link to core. Validates conversion rate. Enables LTV tracking.</td>
+            </tr>
+            <tr>
+              <td style="color: var(--amber);"><strong>2. Medium</strong></td>
+              <td>OAuth + saved codes + followed brands + Bucks balance view</td>
+              <td>4-6 weeks eng</td>
+              <td>Real coupons account. Retention hooks. Reason to log in again.</td>
+            </tr>
+            <tr>
+              <td style="color: var(--purple);"><strong>3. Full</strong></td>
+              <td>Full profile, notification center, personalization (connects to Viktor's work)</td>
+              <td>8-12 weeks eng</td>
+              <td>Personalized coupons experience. Viktor-level targeting on coupons.</td>
+            </tr>
+          </table>
+
+          <strong>Recommended approach:</strong> Start with <strong style="color: var(--green);">Phase 1 (Lightweight)</strong> to validate conversion. "Sign in with Groupon to claim your $5 gift card." This is the minimum viable test &mdash; 2-3 weeks to build, answers the critical question: will coupons users register if the incentive is strong enough?<br><br>
+
+          <strong>Why gift cards are the right incentive:</strong>
+          <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+            <li>Coupons users have <strong>extremely high intent and low patience</strong> &mdash; they came for a code, not to create an account</li>
+            <li>Generic "sign up for updates" will fail. The value must be <strong>concrete and immediate.</strong></li>
+            <li><strong style="color: var(--green);">$5 Groupon gift card</strong> is the simplest high-value offer. Direct exchange: identity for money. And it pulls users into the Groupon app to redeem &mdash; same bridge mechanic as Bucks.</li>
+            <li>Rewards gating (require login for best codes) is an alternative &mdash; already tested at <strong>+1,247% uplift</strong> (Rebecca's ROI model, rewards gating test on NA) &mdash; but riskier for high-traffic monetized pages.</li>
+          </ul>
+
+          <strong>Who are these users?</strong>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.75rem 0;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;">
+              <div style="font-weight: 700; font-size: 0.82rem; color: var(--purple);">Sarah</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-style: italic;">Spa deal seeker</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem;">Searches "spa deals Chicago" 3x/month. Grabs code, never registers. Value captured: <strong style="color: var(--coral);">$1.17/yr</strong>. If registered: <strong style="color: var(--green);">$3.83</strong>. If core customer: <strong style="color: var(--green);">$31.88</strong>.</div>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;">
+              <div style="font-weight: 700; font-size: 0.82rem; color: var(--purple);">Mike</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-style: italic;">Pizza coupon regular</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem;">Visits Domino's coupon page every week. High frequency, zero identity. We earn $0.43/visit but he'd be a <strong style="color: var(--green);">$121 power user</strong> on the value ladder if converted.</div>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;">
+              <div style="font-weight: 700; font-size: 0.82rem; color: var(--purple);">Lisa</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-style: italic;">Brand discount hunter</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem;">Searches Nike, Adidas codes before every purchase. Already in our funnel monthly. <strong>Honey follows her home. We don't.</strong> With Safari extension: $9.81/yr.</div>
+            </div>
+          </div>
+
+          <strong>Test strategy:</strong> Run Phase 1 on <strong>non-monetized pages only</strong> (zero revenue risk). A/B: (A) gift card incentive vs (B) rewards gating vs (C) control. If conversion rate exceeds 2% and gift card cost &lt; $3.83 LTV &rarr; invest in Phase 2.<br><br>
+
+          <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" style="color: var(--blue);">LTV Model (registration economics) &rarr;</a>
+        </div>
+      </details>
+    </div>
+
+    <!-- LAYER 2a: EXTEND — DESKTOP -->
+    <div class="path-card" style="border-color: rgba(45,212,191,0.3); border-top: 3px solid var(--teal);">
+      <div class="path-letter" style="color: var(--teal);">2a</div>
+      <h4 style="color: var(--teal);">Extend: Genie (Desktop) &mdash; Live, Validated</h4>
+      <div class="path-desc">Chrome extension for desktop users (39% of traffic). Already live. <strong>Unit economics proven at $6/user/yr.</strong> Current bottleneck: acquisition. Known solution: rewards-gated install (projected 288x current).</div>
+
+      <div class="funnel-step">
+        <span class="step-label">Desktop coupons visitors</span>
+        <span class="step-value known-val">39% of traffic <span class="tag-known">BQ APR 1</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Genie installs</span>
+        <span class="step-value known-val">981 <span class="tag-known">ACTUAL</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">LP &rarr; Install CVR</span>
+        <span class="step-value known-val">~18% <span class="tag-known">ACTUAL</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Commission per install/yr</span>
+        <span class="step-value known-val">$6.00 <span class="tag-known">ACTUAL</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">+ Rewards scenario</span>
+        <span class="step-value est-val">$9.81 <span class="tag-est">LTV MODEL</span></span>
+      </div>
+
+      <div class="path-result" style="background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.2);">
+        $6-9.81/user/yr &mdash; already validated, needs scale. Current acquisition is the bottleneck.
+      </div>
+
+      <details>
+        <summary>Genie &mdash; proven model, rewards unlocks 100x scale</summary>
+        <div class="detail-content">
+          <strong>Live since Nov 2024.</strong> Unit economics proven: 981 installs, $6/user/yr. With rewards + deals: $9.81 (LTV model).<br><br>
+
+          <strong>Current performance (March MBR):</strong>
+          <table style="font-size: 0.75rem; margin: 0.5rem 0;">
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>Popup CTR</td><td><strong>1.45%</strong> (best promotional asset)</td></tr>
+            <tr><td>LP &rarr; Install (at scale)</td><td><strong>~14%</strong></td></tr>
+            <tr><td>Current installs/month</td><td>~304</td></tr>
+            <tr><td>GA4 active users</td><td>205 (up from ~115)</td></tr>
+          </table>
+
+          <div style="background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.12); border-radius: 8px; padding: 0.75rem; margin: 0.5rem 0; font-size: 0.78rem;">
+            <strong style="color: var(--green);">Next step: Rewards integration.</strong> Gate rewards behind Genie install: "Install Genie to unlock this $5 reward."<br>
+            &bull; <strong>Effort: 30 MD eng + 4 MD design (Q2)</strong><br>
+            &bull; Projected: <strong>8-18K installs/month</strong> (26-59x current 304/mo)<br>
+            &bull; Feb rewards demand: 4,907 transactions, $42K commission, 14K clicks &mdash; users already engage.
+          </div>
+
+          <strong>Without rewards:</strong> ~1.5K installs/month (popup scaling). <strong>With rewards (34 MD investment):</strong> 8-18K installs/month &mdash; transforms Genie from a feature into a distribution channel. Same playbook applies to Safari on the 61% mobile traffic.<br><br>
+          <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" style="color: var(--blue);">LTV Model &rarr;</a>
+        </div>
+      </details>
+    </div>
+
+    <!-- SAVE EVERYWHERE: SAFARI EXTENSION -->
+    <a id="save-everywhere"></a>
+    <div class="path-card" style="border-color: rgba(255,107,107,0.3); border-top: 3px solid var(--coral); grid-column: 1 / -1;">
+      <div class="path-letter" style="color: var(--coral); font-size: 3.5rem; opacity: 0.08;">&#9733;</div>
+      <h4 style="color: var(--coral); font-size: 1.1rem;">Save Everywhere: Safari Extension in Groupon App</h4>
+      <div class="path-desc" style="font-size: 0.85rem;">This is not just "Genie for mobile." This takes Groupon's <strong>entire app user base (~8-10M MAU)</strong> and inserts Groupon into every mobile shopping session. Users already have the app &mdash; no new acquisition needed. The extension ships inside the app they already own.</div>
+
+      <div class="highlight-box" style="font-size: 0.85rem; border-color: rgba(255,107,107,0.2); background: rgba(255,107,107,0.04); margin: 0.75rem 0; padding: 1rem;">
+        <strong style="color: var(--coral);">The strategic shift:</strong> Today, Groupon only exists when users open the app (~1.5x/month). With the Safari extension, Groupon is present on <strong>every shopping site they visit in Safari</strong> &mdash; Nike, Amazon, Target, restaurants, travel. We go from "transactional app they visit monthly" to "always-on savings companion across their entire mobile shopping life."
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <div class="funnel-step">
+            <span class="step-label">Groupon app MAU (US)</span>
+            <span class="step-value known-val">~8-10M <span class="tag-known">TABLEAU</span></span>
+          </div>
+          <div class="funnel-step">
+            <span class="step-label">iOS share (Safari-addressable)</span>
+            <span class="step-value est-val">~55% <span class="tag-est">EST &mdash; need from Radomir</span></span>
+          </div>
+          <div class="funnel-step">
+            <span class="step-label">Extension activation rate</span>
+            <span class="step-value est-val">10-30% <span class="tag-test">TO TEST</span></span>
+          </div>
+          <div class="funnel-step">
+            <span class="step-label">Potential active ext users</span>
+            <span class="step-value est-val">450K-1.65M <span class="tag-est">EST</span></span>
+          </div>
+          <div class="funnel-step">
+            <span class="step-label">Commission/user/yr (from Genie)</span>
+            <span class="step-value known-val">$6.00 <span class="tag-known">GENIE ACTUAL</span></span>
+          </div>
+          <div class="funnel-step">
+            <span class="step-label">+ Bucks &amp; deals cross-sell</span>
+            <span class="step-value est-val">+$3.81 <span class="tag-est">LTV MODEL</span></span>
+          </div>
+        </div>
+        <div>
+          <div style="background: rgba(255,107,107,0.06); border: 1px solid rgba(255,107,107,0.15); border-radius: 10px; padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+            <div style="text-align: center; margin-bottom: 0.75rem;">
+              <div style="font-size: 2rem; font-weight: 800; color: var(--coral);">$4.4M &mdash; $16.2M</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Annual incremental revenue at $9.81/user</div>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">
+              <strong style="color: var(--text);">No new acquisition.</strong> These users already have the app.<br>
+              The extension activates inside what they already own.<br>
+              <span style="color: var(--green);">Honey does this with PayPal. Capital One does it with banking. We do it with deals.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="path-result" style="background: rgba(255,107,107,0.1); color: var(--coral); border: 1px solid rgba(255,107,107,0.2); font-size: 1rem; margin-top: 1rem;">
+        Groupon becomes present in every shopping session &mdash; not just when users open the app. Bucks earned everywhere, redeemed on local experiences.
+      </div>
+
+      <details>
+        <summary>Save Everywhere &mdash; full concept, Groupon Bucks mechanics &amp; pull-back hooks</summary>
+        <div class="detail-content">
+
+          <div style="background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.12); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem;">
+            <strong style="color: var(--amber);">Groupon Bucks: The Connective Tissue</strong><br>
+            <span style="font-size: 0.78rem;">Every interaction connects through one mechanism &mdash; a visible, growing balance that gives users a reason to come back even when they're not shopping. Bucks accumulate from coupon use, cashback, code verifications, streaks, and referrals. They're spent on core Groupon deals. This creates a <strong>shared currency between the affiliate coupon world and the core deals world</strong> &mdash; without it, the two sides don't reinforce each other.</span><br><br>
+            <span style="font-size: 0.82rem; color: var(--text);"><em>"You've earned $14.20 this month"</em> &mdash; users check their balance even when they're not shopping. That's the habit loop.</span>
+          </div>
+
+          <strong>The pull-back loop:</strong>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.3rem; margin: 0.75rem 0; flex-wrap: wrap; font-size: 0.75rem;">
+            <span style="padding: 0.4rem 0.6rem; background: var(--surface-hover); border-radius: 6px;">User shops on Nike</span>
+            <span style="color: var(--text-dim);">&rarr;</span>
+            <span style="padding: 0.4rem 0.6rem; background: var(--surface-hover); border-radius: 6px;">Groupon overlay shows code</span>
+            <span style="color: var(--text-dim);">&rarr;</span>
+            <span style="padding: 0.4rem 0.6rem; background: rgba(251,191,36,0.1); border-radius: 6px; color: var(--amber);">Earns Groupon Bucks</span>
+            <span style="color: var(--text-dim);">&rarr;</span>
+            <span style="padding: 0.4rem 0.6rem; background: rgba(74,222,128,0.1); border-radius: 6px; color: var(--green);">Opens app to redeem</span>
+            <span style="color: var(--text-dim);">&rarr;</span>
+            <span style="padding: 0.4rem 0.6rem; background: rgba(167,139,250,0.1); border-radius: 6px; color: var(--purple);">Books a local deal</span>
+            <span style="color: var(--text-dim);">&rarr;</span>
+            <span style="padding: 0.4rem 0.6rem; background: rgba(251,191,36,0.1); border-radius: 6px; color: var(--amber);">Earns more Bucks</span>
+          </div>
+
+          <strong>How it works (iOS 15+):</strong> Apps can bundle Safari Web Extensions. User has Groupon app &rarr; enables extension in Settings (one-time) &rarr; Groupon overlay appears on every shopping site. This is exactly how Honey (inside PayPal app since 2021) and Rakuten work on iOS today. <strong>Every Groupon app install becomes a Safari extension install for free.</strong><br><br>
+
+          <strong>Hooks to pull users from off-platform back to the app:</strong>
+          <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.78rem;">
+            <li><strong>Coupon auto-apply</strong> &mdash; best codes surfaced at checkout (affiliate commission)</li>
+            <li><strong>Cashback in Bucks</strong> &mdash; % back on purchases, paid as Bucks only redeemable in app</li>
+            <li><strong>Brand following</strong> &mdash; "New Nike code dropped" &rarr; push notification &rarr; opens app</li>
+            <li><strong>Price watchdog</strong> &mdash; "Best time to shop Amazon" alerts &rarr; opens app to see deals</li>
+            <li><strong>Weekly digest</strong> &mdash; best codes + "You've earned $X this week, $Y available to spend on deals"</li>
+            <li><strong>Bucks balance visibility</strong> &mdash; the balance itself is the daily-open trigger. Expiry (90 days) creates urgency to redeem.</li>
+          </ul>
+
+          <strong>Why Groupon wins:</strong> Honey/Rakuten bridge coupons &rarr; retail rewards. Groupon bridges coupons &rarr; <strong>local experiences</strong>. "Earn Bucks from Nike, spend them on a massage near you." No competitor has this.<br><br>
+
+          <strong>Validated by Genie:</strong> Same mechanic, $6/user/yr proven on desktop. Safari inherits the economics + the entire app user base (8-10M, not just coupons visitors).<br><br>
+
+          <strong>Key unknown:</strong> iOS App Store extension bundling. 2-week eng spike validates before any build.<br><br>
+
+          <a href="https://mgregor-png.github.io/groupon-ecosystem/" style="color: var(--blue);">Ecosystem Strategy Board &rarr;</a> &middot;
+          <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" style="color: var(--blue);">LTV Model &rarr;</a> &middot;
+          <a href="https://mgregor-png.github.io/coupons-dashboards/alternative-monetisation-brainstorm-v2.html" style="color: var(--blue);">Save Everywhere Deck &rarr;</a>
+        </div>
+      </details>
+    </div>
+
+    <a id="cashback"></a>
+    <!-- LAYER 3: RETAIN -->
+    <div class="path-card" style="border-color: rgba(251,191,36,0.3); border-top: 3px solid var(--amber);">
+      <div class="path-letter" style="color: var(--amber);">3</div>
+      <h4 style="color: var(--amber);">Retain: Cashback on Purchases</h4>
+      <div class="path-desc">Earn % back on every purchase as Groupon Bucks. Builds on Layer 1 (needs identity) and Layer 2 (Bucks redeemable in app). This is the retention flywheel &mdash; evolved rewards for repeat buyers.</div>
+
+      <div class="funnel-step">
+        <span class="step-label">Addressable users (all app)</span>
+        <span class="step-value known-val">~8-10M <span class="tag-known">TABLEAU</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Cashback opt-in rate</span>
+        <span class="step-value est-val">15-25% <span class="tag-test">TO TEST</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Purchase frequency uplift</span>
+        <span class="step-value est-val">+20-40% <span class="tag-test">TO TEST</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Incremental ARPU</span>
+        <span class="step-value est-val">+$4-8 <span class="tag-est">EST</span></span>
+      </div>
+      <div class="funnel-step">
+        <span class="step-label">Margin impact (cashback cost)</span>
+        <span class="step-value est-val">-3-5% <span class="tag-test">TO VALIDATE</span></span>
+      </div>
+
+      <div class="path-result" style="background: rgba(251,191,36,0.1); color: var(--amber); border: 1px solid rgba(251,191,36,0.2);">
+        $4-8/user/yr net of cashback cost &mdash; broadest reach (iOS + Android), no extension needed
+      </div>
+
+      <details>
+        <summary>Cashback &mdash; how it differs from rewards, risks &amp; engagement layers</summary>
+        <div class="detail-content">
+          <div style="background: rgba(96,165,250,0.06); border: 1px solid rgba(96,165,250,0.12); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem;">
+            <strong>Cashback vs Rewards &mdash; different mechanics:</strong><br>
+            &bull; <strong>Rewards (Layer 1)</strong> = incentive to <em>register</em>. Gift card / Bucks for creating an account. One-time acquisition cost.<br>
+            &bull; <strong>Cashback (this path)</strong> = incentive to <em>buy again</em>. Earn % back on every purchase. Ongoing retention cost.
+          </div>
+          <strong>Core mechanic:</strong> User buys a Groupon deal &rarr; earns 3-5% back as Groupon Bucks &rarr; Bucks balance grows &rarr; user returns to spend Bucks on next deal. Visible balance creates open habit. 90-day expiry drives urgency.<br><br>
+          <strong>Cross-platform:</strong> Works for ALL app users (iOS + Android). No extension, no registration friction. Leverages existing purchase flow.<br><br>
+          <strong>Engagement layers</strong> (can stack on top of cashback):
+          <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.78rem;">
+            <li><strong>Daily Deal Drop + Streaks</strong> &mdash; curated deals rotate daily, streak = bonus (Temu: 89% interaction)</li>
+            <li><strong>Watch This Deal</strong> &mdash; price/availability alerts (Honey's Droplist model)</li>
+            <li><strong>Geo-Push</strong> &mdash; "The spa next door has 40% off today" (Shopkick model)</li>
+          </ul>
+          <strong>Key risk:</strong> Margin erosion. 5% cashback on a $50 deal = $2.50 cost. Must validate frequency uplift &gt; cashback cost. Viktor's L4 data (2.5x CVR, 5.5x frequency when matched to intent) suggests the upside is there for the right segments.<br><br>
+          <strong>Dependency:</strong> Requires Groupon Bucks infrastructure (shared with Paths A and B). Scoping this is Ask #3.<br><br>
+          <a href="https://mgregor-png.github.io/coupons-dashboards/alternative-monetisation-brainstorm-v2.html" style="color: var(--blue);">Full Brainstorm (10 ideas with evaluation) &rarr;</a>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SECTION 5: INVESTMENT vs RETURN ===== -->
+<div class="section">
+  <div class="section-label green">Investment vs. Return &mdash; Per Layer</div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+
+    <div class="card" style="border-top: 3px solid var(--purple);">
+      <h3 style="color: var(--purple); font-size: 0.95rem;">1: Convert (Registration + Rewards)</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Invest</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--text);">2-3 wk</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Auth integration</div>
+        </div>
+        <div style="font-size: 1.5rem; color: var(--text-dim);">&rarr;</div>
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Return</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--green);">$2.1-4.6M/yr</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">$3.83/registration</div>
+        </div>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">
+        <span style="color: var(--green);">&#9679;</span> Highest confidence &mdash; nearly all economics proven from BI data.
+        Foundation for everything else.
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--teal);">
+      <h3 style="color: var(--teal); font-size: 0.95rem;">2a: Extend &mdash; Genie (Desktop)</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Invest</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--text);">34 MD</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Rewards integration</div>
+        </div>
+        <div style="font-size: 1.5rem; color: var(--text-dim);">&rarr;</div>
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Return</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--green);">8-18K inst/mo</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">$6-9.81/user/yr</div>
+        </div>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">
+        <span style="color: var(--green);">&#9679;</span> Live and validated. Unit economics proven at $6/user.
+        Rewards is the 26-59x scale lever.
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--coral); grid-column: 1 / -1;">
+      <h3 style="color: var(--coral); font-size: 1.05rem;">&#9733; Save Everywhere &mdash; Safari Extension (Mobile)</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0; max-width: 500px;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Invest</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--text);">2 wk spike</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Feasibility validation</div>
+        </div>
+        <div style="font-size: 1.5rem; color: var(--text-dim);">&rarr;</div>
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">If validated, return</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--green);">$4.4-16.2M/yr</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">8-10M app users &times; activation &times; $9.81</div>
+        </div>
+      </div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">
+        <span style="color: var(--amber);">&#9679;</span> Biggest opportunity, needs technical validation first. 2-week spike is low-cost, high-information.
+        <strong style="color: var(--text);">If feasible: transforms Groupon from transactional app to always-on savings companion. Addresses Dusan's core brief directly.</strong>
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--amber);">
+      <h3 style="color: var(--amber); font-size: 0.95rem;">3: Retain &mdash; Cashback</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Invest</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--text);">Bucks infra</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Scoping in Q2</div>
+        </div>
+        <div style="font-size: 1.5rem; color: var(--text-dim);">&rarr;</div>
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Return</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--amber);">$4-8/user/yr</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Repeat purchase uplift</div>
+        </div>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">
+        <span style="color: var(--coral);">&#9679;</span> Lowest confidence &mdash; needs Bucks infrastructure + margin validation.
+        Builds on Layers 1 &amp; 2. Scope first, test later.
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--green); background: rgba(74,222,128,0.03);">
+      <h3 style="color: var(--green); font-size: 0.95rem;">Combined: All Layers</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Total investment</div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--text);">~40 MD eng</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">Across all tracks in Q2</div>
+        </div>
+        <div style="font-size: 1.5rem; color: var(--text-dim);">&rarr;</div>
+        <div style="text-align: center;">
+          <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.1em;">Combined return</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--green);">$8-25M/yr</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);">33%+ uplift on $12.6M base</div>
+        </div>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">
+        The layers compound: registration feeds extensions, extensions feed cashback, Bucks ties everything back to core deals. Not four separate bets &mdash; one ecosystem.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label green">ROI &mdash; What Does This Cost vs. What Does It Return</div>
+  <div class="card">
+    <h3>Investment Required</h3>
+    <table>
+      <tr><th>Item</th><th>Cost</th><th>Timeline</th><th>Notes</th></tr>
+      <tr>
+        <td><strong>Safari Extension spike</strong></td>
+        <td style="color: var(--text);">2 weeks iOS eng</td>
+        <td>Q2</td>
+        <td>Feasibility validation only. If green-lit, MVP is ~2-3 months additional.</td>
+      </tr>
+      <tr>
+        <td><strong>Registration + Rewards test</strong></td>
+        <td style="color: var(--text);">2-3 weeks eng (Groupon auth integration)</td>
+        <td>Q2</td>
+        <td>Phase 1: "Sign in with Groupon" + gift card incentive on non-monetized pages. Requires Groupon OAuth integration.</td>
+      </tr>
+      <tr>
+        <td><strong>Groupon Bucks scoping</strong></td>
+        <td style="color: var(--text);">Product brief</td>
+        <td>Q2</td>
+        <td>Backend architecture scoping. No build commitment yet.</td>
+      </tr>
+      <tr>
+        <td><strong>Genie rewards integration</strong></td>
+        <td style="color: var(--text);">30 MD eng + 4 MD design</td>
+        <td>Q2</td>
+        <td>Rewards-gated install. Projected 8-18K installs/mo (26-59x current). The key unlock for Genie scale.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Combined Revenue Scenarios</h3>
+    <p style="margin-bottom: 0.75rem;">If the two proposed tests validate at hypothesis rates:</p>
+    <table>
+      <tr><th>Scenario</th><th>Year 1</th><th>Year 2 (at scale)</th><th>Assumptions</th></tr>
+      <tr>
+        <td><strong style="color: var(--coral);">Conservative</strong></td>
+        <td><span class="revenue-big" style="color: var(--coral);">$4.1M</span></td>
+        <td><span class="revenue-big" style="color: var(--coral);">$7M</span></td>
+        <td>Registration doubles to 2%. Genie grows to 5K users. Safari not validated.</td>
+      </tr>
+      <tr class="row-highlight">
+        <td><strong style="color: var(--amber);">Base case</strong></td>
+        <td><span class="revenue-big" style="color: var(--amber);">$8M</span></td>
+        <td><span class="revenue-big" style="color: var(--amber);">$16M</span></td>
+        <td>Registration 3%. Safari validates at 10% activation. Genie 10K+ users.</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--green);">Upside</strong></td>
+        <td><span class="revenue-big" style="color: var(--green);">$14M</span></td>
+        <td><span class="revenue-big" style="color: var(--green);">$25M+</span></td>
+        <td>Safari 20%+ activation. Registration 5%. Bucks drives cross-path retention.</td>
+      </tr>
+    </table>
+    <div class="highlight-box green-box" style="font-size: 0.92rem; padding: 1.5rem; border-left: 4px solid var(--green);">
+      <strong style="font-size: 1.05rem;">ROI:</strong> Total investment: ~40 MD eng across all three tracks (2wk Safari spike + 2-3wk auth integration + 34 MD Genie rewards). Even the conservative scenario represents a <strong style="font-size: 1.15rem; color: var(--green);">33% uplift on current $12.6M US commission revenue</strong> &mdash; from free traffic we already own. No new user acquisition required.
+    </div>
+  </div>
+</div>
+
+<a id="complements"></a>
+<!-- ===== SECTION 6: HOW THIS COMPLEMENTS PERSONALIZATION ===== -->
+<div class="section">
+  <div class="section-label purple">How This Complements Personalization</div>
+  <div class="card">
+    <p>Viktor Varoczi's <strong style="color: var(--text);">GROUPON LIFE</strong> initiative tackles the same core problem from the <strong>inside</strong> &mdash; the in-app experience. Our strategy tackles it from the <strong>outside</strong> &mdash; capturing value before and after users reach the app.</p>
+
+    <div class="highlight-box muted-box" style="font-size: 0.82rem; margin-bottom: 1rem;">
+      <strong>Viktor's core finding (Clickstream Analysis):</strong> $166M marketing spend &rarr; +15% new users &rarr; only +1% revenue. <strong>66% buy once and stop</strong> (7.3M users). Value ladder: $18 &rarr; $36 &rarr; $53 &rarr; $70 &rarr; $121. In-app: 62% never click a deal, 53% gone in 10s, 77% abandon checkout. <em>"We're filling a bucket with a hole in the bottom."</em>
+    </div>
+
+    <div class="two-col">
+      <div class="col-box" style="border-color: rgba(167,139,250,0.3);">
+        <h4 style="color: var(--purple);">Viktor: Fix the IN-APP experience</h4>
+        <ul>
+          <li>Personalize by L4 affinity (88.5% have a dominant category)</li>
+          <li>Fix the feed, search, checkout (62% never click, 77% abandon)</li>
+          <li>Three pillars: Autopilot, Discovery, Relationship</li>
+          <li>Target: <strong>322K L4 users, $4.8-6.8M upside</strong></li>
+        </ul>
+      </div>
+      <div class="col-box" style="border-color: rgba(255,107,107,0.3);">
+        <h4 style="color: var(--coral);">Us: Capture OFF-PLATFORM value</h4>
+        <ul>
+          <li>Convert anonymous coupons traffic &rarr; registered users</li>
+          <li>Follow users into Safari/Chrome via extensions</li>
+          <li>Bridge back to app via Groupon Bucks</li>
+          <li>Target: <strong>~30M US sessions/yr, $4-16M+ incremental</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box purple-box" style="font-size: 0.85rem;">
+      <strong>Together:</strong> Viktor fixes the bucket. We fill it with more water. Users we acquire through registration and extensions become the <strong>input for Viktor's personalization system</strong>. Complementary layers of one ecosystem strategy.
+    </div>
+
+    <p style="margin-top: 0.75rem; font-size: 0.82rem;"><a href="https://gamma.app/docs/GROUPON-LIFE-u9tppglyxfzpu7j?mode=doc" style="color: var(--blue);">Viktor's GROUPON LIFE Analysis &rarr;</a></p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: PROPOSED TESTS ===== -->
+<div class="section">
+  <div class="section-label coral">Proposed Tests</div>
+  <div class="card">
+    <h3>Test 2 Paths to Validate Unit Economics</h3>
+    <p style="margin-bottom: 0.75rem;">Each test answers: <strong style="color: var(--text);">"What is the actual $/user for this path?"</strong> Once we have real conversion rates, we can make a data-driven allocation decision.</p>
+
+    <div class="highlight-box" style="font-size: 0.82rem; padding: 1.25rem;">
+      <strong>Test 1: Safari Extension (Layer 2b &mdash; Extend Mobile)</strong><br><br>
+      <strong>What:</strong> 2-week iOS engineering spike to validate technical feasibility (App Store bundling, extension permissions). If feasible, soft-launch to 5% of iOS users.<br><br>
+      <strong>Hypothesis:</strong> If we ship a Safari extension inside the Groupon app, at least 10% of iOS users will activate it (PayPal Honey achieves ~30% activation from its app — 10% is conservative), generating &gt;$4/user/yr in affiliate commission + Bucks.<br><br>
+      <strong>Measures:</strong> Activation rate, coupon usage, commission/user, Bucks earning rate, app re-open rate.<br><br>
+      <strong>Kill gate:</strong> <span style="color: var(--coral);">If activation &lt;5% or commission &lt;$2/user/yr after 8 weeks &rarr; pause and reassess.</span>
+    </div>
+
+    <div class="highlight-box coral-box" style="font-size: 0.82rem; padding: 1.25rem;">
+      <strong>Test 2: Registration + Rewards (Layer 1 &mdash; Convert)</strong><br><br>
+      <strong>Context:</strong> No user login on Coupons today &mdash; only email collection. Users are high-intent and resist friction. The incentive must be concrete and immediate.<br><br>
+      <strong>What:</strong> A/B test two registration incentives on non-monetized coupons pages (zero revenue risk): (1) Rewards gift card ($5 Groupon gift card for sign-up) and (2) Rewards gating (register to reveal best codes). Test on top 100 high-traffic non-monetized pages.<br><br>
+      <strong>Hypothesis:</strong> A high-value incentive (gift card) will increase registration rate from 1% to 3%+ without significant bounce rate increase. Rewards gating already showed +1,247% uplift (Rebecca's ROI model, rewards gating test on NA) in prior test.<br><br>
+      <strong>Measures:</strong> Registration rate per variant, bounce rate change, cost per registration (gift card cost vs $3.83 LTV), 30/60/90-day purchase conversion.<br><br>
+      <strong>Kill gate:</strong> <span style="color: var(--coral);">If registration rate &lt;1.5% or cost per registration exceeds LTV ($3.83) or bounce rate increases &gt;20% &rarr; revert.</span>
+    </div>
+
+    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.82rem;"><strong style="color: var(--text);">Layer 2a (Genie) continues scaling independently</strong> &mdash; new platform placement is rolling out now. <strong style="color: var(--text);">Layer 3 (Cashback)</strong> pilots once Groupon Bucks infrastructure is scoped &mdash; it builds on the identity layer from Test 2.</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 8: THE ASK ===== -->
+<div class="section">
+  <div class="section-label blue">The Ask</div>
+
+  <div class="ask-grid">
+    <div class="ask-card">
+      <div style="margin-bottom: 0.75rem;"><span class="ask-number">1</span><span class="ask-title"><strong>Validate</strong> Safari Extension</span></div>
+      Approve 2-week iOS engineering spike. Technical feasibility is the single biggest unknown &mdash; everything else is testable.
+    </div>
+    <div class="ask-card">
+      <div style="margin-bottom: 0.75rem;"><span class="ask-number">2</span><span class="ask-title"><strong>Scale</strong> Registration Path</span></div>
+      A/B test registration incentives (gift cards vs rewards gating) on non-monetized pages. We know each registration is worth $3.83 &mdash; the question is which incentive moves users past the no-login friction.
+    </div>
+    <div class="ask-card">
+      <div style="margin-bottom: 0.75rem;"><span class="ask-number">3</span><span class="ask-title"><strong>Scope</strong> Groupon Bucks</span></div>
+      Product brief + backend scoping for a cross-platform reward currency. This is the connective tissue across all paths.
+    </div>
+    <div class="ask-card">
+      <div style="margin-bottom: 0.75rem;"><span class="ask-number">4</span><span class="ask-title"><strong>Connect</strong> with Viktor's Team</span></div>
+      Align the off-platform capture strategy with GROUPON LIFE personalization. Users we acquire through extensions and registration become the personalization system's input.
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUPPORTING MATERIALS ===== -->
+<div class="section">
+  <div class="section-label purple">Supporting Materials</div>
+  <div class="links-grid">
+    <a href="https://mgregor-png.github.io/groupon-ecosystem/" class="link-card" target="_blank">
+      <div class="link-title">Ecosystem Strategy Board &rarr;</div>
+      <div class="link-desc">Two-problem framing: App retention + Anonymous traffic. Interactive board with solution cards.</div>
+    </a>
+    <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" class="link-card" target="_blank">
+      <div class="link-title">Genie LTV Model &rarr;</div>
+      <div class="link-desc">3-scenario model ($6&rarr;$9.81/user/yr). Desktop extension economics as proxy for Safari.</div>
+    </a>
+    <a href="https://mgregor-png.github.io/coupons-dashboards/alternative-monetisation-brainstorm-v2.html" class="link-card" target="_blank">
+      <div class="link-title">Alt Monetisation Brainstorm &rarr;</div>
+      <div class="link-desc">10 frequency-first ideas evaluated. Groupon Bucks + Daily Deal Drop + Watchdog as winners.</div>
+    </a>
+    <a href="https://gamma.app/docs/GROUPON-LIFE-u9tppglyxfzpu7j?mode=doc" class="link-card" target="_blank">
+      <div class="link-title">Viktor's GROUPON LIFE Analysis &rarr;</div>
+      <div class="link-desc">Clickstream analysis, personalization strategy, L4 affinity targeting, $4.8-6.8M upside.</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  Prepared by Martin Gregor &middot; April 8, 2026 &middot; Coupons &amp; Ecosystem Team<br>
+  For MBR review with Dusan Senkypl
+
+  <div class="theme-switcher">
+    <button class="theme-btn active" onclick="setTheme('dark')">&#9790; Dark</button>
+    <button class="theme-btn" onclick="setTheme('light')">&#9788; Light</button>
+  </div>
+</div>
+
+<script>
+function setTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.classList.add('light');
+  } else {
+    document.documentElement.classList.remove('light');
+  }
+  document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  localStorage.setItem('theme', theme);
+}
+// Restore saved preference
+if (!localStorage.getItem('theme') || localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.theme-btn:last-child').classList.add('active');
+  });
+}
+</script>
+
+</body>
+</html>
