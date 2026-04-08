@@ -3,35 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoS Dashboard — 2026-04-02</title>
+<title>CoS Dashboard — 2026-04-08</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
   :root {
-    --bg: #f5f5f7;
+    --bg: #eef0f5;
     --surface: #ffffff;
     --separator: rgba(0,0,0,0.06);
     --text: #1d1d1f;
     --text-secondary: #6e6e73;
     --text-tertiary: #aeaeb2;
-    --blue: #007aff;   --blue-bg: rgba(0,122,255,0.08);
+    --blue: #4a7cff;   --blue-bg: rgba(74,124,255,0.08);
     --green: #34c759;  --green-bg: rgba(52,199,89,0.08);
     --orange: #ff9500; --orange-bg: rgba(255,149,0,0.08);
     --red: #ff3b30;    --red-bg: rgba(255,59,48,0.08);
     --purple: #af52de; --purple-bg: rgba(175,82,222,0.08);
     --yellow: #ff9f0a; --yellow-bg: rgba(255,159,10,0.08);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02);
     --shadow-md: 0 4px 14px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
-    --shadow-hover: 0 8px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+    --shadow-hover: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
     --radius: 16px;
     --radius-sm: 10px;
+    /* Hero card tints */
+    --hero-sessions: #e8eeff;
+    --hero-ctr: #e5f5ee;
+    --hero-commission: #fef8e8;
+    --hero-transactions: #f0e8fe;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-    background: var(--bg);
+    background: linear-gradient(180deg, #e8eaf2 0%, #eef0f5 40%, #eef0f5 100%);
     color: var(--text);
     line-height: 1.47;
     padding: 32px 40px;
@@ -45,7 +50,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 24px;
+    padding: 18px 24px;
     background: var(--surface);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
@@ -99,42 +104,52 @@
   /* ── Hero Metrics Row ───────────────── */
   .hero-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
     margin-bottom: 20px;
   }
   .hero-card {
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 20px 24px;
+    padding: 18px 20px;
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
   }
   .hero-card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-1px);
   }
   .hero-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 8px;
+    margin-bottom: 6px;
   }
   .hero-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
+    flex-shrink: 0;
   }
   .hero-value {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 800;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
     font-variant-numeric: tabular-nums;
     line-height: 1.1;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    color: var(--text);
   }
   .hero-deltas {
     display: flex;
@@ -157,15 +172,21 @@
     font-weight: 600;
     letter-spacing: -0.2px;
   }
-  .hero-delta.positive { color: var(--green); }
-  .hero-delta.negative { color: var(--red); }
+  .hero-delta.positive { color: var(--green); background: var(--green-bg); padding: 1px 6px; border-radius: 4px; }
+  .hero-delta.negative { color: var(--red); background: var(--red-bg); padding: 1px 6px; border-radius: 4px; }
   .hero-delta.neutral { color: var(--text-tertiary); }
 
   /* ── Two Column Row ─────────────────── */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
     margin-bottom: 20px;
   }
 
@@ -337,55 +358,77 @@
   }
   .mini-table th:not(:first-child) { text-align: right; }
   .mini-table td {
-    padding: 8px 0;
+    padding: 10px 4px;
     border-bottom: 1px solid var(--separator);
     font-variant-numeric: tabular-nums;
+    transition: background 0.15s ease;
   }
   .mini-table td:first-child {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 13.5px;
+    border-radius: 6px 0 0 6px;
+  }
+  .mini-table td:last-child {
+    border-radius: 0 6px 6px 0;
   }
   .mini-table td:not(:first-child) {
     text-align: right;
     color: var(--text-secondary);
   }
   .mini-table tr:last-child td { border-bottom: none; }
+  .mini-table tbody tr:nth-child(even) td { background: rgba(0,0,0,0.015); }
+  .mini-table tbody tr:hover td { background: var(--blue-bg); }
 
-  /* ── Bar Chart ───────────────────────── */
-  .bar-row {
+  /* ── Vertical Bar Chart ──────────────── */
+  .vbar-chart {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: center;
     gap: 12px;
-    padding: 7px 0;
+    height: 140px;
+    padding: 0 4px;
   }
-  .bar-row + .bar-row { border-top: 1px solid var(--separator); }
-  .bar-label {
-    font-size: 12px;
-    font-weight: 500;
+  .vbar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+  .vbar-val {
+    font-size: 10px;
+    font-weight: 600;
     color: var(--text-secondary);
-    min-width: 80px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .vbar-track {
+    width: 100%;
+    max-width: 48px;
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 6px 6px 4px 4px;
+    overflow: hidden;
+  }
+  .vbar-fill {
+    width: 100%;
+    border-radius: 6px 6px 4px 4px;
+    animation: vbarGrow 0.6s ease-out;
+  }
+  @keyframes vbarGrow {
+    from { height: 0 !important; }
+  }
+  .vbar-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-  .bar-track {
-    flex: 1;
-    height: 8px;
-    background: var(--bg);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.5s ease;
-  }
-  .bar-value {
-    font-size: 12px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--text);
-    min-width: 56px;
-    text-align: right;
+    max-width: 100%;
   }
 
   /* ── Collapsed Sections Bar ──────────── */
@@ -399,19 +442,22 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 12px 18px;
     background: var(--surface);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
     cursor: pointer;
-    transition: box-shadow 0.2s ease, background 0.15s ease;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
     user-select: none;
     flex: 1;
     min-width: 140px;
   }
   .collapse-chip:hover {
     box-shadow: var(--shadow-md);
-    background: var(--bg);
+    transform: translateY(-1px);
+  }
+  .collapse-chip:active {
+    transform: translateY(0);
   }
   .collapse-chip.active {
     box-shadow: var(--shadow-md);
@@ -463,32 +509,26 @@
     display: flex;
     gap: 4px;
     margin-bottom: 20px;
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 4px;
-    box-shadow: var(--shadow-sm);
+    padding: 0;
   }
   .tab {
-    flex: 1;
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: transparent;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     font-family: inherit;
     font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-weight: 500;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.15s ease;
   }
   .tab:hover {
-    background: var(--bg);
     color: var(--text);
   }
   .tab.active {
-    background: var(--blue);
-    color: white;
-    box-shadow: 0 2px 8px rgba(0,122,255,0.25);
+    color: var(--blue);
+    font-weight: 600;
   }
   .tab-content {
     display: none;
@@ -1006,22 +1046,86 @@
     text-align: center;
     font-size: 11px;
     color: var(--text-tertiary);
-    padding-bottom: 60px;
+    padding-bottom: 24px;
   }
 
   /* ── Responsive ──────────────────────── */
+  @media (max-width: 1100px) {
+    .hero-row { grid-template-columns: repeat(2, 1fr); }
+    .three-col { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 900px) {
     body { padding: 16px; }
     .hero-row { grid-template-columns: repeat(2, 1fr); }
     .two-col { grid-template-columns: 1fr; }
+    .three-col { grid-template-columns: 1fr; }
     .jira-grid { grid-template-columns: 1fr; }
     .collapsed-bar { flex-direction: column; }
-    .hero-value { font-size: 28px; }
-    .chat-panel { width: calc(100vw - 32px); right: 16px; }
+    .hero-value { font-size: 24px; }
   }
   @media (max-width: 500px) {
     .hero-row { grid-template-columns: 1fr; }
   }
+
+  /* ── Animations ─────────────────────── */
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card, .hero-card, .collapse-chip, .header-bar, .tab-bar {
+    animation: cardFadeIn 0.4s ease backwards;
+  }
+  .hero-row .hero-card:nth-child(1) { animation-delay: 0s; }
+  .hero-row .hero-card:nth-child(2) { animation-delay: 0.05s; }
+  .hero-row .hero-card:nth-child(3) { animation-delay: 0.1s; }
+  .hero-row .hero-card:nth-child(4) { animation-delay: 0.15s; }
+
+  /* ── Sparkline Animations ──────────── */
+  @keyframes sparkDraw {
+    from { stroke-dashoffset: var(--path-len); }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes sparkFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .spark-line {
+    stroke-dasharray: var(--path-len);
+    stroke-dashoffset: var(--path-len);
+    animation: sparkDraw 1.2s ease forwards 0.2s;
+  }
+  .spark-area {
+    opacity: 0;
+    animation: sparkFadeIn 0.6s ease forwards 0.5s;
+  }
+  .spark-dot, .spark-dot-glow {
+    opacity: 0;
+    animation: sparkFadeIn 0.3s ease forwards 1.2s;
+  }
+
+  /* ── Custom Spark Tooltip ──────────── */
+  .spark-tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: rgba(29,29,31,0.92);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translate(-50%, -100%);
+    margin-top: -10px;
+  }
+  .spark-tooltip.visible { opacity: 1; }
+  .spark-tooltip-date { color: rgba(255,255,255,0.6); margin-right: 6px; }
 </style>
 </head>
 <body>
@@ -1029,19 +1133,21 @@
 <!-- ═══ Header Bar ═══ -->
 <div class="header-bar">
   <div class="header-left">
-    <h1>Dashboard</h1>
-    <div class="header-date">Thursday, April 2, 2026</div>
+    <h1>Polished Leadership Dashboard</h1>
+    <div class="header-date">Wednesday, April 8, 2026</div>
   </div>
   <div class="header-right">
     <div style="display:flex;align-items:center;gap:10px">
-      <span id="lastRefresh">Generated 08:49</span>
+      <span style="font-size:12px;color:var(--text-tertiary)">Data snapshot from 2026-04-08</span>
+      <span style="color:var(--separator)">&middot;</span>
+      <span id="lastRefresh" style="font-size:12px;color:var(--text-tertiary)">Live version at localhost:8847</span>
       <button disabled style="display:none" id="refreshBtn" style="background:var(--blue);color:white;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s">Refresh</button>
     </div>
     <div class="header-next-meeting"> &middot; <span style="color:var(--text-tertiary)">auto-refresh 15m</span></div>
   </div>
 </div>
 
-<div style="background:rgba(0,122,255,0.08);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#007aff;text-align:center">Static snapshot from 2026-04-02 — live version at localhost:8847</div>
+<div style="background:rgba(0,122,255,0.08);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#007aff;text-align:center">Static snapshot from 2026-04-08 — live version at localhost:8847</div>
 <!-- ═══ Project Tabs ═══ -->
 <div class="tab-bar">
   <button class="tab active" onclick="switchTab('overview')">Overview</button>
@@ -1063,80 +1169,13 @@
   </div>
   <div class="section-body" data-id="hero">
     <div style="margin-top:12px"><div class="hero-row">
-  <div class="hero-card">
-  <div class="hero-label"><span class="hero-icon">&#128065;</span>Sessions</div>
-  <div class="hero-value">55,359</div>
-  <div class="hero-deltas">
-    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;22%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;13%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;10%</span></div>
-  </div>
-  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
-  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
-  <polygon points="2.0,32.0 12.2,27.6 22.4,28.6 32.7,30.4 42.9,22.6 53.1,16.9 63.3,28.8 73.6,28.8 83.8,22.0 94.0,19.3 104.2,11.7 114.4,6.9 124.7,4.0 134.9,15.8 145.1,10.5 155.3,11.5 165.6,20.8 175.8,22.7 186.0,29.3 196.2,27.1 206.4,32.4 216.7,27.9 226.9,28.8 237.1,35.5 247.3,31.6 257.6,10.9 267.8,13.7 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
-  <polyline points="2.0,32.0 12.2,27.6 22.4,28.6 32.7,30.4 42.9,22.6 53.1,16.9 63.3,28.8 73.6,28.8 83.8,22.0 94.0,19.3 104.2,11.7 114.4,6.9 124.7,4.0 134.9,15.8 145.1,10.5 155.3,11.5 165.6,20.8 175.8,22.7 186.0,29.3 196.2,27.1 206.4,32.4 216.7,27.9 226.9,28.8 237.1,35.5 247.3,31.6 257.6,10.9 267.8,13.7 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
-  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
-  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="32.0"><title>2026-03-03: 63,461</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="27.6"><title>2026-03-04: 65,227</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="28.6"><title>2026-03-05: 64,852</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="30.4"><title>2026-03-06: 64,126</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="22.6"><title>2026-03-07: 67,273</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="16.9"><title>2026-03-08: 69,563</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="28.8"><title>2026-03-09: 64,775</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="28.8"><title>2026-03-10: 64,749</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="22.0"><title>2026-03-11: 67,527</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="19.3"><title>2026-03-12: 68,617</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="11.7"><title>2026-03-13: 71,693</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="6.9"><title>2026-03-14: 73,626</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="4.0"><title>2026-03-15: 74,809</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="15.8"><title>2026-03-16: 70,008</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="10.5"><title>2026-03-17: 72,173</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="11.5"><title>2026-03-18: 71,757</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="20.8"><title>2026-03-19: 68,006</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="22.7"><title>2026-03-20: 67,239</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="29.3"><title>2026-03-21: 64,551</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="27.1"><title>2026-03-22: 65,460</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="32.4"><title>2026-03-23: 63,281</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="27.9"><title>2026-03-24: 65,131</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="28.8"><title>2026-03-25: 64,749</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="35.5"><title>2026-03-26: 62,041</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="31.6"><title>2026-03-27: 63,614</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="10.9"><title>2026-03-28: 72,008</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="13.7"><title>2026-03-29: 70,860</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: 55,359</title></rect>
-</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
-</div>
-  <div class="hero-card">
-  <div class="hero-label"><span class="hero-icon">&#128073;</span>CTR</div>
-  <div class="hero-value">37.2%</div>
-  <div class="hero-deltas">
-    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;1.2%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;5.8%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;8.9%</span></div>
-  </div>
-  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
-  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
-  <polygon points="2.0,34.3 12.2,36.8 22.4,30.0 32.7,19.2 42.9,23.8 53.1,23.7 63.3,23.7 73.6,30.4 83.8,38.6 94.0,33.7 104.2,34.0 114.4,32.7 124.7,31.4 134.9,30.5 145.1,14.2 155.3,13.7 165.6,13.4 175.8,14.5 186.0,7.5 196.2,9.7 206.4,4.0 216.7,26.1 226.9,51.9 237.1,52.0 247.3,47.3 257.6,47.0 267.8,39.1 278.0,47.8 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
-  <polyline points="2.0,34.3 12.2,36.8 22.4,30.0 32.7,19.2 42.9,23.8 53.1,23.7 63.3,23.7 73.6,30.4 83.8,38.6 94.0,33.7 104.2,34.0 114.4,32.7 124.7,31.4 134.9,30.5 145.1,14.2 155.3,13.7 165.6,13.4 175.8,14.5 186.0,7.5 196.2,9.7 206.4,4.0 216.7,26.1 226.9,51.9 237.1,52.0 247.3,47.3 257.6,47.0 267.8,39.1 278.0,47.8" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="278.0" cy="47.8" r="3" fill="#ff3b30" />
-  <circle cx="278.0" cy="47.8" r="6" fill="#ff3b30" opacity="0.2" />
-  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="34.3"><title>2026-03-03: 38.98%</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="36.8"><title>2026-03-04: 38.64%</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="30.0"><title>2026-03-05: 39.55%</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="19.2"><title>2026-03-06: 40.98%</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="23.8"><title>2026-03-07: 40.37%</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="23.7"><title>2026-03-08: 40.39%</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="23.7"><title>2026-03-09: 40.39%</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="30.4"><title>2026-03-10: 39.49%</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="38.6"><title>2026-03-11: 38.39%</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="33.7"><title>2026-03-12: 39.06%</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="34.0"><title>2026-03-13: 39.01%</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="32.7"><title>2026-03-14: 39.18%</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="31.4"><title>2026-03-15: 39.36%</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="30.5"><title>2026-03-16: 39.49%</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="14.2"><title>2026-03-17: 41.65%</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="13.7"><title>2026-03-18: 41.72%</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="13.4"><title>2026-03-19: 41.76%</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="14.5"><title>2026-03-20: 41.61%</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="7.5"><title>2026-03-21: 42.54%</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="9.7"><title>2026-03-22: 42.26%</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="4.0"><title>2026-03-23: 43.01%</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="26.1"><title>2026-03-24: 40.07%</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="51.9"><title>2026-03-25: 36.63%</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="52.0"><title>2026-03-26: 36.61%</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="47.3"><title>2026-03-27: 37.24%</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="47.0"><title>2026-03-28: 37.28%</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="39.1"><title>2026-03-29: 38.34%</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="47.8"><title>2026-03-30: 37.17%</title></rect>
-</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
-</div>
-  <div class="hero-card">
-  <div class="hero-label"><span class="hero-icon">&#128176;</span>Commission</div>
-  <div class="hero-value">$22,267</div>
-  <div class="hero-deltas">
-    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;15%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;16%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;21%</span></div>
-  </div>
-  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
-  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
-  <polygon points="2.0,32.4 12.2,7.8 22.4,26.4 32.7,26.6 42.9,28.5 53.1,36.0 63.3,24.1 73.6,25.5 83.8,16.1 94.0,21.1 104.2,23.3 114.4,19.0 124.7,29.4 134.9,4.8 145.1,11.5 155.3,13.5 165.6,23.8 175.8,27.2 186.0,44.1 196.2,29.0 206.4,25.0 216.7,15.3 226.9,4.0 237.1,5.6 247.3,10.2 257.6,33.3 267.8,26.2 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
-  <polyline points="2.0,32.4 12.2,7.8 22.4,26.4 32.7,26.6 42.9,28.5 53.1,36.0 63.3,24.1 73.6,25.5 83.8,16.1 94.0,21.1 104.2,23.3 114.4,19.0 124.7,29.4 134.9,4.8 145.1,11.5 155.3,13.5 165.6,23.8 175.8,27.2 186.0,44.1 196.2,29.0 206.4,25.0 216.7,15.3 226.9,4.0 237.1,5.6 247.3,10.2 257.6,33.3 267.8,26.2 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
-  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
-  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="32.4"><title>2026-03-03: $25,314</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="7.8"><title>2026-03-04: $29,127</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="26.4"><title>2026-03-05: $26,236</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="26.6"><title>2026-03-06: $26,212</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="28.5"><title>2026-03-07: $25,919</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="36.0"><title>2026-03-08: $24,754</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="24.1"><title>2026-03-09: $26,600</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="25.5"><title>2026-03-10: $26,388</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="16.1"><title>2026-03-11: $27,839</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="21.1"><title>2026-03-12: $27,066</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="23.3"><title>2026-03-13: $26,727</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="19.0"><title>2026-03-14: $27,392</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="29.4"><title>2026-03-15: $25,784</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="4.8"><title>2026-03-16: $29,606</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="11.5"><title>2026-03-17: $28,554</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="13.5"><title>2026-03-18: $28,242</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="23.8"><title>2026-03-19: $26,650</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="27.2"><title>2026-03-20: $26,112</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="44.1"><title>2026-03-21: $23,499</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="29.0"><title>2026-03-22: $25,846</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="25.0"><title>2026-03-23: $26,461</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="15.3"><title>2026-03-24: $27,967</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="4.0"><title>2026-03-25: $29,724</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="5.6"><title>2026-03-26: $29,473</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="10.2"><title>2026-03-27: $28,758</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="33.3"><title>2026-03-28: $25,173</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="26.2"><title>2026-03-29: $26,272</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: $22,267</title></rect>
-</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
-</div>
-  <div class="hero-card">
-  <div class="hero-label"><span class="hero-icon">&#128179;</span>Transactions</div>
-  <div class="hero-value">3,806</div>
-  <div class="hero-deltas">
-    <div class="hero-delta-group"><span class="hero-delta-label">DoD</span><span class="hero-delta negative">&#9660;22%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">WoW</span><span class="hero-delta negative">&#9660;20%</span></div>
-    <div class="hero-delta-group"><span class="hero-delta-label">MoM</span><span class="hero-delta positive">&#9650;29%</span></div>
-  </div>
-  <div style="margin-top:12px"><svg width="100%" height="56" viewBox="0 0 280 56" preserveAspectRatio="none" style="display:block;border-radius:8px;cursor:crosshair">
-  <line x1="73.6" y1="4" x2="73.6" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="145.1" y1="4" x2="145.1" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" /><line x1="216.7" y1="4" x2="216.7" y2="52" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
-  <polygon points="2.0,46.8 12.2,41.0 22.4,34.4 32.7,39.8 42.9,34.0 53.1,31.3 63.3,19.8 73.6,4.0 83.8,18.0 94.0,38.3 104.2,31.2 114.4,14.2 124.7,23.6 134.9,22.9 145.1,20.6 155.3,16.7 165.6,21.1 175.8,27.8 186.0,34.2 196.2,26.1 206.4,25.0 216.7,41.2 226.9,37.5 237.1,41.1 247.3,36.3 257.6,14.8 267.8,20.7 278.0,52.0 278.0,52.0 2.0,52.0" fill="rgba(255,59,48,0.12)" />
-  <polyline points="2.0,46.8 12.2,41.0 22.4,34.4 32.7,39.8 42.9,34.0 53.1,31.3 63.3,19.8 73.6,4.0 83.8,18.0 94.0,38.3 104.2,31.2 114.4,14.2 124.7,23.6 134.9,22.9 145.1,20.6 155.3,16.7 165.6,21.1 175.8,27.8 186.0,34.2 196.2,26.1 206.4,25.0 216.7,41.2 226.9,37.5 237.1,41.1 247.3,36.3 257.6,14.8 267.8,20.7 278.0,52.0" fill="none" stroke="#ff3b30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="278.0" cy="52.0" r="3" fill="#ff3b30" />
-  <circle cx="278.0" cy="52.0" r="6" fill="#ff3b30" opacity="0.2" />
-  <rect x="0.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="2.0" data-y="46.8"><title>2026-03-03: 3,987</title></rect><rect x="7.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="12.2" data-y="41.0"><title>2026-03-04: 4,189</title></rect><rect x="17.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="22.4" data-y="34.4"><title>2026-03-05: 4,420</title></rect><rect x="27.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="32.7" data-y="39.8"><title>2026-03-06: 4,233</title></rect><rect x="37.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="42.9" data-y="34.0"><title>2026-03-07: 4,433</title></rect><rect x="48.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="53.1" data-y="31.3"><title>2026-03-08: 4,530</title></rect><rect x="58.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="63.3" data-y="19.8"><title>2026-03-09: 4,930</title></rect><rect x="68.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="73.6" data-y="4.0"><title>2026-03-10: 5,482</title></rect><rect x="78.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="83.8" data-y="18.0"><title>2026-03-11: 4,993</title></rect><rect x="88.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="94.0" data-y="38.3"><title>2026-03-12: 4,283</title></rect><rect x="99.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="104.2" data-y="31.2"><title>2026-03-13: 4,532</title></rect><rect x="109.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="114.4" data-y="14.2"><title>2026-03-14: 5,127</title></rect><rect x="119.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="124.7" data-y="23.6"><title>2026-03-15: 4,797</title></rect><rect x="129.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="134.9" data-y="22.9"><title>2026-03-16: 4,821</title></rect><rect x="140.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="145.1" data-y="20.6"><title>2026-03-17: 4,904</title></rect><rect x="150.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="155.3" data-y="16.7"><title>2026-03-18: 5,040</title></rect><rect x="160.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="165.6" data-y="21.1"><title>2026-03-19: 4,885</title></rect><rect x="170.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="175.8" data-y="27.8"><title>2026-03-20: 4,652</title></rect><rect x="180.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="186.0" data-y="34.2"><title>2026-03-21: 4,426</title></rect><rect x="191.1" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="196.2" data-y="26.1"><title>2026-03-22: 4,709</title></rect><rect x="201.3" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="206.4" data-y="25.0"><title>2026-03-23: 4,750</title></rect><rect x="211.6" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="216.7" data-y="41.2"><title>2026-03-24: 4,183</title></rect><rect x="221.8" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="226.9" data-y="37.5"><title>2026-03-25: 4,312</title></rect><rect x="232.0" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="237.1" data-y="41.1"><title>2026-03-26: 4,188</title></rect><rect x="242.2" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="247.3" data-y="36.3"><title>2026-03-27: 4,353</title></rect><rect x="252.4" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="257.6" data-y="14.8"><title>2026-03-28: 5,105</title></rect><rect x="262.7" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="267.8" data-y="20.7"><title>2026-03-29: 4,898</title></rect><rect x="272.9" y="0" width="10.2" height="56" fill="transparent" class="spark-hover" data-x="278.0" data-y="52.0"><title>2026-03-30: 3,806</title></rect>
-</svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 2px"><span>4w ago</span><span>today</span></div></div>
-</div>
+  <div class="hero-card"><div class="hero-label">No metric data available</div></div>
 </div></div>
   </div>
 </div>
 
-<!-- Focus + Calendar -->
-<div class="two-col">
+<!-- Focus + Calendar + Weekly Priorities -->
+<div class="three-col">
   <div class="card">
     <div class="section-toggle" onclick="collapseSection(this)" data-section="focus">
       <div class="card-header" style="margin-bottom:0">
@@ -1148,9 +1187,9 @@
       </div>
     </div>
     <div class="section-body" data-id="focus" style="margin-top:16px">
-      <div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-1" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-1">QA Monday: confirm rewards setup, tracking, correct implementation</span></div>
-<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-2" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-2">Get BA results from 10-merchant A/B test (running since Mar 18)</span></div>
-<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-02-3" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-02-3">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</span></div>
+      <div class="focus-item"><div class="focus-check" data-id="focus-2026-04-08-1" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-08-1">QA Monday: confirm rewards setup, tracking, correct implementation</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-08-2" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-08-2">Get BA results from 10-merchant A/B test (running since Mar 18)</span></div>
+<div class="focus-item"><div class="focus-check" data-id="focus-2026-04-08-3" onclick="toggleFocus(this)"></div><span class="focus-text" data-id="focus-2026-04-08-3">Resolve merchant template / Ian dependency with Minas — what does eng work on if waiting 3+ weeks for Eon?</span></div>
     </div>
   </div>
   <div class="card">
@@ -1171,24 +1210,21 @@
       <div class="focus-empty">No events today</div>
     </div>
   </div>
-</div>
-
-<!-- Weekly Priorities -->
-<div class="card" style="margin-bottom:20px">
-  <div class="section-toggle" onclick="collapseSection(this)" data-section="weekly">
-    <div class="card-header" style="margin-bottom:0">
-      <div class="card-header-left">
-        <div class="card-icon green">&#128203;</div>
-        <div class="card-title">Weekly Priorities</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="card-badge">Week of 2 Apr</span>
-        <span class="collapse-arrow">&#9660;</span>
+  <div class="card">
+    <div class="section-toggle" onclick="collapseSection(this)" data-section="weekly">
+      <div class="card-header" style="margin-bottom:0">
+        <div class="card-header-left">
+          <div class="card-icon green">&#128203;</div>
+          <div class="card-title">Weekly Priorities</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="card-badge">Week of 8 Apr</span>
+          <span class="collapse-arrow">&#9660;</span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="section-body" data-id="weekly" style="margin-top:16px">
-    <div class="priority-group-header">
+    <div class="section-body" data-id="weekly" style="margin-top:16px">
+      <div class="priority-group-header">
   <span class="priority-badge priority-red">P1</span>
   <span class="priority-group-title">New Platform — QA &amp; Scale</span>
 </div>
@@ -1260,6 +1296,7 @@
   <div class="check-circle" data-id="wp-36b7b36a" onclick="togglePriority(this)" style="cursor:pointer"></div>
   <div class="priority-text" data-id="wp-36b7b36a">Genie seasonal banner — evaluate priority</div>
 </div>
+    </div>
   </div>
 </div>
 
@@ -1373,13 +1410,7 @@
       </div>
     </div>
     <div class="section-body" data-id="merchants" style="margin-top:16px">
-      <table class="mini-table"><thead><tr><th>Merchant</th><th>Commission</th><th>CTR</th></tr></thead><tbody>
-<tr><td>Chime</td><td>$10,500</td><td>42.9%</td></tr>
-<tr><td>eBay</td><td>$6,535</td><td>63.4%</td></tr>
-<tr><td>Expedia</td><td>$5,285</td><td>50.2%</td></tr>
-<tr><td>Viator</td><td>$4,732</td><td>52.3%</td></tr>
-<tr><td>H&amp;R Block</td><td>$3,686</td><td>40.2%</td></tr>
-</tbody></table>
+      <div class="focus-empty">No merchant data</div>
     </div>
   </div>
   <div class="card">
@@ -1396,36 +1427,7 @@
       </div>
     </div>
     <div class="section-body" data-id="channels" style="margin-top:16px">
-      <div class="bar-row">
-  <span class="bar-label">Organic</span>
-  <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--blue)"></div></div>
-  <span class="bar-value">$113,588</span>
-</div>
-<div class="bar-row">
-  <span class="bar-label">Direct</span>
-  <div class="bar-track"><div class="bar-fill" style="width:12%;background:var(--green)"></div></div>
-  <span class="bar-value">$13,334</span>
-</div>
-<div class="bar-row">
-  <span class="bar-label">PPC</span>
-  <div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--orange)"></div></div>
-  <span class="bar-value">$8,548</span>
-</div>
-<div class="bar-row">
-  <span class="bar-label">Email</span>
-  <div class="bar-track"><div class="bar-fill" style="width:2%;background:var(--purple)"></div></div>
-  <span class="bar-value">$2,515</span>
-</div>
-<div class="bar-row">
-  <span class="bar-label">Referral</span>
-  <div class="bar-track"><div class="bar-fill" style="width:1%;background:var(--red)"></div></div>
-  <span class="bar-value">$749</span>
-</div>
-<div class="bar-row">
-  <span class="bar-label">Affiliate</span>
-  <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--yellow)"></div></div>
-  <span class="bar-value">$280</span>
-</div>
+      <div class="focus-empty">No channel data</div>
     </div>
   </div>
 </div>
@@ -1460,23 +1462,50 @@
 
 <footer>CoS Dashboard &middot; Auto-generated by daily-dashboard.sh</footer>
 
-<!-- ═══ Chat Widget ═══ -->
+<!-- Spark Tooltip -->
+<div class="spark-tooltip" id="sparkTooltip"></div>
 
-<div class="chat-panel" id="chatPanel">
-  <div class="chat-panel-header">
-    <span class="status-dot" id="chatStatus"></span>
-    CoS Assistant
+<!-- ═══ Chat Widget (inline) ═══ -->
+<div class="card chat-inline" style="margin-bottom:20px">
+  <div class="card-header">
+    <div class="card-header-left">
+      <div class="card-icon blue">&#128172;</div>
+      <div class="card-title">CoS Assistant</div>
+    </div>
+    <span class="status-dot" id="chatStatus" style="width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
   </div>
-  <div class="chat-messages" id="chatMessages">
+  <div class="chat-messages" id="chatMessages" style="max-height:200px;overflow-y:auto;margin-bottom:12px">
     <div class="chat-msg system">Ask me anything about your dashboard data.</div>
   </div>
-  <div class="chat-input-row">
+  <div class="chat-input-row" style="border-top:1px solid var(--separator);padding-top:12px;margin:0">
     <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()">
     <button class="chat-send" id="chatSend" onclick="sendChat()">&#9654;</button>
   </div>
 </div>
 
 <script>
+  // ── Sparkline custom tooltips ──
+  (function() {
+    const tip = document.getElementById('sparkTooltip');
+    if (!tip) return;
+    document.addEventListener('mousemove', function(e) {
+      const rect = e.target.closest && e.target.closest('.spark-hover');
+      if (rect) {
+        const label = rect.getAttribute('data-label') || '';
+        const val = rect.getAttribute('data-val') || '';
+        tip.innerHTML = '<span class="spark-tooltip-date">' + label + '</span>' + val;
+        tip.style.left = e.clientX + 'px';
+        tip.style.top = e.clientY - 12 + 'px';
+        tip.classList.add('visible');
+      } else {
+        tip.classList.remove('visible');
+      }
+    });
+    document.addEventListener('mouseleave', function() {
+      tip.classList.remove('visible');
+    }, true);
+  })();
+
   // ── Tab switching ──
   function switchTab(tabId) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1557,17 +1586,7 @@
     }
   }
 
-  // Chat widget
-  let chatOpen = false;
-  function toggleChat() {
-    chatOpen = !chatOpen;
-    document.getElementById('chatPanel').classList.toggle('visible', chatOpen);
-    document.getElementById('chatFab').classList.toggle('open', chatOpen);
-    if (chatOpen) {
-      document.getElementById('chatInput').focus();
-    }
-  }
-
+  // Chat widget (inline)
   async function sendChat() {
     const input = document.getElementById('chatInput');
     const msg = input.value.trim();
