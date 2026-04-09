@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere with Groupon</title>
+<style>
+  :root {
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --bg: var(--gray-50);
+    --card-bg: #fff;
+    --text: var(--gray-900);
+    --text-muted: var(--gray-500);
+    --text-strong: var(--gray-700);
+    --border: var(--gray-200);
+    --border-light: var(--gray-100);
+    --table-header: var(--gray-100);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-strong: #cbd5e1;
+    --border: #334155;
+    --border-light: #1e293b;
+    --table-header: #1e293b;
+    --gray-50: #0f172a;
+    --gray-100: #1e293b;
+    --gray-200: #334155;
+    --gray-300: #475569;
+    --gray-500: #94a3b8;
+    --gray-700: #cbd5e1;
+    --gray-900: #e2e8f0;
+    --green-light: #052e16;
+    --blue-light: #172554;
+    --amber-light: #451a03;
+    --red-light: #450a0a;
+    --purple-light: #2e1065;
+    --teal-light: #042f2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+  header .subtitle { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.5; }
+  header .version { font-size: 0.85rem; color: var(--purple); font-weight: 600; }
+
+  .meta {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;
+  }
+  .meta strong { color: var(--text-strong); font-weight: 600; }
+
+  /* Hero callout */
+  .hero-callout {
+    background: linear-gradient(135deg, var(--green-light), var(--teal-light));
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  .opening-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .insight-box {
+    border-radius: 8px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem; font-size: 0.95rem;
+  }
+  .insight-box.blue { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  .insight-box.blue strong { color: var(--blue); }
+  .insight-box.teal { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .insight-box.teal strong { color: var(--teal); }
+
+  h2 {
+    font-size: 1.25rem; font-weight: 700;
+    margin: 2.5rem 0 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-intro {
+    font-size: 0.9rem; color: var(--text-muted);
+    margin-bottom: 1.25rem; font-style: italic;
+  }
+
+  /* Idea cards */
+  .idea-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.15s;
+  }
+  .idea-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .idea-card.foundation { background: var(--gray-100); border-left: 4px solid var(--gray-500); }
+  .idea-card.recommended { border-left: 4px solid var(--green); }
+  .idea-card.affiliate { border-left: 4px solid var(--teal); }
+  .idea-card.affiliate.recommended { border-left: 4px solid var(--teal); border-right: 4px solid var(--green); }
+
+  .idea-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+  .idea-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gray-200); font-size: 0.8rem; font-weight: 700;
+    color: var(--text-strong); flex-shrink: 0;
+  }
+  .idea-card.recommended .idea-number { background: var(--green); color: #fff; }
+  .idea-card.foundation .idea-number { background: var(--gray-500); color: #fff; }
+  .idea-card.affiliate .idea-number { background: var(--teal); color: #fff; }
+
+  .idea-title { font-size: 1.05rem; font-weight: 700; }
+
+  .idea-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+
+  .tag {
+    font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem;
+    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .tag.low { background: var(--green-light); color: var(--green); }
+  .tag.medium { background: var(--amber-light); color: var(--amber); }
+  .tag.high { background: var(--red-light); color: var(--red); }
+  .tag.rec { background: var(--green-light); color: var(--green); }
+  .tag.aff { background: var(--teal-light); color: var(--teal); }
+  .tag.core { background: var(--blue-light); color: var(--blue); }
+  .tag.both { background: var(--purple-light); color: var(--purple); }
+
+  .idea-section { margin-bottom: 0.6rem; }
+  .idea-section:last-child { margin-bottom: 0; }
+  .idea-section-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.2rem;
+  }
+  .idea-section p { font-size: 0.9rem; line-height: 1.55; }
+
+  .risk-note {
+    background: var(--amber-light); border-radius: 6px;
+    padding: 0.6rem 0.8rem; margin-top: 0.5rem; font-size: 0.85rem;
+  }
+  .risk-note strong { color: var(--amber); }
+
+  .affiliate-note {
+    background: var(--teal-light); border-radius: 6px;
+    padding: 0.6rem 0.8rem; margin-top: 0.5rem; font-size: 0.85rem;
+  }
+  .affiliate-note strong { color: var(--teal); }
+
+  /* Matrix */
+  .matrix-wrap { overflow-x: auto; margin: 1rem 0 2rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    text-align: left; padding: 0.6rem 0.75rem; background: var(--table-header);
+    font-weight: 600; border-bottom: 2px solid var(--border); white-space: nowrap;
+  }
+  td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: var(--gray-50); }
+  td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) { text-align: center; }
+  .stars { color: var(--amber); letter-spacing: -1px; }
+  .type-badge {
+    font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.4rem;
+    border-radius: 999px; white-space: nowrap;
+  }
+  .type-badge.aff { background: var(--teal-light); color: var(--teal); }
+  .type-badge.core { background: var(--blue-light); color: var(--blue); }
+  .type-badge.both { background: var(--purple-light); color: var(--purple); }
+
+  /* Recommendation */
+  .reco-box {
+    background: var(--green-light); border: 1px solid var(--green);
+    border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .reco-box h3 { color: var(--green); font-size: 1.05rem; margin-bottom: 0.75rem; }
+
+  .reco-item {
+    margin-bottom: 0.75rem; padding-left: 1rem;
+    border-left: 3px solid var(--green); font-size: 0.9rem;
+  }
+  .reco-item strong { display: block; font-size: 0.95rem; }
+  .reco-item.teal-border { border-left-color: var(--teal); }
+
+  /* Flywheel diagram */
+  .flywheel {
+    background: var(--card-bg); border: 2px solid var(--purple);
+    border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;
+    text-align: center;
+  }
+  .flywheel h3 { color: var(--purple); margin-bottom: 1rem; font-size: 1.05rem; }
+  .flywheel-steps {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0.5rem; align-items: center;
+  }
+  .flywheel-step {
+    background: var(--gray-100); border-radius: 8px;
+    padding: 0.5rem 0.75rem; font-size: 0.8rem; font-weight: 600;
+  }
+  .flywheel-step.aff { background: var(--teal-light); color: var(--teal); }
+  .flywheel-step.core { background: var(--blue-light); color: var(--blue); }
+  .flywheel-step.shared { background: var(--purple-light); color: var(--purple); }
+  .flywheel-arrow { font-size: 1.2rem; color: var(--gray-300); }
+
+  /* Safari hero section */
+  .safari-hero {
+    background: var(--card-bg);
+    border: 3px solid transparent;
+    border-image: linear-gradient(135deg, var(--green), var(--teal), var(--blue)) 1;
+    border-radius: 0;
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .safari-hero-inner {
+    border-radius: 14px;
+  }
+  .safari-hero h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+    border: none;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .safari-hero .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .safari-hero .stat-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.25rem 0;
+  }
+  .safari-hero .stat-card {
+    flex: 1;
+    min-width: 180px;
+    background: var(--gray-100);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .safari-hero .stat-card .stat-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .safari-hero .stat-card .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+  .safari-hero .key-points {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .safari-hero .key-points li {
+    font-size: 0.9rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .safari-hero .key-points li:last-child { border-bottom: none; }
+  .safari-hero .key-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+  .safari-hero .prototype-frame {
+    margin: 1.5rem 0 0.5rem;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--border);
+  }
+  .safari-hero .prototype-link {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--teal);
+    margin-top: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .safari-hero .prototype-link:hover { text-decoration: underline; }
+
+  /* Three pillars */
+  .three-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .pillar-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .pillar-card .pillar-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .pillar-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .pillar-card .pillar-role {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .pillar-card p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Data section */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .data-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .data-block h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-strong);
+  }
+  .data-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .data-block li {
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .data-block li:last-child { border-bottom: none; }
+  .data-value {
+    font-weight: 700;
+    color: var(--teal);
+    white-space: nowrap;
+  }
+  .data-source {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.1rem;
+  }
+
+  /* Revenue highlight */
+  .revenue-highlight {
+    background: linear-gradient(135deg, var(--green-light), var(--teal-light));
+    border: 2px solid var(--teal);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .revenue-highlight .rev-range {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .revenue-highlight .rev-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+  .revenue-highlight .rev-detail {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* Coupons space section */
+  .funnel-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+  .funnel-step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .funnel-arrow {
+    font-size: 1.2rem;
+    color: var(--gray-300);
+  }
+
+  /* What's next */
+  .next-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .next-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .next-card.highlight {
+    border: 2px solid var(--amber);
+    background: var(--amber-light);
+  }
+  .next-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .next-card p, .next-card li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .next-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .next-card li {
+    padding: 0.25rem 0;
+  }
+
+  /* Supporting materials */
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .material-link {
+    display: block;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .material-link:hover {
+    border-color: var(--teal);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .material-link .material-type {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 400;
+  }
+
+  /* Risk & set-aside sections */
+  .risk-section, .aside-section {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1rem 0;
+  }
+  .risk-section { border-left: 4px solid var(--amber); }
+  .aside-section { border-left: 4px solid var(--gray-300); }
+  .risk-section ul, .aside-section ul { list-style: none; padding: 0; }
+  .risk-section li, .aside-section li {
+    font-size: 0.9rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border-light);
+  }
+  .risk-section li:last-child, .aside-section li:last-child { border-bottom: none; }
+
+  /* Questions */
+  .questions ol { padding-left: 1.25rem; }
+  .questions li {
+    font-size: 0.9rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border-light);
+  }
+  .questions li:last-child { border-bottom: none; }
+
+  footer {
+    margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    font-size: 0.75rem; color: var(--text-muted); text-align: center;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .theme-toggle {
+    background: var(--gray-200);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .theme-toggle:hover {
+    background: var(--gray-300);
+  }
+
+  @media (max-width: 700px) {
+    .three-pillars { grid-template-columns: 1fr; }
+    .data-grid { grid-template-columns: 1fr; }
+    .next-grid { grid-template-columns: 1fr; }
+    .materials-grid { grid-template-columns: 1fr; }
+    .safari-hero .stat-row { flex-direction: column; }
+  }
+
+  @media print {
+    body { padding: 1rem; font-size: 0.85rem; }
+    .idea-card { break-inside: avoid; }
+    .safari-hero { break-inside: avoid; }
+    .theme-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Save Everywhere with Groupon</h1>
+  <p class="subtitle">Coupons content provides a mechanism for Groupon to be part of our customers' shopping experience across thousands of brands and millions of checkouts.</p>
+  <span class="version">v3 - Safari Extension + Cashback + In-App Coupons</span>
+  <div class="meta">
+    <span><strong>For:</strong> Becky + Adam</span>
+    <span><strong>From:</strong> Martin Gregor</span>
+    <span><strong>Date:</strong> April 2026</span>
+  </div>
+</header>
+
+<!-- Opening framing -->
+<p class="opening-text">
+  By delivering coupons content through a Safari extension within the Groupon app, we can extend Groupon's reach to deliver value for our customers across all their shopping experiences.
+</p>
+
+<div class="hero-callout">
+  This captures users off-platform and through Groupon Bucks brings them back into the app.
+</div>
+
+<!-- Insight 1 -->
+<div class="insight-box blue">
+  <strong>Big Insight #1:</strong> The highest-frequency savings apps (Fetch, Temu, Shopkick) have <strong>decoupled "reason to open" from "intent to transact."</strong> Groupon currently requires purchase intent to justify an open. Every idea below creates an open-worthy trigger <em>independent</em> of active deal hunting.
+</div>
+
+<!-- Insight 2 -->
+<div class="insight-box teal">
+  <strong>Big Insight #2:</strong> Groupon's affiliate coupons content is a <strong>hidden frequency asset stuck on the web.</strong> People need promo codes <em>constantly</em> - every online purchase is a coupon moment. This content currently lives on groupon.com/coupons (SEO-driven, visit-and-leave). Moving it into the app creates a <strong>"save everywhere" utility layer</strong> - the bridge between "I open Groupon for a spa deal once a month" and "I open Groupon every time I shop online."
+</div>
+
+<!-- Flywheel -->
+<div class="flywheel">
+  <h3>The Cross-Pollination Flywheel</h3>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Affiliate coupons and core deals reinforce each other when both live in the app.</p>
+  <div class="flywheel-steps">
+    <span class="flywheel-step aff">User needs a Nike code</span>
+    <span class="flywheel-arrow">&rarr;</span>
+    <span class="flywheel-step aff">Opens Groupon app</span>
+    <span class="flywheel-arrow">&rarr;</span>
+    <span class="flywheel-step shared">Sees daily deal / local offer</span>
+    <span class="flywheel-arrow">&rarr;</span>
+    <span class="flywheel-step core">Books a spa deal</span>
+    <span class="flywheel-arrow">&rarr;</span>
+    <span class="flywheel-step shared">Earns credits in wallet</span>
+    <span class="flywheel-arrow">&rarr;</span>
+    <span class="flywheel-step aff">Comes back for next code</span>
+  </div>
+  <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.75rem;">Every coupon lookup is an exposure to a core deal. Every core deal visit is an exposure to coupons. The wallet connects both.</p>
+</div>
+
+
+<!-- ============================================ -->
+<!-- SAFARI EXTENSION HERO SECTION -->
+<!-- ============================================ -->
+
+<div class="safari-hero">
+  <span class="hero-badge">The Centerpiece</span>
+  <h2>Safari Extension - The App Comes to You</h2>
+  <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:1rem;">
+    Rather than the Genie browser extension which only works on desktop, this works on mobile - where our customers actually shop. <strong style="color:var(--teal);">61% of our traffic is mobile.</strong>
+  </p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number">8-10M</div>
+      <div class="stat-label">App MAU - instant distribution<br><span class="data-source">Tableau, Mar 25-Apr 7</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0 downloads</div>
+      <div class="stat-label">As an app extension, no separate install needed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">61%</div>
+      <div class="stat-label">Mobile traffic share<br><span class="data-source">BQ, 2025</span></div>
+    </div>
+  </div>
+
+  <ul class="key-points">
+    <li><strong>Supercharged acquisition:</strong> As an extension of the existing app, acquisition leverages the 8-10M MAU base. No separate download, no separate onboarding - just enable in Settings.</li>
+    <li><strong>Off-platform data:</strong> Integrating data from users' off-Groupon shopping experience into their Groupon profile enhances opportunity for personalisation. We learn what brands they actually buy from.</li>
+    <li><strong>Cashback delivery channel:</strong> The extension becomes the mechanism for applying cashback at checkout across any retailer - not reliant on merchant promo codes.</li>
+    <li><strong>Competitor-validated:</strong> Honey (PayPal app), Rakuten, Capital One Shopping all have Safari extensions. Honey is in crisis (lost 8M users, class action lawsuit) - there's a market window right now.</li>
+  </ul>
+
+  <div class="prototype-frame">
+    <iframe src="safari-extension-prototype.html" style="width:100%;height:700px;border:none;"></iframe>
+  </div>
+  <a href="safari-extension-prototype.html" target="_blank" class="prototype-link">Click through the demo above - or open fullscreen in a new tab</a>
+</div>
+
+
+<!-- ============================================ -->
+<!-- WHY WE NEED ALL THREE -->
+<!-- ============================================ -->
+
+<h2 style="border-bottom-color: var(--teal);">Safari Extension + Cashback/Bucks + Coupons in the App - Why We Need All Three</h2>
+<p class="section-intro">Rather than a standalone extension with just coupons content, the real value is the extension + cashback/Bucks + coupons account/app integration.</p>
+
+<div class="three-pillars">
+  <div class="pillar-card" style="border-top: 3px solid var(--teal);">
+    <div class="pillar-icon">&#x1F30D;</div>
+    <h4>Safari Extension</h4>
+    <div class="pillar-role">= Reach</div>
+    <p>The distribution channel. Meets users where they already shop - in mobile Safari. Surfaces coupons and cashback at the moment of purchase.</p>
+  </div>
+  <div class="pillar-card" style="border-top: 3px solid var(--green);">
+    <div class="pillar-icon">&#x1F4B0;</div>
+    <h4>Cashback / Bucks</h4>
+    <div class="pillar-role">= Value Creation</div>
+    <p>Not reliant on merchant promo codes. Creates value on every purchase. Bucks pull users back into the Groupon app to spend their balance - the return loop.</p>
+  </div>
+  <div class="pillar-card" style="border-top: 3px solid var(--blue);">
+    <div class="pillar-icon">&#x1F4F1;</div>
+    <h4>Coupons in App</h4>
+    <div class="pillar-role">= Personalisation</div>
+    <p>Follow brands, set alerts, build a profile. The app becomes the savings hub where all data converges - what you search, what you buy, what you save.</p>
+  </div>
+</div>
+
+<div class="insight-box teal" style="margin-top:1rem;">
+  <strong>Together:</strong> The extension captures users off-platform. Cashback/Bucks creates value that's locked to Groupon. The app is where they come to spend it, discover deals, and build their savings profile. Each piece alone is incremental. Together they're a flywheel.
+</div>
+
+
+<!-- ============================================ -->
+<!-- FOUNDATION -->
+<!-- ============================================ -->
+
+<h2>Foundation: The Savings Wallet</h2>
+
+<!-- Idea 0 -->
+<div class="idea-card foundation">
+  <div class="idea-header">
+    <span class="idea-number">0</span>
+    <span class="idea-title">Foundation: Savings Wallet / Groupon Credits</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag rec">Enabler</span>
+    <span class="tag both">Core + Affiliate</span>
+  </div>
+  <div class="idea-section">
+    <p><strong>The connective tissue for everything.</strong> A visible, growing balance ("You've earned $14.20 this month") that accumulates from streaks, coupon use, receipts, and referrals. Users check their balance even when not shopping. This is what makes the flywheel spin - credits earned from affiliate coupons can be spent on core deals and vice versa.</p>
+  </div>
+</div>
+
+
+<h2>Part A: Core App Engagement Ideas</h2>
+<p class="section-intro">Ideas that drive app frequency through local deals, gamification, and content - independent of affiliate coupons.</p>
+
+<!-- Idea 1 -->
+<div class="idea-card recommended">
+  <div class="idea-header">
+    <span class="idea-number">1</span>
+    <span class="idea-title">Daily Deal Drop + Check-in Streak</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>3-5 curated deals rotate every 24 hours (app-only). Opening daily builds a streak - hit 7 days, unlock a bonus. Miss a day, lose the streak.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Loss aversion is the strongest behavioural lever. Duolingo 7-day streaks -> 3.6x long-term retention. Temu daily check-in -> 89% interaction rate. Time-limited rotation creates genuine FOMO.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Local deals already have natural scarcity. Coupons team curates from existing inventory - no new supply needed.</p>
+  </div>
+  <div class="affiliate-note">
+    <strong>Affiliate enhancement:</strong> Mix in top online coupon codes alongside local deals in the daily rotation. "Today: 40% off spa near you + 25% off Nike + new Sephora code." Now the daily drop is relevant whether you're shopping local or online.
+  </div>
+  <div class="risk-note">
+    <strong>Risk:</strong> Streak rewards must be concrete (credits, exclusive unlock) - Groupon streaks are extrinsically motivated, so the reward carries the weight.
+  </div>
+</div>
+
+<!-- Idea 2 -->
+<div class="idea-card recommended">
+  <div class="idea-header">
+    <span class="idea-number">2</span>
+    <span class="idea-title">"Watch This Deal" - Price &amp; Availability Alerts</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag both">Core + Affiliate</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Save deals, categories, or <em>retailers</em> you're interested in. Get notified when: a local deal restarts, a new code appears for a watched store, or a discount improves. Honey's Droplist meets Groupon's local deals.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Deferred desire + permission-based alerts = highest-quality re-engagement. Users opt in, so notifications feel like a service. Each alert is a high-intent return visit.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Local deals are cyclical (restaurants rerun offers). Online codes appear and expire constantly. No user can currently say "tell me when there's a spa deal under $50 near me" <em>or</em> "alert me when Nike has 20%+ off." Both are natural.</p>
+  </div>
+</div>
+
+<!-- Idea 3 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">3</span>
+    <span class="idea-title">Spin-to-Win / Daily Reward Game</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low-Med effort</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Daily spin awarding variable rewards: Groupon credits, coupons, prize draw entries. Variable-ratio schedule (slot machine mechanic).</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Temu spin wheels -> 89% interaction. Fetch Play -> +10% CLV, +5% monthly opens. Over 50% of Temu users made unplanned purchases after gamified interactions.</p>
+  </div>
+  <div class="risk-note"><strong>Brand fit question:</strong> May feel incongruent with Groupon's brand. Needs discussion.</div>
+</div>
+
+<!-- Idea 4 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">4</span>
+    <span class="idea-title">Community Picks / Social Deal Voting</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag both">Core + Affiliate</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Upvote local deals and online codes. "Trending" feed surfaces the most popular. The "trending near you" angle combines community signal with local relevance.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Slickdeals converts 40% MAU -> DAU through community curation. Social proof makes deals feel discovered, not sold.</p>
+  </div>
+  <div class="affiliate-note">
+    <strong>Affiliate angle:</strong> Coupon codes are perfect for community voting - "this code actually works" is incredibly valuable signal. Code verification via user votes solves a real trust problem.
+  </div>
+</div>
+
+<!-- Idea 5 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">5</span>
+    <span class="idea-title">Receipt Scanning - Groupon Credits</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag high">POC: High effort</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Scan any local receipt (restaurant, salon, gym) -> earn credits. Bonus for Groupon merchant receipts. Best via partnership (Fetch/Ibotta), not DIY.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Fetch gets more daily opens than Starbucks. Attaching to existing behaviour (getting a receipt) = fastest habit formation.</p>
+  </div>
+</div>
+
+<!-- Idea 6 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">6</span>
+    <span class="idea-title">"Groupon Select" Reinvention - Daily Exclusive Access</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low-Med effort</span>
+    <span class="tag both">Core + Affiliate</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Revamp Select ($4.99/mo): exclusive "Member Deal of the Day," early access, streak bonuses, quarterly savings report. Members also get exclusive online coupon codes not available to non-members.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Amazon Prime 90%+ renewal, Costco 90.4% - paid membership drives frequency through "fee recovery" psychology. Daily exclusive content = reason to open as a member.</p>
+  </div>
+</div>
+
+<!-- Idea 7 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">7</span>
+    <span class="idea-title">Geo-Push: "You're Near a Deal"</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Contextual push near a Groupon merchant: "The spa next door has 40% off today." Proximity-triggered notifications convert 2-3x higher than standard push.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Groupon's strongest natural advantage - <em>local</em>. Turns every walk past a merchant into a potential transaction.</p>
+  </div>
+</div>
+
+<!-- Idea 8 -->
+<div class="idea-card recommended">
+  <div class="idea-header">
+    <span class="idea-number">8</span>
+    <span class="idea-title">Curated Local Content - "What to Do This Weekend"</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Weekly push / in-app section: "Top 5 things to do in [City] this weekend" - curated from deal inventory + editorial picks.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Creates a weekly ritual. Content-driven engagement is lower friction than transactional. The Strategist earns $2M+/month. Nobody else can say "here are 5 restaurant deals near you this weekend" with attached offers.</p>
+  </div>
+</div>
+
+<!-- Idea 9 -->
+<div class="idea-card recommended">
+  <div class="idea-header">
+    <span class="idea-number">9</span>
+    <span class="idea-title">Last-Minute Local Deals (HotelTonight Model)</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Fill merchant dead time - empty tables Tuesday lunch, salon gaps at 4pm. "3 spa slots left today, 60% off." Expires in hours, not weeks.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Users learn to check "what's available right now near me?" - fundamentally different, higher-frequency behaviour. Nobody else can surface "your salon has a 4pm gap today."</p>
+  </div>
+</div>
+
+<!-- Idea 10 -->
+<div class="idea-card">
+  <div class="idea-header">
+    <span class="idea-number">10</span>
+    <span class="idea-title">Merchant Self-Service - Instant Deal Publishing</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag high">POC: High effort</span>
+    <span class="tag core">Core deals</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Merchants publish flash deals in 2-3 clicks when business is slow. Creates urgency and unpredictability. Could test manually first.</p>
+  </div>
+</div>
+
+<!-- ======= PART B: AFFILIATE COUPONS ======= -->
+
+<h2 style="border-bottom-color: var(--teal);">Part B: Affiliate Coupons as an Engagement Layer</h2>
+<p class="section-intro">Ideas that use Groupon's existing coupons/promo code content to drive app frequency. These complement Part A - they're not separate initiatives.</p>
+
+<!-- Idea A1 -->
+<div class="idea-card affiliate recommended">
+  <div class="idea-header">
+    <span class="idea-number">A1</span>
+    <span class="idea-title">Follow Stores + Code Alerts</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag aff">Affiliate coupons</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Let users follow 10-20 favourite online retailers (Nike, Sephora, Amazon, etc.) in the app. Push a notification when a new code appears or an existing code improves for a followed store. "Nike just dropped a 25% off code - tap to grab it."</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>People shop at the same stores repeatedly. Honey's store-follow alerts and Droplist drive the majority of their re-engagement. Each notification is permission-based (user chose the store) so it feels like a service, not spam. And every alert-driven app open exposes the user to local deals too.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Groupon has codes for thousands of retailers already. The content exists - it's just not personalized or push-enabled. This is the single lowest-effort, highest-impact move for affiliate content in the app.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">POC</div>
+    <p>Follow button on retailer pages + notification trigger when new code is detected + simple "My Stores" screen in-app. 4-week test with a user cohort.</p>
+  </div>
+</div>
+
+<!-- Idea A2 -->
+<div class="idea-card affiliate recommended">
+  <div class="idea-header">
+    <span class="idea-number">A2</span>
+    <span class="idea-title">Weekly "Best Codes" Digest</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low effort</span>
+    <span class="tag rec">Recommended</span>
+    <span class="tag aff">Affiliate coupons</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>Every Monday morning, push a single notification: "This week's top codes: 30% off ASOS, 25% Nike, 20% Uber Eats + 3 more." Links to a curated in-app landing page. Personalised by shopping history / followed stores over time.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Predictable cadence = habit formation. This is Flipp's playbook (weekly grocery flyers -> 10M+ downloads, 4.8 stars). Users learn "check Groupon Monday for the week's best codes." The digest format also solves push fatigue - one notification, many codes.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>The content already exists - this is purely curation + push + a landing page. Could be manual initially (editor picks 7 codes), automated later. Pairs naturally with the Weekend Content idea (#8) - Monday codes + Friday local picks = two weekly rituals.</p>
+  </div>
+</div>
+
+<!-- Idea A3 -->
+<div class="idea-card affiliate">
+  <div class="idea-header">
+    <span class="idea-number">A3</span>
+    <span class="idea-title">Code Expiry Countdown + "Use It or Lose It" Alerts</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low effort</span>
+    <span class="tag aff">Affiliate coupons</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>When a user saves or views a code, track it. If the code is expiring within 24 hours, push an alert: "Your 30% off ASOS code expires tonight." Prominent expiry timers on saved codes in-app.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Urgency + loss aversion. A code you saved that's about to expire is nearly impossible to ignore. This is the same FOMO mechanic as flash sales, but applied to something the user already expressed interest in. High-intent, high-conversion notifications.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Codes already have expiry dates in Groupon's system. This is mostly a notification trigger + UI treatment. Very low effort, very high engagement potential.</p>
+  </div>
+</div>
+
+<!-- Idea A4 -->
+<div class="idea-card affiliate">
+  <div class="idea-header">
+    <span class="idea-number">A4</span>
+    <span class="idea-title">Web-to-App Bridge: "Save This Code to the App"</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag low">POC: Low-Med effort</span>
+    <span class="tag aff">Affiliate coupons</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>On groupon.com/coupons pages (SEO traffic), add a CTA: "Save this code to the Groupon app" that deep-links into the app with the code pre-loaded. Converts one-time web visitors into app users. Once in the app, they're in the ecosystem.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Groupon's coupons pages get millions of SEO visits. Currently these users arrive, grab a code, and leave. This is the bridge - convert web traffic into app installs/opens. Each converted user enters the flywheel (sees local deals, earns credits, gets push alerts).</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Uses existing traffic that Groupon already owns. No new content creation. The deep-link technology exists (branch.io, etc.). This is the funnel that feeds all other engagement ideas.</p>
+  </div>
+</div>
+
+<!-- Idea A5 -->
+<div class="idea-card affiliate">
+  <div class="idea-header">
+    <span class="idea-number">A5</span>
+    <span class="idea-title">Post-Use Credits: "Did This Code Work?"</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag aff">Affiliate coupons</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>After a user copies a code, prompt them to confirm: "Did this code work? Yes -> earn 10 credits. No -> we'll find you another." This creates a closing loop + code verification data + credits flowing into the wallet.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Turns a one-way interaction (grab code, leave) into a round-trip (grab code, come back, confirm, earn credits). The credit reward makes the return visit worthwhile. The verification data improves code quality for everyone - solving the #1 frustration with coupon sites (broken codes).</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Solves a real product problem (code quality) while driving engagement. The credits feed the Savings Wallet. Could also power the Community Picks idea (#4) - "verified by 847 users" is powerful social proof.</p>
+  </div>
+</div>
+
+<!-- Idea A6 -->
+<div class="idea-card affiliate">
+  <div class="idea-header">
+    <span class="idea-number">A6</span>
+    <span class="idea-title">"Save Everywhere" - Unified Savings Dashboard</span>
+  </div>
+  <div class="idea-tags">
+    <span class="tag medium">POC: Medium effort</span>
+    <span class="tag both">Core + Affiliate</span>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">What</div>
+    <p>A single screen showing all your savings opportunities in one place: local deals near you + online codes for your favourite stores + available credits + active watches. "Your personalised savings hub." Think Rakuten dashboard but combining local + online.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Why it drives frequency</div>
+    <p>Positions Groupon as "the one app for all savings" - not just local deals, not just coupons. The combination is the moat: nobody else has both local deals AND online codes in the same app. Users open to see "what can I save on today?" across all categories.</p>
+  </div>
+  <div class="idea-section">
+    <div class="idea-section-label">Groupon fit</div>
+    <p>Groupon literally has both content types - local deals (core) and online codes (affiliate). They just live in separate silos today. Merging them into a unified experience is Groupon's unique positioning that Honey, Rakuten, or RetailMeNot can't replicate.</p>
+  </div>
+</div>
+
+
+<!-- ======= EVALUATION ======= -->
+
+<h2>Evaluation Matrix</h2>
+
+<div class="matrix-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Idea</th>
+      <th>Type</th>
+      <th>Frequency</th>
+      <th>Speed to Test</th>
+      <th>Differentiation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>Daily Deal Drop + Streak</td>
+      <td><span class="type-badge both">Both</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>Watch This Deal / Store</td>
+      <td><span class="type-badge both">Both</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Spin-to-Win</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Community Picks</td>
+      <td><span class="type-badge both">Both</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Receipt Scanning</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Select Reinvention</td>
+      <td><span class="type-badge both">Both</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Geo-Push</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td><strong>8</strong></td>
+      <td>Weekend Content</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td><strong>9</strong></td>
+      <td>Last-Minute Deals</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Merchant Self-Service</td>
+      <td><span class="type-badge core">Core</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td><strong>A1</strong></td>
+      <td>Follow Stores + Code Alerts</td>
+      <td><span class="type-badge aff">Affiliate</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td><strong>A2</strong></td>
+      <td>Weekly "Best Codes" Digest</td>
+      <td><span class="type-badge aff">Affiliate</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td>A3</td>
+      <td>Code Expiry Alerts</td>
+      <td><span class="type-badge aff">Affiliate</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td>A4</td>
+      <td>Web-to-App Bridge</td>
+      <td><span class="type-badge aff">Affiliate</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td>A5</td>
+      <td>Post-Use Credits</td>
+      <td><span class="type-badge aff">Affiliate</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+    <tr style="background: var(--teal-light);">
+      <td>A6</td>
+      <td>Unified Savings Dashboard</td>
+      <td><span class="type-badge both">Both</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;</span></td>
+      <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- Recommendation -->
+<div class="reco-box">
+  <h3>Recommendation: The "Save Everywhere" Bundle</h3>
+  <p style="font-size:0.9rem; margin-bottom:1rem;">Six complementary layers that turn Groupon from "deal marketplace I visit monthly" into "savings companion I open daily." The affiliate ideas are the frequency engine; the core ideas are the monetisation engine.</p>
+
+  <div class="reco-item">
+    <strong>1. Daily Deal Drop + Streak (#1) - daily habit engine</strong>
+    Mix local deals + top online codes in one daily rotation. Streak rewards feed the Savings Wallet.
+  </div>
+  <div class="reco-item teal-border">
+    <strong>2. Follow Stores + Code Alerts (A1) - the everyday utility</strong>
+    Users follow their favourite online stores. Alerts drive app opens for every shopping moment, not just local deals. This is the bridge between monthly and daily engagement.
+  </div>
+  <div class="reco-item">
+    <strong>3. Watch This Deal (#2) - passive re-engagement</strong>
+    Captures intent-based users who won't check daily but will return when something matches. Works for both local deals and online stores.
+  </div>
+  <div class="reco-item">
+    <strong>4. Weekend Content (#8) - weekly planning ritual</strong>
+    "Top 5 things to do this weekend." Positions Groupon as a planning tool. Easiest to ship, most defensible.
+  </div>
+  <div class="reco-item">
+    <strong>5. Last-Minute Deals (#9) - uniquely Groupon</strong>
+    Nobody else can do "your salon has a 4pm gap." Highest differentiation on the list.
+  </div>
+  <div class="reco-item teal-border">
+    <strong>6. Weekly Best Codes Digest (A2) - Monday morning ritual</strong>
+    Pairs with Weekend Content for a two-beat weekly rhythm: Monday codes + Friday local picks.
+  </div>
+
+  <p style="font-size:0.85rem; margin-top:1rem; color: var(--text-muted);">
+    <strong>Foundation:</strong> Savings Wallet (#0) connects everything. Credits earned from code alerts, streaks, and post-use verification are spent on core local deals. This is the flywheel.
+  </p>
+</div>
+
+
+<!-- ============================================ -->
+<!-- THE NUMBERS -->
+<!-- ============================================ -->
+
+<h2>The Numbers</h2>
+<p class="section-intro">Key data points supporting the Safari extension + cashback strategy. All sourced and verified.</p>
+
+<div class="data-grid">
+  <div class="data-block">
+    <h4>Groupon App</h4>
+    <ul>
+      <li>
+        <span>Monthly active users</span>
+        <span><span class="data-value">8-10M</span><span class="data-source">Tableau, Mar 25-Apr 7</span></span>
+      </li>
+      <li>
+        <span>Avg opens per month</span>
+        <span><span class="data-value">~1.5x</span><span class="data-source">Tableau, DV/UDV</span></span>
+      </li>
+      <li>
+        <span>Buy once and stop</span>
+        <span><span class="data-value">66%</span><span class="data-source">Viktor, Clickstream</span></span>
+      </li>
+      <li>
+        <span>DAU/MAU stickiness</span>
+        <span><span class="data-value">5%</span><span class="data-source">Tableau</span></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="data-block">
+    <h4>Coupons (Web)</h4>
+    <ul>
+      <li>
+        <span>US sessions/yr</span>
+        <span><span class="data-value">~30M</span><span class="data-source">BQ, 2025</span></span>
+      </li>
+      <li>
+        <span>Annual commission</span>
+        <span><span class="data-value">$12.6M</span><span class="data-source">BQ, 2025</span></span>
+      </li>
+      <li>
+        <span>Revenue per session</span>
+        <span><span class="data-value">$0.43</span><span class="data-source">BQ, derived</span></span>
+      </li>
+      <li>
+        <span>Mobile vs desktop</span>
+        <span><span class="data-value">61% / 39%</span><span class="data-source">BQ, 2025</span></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="data-block">
+    <h4>Genie (Proof of Concept)</h4>
+    <ul>
+      <li>
+        <span>Current installs</span>
+        <span><span class="data-value">981</span><span class="data-source">CJ actuals</span></span>
+      </li>
+      <li>
+        <span>Revenue per user per year</span>
+        <span><span class="data-value">$6</span><span class="data-source">CJ actuals</span></span>
+      </li>
+      <li>
+        <span>34 MD rewards integration</span>
+        <span><span class="data-value">26-59x growth</span><span class="data-source">LTV model</span></span>
+      </li>
+      <li>
+        <span>LP-to-install conversion</span>
+        <span><span class="data-value">14%</span><span class="data-source">PostHog</span></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="data-block">
+    <h4>Competitor Proof</h4>
+    <ul>
+      <li>
+        <span>Honey (PayPal app)</span>
+        <span><span class="data-value">Safari ext.</span></span>
+      </li>
+      <li>
+        <span>Rakuten</span>
+        <span><span class="data-value">Safari ext.</span></span>
+      </li>
+      <li>
+        <span>Capital One Shopping</span>
+        <span><span class="data-value">Safari ext.</span></span>
+      </li>
+      <li>
+        <span>Honey crisis</span>
+        <span><span class="data-value">-8M users</span><span class="data-source">Market window open</span></span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="revenue-highlight">
+  <div class="rev-range">$8-25M/yr</div>
+  <div class="rev-label">Combined annual revenue potential for ~40 MD investment</div>
+  <div class="rev-detail">
+    Safari extension: $4-16M/yr (at $9.81/user, 10-30% activation of app MAU)
+    <span class="data-source">LTV model, conservative-to-optimistic</span>
+    <br>
+    Registration + Genie rewards: $4-7M/yr
+    <span class="data-source">BQ verified ($3.83/reg), LTV model</span>
+  </div>
+</div>
+
+
+<!-- ============================================ -->
+<!-- THE COUPONS SPACE -->
+<!-- ============================================ -->
+
+<h2>The Coupons Space - Supporting the Safari Strategy</h2>
+<p class="section-intro">Our organic coupons traffic is declining. These initiatives support the Safari extension strategy by building the user base and proving the model.</p>
+
+<div class="funnel-flow">
+  <div class="funnel-step">Coupons web visitor</div>
+  <span class="funnel-arrow">&rarr;</span>
+  <div class="funnel-step" style="border-color: var(--green);">Registers</div>
+  <span class="funnel-arrow">&rarr;</span>
+  <div class="funnel-step" style="border-color: var(--teal);">Installs Genie / App</div>
+  <span class="funnel-arrow">&rarr;</span>
+  <div class="funnel-step" style="border-color: var(--blue);">Enables Safari ext.</div>
+  <span class="funnel-arrow">&rarr;</span>
+  <div class="funnel-step" style="border-color: var(--purple);">Earns Bucks</div>
+</div>
+
+<p style="font-size:0.9rem; color: var(--text-muted); text-align: center; margin-bottom: 1rem;">Every registered coupons user becomes a potential Safari extension user.</p>
+
+<div class="data-grid" style="grid-template-columns: repeat(3, 1fr);">
+  <div class="data-block" style="border-top: 3px solid var(--green);">
+    <h4>User Registration + Rewards</h4>
+    <ul>
+      <li><span>Value per registration</span><span class="data-value">$3.83</span></li>
+      <li style="border:none;"><span class="data-source">BQ verified, A/B test</span></li>
+    </ul>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Builds the addressable base for Safari extension rollout.</p>
+  </div>
+  <div class="data-block" style="border-top: 3px solid var(--teal);">
+    <h4>Genie + Rewards</h4>
+    <ul>
+      <li><span>Current model</span><span class="data-value">Proven</span></li>
+      <li style="border:none;"><span class="data-source">34 MD to scale with rewards</span></li>
+    </ul>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Desktop proof-of-concept. Same mechanics apply to Safari mobile.</p>
+  </div>
+  <div class="data-block" style="border-top: 3px solid var(--amber);">
+    <h4>Cashback</h4>
+    <ul>
+      <li><span>Status</span><span class="data-value">In planning</span></li>
+      <li style="border:none;"><span class="data-source">Separate workstream</span></li>
+    </ul>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">The value-creation layer that makes the extension compelling beyond codes.</p>
+  </div>
+</div>
+
+
+<!-- ============================================ -->
+<!-- RISKS -->
+<!-- ============================================ -->
+
+<h2>Risks to Name Upfront</h2>
+<div class="risk-section">
+  <ul>
+    <li><strong>Cannibalisation:</strong> Could daily deals train users to wait? Mitigate: daily deals are <em>additive</em> inventory (flash/exclusive), not discounts on existing.</li>
+    <li><strong>Push notification fatigue:</strong> Multiple ideas rely on push. Solution: one "Morning Brief" digest aggregating all signals, not 5 separate pushes. Store alerts can fire individually (permission-based).</li>
+    <li><strong>App landing experience:</strong> Current app is built for purchase intent. Non-intent opens need a "savings hub" landing zone - the Unified Dashboard (A6) solves this long-term.</li>
+    <li><strong>Affiliate attribution integrity:</strong> Honey's cookie-overwriting scandal is a cautionary tale. Groupon must use clean, transparent attribution. Never overwrite another affiliate's cookies.</li>
+    <li><strong>Coupons content quality:</strong> Broken codes are the #1 frustration. Post-Use Credits (A5) and Community Voting (#4) help, but code quality needs to be high enough to earn trust.</li>
+  </ul>
+</div>
+
+<!-- Set aside -->
+<h2>What We Considered and Set Aside</h2>
+<div class="aside-section">
+  <ul>
+    <li><strong>3P Marketplace (goods replacement):</strong> Revenue play, not frequency. Being handled separately by Core.</li>
+    <li><strong>Full cashback programme:</strong> Not differentiated. Promo test on Coupons pages is the separate workstream.</li>
+    <li><strong>Social feed / UGC:</strong> Cold-start problem too severe for Groupon today.</li>
+    <li><strong>Referral/invite loop:</strong> Growth mechanic, not frequency driver. Layer on later.</li>
+    <li><strong>Browser extension (Genie-for-core):</strong> Already exists as Genie - separate initiative with separate install base. Focus here is on the core app.</li>
+  </ul>
+</div>
+
+
+<!-- ============================================ -->
+<!-- WHAT'S NEXT -->
+<!-- ============================================ -->
+
+<h2>What's Next</h2>
+<p class="section-intro">We're presenting for direction - not asking approval on every sub-project.</p>
+
+<div class="next-grid">
+  <div class="next-card">
+    <h4>Already Executing</h4>
+    <ul>
+      <li>&#10003; Genie rewards integration (34 MD)</li>
+      <li>&#10003; Registration A/B test (live)</li>
+      <li>&#10003; Cashback planning (in progress)</li>
+    </ul>
+  </div>
+  <div class="next-card highlight">
+    <h4>The One Decision Point</h4>
+    <p><strong>2-week iOS spike</strong> to prototype the Safari extension within the Groupon app. This validates the technical feasibility and gives us something to demo.</p>
+    <p style="margin-top:0.5rem; font-size:0.8rem; color:var(--amber);">This is what we need to unlock.</p>
+  </div>
+</div>
+
+
+<!-- ============================================ -->
+<!-- SUPPORTING MATERIALS -->
+<!-- ============================================ -->
+
+<h2>Supporting Materials</h2>
+
+<div class="materials-grid">
+  <a href="safari-extension-prototype.html" target="_blank" class="material-link">
+    Safari Extension Prototype
+    <span class="material-type">Interactive demo</span>
+  </a>
+  <a href="competitor-research-2026-04-08.html" target="_blank" class="material-link">
+    Competitor Research
+    <span class="material-type">Safari extension landscape</span>
+  </a>
+  <a href="ecosystem-recommendation-final.html" target="_blank" class="material-link">
+    Ecosystem Recommendation
+    <span class="material-type">Full analysis (v1)</span>
+  </a>
+  <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" class="material-link">
+    Genie LTV Model
+    <span class="material-type">3-scenario revenue model</span>
+  </a>
+</div>
+
+
+<!-- Discussion Questions -->
+<h2>Discussion Questions for Becky</h2>
+<div class="questions">
+  <ol>
+    <li>Does the <strong>frequency-first</strong> framing resonate, or does Dusan/Adam need revenue-first concepts too?</li>
+    <li><strong>My recommendation:</strong> The 6-layer "Save Everywhere" bundle. Does that feel right, or should we narrow down?</li>
+    <li>The <strong>affiliate coupons in the core app</strong> angle - is this something Core would be open to, or is there a platform/political barrier to putting Coupons content in the mbnxt app?</li>
+    <li>Is the app team open to <strong>gamification mechanics</strong> (streaks, daily rewards)?</li>
+    <li>Does Becky have visibility into <strong>Groupon Select</strong> performance data?</li>
+    <li><strong>Geo-push</strong> - does Core already do this? If not, why?</li>
+    <li>What does "double monetisation" look like in <strong>actual numbers</strong>? Current UDV revenue baseline?</li>
+    <li>The <strong>web-to-app bridge</strong> (A4) - does our Coupons web traffic justify this investment? What's our current SEO -> app conversion rate?</li>
+    <li>Can we get <strong>2 weeks of iOS time</strong> to prototype the Safari extension?</li>
+  </ol>
+</div>
+
+<footer>
+  <span>Prepared for internal discussion - Martin Gregor - April 2026</span>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle dark mode</button>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+}
+
+// Restore saved theme preference
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+
+</body>
+</html>
