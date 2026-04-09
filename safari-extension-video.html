@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere - Safari Extension Walkthrough</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a14;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Screen Counter */
+  .screen-counter {
+    position: fixed;
+    top: 20px;
+    right: 28px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    z-index: 200;
+  }
+
+  /* iPhone Frame */
+  .phone-frame {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    background: #000;
+    border-radius: 55px;
+    border: 4px solid #333;
+    box-shadow: 0 0 0 2px #1a1a1a, 0 20px 60px rgba(0,0,0,0.6), inset 0 0 0 2px #222;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 126px;
+    height: 37px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* Status Bar */
+  .status-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54px;
+    padding: 14px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 90;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .status-bar .time { margin-top: 1px; }
+  .status-bar .icons { display: flex; gap: 5px; align-items: center; font-size: 13px; }
+
+  /* Screen Container */
+  .screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Caption */
+  .caption-area {
+    margin-top: 24px;
+    text-align: center;
+    max-width: 420px;
+    min-height: 50px;
+  }
+  .caption-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Controls */
+  .controls {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .ctrl-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .ctrl-btn:hover {
+    background: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.85);
+  }
+  .ctrl-btn.hidden { opacity: 0; pointer-events: none; }
+
+  /* Progress Bar */
+  .progress-container {
+    margin-top: 24px;
+    width: 420px;
+    max-width: 90vw;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #53a318;
+    border-radius: 2px;
+    transition: width 0.3s linear;
+  }
+  .progress-dots {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .progress-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+  }
+  .progress-dot.visited {
+    background: #53a318;
+  }
+  .progress-dot.current {
+    background: #53a318;
+    box-shadow: 0 0 6px rgba(83,163,24,0.5);
+    transform: scale(1.3);
+  }
+
+  /* End screen overlay */
+  .end-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .end-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .end-link {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .end-link:hover { color: rgba(255,255,255,0.8); }
+
+  /* ===== SCREEN STYLES ===== */
+
+  /* Common iOS styles */
+  .ios-bg { background: #f2f2f7; color: #000; padding-top: 54px; height: 100%; }
+  .ios-bg-white { background: #fff; color: #000; padding-top: 54px; height: 100%; }
+
+  /* Screen 1: App Store */
+  .appstore-header {
+    padding: 16px 20px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .appstore-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: #53a318;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .appstore-info { flex: 1; }
+  .appstore-info h3 { font-size: 17px; font-weight: 600; color: #000; margin-bottom: 2px; line-height: 1.2; }
+  .appstore-info .subtitle { font-size: 13px; color: #8e8e93; margin-bottom: 8px; }
+  .appstore-get {
+    background: #007aff;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 22px;
+    display: inline-block;
+  }
+  .appstore-stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #e5e5ea;
+  }
+  .appstore-stars .stars { font-size: 14px; color: #ff9500; letter-spacing: 1px; }
+  .appstore-stars .rating-text { font-size: 13px; color: #8e8e93; }
+  .appstore-screenshots {
+    padding: 16px 20px;
+  }
+  .appstore-screenshots h4 { font-size: 15px; font-weight: 600; color: #000; margin-bottom: 10px; }
+  .screenshots-row {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .screenshot-thumb {
+    width: 110px;
+    height: 200px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+  .appstore-desc {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #3c3c43;
+    line-height: 1.5;
+  }
+
+  /* Screen 2: Onboarding */
+  .onboarding-screen {
+    background: #fff;
+    height: 100%;
+    padding-top: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .onboarding-green {
+    background: #53a318;
+    width: 100%;
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: #fff;
+  }
+  .onboarding-green .logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .onboarding-green .welcome {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  .onboarding-illustration {
+    margin: 24px 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .onboarding-illustration .icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  .onboarding-illustration .arrow {
+    font-size: 20px;
+    color: #53a318;
+  }
+  .onboarding-body {
+    padding: 0 28px;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .onboarding-body h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 10px;
+  }
+  .onboarding-body p {
+    font-size: 15px;
+    color: #636366;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .onboarding-cta {
+    background: #53a318;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    width: 100%;
+    max-width: 300px;
+  }
+  .onboarding-skip {
+    font-size: 14px;
+    color: #8e8e93;
+    margin-top: 14px;
+  }
+
+  /* Screen 3: iOS Settings */
+  .settings-screen {
+    background: #f2f2f7;
+    height: 100%;
+    padding-top: 54px;
+  }
+  .settings-header {
+    padding: 10px 20px 14px;
+    text-align: center;
+  }
+  .settings-header .back { float: left; color: #007aff; font-size: 17px; }
+  .settings-header h3 { font-size: 17px; font-weight: 600; color: #000; }
+  .settings-card {
+    background: #fff;
+    margin: 0 16px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+  .settings-row .left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .settings-row .app-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #53a318;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .settings-row .label { font-size: 17px; color: #000; }
+  .ios-toggle {
+    width: 51px;
+    height: 31px;
+    border-radius: 16px;
+    background: #34c759;
+    position: relative;
+  }
+  .ios-toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .settings-permission {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #8e8e93;
+    line-height: 1.5;
+    margin: 12px 16px 0;
+  }
+  .settings-info {
+    padding: 8px 16px 0;
+    font-size: 12px;
+    color: #aeaeb2;
+    line-height: 1.4;
+    margin: 0 16px;
+  }
+
+  /* Screen 4: Nike.com */
+  .safari-bar {
+    background: #f2f2f7;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 0.5px solid #c6c6c8;
+  }
+  .safari-url {
+    background: #e5e5ea;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #3c3c43;
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+  }
+  .nike-page {
+    background: #fff;
+    height: 100%;
+    padding-top: 54px;
+    display: flex;
+    flex-direction: column;
+  }
+  .nike-product-img {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 50%, #d4d4d4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .nike-product-img .shoe-shape {
+    width: 200px;
+    height: 80px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    border-radius: 10px 40px 8px 20px;
+    transform: rotate(-5deg);
+    position: relative;
+  }
+  .nike-product-img .shoe-shape::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 10px;
+    right: 10px;
+    height: 14px;
+    background: #e8e8e8;
+    border-radius: 0 0 4px 4px;
+  }
+  .nike-product-img .swoosh {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 900;
+    font-style: italic;
+  }
+  .nike-details {
+    padding: 16px 20px;
+    flex: 1;
+  }
+  .nike-details .brand { font-size: 13px; color: #8e8e93; margin-bottom: 4px; }
+  .nike-details h2 { font-size: 22px; font-weight: 600; color: #111; margin-bottom: 6px; }
+  .nike-details .price { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 16px; }
+  .nike-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d1d1d6;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #8e8e93;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  .nike-cta {
+    width: 100%;
+    padding: 16px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  /* Screen 5: Popup */
+  .groupon-popup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 80;
+    padding: 0 0 34px;
+  }
+  .screen.active .groupon-popup {
+    transform: translateY(0);
+  }
+  .popup-header {
+    background: #53a318;
+    padding: 14px 16px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .popup-header .g-badge {
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .popup-header span { font-size: 14px; font-weight: 600; }
+  .popup-body { padding: 14px 16px; }
+  .popup-code-card {
+    background: #f8faf5;
+    border: 1px solid #e4edda;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .popup-code-card .code-info .code {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1c1c1e;
+    font-family: 'SF Mono', 'Menlo', monospace;
+  }
+  .popup-code-card .code-info .desc {
+    font-size: 12px;
+    color: #636366;
+    margin-top: 2px;
+  }
+  .popup-apply {
+    background: #53a318;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .popup-secondary {
+    padding: 10px 14px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #636366;
+    margin-bottom: 12px;
+  }
+  .popup-bucks {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .popup-bucks .amount { font-size: 16px; font-weight: 700; color: #f57f17; }
+  .popup-bucks .label { font-size: 11px; color: #8d6e13; margin-top: 2px; }
+
+  /* Screen 6: Code Applied */
+  .success-screen {
+    background: #fff;
+    height: 100%;
+    padding-top: 54px;
+    display: flex;
+    flex-direction: column;
+  }
+  .success-popup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    z-index: 80;
+    padding: 30px 20px 44px;
+    text-align: center;
+  }
+  .success-check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #53a318;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 32px;
+    color: #fff;
+    transform: scale(0);
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+  }
+  @keyframes scaleIn {
+    to { transform: scale(1); }
+  }
+  .success-popup h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 12px;
+  }
+  .success-prices {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .success-prices .old {
+    font-size: 18px;
+    color: #8e8e93;
+    text-decoration: line-through;
+  }
+  .success-prices .new {
+    font-size: 24px;
+    font-weight: 700;
+    color: #53a318;
+  }
+  .success-bucks {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f57f17;
+    animation: glow 2s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 4px rgba(245,127,23,0.2); }
+    50% { box-shadow: 0 0 12px rgba(245,127,23,0.4); }
+  }
+
+  /* Screen 7: Push Notification */
+  .lockscreen {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    height: 100%;
+    padding-top: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lockscreen-time {
+    font-size: 76px;
+    font-weight: 200;
+    color: #fff;
+    margin-top: 30px;
+    letter-spacing: -2px;
+  }
+  .lockscreen-date {
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .notification-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 16px;
+    margin: 40px 16px 0;
+    padding: 14px;
+    width: calc(100% - 32px);
+    transform: translateY(-30px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .screen.active .notification-card {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .notif-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .notif-header .notif-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #53a318;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .notif-header .notif-app {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    flex: 1;
+  }
+  .notif-header .notif-time {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
+  .notif-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .notif-body {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.4;
+  }
+
+  /* Screen 8: Groupon App */
+  .groupon-app {
+    background: #f2f2f7;
+    height: 100%;
+    padding-top: 54px;
+  }
+  .groupon-nav {
+    background: #53a318;
+    padding: 8px 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .groupon-nav .nav-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .groupon-nav .bucks-badge {
+    background: rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .bucks-card {
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    margin: 12px 16px;
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid #ffe082;
+  }
+  .bucks-card .card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #8d6e13;
+    margin-bottom: 4px;
+  }
+  .bucks-card .card-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: #f57f17;
+    margin-bottom: 8px;
+  }
+  .bucks-progress {
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+  .bucks-progress-fill {
+    height: 100%;
+    width: 74%;
+    background: #f57f17;
+    border-radius: 2px;
+  }
+  .bucks-card .card-expires {
+    font-size: 11px;
+    color: #a68a2e;
+    margin-bottom: 12px;
+  }
+  .bucks-card .card-cta {
+    background: #53a318;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .deals-section {
+    padding: 16px;
+  }
+  .deals-section h4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 12px;
+  }
+  .deal-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .deal-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .deal-info .deal-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 4px;
+  }
+  .deal-info .deal-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .deal-info .deal-old {
+    font-size: 13px;
+    color: #8e8e93;
+    text-decoration: line-through;
+  }
+  .deal-info .deal-new {
+    font-size: 15px;
+    font-weight: 600;
+    color: #53a318;
+  }
+
+  /* Screen 9: Checkout */
+  .checkout-screen {
+    background: #f2f2f7;
+    height: 100%;
+    padding-top: 54px;
+  }
+  .checkout-header {
+    background: #fff;
+    padding: 10px 16px;
+    text-align: center;
+    border-bottom: 0.5px solid #e5e5ea;
+  }
+  .checkout-header h3 { font-size: 17px; font-weight: 600; color: #000; }
+  .checkout-card {
+    background: #fff;
+    margin: 12px 16px;
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .checkout-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 4px;
+  }
+  .checkout-card .venue {
+    font-size: 14px;
+    color: #636366;
+    margin-bottom: 16px;
+  }
+  .checkout-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+  .checkout-row.total {
+    border-top: 1px solid #e5e5ea;
+    margin-top: 4px;
+    padding-top: 12px;
+    font-weight: 600;
+  }
+  .checkout-row .green { color: #53a318; font-weight: 600; }
+  .checkout-cta {
+    background: #53a318;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 0;
+    width: calc(100% - 32px);
+    margin: 16px 16px;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .checkout-bonus {
+    text-align: center;
+    font-size: 12px;
+    color: #53a318;
+    padding: 4px 16px;
+  }
+
+  /* Screen 10: The Loop */
+  .loop-screen {
+    background: #fff;
+    height: 100%;
+    padding-top: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .loop-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin-bottom: 20px;
+  }
+  .loop-node {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    color: #1c1c1e;
+    width: 90px;
+    line-height: 1.3;
+  }
+  .loop-node .node-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .loop-arrow {
+    position: absolute;
+    font-size: 16px;
+    color: #53a318;
+  }
+  .loop-tagline {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1c1c1e;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .loop-stats {
+    font-size: 12px;
+    color: #636366;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Scale for smaller screens */
+  @media (max-height: 900px) {
+    .phone-frame {
+      transform: scale(0.85);
+      transform-origin: top center;
+    }
+  }
+  @media (max-height: 750px) {
+    .phone-frame {
+      transform: scale(0.72);
+      transform-origin: top center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-counter" id="screenCounter">1/10</div>
+
+<!-- iPhone Frame -->
+<div class="phone-frame" id="phone">
+  <div class="dynamic-island"></div>
+
+  <!-- Screen 1: App Store -->
+  <div class="screen active" id="screen1">
+    <div class="ios-bg">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">9:41</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="appstore-header">
+        <div class="appstore-icon">G</div>
+        <div class="appstore-info">
+          <h3>Groupon - Local Deals &amp; More</h3>
+          <div class="subtitle">Coupons, Savings &amp; Cashback</div>
+          <div class="appstore-get">GET</div>
+        </div>
+      </div>
+      <div class="appstore-stars">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <div class="rating-text">4.7 - 1.2M Ratings</div>
+      </div>
+      <div class="appstore-screenshots">
+        <h4>Preview</h4>
+        <div class="screenshots-row">
+          <div class="screenshot-thumb" style="background: linear-gradient(135deg, #53a318, #7bc043);"></div>
+          <div class="screenshot-thumb" style="background: linear-gradient(135deg, #2196f3, #64b5f6);"></div>
+          <div class="screenshot-thumb" style="background: linear-gradient(135deg, #ff9800, #ffb74d);"></div>
+        </div>
+      </div>
+      <div class="appstore-desc">
+        Save on everything from local restaurants and spas to travel and top brand products. Get cashback on your everyday shopping.
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: Onboarding -->
+  <div class="screen" id="screen2">
+    <div class="onboarding-screen">
+      <div class="status-bar" style="color:#fff;">
+        <div class="time">9:42</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="onboarding-green">
+        <div class="logo">GROUPON</div>
+        <div class="welcome">Welcome to Groupon</div>
+      </div>
+      <div class="onboarding-illustration">
+        <div class="icon-circle" style="background:#007aff; color:#fff; font-size:20px;">&#127760;</div>
+        <div class="arrow">&#10132;</div>
+        <div class="icon-circle" style="background:#53a318; color:#fff; font-weight:700;">G</div>
+      </div>
+      <div class="onboarding-body">
+        <h2>Save on every purchase - not just on Groupon</h2>
+        <p>Enable our Safari extension to see savings when you shop at Nike, Amazon, Target and 10,000+ stores</p>
+        <div class="onboarding-cta">Enable Safari Extension</div>
+        <div class="onboarding-skip">Maybe later</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: iOS Settings -->
+  <div class="screen" id="screen3">
+    <div class="settings-screen">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">9:42</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="settings-header">
+        <div class="back">&#8249; Safari</div>
+        <h3>Safari Extensions</h3>
+      </div>
+      <div class="settings-card">
+        <div class="settings-row">
+          <div class="left">
+            <div class="app-icon">G</div>
+            <div class="label">Groupon</div>
+          </div>
+          <div class="ios-toggle"></div>
+        </div>
+      </div>
+      <div class="settings-permission">
+        Groupon can read and modify webpages on:<br>
+        <strong>All Websites</strong>
+      </div>
+      <div class="settings-info">
+        This extension helps you find savings while you shop online. Your data is only used to match available offers.
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Nike.com -->
+  <div class="screen" id="screen4">
+    <div class="nike-page">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">3:24</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="safari-bar">
+        <div class="safari-url">&#128274; nike.com/air-max-90</div>
+      </div>
+      <div class="nike-product-img">
+        <div class="shoe-shape">
+          <div class="swoosh">&#10004;</div>
+        </div>
+      </div>
+      <div class="nike-details">
+        <div class="brand">Nike</div>
+        <h2>Air Max 90</h2>
+        <div class="price">$130.00</div>
+        <div class="nike-select">Select Size</div>
+        <div class="nike-cta">Add to Bag</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 5: Groupon Popup -->
+  <div class="screen" id="screen5">
+    <div class="nike-page" style="filter: brightness(0.95);">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">3:24</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="safari-bar">
+        <div class="safari-url">&#128274; nike.com/air-max-90</div>
+      </div>
+      <div class="nike-product-img" style="height:200px;">
+        <div class="shoe-shape">
+          <div class="swoosh">&#10004;</div>
+        </div>
+      </div>
+      <div class="nike-details">
+        <div class="brand">Nike</div>
+        <h2>Air Max 90</h2>
+        <div class="price">$130.00</div>
+      </div>
+    </div>
+    <div class="groupon-popup">
+      <div class="popup-header">
+        <div class="g-badge">G</div>
+        <span>Groupon - We found savings for Nike!</span>
+      </div>
+      <div class="popup-body">
+        <div class="popup-code-card">
+          <div class="code-info">
+            <div class="code">NIKE15</div>
+            <div class="desc">15% off sitewide</div>
+          </div>
+          <div class="popup-apply">Apply Code</div>
+        </div>
+        <div class="popup-secondary">&#10003; Free shipping on orders $50+</div>
+        <div class="popup-bucks">
+          <div>
+            <div class="amount">$2.40 Groupon Bucks</div>
+            <div class="label">Redeemable on local deals in the Groupon app</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 6: Code Applied -->
+  <div class="screen" id="screen6">
+    <div class="success-screen">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">3:25</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="safari-bar">
+        <div class="safari-url">&#128274; nike.com/cart</div>
+      </div>
+      <div style="flex:1;"></div>
+      <div class="success-popup">
+        <div class="success-check">&#10003;</div>
+        <h3>Code applied! You saved $19.50</h3>
+        <div class="success-prices">
+          <span class="old">$130.00</span>
+          <span class="new">$110.50</span>
+        </div>
+        <div class="success-bucks">+$2.40 Groupon Bucks earned</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 7: Push Notification -->
+  <div class="screen" id="screen7">
+    <div class="lockscreen">
+      <div class="status-bar" style="color:#fff;">
+        <div class="time">2:47</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="lockscreen-time">2:47</div>
+      <div class="lockscreen-date">Thursday, April 10</div>
+      <div class="notification-card">
+        <div class="notif-header">
+          <div class="notif-icon">G</div>
+          <div class="notif-app">Groupon</div>
+          <div class="notif-time">now</div>
+        </div>
+        <div class="notif-title">You earned $2.40 Bucks from Nike</div>
+        <div class="notif-body">Your balance: $14.60. Tap to browse local deals.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 8: Groupon App - Bucks -->
+  <div class="screen" id="screen8">
+    <div class="groupon-app">
+      <div class="status-bar" style="color:#fff;">
+        <div class="time">2:48</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="groupon-nav">
+        <div class="nav-logo">Groupon</div>
+        <div class="bucks-badge">$14.60</div>
+      </div>
+      <div class="bucks-card">
+        <div class="card-label">Your Groupon Bucks</div>
+        <div class="card-amount">$14.60</div>
+        <div class="bucks-progress"><div class="bucks-progress-fill"></div></div>
+        <div class="card-expires">Expires in 67 days</div>
+        <div class="card-cta">Browse deals to spend your Bucks</div>
+      </div>
+      <div class="deals-section">
+        <h4>Popular near you</h4>
+        <div class="deal-card">
+          <div class="deal-img" style="background: linear-gradient(135deg, #e8d5b7, #c9a96e);"></div>
+          <div class="deal-info">
+            <div class="deal-name">Deep Tissue Massage - Zen Spa</div>
+            <div class="deal-prices">
+              <span class="deal-old">$89</span>
+              <span class="deal-new">$69</span>
+            </div>
+          </div>
+        </div>
+        <div class="deal-card">
+          <div class="deal-img" style="background: linear-gradient(135deg, #ff8a80, #ff5252);"></div>
+          <div class="deal-info">
+            <div class="deal-name">Italian Dinner for Two</div>
+            <div class="deal-prices">
+              <span class="deal-old">$65</span>
+              <span class="deal-new">$49</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 9: Checkout -->
+  <div class="screen" id="screen9">
+    <div class="checkout-screen">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">2:50</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="checkout-header">
+        <h3>Checkout</h3>
+      </div>
+      <div class="checkout-card">
+        <h3>Deep Tissue Massage - 60 min</h3>
+        <div class="venue">Zen Spa - River North, 0.3 mi</div>
+        <div class="checkout-row">
+          <span>Price</span>
+          <span>$69.00</span>
+        </div>
+        <div class="checkout-row">
+          <span>Bucks applied</span>
+          <span class="green">-$14.60</span>
+        </div>
+        <div class="checkout-row total">
+          <span>You pay</span>
+          <span>$54.40</span>
+        </div>
+      </div>
+      <div class="checkout-cta">Book Now</div>
+      <div class="checkout-bonus">+$1.40 more Bucks from this purchase</div>
+    </div>
+  </div>
+
+  <!-- Screen 10: The Loop -->
+  <div class="screen" id="screen10">
+    <div class="loop-screen">
+      <div class="status-bar" style="color:#000;">
+        <div class="time">2:51</div>
+        <div class="icons">
+          <span>&#9679;&#9679;&#9679;&#9679;</span>
+          <span>&#128267;</span>
+        </div>
+      </div>
+      <div class="loop-container">
+        <!-- 6 nodes arranged in a circle -->
+        <div class="loop-node" style="top:0; left:50%; transform:translateX(-50%);">
+          <div class="node-icon" style="background:#e3f2fd; color:#1565c0;">&#127760;</div>
+          Shop anywhere
+        </div>
+        <div class="loop-node" style="top:70px; right:-10px;">
+          <div class="node-icon" style="background:#e8f5e9; color:#2e7d32;">G</div>
+          Groupon finds savings
+        </div>
+        <div class="loop-node" style="bottom:70px; right:-10px;">
+          <div class="node-icon" style="background:#fff8e1; color:#f57f17;">$</div>
+          Earn Bucks
+        </div>
+        <div class="loop-node" style="bottom:0; left:50%; transform:translateX(-50%);">
+          <div class="node-icon" style="background:#fce4ec; color:#c62828;">&#128276;</div>
+          Open app
+        </div>
+        <div class="loop-node" style="bottom:70px; left:-10px;">
+          <div class="node-icon" style="background:#f3e5f5; color:#6a1b9a;">&#9733;</div>
+          Book local deal
+        </div>
+        <div class="loop-node" style="top:70px; left:-10px;">
+          <div class="node-icon" style="background:#fff3e0; color:#e65100;">&#8635;</div>
+          Earn more Bucks
+        </div>
+        <!-- Arrows -->
+        <div class="loop-arrow" style="top:32px; right:42px; transform:rotate(55deg);">&#10140;</div>
+        <div class="loop-arrow" style="top:130px; right:6px; transform:rotate(90deg);">&#10140;</div>
+        <div class="loop-arrow" style="bottom:32px; right:42px; transform:rotate(125deg);">&#10140;</div>
+        <div class="loop-arrow" style="bottom:32px; left:42px; transform:rotate(-125deg);">&#10140;</div>
+        <div class="loop-arrow" style="top:130px; left:6px; transform:rotate(-90deg);">&#10140;</div>
+        <div class="loop-arrow" style="top:32px; left:42px; transform:rotate(-55deg);">&#10140;</div>
+      </div>
+      <div class="loop-tagline">The Save Everywhere Loop</div>
+      <div class="loop-stats">
+        Every shopping session drives app engagement<br>
+        <strong style="color:#53a318;">$9.81/user/yr - 8-10M users - no acquisition needed</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Caption -->
+<div class="caption-area">
+  <div class="caption-text" id="caption">User downloads the Groupon app from the App Store</div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="ctrl-btn hidden" id="restartBtn" onclick="restart()">Restart</button>
+  <button class="ctrl-btn" id="playPauseBtn" onclick="togglePlay()">&#9646;&#9646; Pause</button>
+  <a class="ctrl-btn hidden" id="backLink" href="save-everywhere-final.html" style="text-decoration:none;">Back to presentation</a>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-container">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+    <div class="progress-dots" id="progressDots"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var SCREENS = [
+    { id: 'screen1',  duration: 3000, caption: 'User downloads the Groupon app from the App Store' },
+    { id: 'screen2',  duration: 3000, caption: 'During onboarding, user is prompted to enable the Safari extension' },
+    { id: 'screen3',  duration: 3000, caption: 'One-time setup in iOS Settings - just a toggle' },
+    { id: 'screen4',  duration: 3000, caption: 'Later that week - user shops on Nike.com in Safari' },
+    { id: 'screen5',  duration: 3500, caption: 'Groupon automatically surfaces relevant codes and cashback' },
+    { id: 'screen6',  duration: 3000, caption: 'Code applied automatically - and Bucks earned' },
+    { id: 'screen7',  duration: 3000, caption: 'A push notification brings the user back to the Groupon app' },
+    { id: 'screen8',  duration: 3000, caption: 'Inside the app - Bucks balance drives engagement with local deals' },
+    { id: 'screen9',  duration: 3000, caption: 'Bucks earned from Nike, spent on a local experience - and earning more' },
+    { id: 'screen10', duration: 4000, caption: 'The Save Everywhere loop - off-platform capture, in-app engagement' }
+  ];
+
+  var current = 0;
+  var playing = false;
+  var timer = null;
+  var progressTimer = null;
+  var screenStartTime = 0;
+
+  var captionEl = document.getElementById('caption');
+  var counterEl = document.getElementById('screenCounter');
+  var fillEl = document.getElementById('progressFill');
+  var dotsContainer = document.getElementById('progressDots');
+  var playPauseBtn = document.getElementById('playPauseBtn');
+  var restartBtn = document.getElementById('restartBtn');
+  var backLink = document.getElementById('backLink');
+  var phone = document.getElementById('phone');
+
+  // Build progress dots
+  for (var i = 0; i < SCREENS.length; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'progress-dot';
+    dotsContainer.appendChild(dot);
+  }
+
+  function updateDots() {
+    var dots = dotsContainer.querySelectorAll('.progress-dot');
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].className = 'progress-dot';
+      if (i < current) dots[i].classList.add('visited');
+      if (i === current) { dots[i].classList.add('current'); dots[i].classList.add('visited'); }
+    }
+  }
+
+  function updateProgress() {
+    // Overall progress: completed screens + fraction of current
+    var elapsed = Date.now() - screenStartTime;
+    var fraction = Math.min(elapsed / SCREENS[current].duration, 1);
+    var totalDuration = 0;
+    var completedDuration = 0;
+    for (var i = 0; i < SCREENS.length; i++) {
+      totalDuration += SCREENS[i].duration;
+      if (i < current) completedDuration += SCREENS[i].duration;
+    }
+    completedDuration += fraction * SCREENS[current].duration;
+    fillEl.style.width = ((completedDuration / totalDuration) * 100) + '%';
+  }
+
+  function goTo(index, autoAdvance) {
+    if (index < 0 || index >= SCREENS.length) return;
+
+    // Deactivate old
+    var oldEl = document.getElementById(SCREENS[current].id);
+    if (oldEl) oldEl.classList.remove('active');
+
+    current = index;
+
+    // Activate new
+    var newEl = document.getElementById(SCREENS[current].id);
+    if (newEl) newEl.classList.add('active');
+
+    captionEl.textContent = SCREENS[current].caption;
+    counterEl.textContent = (current + 1) + '/10';
+    updateDots();
+    screenStartTime = Date.now();
+    updateProgress();
+
+    // Show/hide end controls
+    if (current === SCREENS.length - 1) {
+      restartBtn.classList.remove('hidden');
+      backLink.classList.remove('hidden');
+    } else {
+      restartBtn.classList.add('hidden');
+      backLink.classList.add('hidden');
+    }
+
+    // Schedule next
+    clearTimeout(timer);
+    clearInterval(progressTimer);
+    if (playing && autoAdvance !== false) {
+      timer = setTimeout(function() {
+        if (current < SCREENS.length - 1) {
+          goTo(current + 1);
+        } else {
+          pause();
+        }
+      }, SCREENS[current].duration);
+      progressTimer = setInterval(updateProgress, 50);
+    }
+  }
+
+  function play() {
+    playing = true;
+    playPauseBtn.innerHTML = '&#9646;&#9646; Pause';
+    screenStartTime = Date.now();
+    timer = setTimeout(function() {
+      if (current < SCREENS.length - 1) {
+        goTo(current + 1);
+      } else {
+        pause();
+      }
+    }, SCREENS[current].duration);
+    progressTimer = setInterval(updateProgress, 50);
+  }
+
+  function pause() {
+    playing = false;
+    playPauseBtn.innerHTML = '&#9654; Play';
+    clearTimeout(timer);
+    clearInterval(progressTimer);
+  }
+
+  function togglePlay() {
+    if (playing) { pause(); } else { play(); }
+  }
+
+  function restart() {
+    goTo(0, false);
+    setTimeout(function() { play(); }, 200);
+  }
+  window.restart = restart;
+  window.togglePlay = togglePlay;
+
+  // Phone click: if playing, pause. If paused, advance.
+  phone.addEventListener('click', function() {
+    if (playing) {
+      pause();
+    } else {
+      if (current < SCREENS.length - 1) {
+        goTo(current + 1, false);
+      }
+    }
+  });
+
+  // Keyboard controls
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      togglePlay();
+    } else if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      var wasPlaying = playing;
+      if (wasPlaying) pause();
+      if (current < SCREENS.length - 1) goTo(current + 1, false);
+    } else if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      var wasPlaying2 = playing;
+      if (wasPlaying2) pause();
+      if (current > 0) goTo(current - 1, false);
+    }
+  });
+
+  // Initialize first screen
+  updateDots();
+  updateProgress();
+
+  // Auto-play after 1 second
+  setTimeout(function() {
+    play();
+  }, 1000);
+})();
+</script>
+
+</body>
+</html>
