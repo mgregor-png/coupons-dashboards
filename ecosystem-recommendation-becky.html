@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere with Groupon - Becky's Structure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a14;
+    --surface: #13132a;
+    --surface-hover: #1a1a38;
+    --border: #252548;
+    --text: #e8e8f0;
+    --text-muted: #9090aa;
+    --text-dim: #606078;
+    --coral: #ff6b6b;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+  }
+
+  html.light {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface-hover: #f0f0f2;
+    --border: #d8d8dc;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --text-dim: #aeaeb2;
+    --coral: #e0443a;
+    --amber: #d48a00;
+    --teal: #1a9e8f;
+    --green: #28a745;
+    --blue: #0066cc;
+    --purple: #7c3aed;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* === DECK CARD === */
+  .deck-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  html.light .deck-card { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  html:not(.light) .deck-card { box-shadow: 0 2px 16px rgba(0,0,0,0.2); }
+
+  .deck-card .card-number {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* === FRAMING TOGGLE === */
+  .framing-toggle {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0;
+  }
+  .framing-btn {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .framing-btn:first-child { border-radius: 6px 0 0 6px; border-right: none; }
+  .framing-btn:last-child { border-radius: 0 6px 6px 0; }
+  .framing-btn:hover { color: var(--text); }
+  .framing-btn.active { background: var(--coral); border-color: var(--coral); color: #fff; }
+
+  .ceo-only { display: none; }
+  body.ceo-framing .ceo-only { display: block; }
+  body.ceo-framing .customer-only { display: none; }
+
+  /* === THEME SWITCHER === */
+  .theme-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .theme-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--amber); color: var(--text); }
+  .theme-btn.active { border-color: var(--amber); color: var(--amber); background: rgba(251,191,36,0.08); }
+
+  /* === TYPOGRAPHY === */
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+  .section-label.coral { color: var(--coral); }
+  .section-label.amber { color: var(--amber); }
+  .section-label.teal { color: var(--teal); }
+  .section-label.green { color: var(--green); }
+  .section-label.blue { color: var(--blue); }
+  .section-label.purple { color: var(--purple); }
+
+  /* === TAGS === */
+  .tag-est {
+    font-size: 0.55rem; font-weight: 600; color: var(--amber);
+    background: rgba(251,191,36,0.12); padding: 0.1rem 0.35rem;
+    border-radius: 3px; margin-left: 0.3rem; vertical-align: middle;
+  }
+  .tag-known {
+    font-size: 0.55rem; font-weight: 600; color: var(--green);
+    background: rgba(74,222,128,0.12); padding: 0.1rem 0.35rem;
+    border-radius: 3px; margin-left: 0.3rem; vertical-align: middle;
+  }
+  .tag-test {
+    font-size: 0.55rem; font-weight: 600; color: var(--coral);
+    background: rgba(255,107,107,0.12); padding: 0.1rem 0.35rem;
+    border-radius: 3px; margin-left: 0.3rem; vertical-align: middle;
+  }
+
+  /* === EFFORT PILLS === */
+  .effort-pill {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .effort-pill.low { background: rgba(74,222,128,0.12); color: var(--green); }
+  .effort-pill.medium { background: rgba(251,191,36,0.12); color: var(--amber); }
+  .effort-pill.live { background: rgba(45,212,191,0.12); color: var(--teal); }
+  .effort-pill.foundation { background: rgba(167,139,250,0.12); color: var(--purple); }
+
+  /* === GRID HELPERS === */
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 700px) {
+    .three-col { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* === PITCH COLUMNS === */
+  .pitch-col {
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .pitch-col h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .pitch-col p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* === FLYWHEEL === */
+  .flywheel-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: rgba(167,139,250,0.04);
+    border: 2px solid var(--purple);
+    border-radius: 14px;
+  }
+  .flywheel-step {
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .flywheel-step.f-teal { background: rgba(45,212,191,0.12); color: var(--teal); }
+  .flywheel-step.f-green { background: rgba(74,222,128,0.12); color: var(--green); }
+  .flywheel-step.f-purple { background: rgba(167,139,250,0.12); color: var(--purple); }
+  .flywheel-step.f-amber { background: rgba(251,191,36,0.12); color: var(--amber); }
+  .flywheel-step.f-coral { background: rgba(255,107,107,0.12); color: var(--coral); }
+  .flywheel-step.f-blue { background: rgba(96,165,250,0.12); color: var(--blue); }
+  .flywheel-arrow { font-size: 1.2rem; color: var(--text-dim); }
+
+  /* === WALLET FLOW === */
+  .wallet-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 700px) {
+    .wallet-flow { grid-template-columns: 1fr; }
+    .wallet-flow .wallet-arrow { transform: rotate(90deg); }
+  }
+  .wallet-box {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .wallet-box h5 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .wallet-box li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.2rem; }
+  .wallet-box ul { padding-left: 1rem; margin: 0; }
+  .wallet-center {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: rgba(74,222,128,0.06);
+    border: 2px solid var(--green);
+  }
+  .wallet-center .balance { font-size: 2rem; font-weight: 800; color: var(--green); display: block; }
+  .wallet-center .balance-label { font-size: 0.72rem; color: var(--text-muted); }
+  .wallet-arrow { text-align: center; font-size: 1.5rem; color: var(--text-dim); }
+
+  /* === HOOKS GRID === */
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+  }
+  @media (max-width: 900px) { .hooks-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .hooks-grid { grid-template-columns: 1fr; } }
+  .hook-card {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  html.light .hook-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .hook-card .hook-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .hook-card h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .hook-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+
+  /* === MATH BOX === */
+  .math-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(37,37,72,0.3);
+    font-size: 0.85rem;
+  }
+  .math-row:last-child { border-bottom: none; }
+  .math-row .math-label { color: var(--text-muted); }
+  .math-row .math-value { font-weight: 700; }
+  .math-result {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .math-result.coral-result { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); }
+  .math-result .mr-number { font-size: 1.4rem; font-weight: 800; display: block; }
+  .math-result .mr-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+  /* === SOLUTION CARDS === */
+  .solution-card {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid transparent;
+  }
+  .solution-card.purple-left { border-left-color: var(--purple); }
+  .solution-card.teal-left { border-left-color: var(--teal); }
+  .solution-card.amber-left { border-left-color: var(--amber); }
+  .solution-card.coral-left { border-left-color: var(--coral); }
+  .solution-card.green-left { border-left-color: var(--green); }
+  .solution-card h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .solution-card p, .solution-card li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+  .solution-card ul { padding-left: 1.1rem; margin-top: 0.35rem; }
+  .solution-card li { margin-bottom: 0.2rem; }
+  .solution-card strong { color: var(--text); }
+
+  /* === COMPARISON BOXES === */
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 700px) { .comparison-row { grid-template-columns: 1fr; } }
+  .comparison-box {
+    background: var(--surface-hover);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    text-align: center;
+  }
+  html.light .comparison-box { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .comparison-box.green-border { border-color: var(--green); }
+  .comparison-box .comp-number {
+    font-size: 2rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .comparison-box .comp-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* === CEO SUMMARY === */
+  .ceo-summary-card {
+    border: 2px solid var(--coral);
+  }
+  .ceo-metric-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  @media (max-width: 600px) { .ceo-metric-row { grid-template-columns: repeat(2, 1fr); } }
+  .ceo-metric {
+    text-align: center;
+    padding: 1rem;
+    background: var(--surface-hover);
+    border-radius: 10px;
+  }
+  .ceo-metric .num { font-size: 1.5rem; font-weight: 800; display: block; }
+  .ceo-metric .lbl { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+  /* === LINKS GRID === */
+  .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (max-width: 600px) { .links-grid { grid-template-columns: 1fr; } }
+  .link-card {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .link-card:hover { border-color: var(--amber); }
+  .link-card .link-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+  .link-card .link-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* === PROTO IFRAME === */
+  .proto-frame {
+    width: 100%;
+    height: 700px;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    background: #111;
+  }
+  html.light .proto-frame { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  .proto-link {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .proto-link:hover { text-decoration: underline; }
+
+  /* === HIGHLIGHT BOX === */
+  .highlight-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 10px;
+    padding: 1.25rem;
+    font-size: 0.88rem;
+  }
+  .highlight-box.muted-box { background: rgba(144,144,170,0.06); border-color: rgba(144,144,170,0.15); }
+
+  /* === STEP FLOW === */
+  .step-flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 700px) { .step-flow { grid-template-columns: 1fr; } }
+  .step-item {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    text-align: center;
+  }
+  html.light .step-item { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .step-number.teal-bg { background: rgba(45,212,191,0.15); color: var(--teal); }
+  .step-number.green-bg { background: rgba(74,222,128,0.15); color: var(--green); }
+  .step-number.purple-bg { background: rgba(167,139,250,0.15); color: var(--purple); }
+  .step-item p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* === BIG IDEA CARD === */
+  .big-idea {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .big-idea-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 700px;
+    margin: 1.25rem auto 0;
+    line-height: 1.7;
+  }
+
+  /* === SIDE NOTES === */
+  .side-notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 700px) { .side-notes { grid-template-columns: 1fr; } }
+  .side-note {
+    padding: 1rem 1.25rem;
+    background: var(--surface-hover);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .side-note strong { color: var(--text); }
+
+  /* === METRICS GRID === */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 700px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .metrics-grid { grid-template-columns: 1fr; } }
+  .metric-tile {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  html.light .metric-tile { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .metric-tile .metric-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .metric-tile .metric-lbl {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .metric-tile .metric-src {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 500px) {
+    body { padding: 1rem 0.75rem 3rem; }
+    .deck-card { padding: 1.5rem 1.25rem; }
+    .deck-card .card-number { top: 0.75rem; left: 1rem; }
+    .framing-toggle { top: 0.75rem; right: 1rem; }
+    .proto-frame { height: 500px; }
+    .hooks-grid { grid-template-columns: 1fr; }
+    .comparison-row { grid-template-columns: 1fr; }
+    .ceo-metric-row { grid-template-columns: repeat(2, 1fr); }
+    .links-grid { grid-template-columns: 1fr; }
+    .big-idea { font-size: 1.1rem; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .step-flow { grid-template-columns: 1fr; }
+    .side-notes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- CARD 1: TITLE                                                     -->
+<!-- ================================================================ -->
+<div class="deck-card" style="text-align: center; padding-top: 3rem;">
+  <span class="card-number">01</span>
+  <div class="framing-toggle">
+    <button class="framing-btn active" onclick="setFraming('customer')">Customer</button>
+    <button class="framing-btn" onclick="setFraming('ceo')">CEO</button>
+  </div>
+
+  <div class="badge">MBR Recommendation - April 2026</div>
+  <h1 style="font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--coral), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">Save Everywhere with Groupon</h1>
+  <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 740px; margin: 0 auto 1rem; line-height: 1.7;">Coupons content provides a mechanism for Groupon to be part of our customers' shopping experience across thousands of brands and millions of checkouts.</p>
+  <p style="font-size: 0.78rem; color: var(--text-dim);">Martin Gregor - Coupons & Ecosystem - For Adam Slaby & Rebecca Spurr</p>
+</div>
+
+<!-- ================================================================ -->
+<!-- CEO CARD: Executive Summary (hidden by default)                   -->
+<!-- ================================================================ -->
+<div class="deck-card ceo-only ceo-summary-card">
+  <span class="card-number" style="color: var(--coral);">Executive Summary</span>
+  <h2 style="font-size: 1.3rem; font-weight: 800; margin-top: 1.5rem; margin-bottom: 1rem;">The 60-Second Version</h2>
+
+  <div class="ceo-metric-row">
+    <div class="ceo-metric">
+      <span class="num" style="color: var(--coral);">$12.6M</span>
+      <span class="lbl">Current US coupons revenue (declining 17% YoY) <span style="font-size: 0.6rem; color: var(--text-dim);">(BQ, 2025)</span></span>
+    </div>
+    <div class="ceo-metric">
+      <span class="num" style="color: var(--green);">$4-16M</span>
+      <span class="lbl">Incremental from Safari extension</span>
+    </div>
+    <div class="ceo-metric">
+      <span class="num" style="color: var(--amber);">~40 MD</span>
+      <span class="lbl">Total engineering investment</span>
+    </div>
+    <div class="ceo-metric">
+      <span class="num" style="color: var(--green);">8-10M</span>
+      <span class="lbl">App MAU - no new acquisition <span style="font-size: 0.6rem; color: var(--text-dim);">(Tableau)</span></span>
+    </div>
+  </div>
+
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Coupons revenue is declining. This strategy extracts 3-5x more value from every session by converting anonymous traffic into identified users and following them off-platform via a Safari extension - bringing them back to the core app through Groupon Bucks.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+    <div style="padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--coral);">
+      <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--coral);">Double monetisation</div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks earned off-platform ($9.81/yr) + redeemed on core deals</div>
+    </div>
+    <div style="padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--amber);">
+      <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--amber);">Open app more frequently</div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks balance + alerts = 3+ weekly touchpoints vs 1.5x/month</div>
+    </div>
+    <div style="padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--purple);">
+      <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--purple);">Drive more users to app</div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">Every off-platform interaction bridges back via Bucks - redeemable only in app</div>
+    </div>
+    <div style="padding: 0.75rem; background: var(--surface-hover); border-radius: 8px; border-left: 3px solid var(--green);">
+      <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--green);">Improve retention</div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">Bucks expiry + brand following + cashback. Complements Viktor's in-app work.</div>
+    </div>
+  </div>
+
+  <p style="font-size: 0.88rem; color: var(--text); margin-top: 1.25rem; font-weight: 600;">Ask: 2-week iOS spike to validate Safari feasibility. If it works: $8-25M/yr. If not: $4-7M from registration + Genie alone.</p>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 2: THE BIG IDEA                                              -->
+<!-- ================================================================ -->
+<div class="deck-card" style="padding: 3rem 2.5rem;">
+  <span class="card-number">02 - The Big Idea</span>
+
+  <p class="big-idea" style="margin-top: 1rem;">By delivering coupons content through a Safari extension within the Groupon app, we can extend Groupon's reach to deliver value for our customers across all their shopping experiences.</p>
+
+  <p class="big-idea-sub">This captures users off-platform and through Groupon Bucks brings them back into the app.</p>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 3: HOW IT WORKS                                              -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">03 - How It Works</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem;">How It Works</h3>
+
+  <div class="step-flow">
+    <div class="step-item">
+      <span class="step-number teal-bg">1</span>
+      <p>A Safari extension is added to the Groupon app</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number green-bg">2</span>
+      <p>When a user downloads the app and enables the extension, Groupon will pop up when they shop at leading retailers on their phone</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number purple-bg">3</span>
+      <p>Coupons content is strengthened by cashback offers which upsell into Groupon Bucks, leading the user back to Groupon</p>
+    </div>
+  </div>
+
+  <div style="padding: 1.25rem; background: rgba(45,212,191,0.06); border: 1px solid rgba(45,212,191,0.15); border-radius: 10px; text-align: center; margin-bottom: 1.25rem;">
+    <p style="font-size: 0.92rem; color: var(--text); font-weight: 600;">Rather than the Genie extension which only works on desktop, this works on mobile - where our customers shop!</p>
+  </div>
+
+  <div class="side-notes">
+    <div class="side-note" style="border-left-color: var(--green);">
+      <strong>Supercharged acquisition:</strong> Leverages the existing app base - 8-10M MAU, no separate download needed.
+    </div>
+    <div class="side-note" style="border-left-color: var(--purple);">
+      <strong>Personalisation data:</strong> Integrating data from users' off-Groupon shopping experience into their Groupon profile enhances opportunity for personalisation.
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 4: INTERACTIVE DEMO                                          -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">04 - Interactive Demo</span>
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin: 1rem 0 1.25rem;">This is what the user sees. Nike checkout - Groupon popup - code applied - Bucks earned - back to the app.</p>
+
+  <iframe src="safari-extension-prototype.html" class="proto-frame"></iframe>
+  <a href="safari-extension-prototype.html" target="_blank" class="proto-link">Click through the demo above, or open fullscreen &#8594;</a>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 5: WHY WE NEED ALL THREE                                     -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">05 - The Full Picture</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem;">Safari Extension + Cashback/Bucks + Coupons in the App</h3>
+  <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Why We Need All Three</p>
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Rather than a standalone extension with just coupons content, the real value is based on the extension + cashback/Bucks + coupons account/app integration.</p>
+
+  <div class="three-col">
+    <div class="pitch-col" style="background: rgba(45,212,191,0.04); border-color: rgba(45,212,191,0.2);">
+      <div class="section-label teal">Distribution</div>
+      <h4 style="color: var(--teal);">Safari Extension</h4>
+      <p><strong style="color: var(--text);">Reach</strong> - extends Groupon into every shopping session on mobile Safari. The distribution channel.</p>
+    </div>
+    <div class="pitch-col" style="background: rgba(74,222,128,0.04); border-color: rgba(74,222,128,0.2);">
+      <div class="section-label green">Value</div>
+      <h4 style="color: var(--green);">Cashback / Groupon Bucks</h4>
+      <p><strong style="color: var(--text);">Value creation</strong> - gives us a way of creating valuable content for the user without being reliant on codes issued by merchants. Most importantly, cashback opens the doorway to an upsell into Groupon Bucks - pulling users back to the core app.</p>
+    </div>
+    <div class="pitch-col" style="background: rgba(167,139,250,0.04); border-color: rgba(167,139,250,0.2);">
+      <div class="section-label purple">Retention</div>
+      <h4 style="color: var(--purple);">Coupons in the App</h4>
+      <p><strong style="color: var(--text);">Personalisation</strong> - integration into the account opens the way for more messaging. Allow customers to follow their favourite brands, get alerts when coupons/cashback offers are available.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 6: THE NUMBERS                                               -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">06 - The Numbers</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 1rem; margin-bottom: 1.25rem;">The Numbers</h3>
+
+  <div class="metrics-grid">
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--coral);">8-10M</span>
+      <span class="metric-lbl">App MAU</span>
+      <span class="metric-src">Tableau</span>
+    </div>
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--teal);">61%</span>
+      <span class="metric-lbl">Mobile traffic</span>
+      <span class="metric-src">BigQuery</span>
+    </div>
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--blue);">~50%</span>
+      <span class="metric-lbl">US Safari share</span>
+      <span class="metric-src">Market data</span>
+    </div>
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--green);">$9.81</span>
+      <span class="metric-lbl">Per user per year potential</span>
+      <span class="metric-src">Genie LTV model</span>
+    </div>
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--amber);">$4-16M/yr</span>
+      <span class="metric-lbl">Incremental revenue</span>
+      <span class="metric-src">Modelled</span>
+    </div>
+    <div class="metric-tile">
+      <span class="metric-num" style="color: var(--purple);">$6/user/yr</span>
+      <span class="metric-lbl">Genie proof: actual from 981 installs</span>
+      <span class="metric-src">CJ actuals</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 1.25rem; padding: 1rem 1.25rem; background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.15); border-radius: 10px;">
+    <p style="font-size: 0.85rem; color: var(--text-muted);"><strong style="color: var(--coral);">Unknowns:</strong> App Store approval for Safari extension bundling (2-week iOS spike to validate)</p>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 7: THE COUPONS OPPORTUNITY (SECONDARY)                       -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">07 - Supporting</span>
+  <div class="section-label purple">Secondary</div>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">Supporting: The Coupons Space</h3>
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Our organic coupons traffic is declining (30M sessions, -17% YoY). But these initiatives support and feed the Safari extension strategy:</p>
+
+  <div class="three-col">
+    <div class="solution-card purple-left">
+      <h4>User Registration</h4>
+      <p>Convert anonymous visitors via rewards. <strong>$3.83/registration.</strong> Every registered user becomes a Safari extension candidate.</p>
+    </div>
+    <div class="solution-card teal-left">
+      <h4>Genie Rewards</h4>
+      <p>Scale the proven desktop extension (34 MD investment, 26-59x growth). <strong>Proves the model Safari inherits.</strong></p>
+    </div>
+    <div class="solution-card amber-left">
+      <h4>Cashback</h4>
+      <p>Already in planning. Builds on Bucks infrastructure shared with Safari.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 8: WHAT WE'RE DOING + WHAT WE NEED                          -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">08 - Status & Asks</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 1rem; margin-bottom: 1.25rem;">What We're Doing + What We Need</h3>
+
+  <div class="two-col">
+    <div style="padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--green);">
+      <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--green); margin-bottom: 0.75rem;">Already executing</h4>
+      <ul style="padding-left: 1.1rem;">
+        <li style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong style="color: var(--text);">Genie rewards</strong> (34 MD) - scaling proven desktop model 26-59x</li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong style="color: var(--text);">Registration A/B test</strong> - on non-monetized pages, zero risk</li>
+        <li style="font-size: 0.85rem; color: var(--text-muted);"><strong style="color: var(--text);">Cashback planning</strong> - building on Bucks infrastructure</li>
+      </ul>
+    </div>
+    <div style="padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--coral);">
+      <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--coral); margin-bottom: 0.75rem;">What we need</h4>
+      <ul style="padding-left: 1.1rem;">
+        <li style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;"><strong style="color: var(--text);">2-week iOS spike</strong> - validate Safari extension feasibility</li>
+        <li style="font-size: 0.85rem; color: var(--text-muted);"><strong style="color: var(--text);">Viktor alignment</strong> - complementary scope, not competing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top: 1.25rem;">
+    <p style="color: var(--text); font-weight: 600;">The one decision point is the iOS spike.</p>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CARD 9: SUPPORTING MATERIALS                                      -->
+<!-- ================================================================ -->
+<div class="deck-card">
+  <span class="card-number">09 - References</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 1rem; margin-bottom: 1.25rem;">Supporting Materials</h3>
+
+  <div class="links-grid">
+    <a href="safari-extension-prototype.html" class="link-card">
+      <div class="link-title">Interactive Prototype</div>
+      <div class="link-desc">Click-through Safari extension demo - coupon auto-apply and Bucks earning flow</div>
+    </a>
+    <a href="competitor-research-2026-04-08.html" class="link-card">
+      <div class="link-title">Competitor Research</div>
+      <div class="link-desc">Honey, Rakuten, Capital One Shopping, Coupert - market positioning and features</div>
+    </a>
+    <a href="ecosystem-recommendation-2026-04-08.html" class="link-card">
+      <div class="link-title">Full Data Analysis (v1)</div>
+      <div class="link-desc">Complete value ladder, funnel math, and revenue projections with BQ-verified numbers</div>
+    </a>
+    <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" class="link-card" target="_blank">
+      <div class="link-title">Genie LTV Model</div>
+      <div class="link-desc">3-scenario lifetime value model - $6 to $9.81 per user per year, peer-reviewed</div>
+    </a>
+  </div>
+</div>
+
+<!-- === FOOTER === -->
+<div class="footer">
+  <p>Prepared by Martin Gregor - April 2026 - Coupons & Ecosystem Team</p>
+  <div class="theme-switcher">
+    <button class="theme-btn active" onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" onclick="setTheme('dark')">Dark</button>
+  </div>
+</div>
+
+<script>
+  function setTheme(theme) {
+    var cl = document.documentElement.classList;
+    cl.remove('light', 'dark');
+    cl.add(theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().trim() === theme);
+    });
+  }
+
+  function setFraming(framing) {
+    var body = document.body;
+    if (framing === 'ceo') {
+      body.classList.add('ceo-framing');
+    } else {
+      body.classList.remove('ceo-framing');
+    }
+    document.querySelectorAll('.framing-btn').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>

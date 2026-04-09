@@ -266,24 +266,186 @@
   .hooks-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
+    gap: 1.25rem;
   }
-  @media (max-width: 900px) { .hooks-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 500px) { .hooks-grid { grid-template-columns: 1fr; } }
-  .hook-card {
-    background: var(--surface-hover);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
+  @media (max-width: 700px) { .hooks-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 400px) { .hooks-grid { grid-template-columns: 1fr; } }
+  .hook-item {
+    text-align: center;
   }
-  html.light .hook-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-  .hook-card .hook-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
+  .hook-item .hook-title { font-size: 0.78rem; font-weight: 700; margin: 0.6rem 0 0.25rem; color: var(--text); }
+  .hook-item .hook-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; margin-top: 0.3rem; }
+  .hook-item .effort-pill { margin-top: 0.2rem; }
+
+  /* === MINI PHONE === */
+  .mini-phone {
+    width: 140px;
+    margin: 0 auto;
+    background: #1a1a2e;
+    border-radius: 18px;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
-  .hook-card h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.35rem; }
-  .hook-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+  html.light .mini-phone { background: #333; }
+  .mini-screen {
+    background: #fff;
+    border-radius: 14px;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    font-family: -apple-system, sans-serif;
+    color: #1d1d1f;
+    font-size: 9px;
+    line-height: 1.3;
+    padding: 20px 8px 8px;
+  }
+  .mini-notch {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 10px;
+    background: #1a1a2e;
+    border-radius: 10px;
+  }
+  html.light .mini-notch { background: #333; }
+  .mini-url-bar {
+    background: #f2f2f7;
+    border-radius: 6px;
+    padding: 3px 6px;
+    font-size: 7.5px;
+    color: #8e8e93;
+    margin-bottom: 6px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .mini-toast {
+    background: #34c759;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin-top: 6px;
+    text-align: center;
+  }
+  .mini-notif {
+    background: #f2f2f7;
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .mini-notif-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background: #53b83a;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .mini-notif-text { flex: 1; font-size: 8px; line-height: 1.35; }
+  .mini-notif-title { font-weight: 700; margin-bottom: 1px; }
+  .mini-alert-box {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 6px;
+    font-size: 8px;
+    text-align: center;
+  }
+  .mini-deal-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border: 1px solid #e5e5ea;
+  }
+  .mini-deal-title { font-weight: 600; font-size: 8px; }
+  .mini-deal-price { font-weight: 700; color: #53b83a; font-size: 9px; }
+  .mini-deal-old { text-decoration: line-through; color: #8e8e93; font-size: 7.5px; margin-left: 3px; }
+  .mini-urgent-tag {
+    display: inline-block;
+    background: #ff3b30;
+    color: #fff;
+    font-size: 6.5px;
+    font-weight: 700;
+    padding: 1.5px 4px;
+    border-radius: 3px;
+    margin-bottom: 3px;
+  }
+  .mini-app-header {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1d1d1f;
+  }
+  .mini-bucks-amount {
+    font-size: 20px;
+    font-weight: 800;
+    color: #d48a00;
+    text-align: center;
+    margin: 12px 0 6px;
+  }
+  .mini-progress-bar {
+    background: #e5e5ea;
+    border-radius: 4px;
+    height: 6px;
+    margin: 6px 0;
+    overflow: hidden;
+  }
+  .mini-progress-fill {
+    background: #d48a00;
+    height: 100%;
+    border-radius: 4px;
+    width: 74%;
+  }
+  .mini-btn {
+    background: #53b83a;
+    color: #fff;
+    border-radius: 8px;
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 8.5px;
+    margin-top: 6px;
+  }
+  .mini-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1d1d1f;
+  }
+  .mini-notif-banner {
+    background: #f2f2f7;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 8px;
+  }
+  .mini-amber-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background: #d48a00;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 700;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
 
   /* === MATH BOX === */
   .math-row {
@@ -437,7 +599,7 @@
     .deck-card .card-number { top: 0.75rem; left: 1rem; }
     .framing-toggle { top: 0.75rem; right: 1rem; }
     .proto-frame { height: 500px; }
-    .hooks-grid { grid-template-columns: 1fr; }
+    .hooks-grid { grid-template-columns: repeat(2, 1fr); }
     .comparison-row { grid-template-columns: 1fr; }
     .ceo-metric-row { grid-template-columns: repeat(2, 1fr); }
     .links-grid { grid-template-columns: 1fr; }
@@ -620,60 +782,166 @@
 
   <div class="hooks-grid">
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128269;</span>
-      <h5>Coupon Auto-Apply</h5>
-      <p>Codes surface at checkout automatically. No searching, no copying.</p>
+    <!-- 1. Coupon Auto-Apply -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div class="mini-url-bar">nike.com/checkout</div>
+        <div style="font-size:8px; color:#8e8e93; margin:4px 0;">Order Summary</div>
+        <div style="display:flex; justify-content:space-between; font-size:8px; padding:3px 0; border-bottom:1px solid #e5e5ea;"><span>Subtotal</span><span>$130.00</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:8px; padding:3px 0; border-bottom:1px solid #e5e5ea; color:#34c759;"><span>Discount</span><span>-$19.50</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:9px; font-weight:700; padding:4px 0;"><span>Total</span><span>$110.50</span></div>
+        <div class="mini-toast">NIKE15 applied! Saved $19.50</div>
+        <div style="font-size:6.5px; color:#8e8e93; text-align:center; margin-top:4px;">Applied by Groupon Genie</div>
+      </div></div>
+      <div class="hook-title">Coupon Auto-Apply</div>
       <span class="effort-pill live">Live via Genie</span>
+      <div class="hook-desc">Codes surface at checkout automatically</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128176;</span>
-      <h5>Cashback in Bucks</h5>
-      <p>Earn % back on purchases, redeemable on deals inside the app.</p>
+    <!-- 2. Cashback in Bucks -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div style="font-size:8px; color:#8e8e93; text-align:center; margin-bottom:10px;">Purchase complete</div>
+        <div style="text-align:center; font-size:24px; margin:8px 0;">&#10003;</div>
+        <div style="text-align:center; font-size:9px; font-weight:600; margin-bottom:10px;">Order confirmed</div>
+        <div class="mini-notif-banner">
+          <div style="text-align:center;">
+            <span class="mini-amber-icon">B</span>
+            <div style="font-size:9px; font-weight:700; margin-top:4px; color:#d48a00;">+$2.40 Groupon Bucks earned</div>
+            <div style="font-size:7px; color:#8e8e93; margin-top:2px;">Balance: $14.60</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="hook-title">Cashback in Bucks</div>
       <span class="effort-pill medium">Medium effort</span>
+      <div class="hook-desc">Earn % back, redeemable on deals</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128276;</span>
-      <h5>Brand Following + Alerts</h5>
-      <p>"New Nike code dropped - 20% off" push notification to your phone.</p>
+    <!-- 3. Brand Following -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div style="font-size:7px; color:#8e8e93; text-align:center; margin-bottom:6px;">Lock Screen</div>
+        <div style="text-align:center; font-size:22px; margin:12px 0;">9:41</div>
+        <div style="text-align:center; font-size:7px; color:#8e8e93; margin-bottom:14px;">Monday, April 7</div>
+        <div class="mini-notif">
+          <div class="mini-notif-icon">G</div>
+          <div class="mini-notif-text">
+            <div class="mini-notif-title">Groupon</div>
+            <div>Nike - New code: 20% off sitewide</div>
+            <div style="color:#8e8e93; margin-top:2px;">Tap to save</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="hook-title">Brand Following</div>
       <span class="effort-pill low">Low effort</span>
+      <div class="hook-desc">Push alerts for followed brands</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128200;</span>
-      <h5>Price Watchdog</h5>
-      <p>Track prices, alert at lowest: "Best time to shop Amazon."</p>
+    <!-- 4. Price Watchdog -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div style="font-size:7px; color:#8e8e93; text-align:center; margin-bottom:6px;">Lock Screen</div>
+        <div style="text-align:center; font-size:22px; margin:12px 0;">9:41</div>
+        <div style="text-align:center; font-size:7px; color:#8e8e93; margin-bottom:14px;">Monday, April 7</div>
+        <div class="mini-notif">
+          <div class="mini-notif-icon">G</div>
+          <div class="mini-notif-text">
+            <div class="mini-notif-title">Price Alert</div>
+            <div>Amazon Fire TV Stick</div>
+            <div style="font-weight:700; color:#34c759;">Lowest price in 90 days</div>
+            <div><span style="font-weight:700;">$24.99</span> <span style="text-decoration:line-through; color:#8e8e93;">$49.99</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="hook-title">Price Watchdog</div>
       <span class="effort-pill medium">Medium effort</span>
+      <div class="hook-desc">Alerts when tracked prices drop</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128065;</span>
-      <h5>Watch This Deal</h5>
-      <p>Save deals or categories, get notified when they restart or drop in price.</p>
+    <!-- 5. Watch This Deal -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div style="font-size:7px; color:#8e8e93; text-align:center; margin-bottom:6px;">Lock Screen</div>
+        <div style="text-align:center; font-size:22px; margin:12px 0;">9:41</div>
+        <div style="text-align:center; font-size:7px; color:#8e8e93; margin-bottom:14px;">Monday, April 7</div>
+        <div class="mini-notif">
+          <div class="mini-notif-icon">G</div>
+          <div class="mini-notif-text">
+            <div class="mini-notif-title">Deal Alert</div>
+            <div>Zen Spa deal is back!</div>
+            <div>60 min massage <span style="font-weight:700;">$69</span> <span style="text-decoration:line-through; color:#8e8e93;">$110</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="hook-title">Watch This Deal</div>
       <span class="effort-pill medium">Medium effort</span>
+      <div class="hook-desc">Notified when saved deals return</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#127775;</span>
-      <h5>Weekend Content</h5>
-      <p>"Top 5 things to do in Chicago this weekend" curated from live deals.</p>
+    <!-- 6. Weekend Content -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div class="mini-section-title">This Weekend in Chicago</div>
+        <div class="mini-deal-card">
+          <div class="mini-deal-title">Italian Dinner for 2</div>
+          <div style="font-size:7px; color:#8e8e93;">Trattoria No. 10</div>
+          <div><span class="mini-deal-price">$39</span><span class="mini-deal-old">$78</span></div>
+        </div>
+        <div class="mini-deal-card">
+          <div class="mini-deal-title">Escape Room - Team of 4</div>
+          <div style="font-size:7px; color:#8e8e93;">Fox in a Box</div>
+          <div><span class="mini-deal-price">$28</span><span class="mini-deal-old">$56</span></div>
+        </div>
+        <div style="text-align:center; font-size:7px; color:#007aff; margin-top:6px; font-weight:600;">See all 12 weekend picks</div>
+      </div></div>
+      <div class="hook-title">Weekend Content</div>
       <span class="effort-pill low">Low effort</span>
+      <div class="hook-desc">Curated local deals every weekend</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#9889;</span>
-      <h5>Last-Minute Local Deals</h5>
-      <p>"3 spa slots left today, 60% off" - fills merchant dead time.</p>
+    <!-- 7. Last-Minute Deals -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div class="mini-section-title">Available Now Near You</div>
+        <div class="mini-deal-card">
+          <span class="mini-urgent-tag">3 slots left today</span>
+          <div class="mini-deal-title">Deep Tissue Massage - 60 min</div>
+          <div style="font-size:7px; color:#8e8e93;">Serenity Spa - 0.4 mi</div>
+          <div><span class="mini-deal-price">$45</span><span class="mini-deal-old">$110</span><span style="font-size:7px; color:#ff3b30; font-weight:600; margin-left:4px;">-59%</span></div>
+        </div>
+        <div class="mini-deal-card">
+          <span class="mini-urgent-tag">Ends 5pm</span>
+          <div class="mini-deal-title">Lunch Prix Fixe</div>
+          <div style="font-size:7px; color:#8e8e93;">Bistro Verde - 0.2 mi</div>
+          <div><span class="mini-deal-price">$22</span><span class="mini-deal-old">$45</span></div>
+        </div>
+      </div></div>
+      <div class="hook-title">Last-Minute Deals</div>
       <span class="effort-pill medium">Medium effort</span>
+      <div class="hook-desc">Fills merchant dead time nearby</div>
     </div>
 
-    <div class="hook-card">
-      <span class="hook-icon">&#128179;</span>
-      <h5>Bucks Balance + Expiry</h5>
-      <p>Visible growing balance with 90-day expiry drives urgency to spend.</p>
+    <!-- 8. Bucks Balance -->
+    <div class="hook-item">
+      <div class="mini-phone"><div class="mini-screen">
+        <div class="mini-notch"></div>
+        <div class="mini-app-header">Groupon Bucks</div>
+        <div class="mini-bucks-amount">$14.60</div>
+        <div style="font-size:7.5px; text-align:center; color:#8e8e93;">Groupon Bucks</div>
+        <div class="mini-progress-bar"><div class="mini-progress-fill"></div></div>
+        <div style="font-size:7px; text-align:center; color:#d48a00; font-weight:600;">Expires in 67 days</div>
+        <div class="mini-btn">Spend on deals</div>
+      </div></div>
+      <div class="hook-title">Bucks Balance</div>
       <span class="effort-pill foundation">Foundation</span>
+      <div class="hook-desc">Visible balance drives urgency to spend</div>
     </div>
 
   </div>
