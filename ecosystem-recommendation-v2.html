@@ -54,6 +54,8 @@
   html.light .comparison-box { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   html.light .brief-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   html.light .layer-card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  html.light .mini-phone { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  html.light .proto-frame { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
 
   .theme-switcher {
     display: flex;
@@ -471,337 +473,7 @@
     font-size: 0.75rem;
   }
 
-  /* === IPHONE MOCKUP === */
-  .iphone-container {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-  }
-  .iphone-frame {
-    width: 320px;
-    min-height: 620px;
-    background: #000;
-    border-radius: 44px;
-    padding: 14px;
-    position: relative;
-    box-shadow: 0 12px 60px rgba(0,0,0,0.35), inset 0 0 0 2px #333;
-  }
-  .iphone-screen {
-    width: 100%;
-    height: 100%;
-    min-height: 592px;
-    background: #fff;
-    border-radius: 32px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-  .iphone-notch {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 28px;
-    background: #000;
-    border-radius: 0 0 18px 18px;
-    z-index: 10;
-  }
-  .iphone-status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 20px 4px;
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: #1d1d1f;
-    background: #f8f8f8;
-    position: relative;
-    z-index: 5;
-  }
-  .iphone-status-bar .time { margin-left: 4px; }
-  .iphone-status-bar .icons { display: flex; gap: 4px; font-size: 0.55rem; }
-  .safari-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: #f0f0f2;
-    border-bottom: 1px solid #e0e0e2;
-  }
-  .safari-bar .safari-back { font-size: 0.7rem; color: #007aff; }
-  .safari-bar .safari-url {
-    flex: 1;
-    background: #fff;
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.6rem;
-    color: #6e6e73;
-    text-align: center;
-    border: 1px solid #e0e0e2;
-  }
-  .safari-bar .safari-share { font-size: 0.65rem; color: #007aff; }
-  .nike-page {
-    flex: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-  }
-  .nike-page .nike-logo {
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    color: #111;
-    margin-bottom: 12px;
-  }
-  .nike-page .checkout-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .nike-item {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 10px;
-    background: #f8f8f8;
-    border-radius: 8px;
-    margin-bottom: 8px;
-  }
-  .nike-item-img {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #e8e8e8, #d0d0d0);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.5rem;
-    color: #999;
-    font-weight: 700;
-  }
-  .nike-item-info { flex: 1; }
-  .nike-item-name { font-size: 0.65rem; font-weight: 600; color: #111; }
-  .nike-item-size { font-size: 0.55rem; color: #6e6e73; }
-  .nike-item-price { font-size: 0.7rem; font-weight: 700; color: #111; }
-  .nike-promo-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .nike-promo-input {
-    flex: 1;
-    border: 1px solid #d8d8dc;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 0.6rem;
-    color: #aeaeb2;
-  }
-  .nike-promo-btn {
-    background: #e0e0e2;
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: #6e6e73;
-  }
-  .nike-total-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-top: 1px solid #e8e8e8;
-    margin-bottom: 4px;
-  }
-  .nike-total-label { font-size: 0.65rem; color: #6e6e73; }
-  .nike-total-value { font-size: 0.75rem; font-weight: 700; color: #111; }
-  .groupon-popup {
-    background: linear-gradient(135deg, #28a745, #1a9e8f);
-    border-radius: 14px;
-    padding: 14px;
-    margin-top: auto;
-    position: relative;
-    overflow: hidden;
-  }
-  .groupon-popup::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 80px;
-    height: 80px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-  }
-  .groupon-popup-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-  .groupon-popup-logo {
-    width: 26px;
-    height: 26px;
-    background: #fff;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    font-weight: 900;
-    color: #28a745;
-    flex-shrink: 0;
-  }
-  .groupon-popup-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-  }
-  .groupon-popup-sub {
-    font-size: 0.55rem;
-    color: rgba(255,255,255,0.8);
-  }
-  .groupon-code-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.15);
-    border-radius: 8px;
-    padding: 8px 10px;
-    margin-bottom: 6px;
-  }
-  .groupon-code-text {
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: #fff;
-  }
-  .groupon-code-desc {
-    font-size: 0.5rem;
-    color: rgba(255,255,255,0.7);
-  }
-  .groupon-apply-btn {
-    background: #fff;
-    color: #28a745;
-    border-radius: 6px;
-    padding: 5px 12px;
-    font-size: 0.6rem;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .groupon-bucks-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    background: rgba(251,191,36,0.2);
-    border-radius: 8px;
-    margin-top: 2px;
-  }
-  .groupon-bucks-text {
-    font-size: 0.62rem;
-    font-weight: 700;
-    color: #fbbf24;
-  }
-  .groupon-bucks-sub {
-    font-size: 0.48rem;
-    color: rgba(255,255,255,0.7);
-    margin-top: 1px;
-  }
-
-  /* Journey steps */
-  .journey-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    margin: 2rem 0 1rem;
-  }
-  @media (max-width: 700px) { .journey-steps { grid-template-columns: 1fr 1fr; } }
-  .journey-step {
-    text-align: center;
-    padding: 1rem 0.75rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    position: relative;
-  }
-  .journey-step .step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 0.7rem;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 0.5rem;
-  }
-  .journey-step .step-text {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text);
-    display: block;
-  }
-
-  /* Hook cards */
-  .hook-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin: 1rem 0;
-  }
-  @media (max-width: 700px) { .hook-grid { grid-template-columns: 1fr; } }
-  .hook-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .hook-card .hook-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    font-size: 0.6rem;
-    font-weight: 800;
-    color: #fff;
-    background: var(--teal);
-    margin-bottom: 0.5rem;
-  }
-  .hook-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .hook-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
-
-  /* Layer cards */
-  .layer-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin: 1rem 0;
-  }
-  @media (max-width: 700px) { .layer-grid { grid-template-columns: 1fr; } }
-  .layer-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    border-top: 3px solid transparent;
-  }
-  .layer-card.teal-top { border-top-color: var(--teal); }
-  .layer-card.purple-top { border-top-color: var(--purple); }
-  .layer-card.amber-top { border-top-color: var(--amber); }
-  .layer-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .layer-card li { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.25rem; }
-  .layer-card ul { padding-left: 1rem; margin: 0; }
-  .layer-card .layer-link { font-size: 0.72rem; color: var(--blue); text-decoration: none; margin-top: 0.5rem; display: inline-block; }
-  .layer-card .layer-link:hover { text-decoration: underline; }
-
-  /* Comparison boxes */
+  /* === COMPARISON BOXES === */
   .comparison-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -830,7 +502,7 @@
     font-weight: 600;
   }
 
-  /* Brief answer cards */
+  /* === BRIEF CARDS === */
   .brief-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -852,7 +524,7 @@
   .brief-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.35rem; }
   .brief-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; }
 
-  /* Next steps */
+  /* === NEXT STEPS === */
   .next-steps-list {
     list-style: none;
     padding: 0;
@@ -885,7 +557,7 @@
   }
   .next-steps-list li strong { color: var(--text); }
 
-  /* Flywheel */
+  /* === FLYWHEEL === */
   .flywheel {
     display: flex;
     flex-wrap: wrap;
@@ -911,7 +583,7 @@
   .flywheel-step.f-coral { background: rgba(255,107,107,0.12); color: var(--coral); }
   .flywheel-arrow { font-size: 1.1rem; color: var(--text-dim); }
 
-  /* Elevator pitch box */
+  /* === ELEVATOR PITCH === */
   .pitch-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -945,14 +617,367 @@
   }
   .pitch-right strong { color: var(--text); }
 
+  /* === HOOK CARDS === */
+  .hook-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  @media (max-width: 700px) { .hook-grid { grid-template-columns: 1fr; } }
+  .hook-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .hook-card .hook-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .hook-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .hook-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* === LAYER CARDS === */
+  .layer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  @media (max-width: 700px) { .layer-grid { grid-template-columns: 1fr; } }
+  .layer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid transparent;
+  }
+  .layer-card.teal-top { border-top-color: var(--teal); }
+  .layer-card.purple-top { border-top-color: var(--purple); }
+  .layer-card.amber-top { border-top-color: var(--amber); }
+  .layer-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .layer-card li { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.25rem; }
+  .layer-card ul { padding-left: 1rem; margin: 0; }
+  .layer-card .layer-link { font-size: 0.72rem; color: var(--blue); text-decoration: none; margin-top: 0.5rem; display: inline-block; }
+  .layer-card .layer-link:hover { text-decoration: underline; }
+
+  /* === PROTOTYPE IFRAME === */
+  .proto-frame {
+    width: 100%;
+    height: 750px;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    background: #111;
+  }
+  .proto-link {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .proto-link:hover { text-decoration: underline; }
+
+  /* === MINI PHONE FRAMES (Hooks) === */
+  .mini-phones-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 700px) { .mini-phones-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 450px) { .mini-phones-grid { grid-template-columns: 1fr; align-items: center; } }
+
+  .mini-phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mini-phone {
+    width: 150px;
+    height: 260px;
+    background: #000;
+    border-radius: 22px;
+    padding: 6px;
+    position: relative;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25), inset 0 0 0 1px #333;
+    flex-shrink: 0;
+  }
+  .mini-screen {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 17px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .mini-notch {
+    width: 50px;
+    height: 12px;
+    background: #000;
+    border-radius: 0 0 8px 8px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .mini-status {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 8px 2px;
+    font-size: 0.38rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    background: #f8f8f8;
+  }
+  .mini-content {
+    flex: 1;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .mini-phone-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+  }
+  .mini-phone-desc {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Mini phone screen content styles */
+  .mini-toast {
+    background: linear-gradient(135deg, #28a745, #1a9e8f);
+    border-radius: 8px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    margin-top: auto;
+  }
+  .mini-toast .toast-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
+  .mini-toast .toast-text { font-size: 0.48rem; font-weight: 700; }
+  .mini-toast .toast-sub { font-size: 0.38rem; opacity: 0.85; margin-top: 1px; }
+
+  .mini-notif {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 6px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .mini-notif-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: #28a745;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.45rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .mini-notif-text { font-size: 0.4rem; color: #333; font-weight: 600; line-height: 1.3; }
+  .mini-notif-sub { font-size: 0.35rem; color: #999; }
+
+  .mini-email {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px;
+    margin: 3px 0;
+  }
+  .mini-email-header { font-size: 0.4rem; font-weight: 700; color: #28a745; margin-bottom: 2px; }
+  .mini-email-subject { font-size: 0.42rem; font-weight: 600; color: #111; margin-bottom: 2px; }
+  .mini-email-body { font-size: 0.35rem; color: #666; line-height: 1.3; }
+
+  .mini-app-header {
+    background: #28a745;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .mini-app-logo { font-size: 0.55rem; font-weight: 900; color: #fff; }
+  .mini-app-nav { font-size: 0.32rem; color: rgba(255,255,255,0.7); margin-left: auto; }
+
+  .mini-balance {
+    text-align: center;
+    padding: 10px 6px;
+  }
+  .mini-balance-amount { font-size: 1.1rem; font-weight: 800; color: #28a745; display: block; }
+  .mini-balance-label { font-size: 0.38rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+  .mini-balance-expiry { font-size: 0.38rem; color: #d48a00; margin-top: 4px; display: block; font-weight: 600; }
+  .mini-balance-btn {
+    display: block;
+    margin: 6px auto 0;
+    background: #28a745;
+    color: #fff;
+    border-radius: 6px;
+    padding: 4px 14px;
+    font-size: 0.4rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .mini-safari-bar {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 6px;
+    background: #f0f0f2;
+    border-bottom: 1px solid #e0e0e2;
+  }
+  .mini-safari-url {
+    flex: 1;
+    background: #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 0.35rem;
+    color: #6e6e73;
+    text-align: center;
+    border: 1px solid #e0e0e2;
+  }
+
+  .mini-price-alert {
+    background: linear-gradient(135deg, #ff6b6b, #e0443a);
+    border-radius: 8px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+  }
+  .mini-price-icon { font-size: 1rem; display: block; margin-bottom: 2px; }
+  .mini-price-text { font-size: 0.45rem; font-weight: 700; }
+  .mini-price-sub { font-size: 0.36rem; opacity: 0.85; margin-top: 2px; }
+  .mini-price-tag { font-size: 0.6rem; font-weight: 800; margin-top: 3px; display: block; }
+
+  /* === COMBINED VIEW === */
+  .combined-card {
+    background: var(--surface);
+    border: 2px solid var(--amber);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1rem 0;
+  }
+  .combined-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 700px) { .combined-grid { grid-template-columns: 1fr; } }
+  .combined-problem {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .combined-problem.coral-accent { background: rgba(255,107,107,0.04); border-color: rgba(255,107,107,0.2); }
+  .combined-problem.purple-accent { background: rgba(167,139,250,0.04); border-color: rgba(167,139,250,0.2); }
+  .combined-problem .cp-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.25rem; }
+  .combined-problem .cp-number { font-size: 1.8rem; font-weight: 800; display: block; }
+  .combined-problem .cp-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+  .combined-plus {
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  .combined-total {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(251,191,36,0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .combined-total .ct-number { font-size: 1.5rem; font-weight: 800; color: var(--amber); }
+  .combined-total .ct-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+  .combined-total .ct-sub { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem; }
+
+  /* === SOLUTION CARDS === */
+  .solution-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid transparent;
+  }
+  .solution-card.purple-left { border-left-color: var(--purple); }
+  .solution-card.teal-left { border-left-color: var(--teal); }
+  .solution-card.amber-left { border-left-color: var(--amber); }
+  .solution-card h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .solution-card p, .solution-card li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+  .solution-card ul { padding-left: 1.1rem; margin-top: 0.35rem; }
+  .solution-card li { margin-bottom: 0.2rem; }
+  .solution-card strong { color: var(--text); }
+
+  /* === MATH BOX === */
+  .math-box {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin: 1.25rem 0;
+  }
+  .math-box h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+  .math-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(37,37,72,0.3);
+    font-size: 0.82rem;
+  }
+  .math-row:last-child { border-bottom: none; }
+  .math-row .math-label { color: var(--text-muted); }
+  .math-row .math-value { font-weight: 700; }
+  .math-result {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .math-result.coral-result { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); }
+  .math-result.purple-result { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); }
+  .math-result .mr-number { font-size: 1.3rem; font-weight: 800; display: block; }
+  .math-result .mr-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
+
   @media (max-width: 500px) {
     body { padding: 1.5rem 1rem 3rem; }
     .header h1 { font-size: 1.5rem; }
-    .iphone-frame { width: 280px; min-height: 540px; border-radius: 38px; padding: 12px; }
-    .iphone-screen { min-height: 516px; border-radius: 28px; }
     .links-grid { grid-template-columns: 1fr; }
     .pitch-box { padding: 1.25rem; }
     .pitch-left .pitch-number { font-size: 1.8rem; }
+    .ceo-metric-row { grid-template-columns: repeat(2, 1fr); }
+    .mini-phones-grid { grid-template-columns: repeat(2, 1fr); }
+    .combined-grid { grid-template-columns: 1fr; }
+    .proto-frame { height: 550px; }
   }
 </style>
 </head>
@@ -964,22 +989,12 @@
   <button class="framing-btn" onclick="setFraming('ceo')">CEO Framing</button>
 </div>
 
-<!-- === 1. HEADER + ELEVATOR PITCH === -->
+<!-- === HEADER === -->
 <div class="header" data-section="header">
   <div class="badge">MBR Recommendation - April 2026</div>
   <h1>Save Everywhere with Groupon</h1>
-  <div class="subtitle">A Safari extension inside the Groupon app. Users save on every shopping site. We capture value from every session.</div>
+  <div class="subtitle">Drive more users to the core Groupon mobile app. Monetise them better.</div>
   <div class="meta">Martin Gregor - Coupons &amp; Ecosystem - For Adam Slaby &amp; Dusan</div>
-</div>
-
-<div class="pitch-box">
-  <div class="pitch-left">
-    <span class="pitch-number">$4-16M/yr</span>
-    <div class="pitch-sub">incremental revenue from 8-10M app users we already own</div>
-  </div>
-  <div class="pitch-right">
-    <strong>The idea:</strong> bundle a Safari extension inside the Groupon app. When users shop on Nike, Amazon, Target - Groupon shows codes and cashback. Bucks earned everywhere, redeemed on local deals in the app.
-  </div>
 </div>
 
 <!-- CEO FRAMING: Executive Summary (hidden by default) -->
@@ -1029,328 +1044,483 @@
 
 <div id="content-flow">
 
-<!-- === 2. IPHONE MOCKUP === -->
-<div class="section" style="border-top: none; padding-top: 0;" id="sec-mockup">
-  <div class="section-label teal">The Product</div>
-
-  <div class="iphone-container">
-    <div class="iphone-frame">
-      <div class="iphone-screen">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
-          <span class="time">9:41</span>
-          <span class="icons">&#9679;&#9679;&#9679; WiFi &#128267;</span>
-        </div>
-        <div class="safari-bar">
-          <span class="safari-back">&#10094;</span>
-          <span class="safari-url">nike.com/checkout</span>
-          <span class="safari-share">&#8599;</span>
-        </div>
-        <div class="nike-page">
-          <div class="nike-logo">NIKE</div>
-          <div class="checkout-title">Checkout</div>
-          <div class="nike-item">
-            <div class="nike-item-img">SHOE</div>
-            <div class="nike-item-info">
-              <div class="nike-item-name">Air Max 90</div>
-              <div class="nike-item-size">Size 10 - White/Black</div>
-            </div>
-            <div class="nike-item-price">$129.99</div>
-          </div>
-          <div class="nike-promo-row">
-            <div class="nike-promo-input">Enter promo code</div>
-            <div class="nike-promo-btn">Apply</div>
-          </div>
-          <div class="nike-total-row">
-            <span class="nike-total-label">Total</span>
-            <span class="nike-total-value">$129.99</span>
-          </div>
-
-          <!-- Groupon popup overlay -->
-          <div class="groupon-popup">
-            <div class="groupon-popup-header">
-              <div class="groupon-popup-logo">G</div>
-              <div>
-                <div class="groupon-popup-title">Save on Nike</div>
-                <div class="groupon-popup-sub">Groupon found savings for you</div>
-              </div>
-            </div>
-            <div class="groupon-code-row">
-              <div>
-                <div class="groupon-code-text">NIKE15 - 15% off sitewide</div>
-                <div class="groupon-code-desc">Verified today - 1,243 used</div>
-              </div>
-              <div class="groupon-apply-btn">Apply Code</div>
-            </div>
-            <div class="groupon-bucks-row">
-              <div>
-                <div class="groupon-bucks-text">Earn $2.40 Groupon Bucks</div>
-                <div class="groupon-bucks-sub">Redeemable on local deals in the Groupon app</div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- === ELEVATOR PITCH === -->
+<div class="section" style="border-top: none; padding-top: 0;" id="sec-pitch">
+  <div class="card" style="border: 2px solid rgba(251,191,36,0.3); border-radius: 16px; padding: 2rem;">
+    <p style="font-size: 0.92rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem;"><strong>The core problem:</strong> Groupon app users open the app 1.5x per month and buy about 1x per year. 66% buy once and never return. We need a reason to keep them engaged beyond the moment they want a deal.</p>
+    <p style="font-size: 0.92rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem;"><strong>The solution:</strong> embed a Safari extension inside the Groupon app. Users save on every shopping site they visit. Groupon Bucks earned everywhere pull them back into the app. Every app install becomes a savings companion.</p>
+    <div class="pitch-box" style="margin: 0; border: none; padding: 1.5rem; background: rgba(251,191,36,0.04); border-radius: 12px;">
+      <div class="pitch-left">
+        <span class="pitch-number">$4-16M/yr</span>
+        <div class="pitch-sub">incremental revenue</div>
       </div>
-    </div>
-  </div>
-
-  <!-- Journey steps -->
-  <div class="journey-steps">
-    <div class="journey-step">
-      <div class="step-num" style="background: var(--green);">1</div>
-      <span class="step-text">User has Groupon app</span>
-    </div>
-    <div class="journey-step">
-      <div class="step-num" style="background: var(--blue);">2</div>
-      <span class="step-text">Shops on Nike in Safari</span>
-    </div>
-    <div class="journey-step">
-      <div class="step-num" style="background: var(--coral);">3</div>
-      <span class="step-text">Groupon popup shows codes + cashback</span>
-    </div>
-    <div class="journey-step">
-      <div class="step-num" style="background: var(--amber);">4</div>
-      <span class="step-text">Earns Bucks - redeems in app on local deals</span>
+      <div class="pitch-right">
+        From <strong>8-10M app users we already own.</strong> No new user acquisition required.
+      </div>
     </div>
   </div>
 </div>
 
-<!-- === 3. THE PROBLEM (compressed) === -->
-<div class="section" id="sec-problem">
-  <div class="section-label coral">Why Now</div>
-  <div class="card">
-    <h3>The Revenue Problem</h3>
+<!-- === PROBLEM 1: APP RETENTION === -->
+<div class="section" id="sec-problem1">
+  <div class="section-label coral">Primary Goal</div>
+  <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem;">Drive more users to the core Groupon mobile app</h3>
+
+  <div class="stat-row" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="stat">
+      <span class="number" style="color: var(--coral);">~1.5x/mo</span>
+      <span class="label">App opens per user <span class="est">(Tableau)</span></span>
+    </div>
+    <div class="stat">
+      <span class="number" style="color: var(--coral);">~5%</span>
+      <span class="label">DAU/MAU stickiness</span>
+    </div>
+    <div class="stat">
+      <span class="number" style="color: var(--coral);">66%</span>
+      <span class="label">Buy once and stop <span class="est">(Viktor)</span></span>
+    </div>
+  </div>
+
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin: 1rem 0; line-height: 1.7;">Users open the app when they want a deal, buy, and leave. There is no reason to come back until the next purchase intent. The Safari extension changes this - Groupon is present in every shopping session, earning Bucks that pull users back.</p>
+
+  <!-- Interactive Demo -->
+  <div class="card" style="padding: 1.5rem;">
+    <div class="section-label teal">The Product - Interactive Demo</div>
+    <iframe src="safari-extension-prototype.html" class="proto-frame"></iframe>
+    <a href="safari-extension-prototype.html" target="_blank" class="proto-link">Click through the demo above, or open fullscreen &rarr;</a>
+  </div>
+
+  <!-- Groupon Bucks -->
+  <div class="card" style="margin-top: 1.5rem;">
+    <div class="section-label green">Groupon Bucks - The Connective Tissue</div>
+    <h3>Every interaction connects through one mechanism - a visible, growing balance.</h3>
+
+    <!-- Flywheel -->
+    <div class="flywheel">
+      <span class="flywheel-step f-teal">Shop on Nike</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step f-green">Groupon overlay</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step f-amber">Earn Bucks</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step f-coral">Open app to redeem</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step f-purple">Book local deal</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step f-green">Earn more Bucks</span>
+    </div>
+
+    <!-- 6 Hooks as mini phones -->
+    <h4 style="font-size: 1rem; font-weight: 700; margin: 1.5rem 0 0.5rem; text-align: center;">6 Hooks That Keep Users Coming Back</h4>
+
+    <div class="mini-phones-grid">
+
+      <!-- Hook 1: Coupon Auto-Apply -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-safari-bar">
+              <span style="font-size: 0.32rem; color: #007aff;">&lt;</span>
+              <div class="mini-safari-url">nike.com/checkout</div>
+            </div>
+            <div class="mini-content" style="background: #fff; padding: 8px;">
+              <div style="font-size: 0.5rem; font-weight: 800; color: #111; margin-bottom: 6px;">NIKE</div>
+              <div style="background: #f5f5f5; border-radius: 4px; padding: 4px; margin-bottom: 4px;">
+                <div style="font-size: 0.35rem; color: #666;">Subtotal</div>
+                <div style="font-size: 0.48rem; font-weight: 700; color: #111;">$129.99</div>
+              </div>
+              <div style="background: #f5f5f5; border-radius: 4px; padding: 4px; margin-bottom: 6px;">
+                <div style="font-size: 0.35rem; color: #28a745; font-weight: 600;">Discount: -$19.50</div>
+                <div style="font-size: 0.48rem; font-weight: 700; color: #111;">$110.49</div>
+              </div>
+              <div class="mini-toast">
+                <span class="toast-icon">&#10003;</span>
+                <span class="toast-text">Code applied! Saved $19.50</span>
+                <div class="toast-sub">NIKE15 - verified today</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Coupon Auto-Apply</div>
+        <div class="mini-phone-desc">Best codes found and applied at checkout</div>
+      </div>
+
+      <!-- Hook 2: Cashback in Bucks -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-content" style="background: #f8f8f8; padding: 8px;">
+              <div style="height: 40px;"></div>
+              <div class="mini-notif" style="background: #fff; border-radius: 12px; padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <div class="mini-notif-icon" style="width: 24px; height: 24px; border-radius: 6px;">G</div>
+                <div>
+                  <div style="font-size: 0.32rem; color: #999; margin-bottom: 1px;">GROUPON - now</div>
+                  <div class="mini-notif-text" style="font-size: 0.42rem;">+$2.40 Bucks earned</div>
+                  <div class="mini-notif-sub" style="font-size: 0.35rem;">Nike purchase - redeemable on deals</div>
+                </div>
+              </div>
+              <div style="margin-top: auto; text-align: center; padding: 10px 0;">
+                <div style="font-size: 0.55rem; font-weight: 800; color: #28a745;">Your Bucks: $14.60</div>
+                <div style="font-size: 0.35rem; color: #999; margin-top: 2px;">Tap to view balance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Cashback in Bucks</div>
+        <div class="mini-phone-desc">Earn on every purchase, redeem in app</div>
+      </div>
+
+      <!-- Hook 3: Brand Following -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-content" style="background: #f8f8f8; padding: 8px;">
+              <div style="font-size: 0.4rem; color: #999; text-align: center; margin-bottom: 6px;">Notifications</div>
+              <div class="mini-notif" style="background: #fff; border-radius: 10px; padding: 7px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 5px;">
+                <div class="mini-notif-icon" style="width: 22px; height: 22px; border-radius: 5px; background: #111;">
+                  <span style="font-size: 0.35rem; font-weight: 800;">N</span>
+                </div>
+                <div>
+                  <div class="mini-notif-text" style="font-size: 0.4rem;">New Nike code dropped</div>
+                  <div class="mini-notif-sub" style="font-size: 0.33rem;">20% off - ends Friday</div>
+                </div>
+              </div>
+              <div class="mini-notif" style="background: #fff; border-radius: 10px; padding: 7px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 5px;">
+                <div class="mini-notif-icon" style="width: 22px; height: 22px; border-radius: 5px; background: #cc0000;">
+                  <span style="font-size: 0.35rem; font-weight: 800;">T</span>
+                </div>
+                <div>
+                  <div class="mini-notif-text" style="font-size: 0.4rem;">Target: 15% off home</div>
+                  <div class="mini-notif-sub" style="font-size: 0.33rem;">Code HOMESAVE - 2 days left</div>
+                </div>
+              </div>
+              <div class="mini-notif" style="background: #fff; border-radius: 10px; padding: 7px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);">
+                <div class="mini-notif-icon" style="width: 22px; height: 22px; border-radius: 5px; background: #ff9900;">
+                  <span style="font-size: 0.35rem; font-weight: 800;">A</span>
+                </div>
+                <div>
+                  <div class="mini-notif-text" style="font-size: 0.4rem;">Amazon: $10 off $50+</div>
+                  <div class="mini-notif-sub" style="font-size: 0.33rem;">Prime members only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Brand Following</div>
+        <div class="mini-phone-desc">Push alerts for stores you follow</div>
+      </div>
+
+      <!-- Hook 4: Price Watchdog -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-content" style="background: #f8f8f8; padding: 8px;">
+              <div style="height: 20px;"></div>
+              <div class="mini-notif" style="background: #fff; border-radius: 12px; padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 6px;">
+                <div class="mini-notif-icon" style="width: 24px; height: 24px; border-radius: 6px; background: #e0443a;">!</div>
+                <div>
+                  <div style="font-size: 0.32rem; color: #999; margin-bottom: 1px;">PRICE ALERT</div>
+                  <div class="mini-notif-text" style="font-size: 0.42rem;">Amazon Fire TV Stick</div>
+                  <div class="mini-notif-sub" style="font-size: 0.35rem;">Lowest price in 90 days</div>
+                </div>
+              </div>
+              <div style="text-align: center; margin-top: 8px;">
+                <div style="font-size: 0.7rem; font-weight: 800; color: #e0443a;">$24.99</div>
+                <div style="font-size: 0.35rem; color: #999; text-decoration: line-through;">$39.99</div>
+                <div style="font-size: 0.35rem; color: #28a745; font-weight: 600; margin-top: 2px;">Save 38% + earn Bucks</div>
+              </div>
+              <div style="margin-top: auto; background: #28a745; border-radius: 6px; padding: 5px; text-align: center;">
+                <span style="font-size: 0.4rem; color: #fff; font-weight: 700;">Shop Now</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Price Watchdog</div>
+        <div class="mini-phone-desc">Alerts when tracked items hit lowest price</div>
+      </div>
+
+      <!-- Hook 5: Weekly Digest -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-content" style="background: #fff; padding: 6px;">
+              <div class="mini-email" style="border: none; padding: 0;">
+                <div style="background: #28a745; border-radius: 6px 6px 0 0; padding: 6px 8px;">
+                  <div style="font-size: 0.4rem; font-weight: 800; color: #fff;">GROUPON</div>
+                  <div style="font-size: 0.45rem; font-weight: 700; color: #fff; margin-top: 2px;">Your Weekly Savings</div>
+                </div>
+                <div style="padding: 6px 8px; background: #f8f8f8; border-radius: 0 0 6px 6px;">
+                  <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #eee;">
+                    <span style="font-size: 0.38rem; color: #666;">Bucks earned</span>
+                    <span style="font-size: 0.42rem; font-weight: 700; color: #28a745;">$8.40</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #eee;">
+                    <span style="font-size: 0.38rem; color: #666;">Codes used</span>
+                    <span style="font-size: 0.42rem; font-weight: 700; color: #111;">3</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #eee;">
+                    <span style="font-size: 0.38rem; color: #666;">Total saved</span>
+                    <span style="font-size: 0.42rem; font-weight: 700; color: #111;">$47.20</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                    <span style="font-size: 0.38rem; color: #666;">Balance</span>
+                    <span style="font-size: 0.42rem; font-weight: 700; color: #d48a00;">$14.60</span>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: auto; background: #28a745; border-radius: 6px; padding: 4px; text-align: center;">
+                <span style="font-size: 0.38rem; color: #fff; font-weight: 700;">Spend your Bucks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Weekly Digest</div>
+        <div class="mini-phone-desc">Savings summary builds habit loop</div>
+      </div>
+
+      <!-- Hook 6: Bucks Balance -->
+      <div class="mini-phone-wrapper">
+        <div class="mini-phone">
+          <div class="mini-screen">
+            <div class="mini-notch"></div>
+            <div class="mini-status">
+              <span>9:41</span>
+              <span>LTE</span>
+            </div>
+            <div class="mini-app-header">
+              <span class="mini-app-logo">G</span>
+              <span style="font-size: 0.42rem; font-weight: 600; color: #fff;">Groupon</span>
+              <span class="mini-app-nav">My Bucks</span>
+            </div>
+            <div class="mini-content" style="background: #fff;">
+              <div class="mini-balance">
+                <span class="mini-balance-label">Your Balance</span>
+                <span class="mini-balance-amount">$14.60</span>
+                <span class="mini-balance-expiry">Expires in 67 days</span>
+                <div style="margin-top: 8px; display: flex; gap: 4px; justify-content: center;">
+                  <div style="background: #f5f5f5; border-radius: 4px; padding: 3px 6px; font-size: 0.32rem; color: #666;">
+                    <div style="font-weight: 700; color: #111;">$8.40</div>
+                    <div>This week</div>
+                  </div>
+                  <div style="background: #f5f5f5; border-radius: 4px; padding: 3px 6px; font-size: 0.32rem; color: #666;">
+                    <div style="font-weight: 700; color: #111;">$42.10</div>
+                    <div>All time</div>
+                  </div>
+                </div>
+                <div class="mini-balance-btn">Spend on Deals</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mini-phone-label">Bucks Balance</div>
+        <div class="mini-phone-desc">Visible balance drives urgency to redeem</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Problem 1 Math -->
+  <div class="math-box" style="border-color: var(--coral);">
+    <h4 style="color: var(--coral);">App Retention - Revenue Impact</h4>
+    <div class="math-row">
+      <span class="math-label">App MAU</span>
+      <span class="math-value">8-10M <span class="tag-known">Tableau</span></span>
+    </div>
+    <div class="math-row">
+      <span class="math-label">iOS share</span>
+      <span class="math-value">~55% <span class="tag-est">EST - need from Radomir</span></span>
+    </div>
+    <div class="math-row">
+      <span class="math-label">Safari extension activation</span>
+      <span class="math-value">10-30% <span class="tag-test">TO TEST - Honey gets ~30%</span></span>
+    </div>
+    <div class="math-row">
+      <span class="math-label">Revenue per user per year</span>
+      <span class="math-value">$9.81 <span class="tag-known">Genie actual + Bucks model</span></span>
+    </div>
+    <div class="math-result coral-result">
+      <span class="mr-number" style="color: var(--coral);">= $4.4 - 16.2M/yr incremental</span>
+      <span class="mr-label">No new user acquisition. They already have the app.</span>
+    </div>
+
+    <div class="comparison-row" style="margin-bottom: 0;">
+      <div class="comparison-box" style="border-color: var(--text-dim); padding: 1.25rem;">
+        <span class="comp-number" style="color: var(--text-dim); font-size: 1.5rem;">$0</span>
+        <span class="comp-label" style="font-size: 0.75rem;">Without extension (incremental)</span>
+      </div>
+      <div class="comparison-box green-border" style="padding: 1.25rem;">
+        <span class="comp-number" style="color: var(--green); font-size: 1.5rem;">$4-16M/yr</span>
+        <span class="comp-label" style="font-size: 0.75rem;">With Safari extension</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- === PROBLEM 2: COUPONS TRAFFIC CONVERSION === -->
+<div class="section" id="sec-problem2">
+  <div class="section-label purple">Secondary Goal</div>
+  <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem;">Convert anonymous coupons traffic into registered Groupon users</h3>
+
+  <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="stat">
+      <span class="number" style="color: var(--purple);">~30M</span>
+      <span class="label">US sessions/yr <span class="est">(BQ verified)</span></span>
+    </div>
+    <div class="stat">
+      <span class="number" style="color: var(--purple);">$0.43</span>
+      <span class="label">Current per-session revenue</span>
+    </div>
+    <div class="stat">
+      <span class="number" style="color: var(--purple);">99%</span>
+      <span class="label">Leave without registering</span>
+    </div>
+    <div class="stat">
+      <span class="number" style="color: var(--purple);">$12.6M</span>
+      <span class="label">Current revenue - tracking to $8.8M</span>
+    </div>
+  </div>
+
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin: 1rem 0; line-height: 1.7;">Free organic traffic with high savings intent. Today we capture $0.43 and lose the user. These solutions convert anonymous visitors into known users who feed into the app ecosystem above.</p>
+
+  <!-- Solution A -->
+  <div class="solution-card purple-left">
+    <h4>Solution A: Registration + Rewards</h4>
     <ul>
-      <li><strong>Coupons revenue: $14.7M (2024) - $12.6M (2025) - tracking to $8.8M (2026).</strong> Declining 17% YoY.</li>
-      <li>Users grab a code and leave. <strong>99% never register.</strong> Zero off-platform presence.</li>
-      <li>This doesn't reverse the decline. It makes each session worth <strong>3-5x more</strong>.</li>
+      <li>Convert anonymous to known via gift cards / rewards gating</li>
+      <li>Needs Groupon auth integration (Phase 1: 2-3 weeks)</li>
+      <li><strong>$3.83/registration</strong> (BQ verified, Behdad)</li>
+      <li>540K registrations/yr currently at ~1.8% rate</li>
+      <li>Revenue: <strong>$2.1-4.6M/yr</strong></li>
     </ul>
+  </div>
 
-    <!-- Compact value ladder -->
-    <div class="value-ladder">
-      <div class="ladder-step step-coral">
-        <span class="number" style="color: var(--coral);">$0.43</span>
-        <span class="step-title">Today</span>
-        <span class="step-desc">Anonymous click</span>
+  <!-- Solution B -->
+  <div class="solution-card teal-left">
+    <h4>Solution B: Genie Desktop Extension + Rewards</h4>
+    <ul>
+      <li>Chrome extension for desktop users (39% of coupons traffic)</li>
+      <li>Already live: <strong>981 installs, $6/user/yr validated</strong></li>
+      <li>34 MD rewards integration = 26-59x installs (8-18K/mo)</li>
+      <li>Proves the extension model that Safari inherits</li>
+      <li>Revenue: scale dependent</li>
+    </ul>
+  </div>
+
+  <!-- Solution C -->
+  <div class="solution-card amber-left">
+    <h4>Solution C: Cashback</h4>
+    <ul>
+      <li>Evolved rewards for repeat purchases</li>
+      <li>% back as Groupon Bucks on every purchase</li>
+      <li>Builds on Bucks infrastructure (shared with Problem 1)</li>
+      <li>Needs scoping first</li>
+    </ul>
+  </div>
+
+  <!-- Problem 2 Math -->
+  <div class="math-box" style="border-color: var(--purple);">
+    <h4 style="color: var(--purple);">Coupons Conversion - Revenue Impact</h4>
+    <div class="math-result purple-result">
+      <span class="mr-number" style="color: var(--purple);">Registration + Genie combined: $4-7M/yr</span>
+      <span class="mr-label">This is the fallback even if Safari extension does not work.</span>
+    </div>
+    <p style="font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.75rem;">Every registered coupons user becomes a potential Safari extension user.</p>
+  </div>
+</div>
+
+<!-- === COMBINED VIEW === -->
+<div class="section" id="sec-combined">
+  <div class="section-label amber">Combined View</div>
+
+  <div class="combined-card">
+    <div class="combined-grid">
+      <div class="combined-problem coral-accent">
+        <div class="cp-label" style="color: var(--coral);">Problem 1: App Retention</div>
+        <span class="cp-number" style="color: var(--coral);">$4-16M</span>
+        <div class="cp-desc">Safari extension for existing app users</div>
       </div>
-      <div class="ladder-arrow">&rarr;</div>
-      <div class="ladder-step step-amber">
-        <span class="number" style="color: var(--amber);">$3.83</span>
-        <span class="step-title">Registered</span>
-        <span class="step-desc">Known user</span>
-      </div>
-      <div class="ladder-arrow">&rarr;</div>
-      <div class="ladder-step step-teal">
-        <span class="number" style="color: var(--teal);">$6.00</span>
-        <span class="step-title">Extension</span>
-        <span class="step-desc">Genie desktop</span>
-      </div>
-      <div class="ladder-arrow">&rarr;</div>
-      <div class="ladder-step step-green">
-        <span class="number" style="color: var(--green);">$9.81</span>
-        <span class="step-title">Safari</span>
-        <span class="step-desc">Mobile + Bucks</span>
-      </div>
-      <div class="ladder-arrow">&rarr;</div>
-      <div class="ladder-step step-purple">
-        <span class="number" style="color: var(--purple);">$31.88</span>
-        <span class="step-title">Full Stack</span>
-        <span class="step-desc">All layers</span>
+      <div class="combined-plus">+</div>
+      <div class="combined-problem purple-accent">
+        <div class="cp-label" style="color: var(--purple);">Problem 2: Coupons Conversion</div>
+        <span class="cp-number" style="color: var(--purple);">$4-7M</span>
+        <div class="cp-desc">Registration + Genie + Cashback</div>
       </div>
     </div>
-
-    <p style="margin-top: 0.5rem;"><a href="ecosystem-recommendation-2026-04-08.html" style="color: var(--blue); font-size: 0.82rem; font-weight: 600; text-decoration: none;">Full analysis with BQ-verified data &rarr;</a></p>
-  </div>
-</div>
-
-<!-- === 4. GROUPON BUCKS === -->
-<div class="section" id="sec-bucks">
-  <div class="section-label green">The Connective Tissue</div>
-  <div class="card">
-    <h3>Groupon Bucks - Why Users Come Back</h3>
-    <p>Every interaction connects through one mechanism - <strong>a visible, growing balance</strong> that gives users a reason to come back even when they're not shopping.</p>
-
-    <div class="highlight-box green-box" style="margin-top: 1.25rem;">
-      <p style="color: var(--text);"><strong>The earn/spend loop:</strong> coupon use, cashback, code verifications, referrals - all earn Bucks. Bucks get spent on core Groupon deals. One currency that bridges the coupon web world and the deals app world.</p>
-    </div>
-
-    <div class="highlight-box" style="border-left: 4px solid var(--amber);">
-      <p style="color: var(--text); font-style: italic; font-weight: 600;">"$14.20 earned this month"</p>
-      <p style="color: var(--text-muted); margin-top: 0.25rem;">Users check their balance even when they're not shopping. That's the habit loop.</p>
-    </div>
-  </div>
-
-  <!-- Pull-back flow diagram -->
-  <div class="flywheel">
-    <span class="flywheel-step f-teal">Shop on Nike</span>
-    <span class="flywheel-arrow">&rarr;</span>
-    <span class="flywheel-step f-green">Groupon overlay</span>
-    <span class="flywheel-arrow">&rarr;</span>
-    <span class="flywheel-step f-amber">Earn Bucks</span>
-    <span class="flywheel-arrow">&rarr;</span>
-    <span class="flywheel-step f-coral">Open app to redeem</span>
-    <span class="flywheel-arrow">&rarr;</span>
-    <span class="flywheel-step f-purple">Book local deal</span>
-    <span class="flywheel-arrow">&rarr;</span>
-    <span class="flywheel-step f-green">Earn more Bucks</span>
-  </div>
-</div>
-
-<!-- === 5. HOOKS === -->
-<div class="section" id="sec-hooks">
-  <div class="section-label teal">Engagement Hooks</div>
-  <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">What Keeps Users Coming Back</h3>
-
-  <div class="hook-grid">
-    <div class="hook-card">
-      <div class="hook-num">1</div>
-      <h4>Coupon auto-apply</h4>
-      <p>Best codes found and applied at checkout automatically. Zero friction savings.</p>
-    </div>
-    <div class="hook-card">
-      <div class="hook-num">2</div>
-      <h4>Cashback in Bucks</h4>
-      <p>Percentage back on purchases, redeemable in-app on local deals and experiences.</p>
-    </div>
-    <div class="hook-card">
-      <div class="hook-num">3</div>
-      <h4>Brand following</h4>
-      <p>"New Nike code dropped" - push notifications for stores you follow.</p>
-    </div>
-    <div class="hook-card">
-      <div class="hook-num">4</div>
-      <h4>Price watchdog</h4>
-      <p>"Best time to shop Amazon" - alerts when savings peak for tracked retailers.</p>
-    </div>
-    <div class="hook-card">
-      <div class="hook-num">5</div>
-      <h4>Weekly digest</h4>
-      <p>Best codes of the week plus Bucks earned summary. Predictable cadence builds habits.</p>
-    </div>
-    <div class="hook-card">
-      <div class="hook-num">6</div>
-      <h4>Bucks balance</h4>
-      <p>Visible, growing balance. 90-day expiry drives urgency to redeem on local deals.</p>
+    <div class="combined-total">
+      <div class="ct-number">Combined: $8-25M/yr for ~40 MD engineering</div>
+      <div class="ct-sub">Total investment: 2-week iOS spike + 34 MD Genie rewards + 2-3 week auth integration</div>
     </div>
   </div>
 </div>
 
-<!-- === 6. SUPPORTING LAYERS === -->
-<div class="section" id="sec-layers">
-  <div class="section-label blue">Supporting Layers</div>
-
-  <div class="layer-grid">
-    <div class="layer-card teal-top">
-      <h4 style="color: var(--teal);">Genie Desktop - Proven</h4>
-      <ul>
-        <li>Live since Nov 2024, <strong style="color: var(--text);">$6/user/yr validated</strong></li>
-        <li>34 MD rewards integration = 26-59x install growth</li>
-        <li>Proves the extension model for Safari</li>
-      </ul>
-      <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" class="layer-link" target="_blank">View LTV model &rarr;</a>
-    </div>
-    <div class="layer-card purple-top">
-      <h4 style="color: var(--purple);">Registration + Rewards - Foundation</h4>
-      <ul>
-        <li>Convert anonymous to known via gift cards/gating</li>
-        <li>Needs Groupon auth integration (2-3 weeks)</li>
-        <li><strong style="color: var(--text);">$3.83/registration</strong> (BQ verified)</li>
-      </ul>
-    </div>
-    <div class="layer-card amber-top">
-      <h4 style="color: var(--amber);">Cashback - Retention</h4>
-      <ul>
-        <li>Evolved rewards for repeat purchases</li>
-        <li>Builds on Bucks infrastructure</li>
-        <li>Needs scoping first</li>
-      </ul>
-    </div>
+<!-- === COMPLEMENTS VIKTOR === -->
+<div class="section" id="sec-viktor">
+  <div class="highlight-box muted-box" style="font-size: 0.85rem;">
+    <p style="color: var(--text-muted);"><strong style="color: var(--text);">Complements Viktor Varoczi's GROUPON LIFE initiative.</strong> Viktor fixes the in-app experience (personalization, feed, retention for 322K L4 users). We bring more users to the app and capture value when they are not in it.</p>
+    <p style="margin-top: 0.5rem;"><a href="https://gamma.app" style="color: var(--blue); font-size: 0.78rem; text-decoration: none; font-weight: 600;" target="_blank">Viktor's Gamma presentation &rarr;</a></p>
   </div>
 </div>
 
-<!-- === 7. THE MATH === -->
-<div class="section" id="sec-math">
-  <div class="section-label amber">The Math</div>
-
-  <div class="comparison-row">
-    <div class="comparison-box green-border">
-      <span class="comp-number" style="color: var(--green);">$4-7M/yr</span>
-      <span class="comp-label">Without Safari: Convert + Genie alone</span>
-    </div>
-    <div class="comparison-box coral-border">
-      <span class="comp-number" style="color: var(--coral);">$8-25M/yr</span>
-      <span class="comp-label">With Safari: All layers + 8-10M app users</span>
-    </div>
-  </div>
-
-  <div class="highlight-box" style="text-align: center; border-left: 4px solid var(--amber); padding: 1.25rem;">
-    <p style="color: var(--text); font-size: 1rem; font-weight: 600;">Total investment: ~40 MD engineering. 33%+ uplift on $12.6M base.</p>
-  </div>
-</div>
-
-<!-- === 8. HOW THIS ANSWERS DUSAN'S BRIEF === -->
-<div class="section" id="sec-brief">
-  <div class="section-label purple">Answering the Brief</div>
-  <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">How This Delivers on Dusan's Four Priorities</h3>
-
-  <div class="brief-grid">
-    <div class="brief-card coral-left">
-      <h4>Double monetisation</h4>
-      <p>Bucks earned off-platform through Safari extension + redeemed on core deals. Two revenue events from one user session.</p>
-    </div>
-    <div class="brief-card amber-left">
-      <h4>Open app more frequently</h4>
-      <p>3+ weekly touchpoints vs current 1.5x/month. Brand following, Bucks balance checks, weekly digest all pull users into the app.</p>
-    </div>
-    <div class="brief-card purple-left">
-      <h4>Drive more users to app</h4>
-      <p>Every Safari interaction bridges back to the app via Bucks redemption. Web users become app users through the earn/spend loop.</p>
-    </div>
-    <div class="brief-card blue-left">
-      <h4>Improve retention &amp; frequency</h4>
-      <p>Bucks 90-day expiry drives urgency. Brand following creates habitual check-ins. Cashback rewards repeat behaviour.</p>
-    </div>
-  </div>
-</div>
-
-<!-- === 9. NEXT STEPS === -->
+<!-- === NEXT STEPS === -->
 <div class="section" id="sec-steps">
   <div class="section-label green">Next Steps</div>
 
   <div class="card">
     <ol class="next-steps-list">
       <li><strong>2-week iOS engineering spike</strong> - validate Safari extension feasibility within the Groupon app bundle</li>
-      <li><strong>Registration A/B test</strong> - run on non-monetized pages to validate $3.83/registration conversion</li>
-      <li><strong>Groupon Bucks product brief</strong> - 2-week scoping sprint to define earn/spend rules and technical requirements</li>
-      <li><strong>Connect with Viktor's GROUPON LIFE</strong> - align personalization work with the ecosystem strategy</li>
+      <li><strong>Genie rewards integration (34 MD)</strong> - scale the proven model with 26-59x install growth</li>
+      <li><strong>Registration A/B test</strong> - run on non-monetized coupons pages to validate conversion</li>
+      <li><strong>Groupon Bucks product brief</strong> - 2-week scoping sprint to define earn/spend rules</li>
+      <li><strong>Connect with Viktor's team</strong> - align ecosystem strategy with GROUPON LIFE</li>
     </ol>
-
-    <div class="highlight-box muted-box" style="margin-top: 1.25rem; font-size: 0.8rem;">
-      <p style="color: var(--text-muted);">This strategy complements Viktor Varoczi's GROUPON LIFE initiative. Viktor fixes the in-app experience. We bring more users to the app and capture value when they're not in it.</p>
-    </div>
   </div>
 </div>
 
-<!-- === 10. SUPPORTING MATERIALS === -->
+<!-- === SUPPORTING MATERIALS === -->
 <div class="section" id="sec-materials">
   <div class="section-label blue">Supporting Materials</div>
 
   <div class="links-grid">
+    <a href="safari-extension-prototype.html" class="link-card">
+      <div class="link-title">Interactive Prototype</div>
+      <div class="link-desc">Click-through Safari extension demo - coupon auto-apply and Bucks earning flow</div>
+    </a>
     <a href="competitor-research-2026-04-08.html" class="link-card">
-      <div class="link-title">Competitor Research (7 players)</div>
-      <div class="link-desc">Honey, Rakuten, Capital One Shopping, Coupert and more - market positioning and feature comparison</div>
+      <div class="link-title">Competitor Research</div>
+      <div class="link-desc">Honey, Rakuten, Capital One Shopping, Coupert and more - market positioning and features</div>
     </a>
     <a href="ecosystem-recommendation-2026-04-08.html" class="link-card">
-      <div class="link-title">Full Data Analysis (BQ verified)</div>
-      <div class="link-desc">Complete value ladder, funnel math, and revenue projections with BigQuery-verified numbers</div>
+      <div class="link-title">Full Data Analysis (v1)</div>
+      <div class="link-desc">Complete value ladder, funnel math, and revenue projections with BQ-verified numbers</div>
     </a>
     <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" class="link-card" target="_blank">
       <div class="link-title">Genie LTV Model</div>
       <div class="link-desc">3-scenario lifetime value model - $6 to $9.81 per user per year, peer-reviewed</div>
-    </a>
-    <a href="https://mgregor-png.github.io/coupons-dashboards/alternative-monetisation-brainstorm-v2.html" class="link-card" target="_blank">
-      <div class="link-title">Save Everywhere Deck</div>
-      <div class="link-desc">Full presentation with Safari extension flow mockups, engagement hooks, and frequency analysis</div>
     </a>
   </div>
 </div>
@@ -1376,25 +1546,14 @@
     });
   }
 
-  var customerOrder = ['sec-mockup','sec-problem','sec-bucks','sec-hooks','sec-layers','sec-math','sec-brief','sec-steps','sec-materials'];
-  var ceoOrder = ['sec-brief','sec-math','sec-problem','sec-mockup','sec-bucks','sec-hooks','sec-layers','sec-steps','sec-materials'];
-
   function setFraming(framing) {
     var body = document.body;
-    var container = document.getElementById('content-flow');
-    var order = framing === 'ceo' ? ceoOrder : customerOrder;
 
     if (framing === 'ceo') {
       body.classList.add('ceo-framing');
     } else {
       body.classList.remove('ceo-framing');
     }
-
-    // Reorder sections by moving DOM elements
-    order.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) container.appendChild(el);
-    });
 
     document.querySelectorAll('.framing-btn').forEach(function(btn) {
       btn.classList.remove('active');
