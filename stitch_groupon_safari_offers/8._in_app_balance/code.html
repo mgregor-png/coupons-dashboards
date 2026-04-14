@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "outline": "#717a67",
+                    "inverse-on-surface": "#edf0ff",
+                    "secondary-fixed-dim": "#8bd0ef",
+                    "on-secondary-fixed": "#001f2a",
+                    "on-tertiary-fixed-variant": "#005311",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#306b00",
+                    "secondary-container": "#99defd",
+                    "inverse-primary": "#87dc4f",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#87dc4f",
+                    "primary": "#2f6900",
+                    "on-surface": "#161c26",
+                    "surface-dim": "#d5dae9",
+                    "background": "#f9f9ff",
+                    "tertiary": "#006b19",
+                    "primary-fixed": "#a2f968",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002203",
+                    "tertiary-container": "#188729",
+                    "surface-container-highest": "#dee2f1",
+                    "surface-bright": "#f9f9ff",
+                    "tertiary-fixed": "#91fa8c",
+                    "surface-variant": "#dee2f1",
+                    "secondary": "#116682",
+                    "outline-variant": "#c0cab4",
+                    "surface-container-high": "#e4e8f7",
+                    "surface-container": "#e9edfd",
+                    "on-surface-variant": "#414a39",
+                    "secondary-fixed": "#bde9ff",
+                    "tertiary-fixed-dim": "#75dd73",
+                    "inverse-surface": "#2b303c",
+                    "primary-container": "#3d8400",
+                    "on-tertiary-container": "#f7fff1",
+                    "on-primary-fixed": "#0a2100",
+                    "on-primary-container": "#f9ffed",
+                    "on-background": "#161c26",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed-variant": "#235100",
+                    "on-secondary-fixed-variant": "#004d64",
+                    "on-secondary-container": "#0a637f",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 12px 32px rgba(22, 28, 38, 0.06);
+        }
+        .asymmetric-clip {
+            border-top-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-slate-50/85 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10">
+<img class="w-full h-full object-cover" data-alt="close-up portrait of a professional woman with a friendly smile, soft natural studio lighting, minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_oPIXcq3k3SGE34aKeF3aBIvrw8OWNmC2K5ZSv3ZwJsRZQjx7ffITExBGO6qdLFbwZdKEq5IHXJ99j5Qjgsa6S3UxBljg2yf_iyxlSd2hZNBvLs15iYc0Kuvfexy16AA2fNbVGBuz1YN9pqmYLNgUWvwT-50f4_Nch6MUIpPSJdvUyS4g3pLoLa5fS8wPy5MB9DBhiyJFQLm5cT8ero8p7d7-6jVfJ0m3tlcAMeTAffaWLlXxdEYng1-C68mnaUhVC6xA4ZlyvJP1"/>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-green-800">The Value Architect</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-200/50 transition-transform duration-200 ease-in-out active:scale-95">
+<span class="material-symbols-outlined text-green-700">notifications</span>
+</button>
+</header>
+<main class="pb-32 px-6 pt-4 max-w-2xl mx-auto">
+<!-- Bucks Balance Hero Card -->
+<section class="relative mb-12">
+<div class="bg-gradient-to-br from-primary to-primary-container p-8 rounded-xl editorial-shadow overflow-hidden relative">
+<!-- Background Decorative Elements -->
+<div class="absolute top-[-20%] right-[-10%] w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-20%] left-[-10%] w-32 h-32 bg-secondary/20 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<p class="text-on-primary/80 text-sm font-medium tracking-wide mb-1">CURRENT BALANCE</p>
+<div class="flex items-baseline gap-2 mb-6">
+<span class="text-5xl font-extrabold text-white tracking-tighter">$14.60</span>
+<span class="text-on-primary/90 font-semibold">Bucks</span>
+</div>
+<div class="bg-white/15 backdrop-blur-md rounded-lg p-4 flex items-center justify-between border border-white/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div>
+<p class="text-white text-xs font-bold leading-tight">PREMIUM STATUS</p>
+<p class="text-white/80 text-[10px]">4 deals until next reward</p>
+</div>
+</div>
+<div class="w-24 h-1.5 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-white w-3/4"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions Grid -->
+<section class="mb-10 flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+<button class="flex-shrink-0 bg-surface-container-lowest editorial-shadow px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary text-xl">add_circle</span>
+<span class="text-sm font-bold">Add Bucks</span>
+</button>
+<button class="flex-shrink-0 bg-surface-container-lowest editorial-shadow px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-secondary text-xl">history</span>
+<span class="text-sm font-bold">History</span>
+</button>
+<button class="flex-shrink-0 bg-surface-container-lowest editorial-shadow px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-tertiary text-xl">redeem</span>
+<span class="text-sm font-bold">Gift Card</span>
+</button>
+</section>
+<!-- Featured Section: Popular Near You -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<div>
+<span class="text-primary font-bold text-xs tracking-widest uppercase mb-1 block">Curated Picks</span>
+<h2 class="text-2xl font-extrabold tracking-tight text-on-surface leading-none">Popular Near You</h2>
+</div>
+<button class="text-primary text-sm font-bold">View all</button>
+</div>
+<!-- Asymmetric Bento Grid for Deals -->
+<div class="grid grid-cols-1 gap-8">
+<!-- Deal Card 1: Restaurant -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden transition-all duration-300">
+<div class="flex flex-col md:flex-row">
+<div class="relative w-full md:w-2/5 h-56 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover asymmetric-clip group-hover:scale-105 transition-transform duration-500" data-alt="top-down artistic shot of gourmet pasta dish with fresh basil and parmesan on a dark ceramic plate, warm restaurant ambiance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKMYGWE5UYa_fqrDkrsM__0VQGCVOMIZhWJtl-6PCJmfSZlTas0ajfzFphWntjpqwvoZZbNaHYqb4QLf75hlMivxpuSD5N-QXqklpA5xgosDcmn5RChvT6C84k952Wg3SBa7eWck-hiWBaulKBOffahHJ8O_bx77a38TbZQkag5uGct4BQf-dCHREcO8LdQR4IK1p07E6m1XonZPv6_QGOREv_CHhTUe49Sky8YGv4xvvwKX-nP006LJ4rg1ZX7OJ2oRFYPWzT12tT"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+<p class="text-[10px] font-black text-primary">BEST SELLER</p>
+</div>
+</div>
+<div class="p-6 md:w-3/5 flex flex-col justify-center">
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface-variant">4.9 (1.2k reviews)</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-2 leading-tight">Artisan Italian Tasting Experience</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Experience a 5-course curated tasting menu at Lucca's Kitchen. Farm-to-table ingredients.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant line-through">$85.00</span>
+<span class="text-2xl font-black text-primary">$42.50</span>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-transform active:scale-95">
+                                    Book Now
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Deal Card 2: Spa -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden transition-all duration-300">
+<div class="flex flex-col md:flex-row-reverse">
+<div class="relative w-full md:w-2/5 h-56 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover asymmetric-clip group-hover:scale-105 transition-transform duration-500" data-alt="serene spa interior with stacked smooth volcanic stones, bamboo leaves, and soft candle light reflecting on calm water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL0fTOJACvbQR8hw3xUtVz3wgpxdSLQ1rKIOHLsPs21kJg9gmdP3eOegvvx6f_EG6xHq_zLLskvxjmY9-4cT6mrIEB7DdYBmRC3r8tQLYOSwmKMEuXqvZ2UuPck-VRXbKPwxH3ZvNRcrbanXuggPKx7yOVEsHjZQtoRHyaft6JdYRA_AmrF3XAR9dBZ5wcukd6VC8nPGMJsaWSykEy5G0BQF28rdyAOnDAMNSeEjwSBjW-6Recw7BglBn6JbXvoQ_kFQDE22CyPMTz"/>
+<div class="absolute top-4 right-4 bg-secondary/90 backdrop-blur-sm px-3 py-1 rounded-full">
+<p class="text-[10px] font-black text-white uppercase">Bucks Eligible</p>
+</div>
+</div>
+<div class="p-6 md:w-3/5 flex flex-col justify-center">
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface-variant">4.7 (850 reviews)</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-2 leading-tight">Zen Radiance Facial &amp; Massage</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">90 minutes of pure bliss at Serenity Day Spa. Includes organic essential oils treatment.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant line-through">$120.00</span>
+<span class="text-2xl font-black text-secondary">$65.00</span>
+</div>
+<button class="bg-surface-container-highest text-on-surface font-bold px-5 py-2.5 rounded-xl text-sm transition-transform active:scale-95">
+                                    View Deal
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Use Your Bucks Banner -->
+<section class="mt-12">
+<div class="bg-surface-container-high rounded-xl p-6 flex items-center gap-6">
+<div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" style="font-variation-settings: 'FILL' 1;">wallet</span>
+</div>
+<div>
+<h4 class="font-bold text-lg leading-tight">Apply your $14.60 balance</h4>
+<p class="text-sm text-on-surface-variant">Your Bucks will be automatically applied at checkout for your next purchase.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-2 pb-6 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl z-50 border-t border-slate-100">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-green-600 transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="text-[10px] font-medium mt-1">Featured</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-green-600 transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-medium mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-green-50 text-green-700 rounded-2xl px-5 py-1.5 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-[10px] font-medium mt-1">My Bucks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-green-600 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium mt-1">Account</span>
+</a>
+</nav>
+</body></html>

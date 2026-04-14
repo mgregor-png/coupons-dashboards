@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere - User Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 40px;
+  }
+
+  /* Left side - phone */
+  .phone-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .phone-frame {
+    position: relative;
+    width: 320px;
+    height: 693px;
+    background: #000;
+    border-radius: 48px;
+    border: 3px solid #2a2a2a;
+    box-shadow: 0 0 0 1px #111, 0 24px 80px rgba(0,0,0,0.7);
+    overflow: hidden;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 18px;
+    z-index: 100;
+  }
+
+  .screen-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .screen-img.active { opacity: 1; }
+
+  /* Progress dots */
+  .progress {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: #53a318;
+    box-shadow: 0 0 8px rgba(83,163,24,0.5);
+    transform: scale(1.3);
+  }
+  .dot.visited { background: rgba(83,163,24,0.5); }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .ctrl-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .ctrl-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+  }
+  .ctrl-btn.playing {
+    background: rgba(83,163,24,0.15);
+    border-color: rgba(83,163,24,0.3);
+    color: #53a318;
+  }
+
+  /* Right side - narrative */
+  .narrative-col {
+    max-width: 360px;
+    min-width: 280px;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    transition: all 0.4s ease;
+  }
+  .phase-setup { background: rgba(0,122,255,0.15); color: #5ac8fa; }
+  .phase-capture { background: rgba(83,163,24,0.15); color: #a2f968; }
+  .phase-engage { background: rgba(255,149,0,0.15); color: #ffcc00; }
+
+  .step-counter {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    transition: opacity 0.4s ease;
+  }
+
+  .step-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    transition: opacity 0.4s ease;
+  }
+
+  .step-desc {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Timer bar under phone */
+  .timer-bar {
+    width: 320px;
+    height: 2px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .timer-fill {
+    height: 100%;
+    background: #53a318;
+    width: 0%;
+    transition: width 0.1s linear;
+    border-radius: 1px;
+  }
+
+  /* Fade transitions for text */
+  .fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.25s ease !important;
+  }
+
+  /* Mobile layout */
+  @media (max-width: 800px) {
+    .container {
+      flex-direction: column;
+      gap: 32px;
+      padding: 24px 16px;
+    }
+    .narrative-col {
+      text-align: center;
+      max-width: 360px;
+    }
+    .step-title { font-size: 22px; }
+    .step-desc { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="phone-col">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div id="screens"></div>
+    </div>
+    <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+    <div class="progress" id="progressDots"></div>
+    <div class="controls">
+      <button class="ctrl-btn" id="prevBtn" onclick="prev()">&#8592; Prev</button>
+      <button class="ctrl-btn" id="playBtn" onclick="togglePlay()">&#9654; Play</button>
+      <button class="ctrl-btn" id="nextBtn" onclick="next()">Next &#8594;</button>
+    </div>
+  </div>
+
+  <div class="narrative-col">
+    <div class="phase-badge" id="phaseBadge"></div>
+    <div class="step-counter" id="stepCounter"></div>
+    <div class="step-title" id="stepTitle"></div>
+    <div class="step-desc" id="stepDesc"></div>
+  </div>
+</div>
+
+<script>
+const SCREENS = [
+  {
+    src: 'stitch_groupon_safari_offers 2/4._nike_product_clean/screen.png',
+    title: 'Shopping on Nike',
+    desc: 'User browses Nike.com in Safari. No Groupon intent needed - the extension works in the background.',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers 2/5._extension_surface_ultra_polish/screen.png',
+    title: 'Extension Surfaces Savings',
+    desc: 'Groupon automatically detects the merchant and surfaces a coupon code plus cashback offer.',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers 2/nike_mobile_savings_applied/screen.png',
+    title: 'Savings Applied',
+    desc: 'Code applied at checkout - instant savings plus Groupon Bucks earned on the purchase.',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers 2/8._in_app_balance_ultra_polish/screen.png',
+    title: 'In-App Balance',
+    desc: 'Bucks balance visible in-app. Browse curated local deals to spend them on.',
+    phase: 'engage'
+  }
+];
+
+const PHASE_LABELS = { setup: 'Setup', capture: 'Capture', engage: 'Engage' };
+
+let current = 0;
+let playing = false;
+let interval = null;
+let timerInterval = null;
+const DURATION = 4000; // ms per screen
+
+// Build screen images
+const screensEl = document.getElementById('screens');
+SCREENS.forEach((s, i) => {
+  const img = document.createElement('img');
+  img.className = 'screen-img' + (i === 0 ? ' active' : '');
+  img.src = s.src;
+  img.alt = s.title;
+  img.draggable = false;
+  screensEl.appendChild(img);
+});
+
+// Build progress dots
+const dotsEl = document.getElementById('progressDots');
+SCREENS.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  dotsEl.appendChild(dot);
+});
+
+function goTo(idx) {
+  if (idx === current) return;
+
+  // Fade out text
+  const els = ['stepCounter', 'stepTitle', 'stepDesc'];
+  els.forEach(id => document.getElementById(id).classList.add('fade-out'));
+
+  // Switch image
+  const imgs = screensEl.querySelectorAll('.screen-img');
+  imgs[current].classList.remove('active');
+  imgs[idx].classList.add('active');
+
+  // Update dots
+  const dots = dotsEl.querySelectorAll('.dot');
+  dots[current].classList.remove('active');
+  dots[current].classList.add('visited');
+  dots[idx].classList.remove('visited');
+  dots[idx].classList.add('active');
+  // Mark all before idx as visited
+  for (let i = 0; i < SCREENS.length; i++) {
+    if (i < idx) dots[i].classList.add('visited');
+  }
+
+  current = idx;
+  resetTimer();
+
+  // Fade in new text after brief delay
+  setTimeout(() => {
+    updateText();
+    els.forEach(id => document.getElementById(id).classList.remove('fade-out'));
+  }, 280);
+}
+
+function updateText() {
+  const s = SCREENS[current];
+  const badge = document.getElementById('phaseBadge');
+  badge.textContent = PHASE_LABELS[s.phase];
+  badge.className = 'phase-badge phase-' + s.phase;
+
+  document.getElementById('stepCounter').textContent = `Step ${current + 1} of ${SCREENS.length}`;
+  document.getElementById('stepTitle').textContent = s.title;
+  document.getElementById('stepDesc').textContent = s.desc;
+}
+
+function next() {
+  if (current < SCREENS.length - 1) {
+    goTo(current + 1);
+  } else if (playing) {
+    goTo(0); // loop when auto-playing
+  }
+}
+
+function prev() {
+  if (current > 0) goTo(current - 1);
+}
+
+function togglePlay() {
+  playing = !playing;
+  const btn = document.getElementById('playBtn');
+  if (playing) {
+    btn.textContent = '\u23F8 Pause';
+    btn.classList.add('playing');
+    interval = setInterval(next, DURATION);
+    startTimer();
+  } else {
+    btn.textContent = '\u25B6 Play';
+    btn.classList.remove('playing');
+    clearInterval(interval);
+    clearInterval(timerInterval);
+    document.getElementById('timerFill').style.width = '0%';
+  }
+}
+
+let timerStart = 0;
+function startTimer() {
+  timerStart = Date.now();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    const elapsed = Date.now() - timerStart;
+    const pct = Math.min((elapsed / DURATION) * 100, 100);
+    document.getElementById('timerFill').style.width = pct + '%';
+  }, 30);
+}
+
+function resetTimer() {
+  if (playing) {
+    clearInterval(interval);
+    interval = setInterval(next, DURATION);
+    startTimer();
+  }
+}
+
+// Keyboard
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+  else if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+});
+
+// Click on phone to advance
+document.querySelector('.phone-frame').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x > rect.width / 2) next();
+  else prev();
+});
+
+// Init
+updateText();
+</script>
+
+</body>
+</html>

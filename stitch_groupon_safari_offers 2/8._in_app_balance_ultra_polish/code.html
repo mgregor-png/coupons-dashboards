@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "primary": "#53A318",
+              "on-primary": "#ffffff",
+              "surface": "#F9FAFB",
+              "on-surface": "#111827",
+              "surface-container": "#FFFFFF",
+              "surface-variant": "#F3F4F6",
+              "on-surface-variant": "#4B5563",
+              "outline": "#E5E7EB",
+              "secondary": "#116682"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.5rem",
+              "lg": "1rem",
+              "xl": "1.5rem",
+              "full": "9999px"
+            },
+            "fontFamily": {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-white/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4 border-b border-gray-100/50">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-primary/10">
+<img class="w-full h-full object-cover" data-alt="professional woman portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_oPIXcq3k3SGE34aKeF3aBIvrw8OWNmC2K5ZSv3ZwJsRZQjx7ffITExBGO6qdLFbwZdKEq5IHXJ99j5Qjgsa6S3UxBljg2yf_iyxlSd2hZNBvLs15iYc0Kuvfexy16AA2fNbVGBuz1YN9pqmYLNgUWvwT-50f4_Nch6MUIpPSJdvUyS4g3pLoLa5fS8wPy5MB9DBhiyJFQLm5cT8ero8p7d7-6jVfJ0m3tlcAMeTAffaWLlXxdEYng1-C68mnaUhVC6xA4ZlyvJP1"/>
+</div>
+<span class="text-2xl font-extrabold tracking-tight text-primary">Groupon</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined text-gray-700">notifications</span>
+</button>
+</header>
+<main class="pb-32 px-6 pt-6 max-w-2xl mx-auto">
+<!-- Bucks Balance Hero Card -->
+<section class="mb-8">
+<div class="bg-primary p-7 rounded-3xl editorial-shadow relative overflow-hidden">
+<!-- Subtle Texture -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent"></div>
+<div class="relative z-10">
+<p class="text-on-primary/70 text-[11px] font-bold tracking-[0.1em] uppercase mb-1">Current Balance</p>
+<div class="flex items-baseline gap-2 mb-8">
+<span class="text-5xl font-extrabold text-white tracking-tight">$14.60</span>
+<span class="text-white/90 font-medium text-lg">Bucks</span>
+</div>
+<!-- Recent Activity Highlight -->
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 mb-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg">add_task</span>
+</div>
+<div>
+<p class="text-white text-xs font-bold">Recent Activity</p>
+<p class="text-white/80 text-[11px]">+$1.80 Groupon Bucks from Nike</p>
+</div>
+</div>
+<span class="text-white/60 material-symbols-outlined text-sm">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-white/90 text-[11px] font-semibold">Premium Status: 4 deals to next reward</span>
+</div>
+<div class="w-20 h-1 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-white w-3/4 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="mb-10 flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+<button class="flex-shrink-0 bg-white editorial-shadow px-5 py-3 rounded-2xl flex items-center gap-2.5 hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-[13px] font-bold text-gray-800">Add Bucks</span>
+</button>
+<button class="flex-shrink-0 bg-white editorial-shadow px-5 py-3 rounded-2xl flex items-center gap-2.5 hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-secondary text-[20px]">history</span>
+<span class="text-[13px] font-bold text-gray-800">History</span>
+</button>
+<button class="flex-shrink-0 bg-white editorial-shadow px-5 py-3 rounded-2xl flex items-center gap-2.5 hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">redeem</span>
+<span class="text-[13px] font-bold text-gray-800">Gift Card</span>
+</button>
+</section>
+<!-- Featured Section -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<div>
+<span class="text-primary font-bold text-[10px] tracking-widest uppercase mb-1 block">Curated for you</span>
+<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Popular Near You</h2>
+</div>
+<button class="text-primary text-[13px] font-bold px-3 py-1 bg-primary/5 rounded-full">View all</button>
+</div>
+<div class="space-y-8">
+<!-- High Fidelity Deal Card 1 -->
+<div class="group bg-white rounded-3xl overflow-hidden editorial-shadow transition-all duration-300">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="artisan pasta dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKMYGWE5UYa_fqrDkrsM__0VQGCVOMIZhWJtl-6PCJmfSZlTas0ajfzFphWntjpqwvoZZbNaHYqb4QLf75hlMivxpuSD5N-QXqklpA5xgosDcmn5RChvT6C84k952Wg3SBa7eWck-hiWBaulKBOffahHJ8O_bx77a38TbZQkag5uGct4BQf-dCHREcO8LdQR4IK1p07E6m1XonZPv6_QGOREv_CHhTUe49Sky8YGv4xvvwKX-nP006LJ4rg1ZX7OJ2oRFYPWzT12tT"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-white/95 backdrop-blur-sm text-primary text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">Best Seller</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-amber-400 text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-gray-500">4.9</span>
+<span class="text-gray-300 text-xs">•</span>
+<span class="text-xs font-medium text-gray-400">1.2k reviews</span>
+</div>
+<h3 class="text-xl font-bold text-gray-900 mb-2 leading-tight">Artisan Italian Tasting Experience</h3>
+<p class="text-gray-500 text-[13px] mb-5 leading-relaxed">Experience a 5-course curated tasting menu at Lucca's Kitchen. Farm-to-table excellence.</p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-gray-400 line-through font-medium">$85.00</span>
+<span class="text-2xl font-black text-primary tracking-tight">$42.50</span>
+</div>
+<button class="bg-primary text-white font-bold px-7 py-3 rounded-2xl text-[13px] shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+                            Book Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- High Fidelity Deal Card 2 -->
+<div class="group bg-white rounded-3xl overflow-hidden editorial-shadow transition-all duration-300">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="spa therapy stones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL0fTOJACvbQR8hw3xUtVz3wgpxdSLQ1rKIOHLsPs21kJg9gmdP3eOegvvx6f_EG6xHq_zLLskvxjmY9-4cT6mrIEB7DdYBmRC3r8tQLYOSwmKMEuXqvZ2UuPck-VRXbKPwxH3ZvNRcrbanXuggPKx7yOVEsHjZQtoRHyaft6JdYRA_AmrF3XAR9dBZ5wcukd6VC8nPGMJsaWSykEy5G0BQF28rdyAOnDAMNSeEjwSBjW-6Recw7BglBn6JbXvoQ_kFQDE22CyPMTz"/>
+<div class="absolute top-4 right-4">
+<span class="bg-secondary/90 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-lg uppercase tracking-wider">Bucks Eligible</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-1.5 mb-2">
+<span class="material-symbols-outlined text-amber-400 text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-gray-500">4.7</span>
+<span class="text-gray-300 text-xs">•</span>
+<span class="text-xs font-medium text-gray-400">850 reviews</span>
+</div>
+<h3 class="text-xl font-bold text-gray-900 mb-2 leading-tight">Zen Radiance Facial &amp; Massage</h3>
+<p class="text-gray-500 text-[13px] mb-5 leading-relaxed">90 minutes of pure bliss at Serenity Day Spa with organic essential oil treatments.</p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-gray-400 line-through font-medium">$120.00</span>
+<span class="text-2xl font-black text-gray-900 tracking-tight">$65.00</span>
+</div>
+<button class="bg-gray-100 text-gray-800 font-bold px-7 py-3 rounded-2xl text-[13px] active:scale-95 transition-transform hover:bg-gray-200">
+                            View Deal
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Integrated CTA Banner -->
+<section class="mt-12 mb-4">
+<div class="bg-primary/5 border border-primary/10 rounded-3xl p-6 flex items-center gap-5">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">wallet</span>
+</div>
+<div>
+<h4 class="font-extrabold text-gray-900 text-base leading-tight mb-1">Apply your $14.60 balance</h4>
+<p class="text-[13px] text-gray-500 leading-snug">Your Bucks will be applied at checkout automatically for your next amazing experience.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-8 bg-white/95 backdrop-blur-xl z-50 border-t border-gray-100">
+<a class="flex flex-col items-center justify-center text-gray-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Featured</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-colors px-4 py-2 bg-primary/5 rounded-2xl" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">My Bucks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Account</span>
+</a>
+</nav>
+</body></html>

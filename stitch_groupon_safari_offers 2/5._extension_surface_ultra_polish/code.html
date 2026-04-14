@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Groupon - Nike Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "outline": "#717a67",
+                    "inverse-on-surface": "#edf0ff",
+                    "secondary-fixed-dim": "#8bd0ef",
+                    "on-secondary-fixed": "#001f2a",
+                    "on-tertiary-fixed-variant": "#005311",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#306b00",
+                    "secondary-container": "#99defd",
+                    "inverse-primary": "#87dc4f",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#87dc4f",
+                    "primary": "#2f6900",
+                    "on-surface": "#161c26",
+                    "surface-dim": "#d5dae9",
+                    "background": "#f9f9ff",
+                    "tertiary": "#006b19",
+                    "primary-fixed": "#a2f968",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002203",
+                    "tertiary-container": "#188729",
+                    "surface-container-highest": "#dee2f1",
+                    "surface-bright": "#f9f9ff",
+                    "tertiary-fixed": "#91fa8c",
+                    "surface-variant": "#dee2f1",
+                    "secondary": "#116682",
+                    "outline-variant": "#c0cab4",
+                    "surface-container-high": "#e4e8f7",
+                    "surface-container": "#e9edfd",
+                    "on-surface-variant": "#414a39",
+                    "secondary-fixed": "#bde9ff",
+                    "tertiary-fixed-dim": "#75dd73",
+                    "inverse-surface": "#2b303c",
+                    "primary-container": "#3d8400",
+                    "on-tertiary-container": "#f7fff1",
+                    "on-primary-fixed": "#0a2100",
+                    "on-primary-container": "#f9ffed",
+                    "on-background": "#161c26",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed-variant": "#235100",
+                    "on-secondary-fixed-variant": "#004d64",
+                    "on-secondary-container": "#0a637f",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "2xl": "1.5rem",
+                    "3xl": "2.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .extension-shadow {
+            box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.3);
+        }
+        body {
+            min-height: 100dvh;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+        }
+        .emerald-gradient-button {
+            background: linear-gradient(135deg, #3d8400 0%, #2f6900 100%);
+        }
+        .coupon-dash {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%233D8400FF' stroke-width='1.5' stroke-dasharray='6%2c 4' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        .ios-handle {
+            width: 36px;
+            height: 5px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 999px;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary-fixed">
+<!-- Nike Website Mockup (Background) -->
+<div class="relative min-h-screen w-full overflow-hidden filter brightness-90">
+<!-- Nike Header -->
+<header class="flex justify-between items-center px-8 py-4 bg-white">
+<img alt="Nike Logo" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8rLhCkLqvxAAR29q3sYx074iZiJ7TTso4qG4C2T-pTvWYFADty1LK6yOOfSHRPjssbV7wsCM00XrRU3eNLGNk-FGFEu0PccymJ9sbv8eYw6CLH7CfAJiDJYs00P9HKFOf9U4TYlSrPTPNExfNLOkwSda4Lr3YXKRvfMizVqVJT1KAAr5wdgJmOB1HLqXKoz5vUl1c3IXjpUZp7Y3v0WMal-jql2p0_2VXSvuE2CnipHAl6_srS2lKLvVAKdELuaGtWcToiJsBLMEa"/>
+<nav class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest">
+<span>New Releases</span>
+<span>Men</span>
+<span>Women</span>
+<span>Kids</span>
+</nav>
+<div class="flex space-x-4">
+<span class="material-symbols-outlined">search</span>
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+</header>
+<!-- Product Content -->
+<main class="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="aspect-square bg-surface-container rounded-xl">
+<img alt="Modern high-performance red running shoe" class="w-full h-full object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzMJuch2SWqmx-k5J_krq4DgPMVDpc5_qtUhWnZsCtqLpp3J7gUZC9wXXugw3YI47lFCHe_VqiPiW-poB0mcgND2vZvtGhzxpP9ZlCvJGotnfUgA074hNiZlSO8aH9d8bXvP330YE_5atOhvU6PEry9qdsFxUaqqM0JnWtmrl-f0vhs-pv8p2fIe1EzvOpHKWMTnA7AV8dIufY3mWBxUW1kKgI6G5jbMHxUD-IdbP0r2CTlBaMfS7WuwzS-8QvgsDsFVaUZXflh2jA"/>
+</div>
+<div class="space-y-6">
+<p class="text-secondary font-bold">Sustainable Materials</p>
+<h1 class="text-5xl font-extrabold tracking-tighter">Nike Air Pegasus Pro</h1>
+<p class="text-xl">$160.00</p>
+<div class="space-y-4">
+<div class="h-14 w-full bg-on-surface text-white flex items-center justify-center font-bold rounded-full">Add to Bag</div>
+<div class="h-14 w-full border border-surface-container-highest flex items-center justify-center font-bold rounded-full">Favorite</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Darkened Overlay for context -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-[2px] z-40"></div>
+<!-- Groupon iOS Extension Panel -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex justify-center p-4 md:p-8 animate-in slide-in-from-bottom duration-500 ease-out">
+<div class="w-full max-w-lg glass-panel rounded-3xl extension-shadow border border-white/80 overflow-hidden flex flex-col">
+<!-- Native iOS-style Header Status Bar -->
+<div class="bg-primary/[0.04] border-b border-black/5 px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-primary rounded-[8px] flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-white" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="text-[11px] font-extrabold text-primary uppercase tracking-[0.12em]">Extension Active</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-black/[0.06] flex items-center justify-center hover:bg-black/10 transition-colors">
+<span class="material-symbols-outlined text-base font-bold">close</span>
+</button>
+</div>
+<!-- Main Extension Content -->
+<div class="px-6 pt-6 pb-8 space-y-6">
+<!-- Brand & Info -->
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 bg-primary rounded-2xl shadow-sm flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">local_offer</span>
+</div>
+<div>
+<h2 class="text-[22px] font-extrabold tracking-tight text-on-surface leading-tight">Groupon Rewards</h2>
+<p class="text-[14px] text-on-surface-variant/70 font-semibold">Found 1 coupon for Nike.com</p>
+</div>
+</div>
+<!-- Highlighted Offer Card -->
+<div class="bg-white rounded-[24px] p-6 border border-black/[0.03] shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-full uppercase tracking-wider">Best Value</span>
+<!-- Code Display -->
+<button class="group relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all active:scale-95">
+<div class="absolute inset-0 coupon-dash rounded-xl opacity-20 group-hover:opacity-100 transition-opacity"></div>
+<span class="font-mono font-extrabold text-primary text-base tracking-widest uppercase">NIKE15</span>
+<span class="material-symbols-outlined text-primary text-lg group-hover:translate-x-0.5 transition-transform">content_copy</span>
+</button>
+</div>
+<h3 class="text-5xl font-extrabold text-on-surface tracking-tighter leading-none mb-3">15% Off</h3>
+<p class="text-on-surface-variant/80 text-[14px] font-medium mb-5">Applied to your entire order at checkout</p>
+<!-- Bonus Visual Hierarchy -->
+<div class="pt-4 border-t border-dashed border-black/[0.08] flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<p class="text-[14px] font-bold text-primary">
+                        Earn $0.8 Bucks <span class="text-on-surface-variant/60 font-medium">using this code</span>
+</p>
+</div>
+</div>
+<!-- Cashback Offer Card - Refined -->
+<div class="bg-primary/[0.04] rounded-2xl p-5 border border-primary/10 shadow-[0_2px_4px_rgba(0,0,0,0.02)] flex items-center justify-between group hover:bg-primary/[0.06] transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-primary/5 flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-extrabold text-primary/70 uppercase tracking-[0.15em]">Available Cashback</p>
+<h3 class="text-[16px] font-extrabold text-on-surface tracking-tight leading-tight">3% Cashback + $1.8 Bucks</h3>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-2 gap-4">
+<button class="h-[68px] emerald-gradient-button text-white text-[17px] font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 active:scale-[0.97] transition-all duration-200">
+                    Apply Now
+                    <span class="material-symbols-outlined text-xl">bolt</span>
+</button>
+<button class="h-[68px] bg-white border border-black/[0.06] text-on-surface font-extrabold text-[17px] rounded-2xl hover:bg-white/50 active:bg-black/[0.02] active:scale-[0.97] transition-all duration-200 shadow-sm">
+                    Save for later
+                </button>
+</div>
+<!-- Footer Branding -->
+<div class="flex flex-col items-center gap-4">
+<p class="text-[10px] text-on-surface-variant/40 font-bold uppercase tracking-[0.2em] text-center">
+                    Verified by Groupon • Secure Extension
+                </p>
+<div class="ios-handle"></div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Value Architect - Safari Extension Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "outline": "#717a67",
+                    "inverse-on-surface": "#edf0ff",
+                    "secondary-fixed-dim": "#8bd0ef",
+                    "on-secondary-fixed": "#001f2a",
+                    "on-tertiary-fixed-variant": "#005311",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#306b00",
+                    "secondary-container": "#99defd",
+                    "inverse-primary": "#87dc4f",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#87dc4f",
+                    "primary": "#2f6900",
+                    "on-surface": "#161c26",
+                    "surface-dim": "#d5dae9",
+                    "background": "#f9f9ff",
+                    "tertiary": "#006b19",
+                    "primary-fixed": "#a2f968",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002203",
+                    "tertiary-container": "#188729",
+                    "surface-container-highest": "#dee2f1",
+                    "surface-bright": "#f9f9ff",
+                    "tertiary-fixed": "#91fa8c",
+                    "surface-variant": "#dee2f1",
+                    "secondary": "#116682",
+                    "outline-variant": "#c0cab4",
+                    "surface-container-high": "#e4e8f7",
+                    "surface-container": "#e9edfd",
+                    "on-surface-variant": "#414a39",
+                    "secondary-fixed": "#bde9ff",
+                    "tertiary-fixed-dim": "#75dd73",
+                    "inverse-surface": "#2b303c",
+                    "primary-container": "#3d8400",
+                    "on-tertiary-container": "#f7fff1",
+                    "on-primary-fixed": "#0a2100",
+                    "on-primary-container": "#f9ffed",
+                    "on-background": "#161c26",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed-variant": "#235100",
+                    "on-secondary-fixed-variant": "#004d64",
+                    "on-secondary-container": "#0a637f",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* iOS Switch Style */
+        .ios-switch {
+            position: relative;
+            display: inline-block;
+            width: 51px;
+            height: 31px;
+        }
+        .ios-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e9e9ea;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 27px;
+            width: 27px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        input:checked + .slider {
+            background-color: #34c759;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- The TopAppBar is suppressed because this is a focused system settings task -->
+<main class="min-h-screen flex flex-col items-center pb-20">
+<!-- Header Text -->
+<div class="w-full max-w-md px-6 pt-12 pb-8">
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">The Value Architect</h1>
+<p class="text-on-surface-variant font-medium leading-relaxed">One-time setup in iOS Settings - just a toggle</p>
+</div>
+<!-- iOS Settings Mockup Container -->
+<div class="w-full max-w-md px-4">
+<div class="bg-surface-container-low rounded-[2.5rem] p-3 shadow-2xl overflow-hidden">
+<!-- System Header -->
+<div class="flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm">arrow_back_ios</span>
+<span class="text-secondary font-medium">Extensions</span>
+</div>
+<span class="text-on-surface font-semibold">Safari</span>
+<div class="w-10"></div>
+</div>
+<!-- Settings Content Area -->
+<div class="bg-surface-bright rounded-2xl overflow-hidden mt-2">
+<!-- Section Title -->
+<div class="px-6 pt-6 pb-2">
+<span class="text-on-surface-variant text-xs font-semibold uppercase tracking-wider">ALLOW THESE EXTENSIONS</span>
+</div>
+<!-- Extension Row -->
+<div class="flex items-center justify-between px-6 py-4 bg-white border-y border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-white shadow-sm overflow-hidden">
+<img alt="Groupon Logo" class="w-8 h-8 object-contain" data-alt="Stylized modern brand logo for Groupon featuring professional typography on a clean minimal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcSgLnBQQ5t4BBHLB2n7mDs82B1r8NiYepq_66La44y1-PpaplnHpfMxR-ucg-M2K6CT96kUorURlV2FpnC08MvoV84AS_9d6_2rxXLU6z96o0kiiOorVr2lJ8dLn9yKbgH9q3oY-ev-xzSc8jrwkPOc7SEtiSZzg4xlvkfuynTGiSGr1evPN8F0S8GiPp47tSuh8HSWC9n95IjLsJAW8glG8XWTaTg2NDX3ytmajCrW46uSrTsZr6TsD69JMl6BY4QFM8SIQ-XL8o"/>
+</div>
+<span class="text-on-surface font-semibold text-lg tracking-tight">Groupon</span>
+</div>
+<label class="ios-switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<!-- Informational Text -->
+<div class="px-6 py-4">
+<p class="text-on-surface-variant text-[13px] leading-snug">
+                            "Groupon" can read and alter webpage content and see your browsing history on all websites. This is used to find savings and activate rewards while you shop.
+                        </p>
+</div>
+</div>
+<!-- Instructional Hint -->
+<div class="mt-8 px-6 pb-6 text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-container/20 text-on-primary-container rounded-full border border-primary/10">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-xs font-bold uppercase tracking-widest">Secure &amp; Verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Value Card - Asymmetric Editorial Layout -->
+<div class="w-full max-w-md px-4 mt-12">
+<div class="relative overflow-hidden rounded-3xl bg-surface-container-highest group">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img alt="Woman shopping" class="w-full h-64 object-cover transform transition-transform duration-700 group-hover:scale-105" data-alt="a stylish person in a designer boutique holding a shopping bag with a look of joyful discovery soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7zd6uSvwXWP2rA5VzN8ezdLbvnoD58AyE2uAGtTQLuC_rAZUdPRX0aB-hMccahEkxz_bgSA4ap4ZRiSP3dhDlsbXkUBTLJZJ7UKhaM0tt_DD09cvAFN4iWsI3Fn-zCOmFNko87G8UZFwKt5qwRbNqZHd6PedvhfVgYoG7AE3TGw9bY4-DgqcXORSqlyjlLzgT-dvbYLrTP8O4Sh66LwIySQ70UbkfJWKx3Xzx3zDqIoyIU4m11qXE1eMO9Ee1aaQLea8jAHgqH0ii"/>
+<div class="absolute bottom-0 left-0 p-8 z-20">
+<h2 class="text-white text-2xl font-extrabold leading-tight mb-2 tracking-tight">Seamless Savings,<br/>Zero Effort.</h2>
+<p class="text-white/90 text-sm font-medium leading-relaxed max-w-[240px]">
+                        The extension works silently in Safari to fetch the best deals the moment you land on a store.
+                    </p>
+</div>
+<!-- Floating Glassmorphic Badge -->
+<div class="absolute top-6 right-6 z-20 backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl p-4 flex flex-col items-center">
+<span class="text-white text-xs font-bold tracking-widest uppercase mb-1">Average Savings</span>
+<span class="text-white text-3xl font-black">$42.50</span>
+</div>
+</div>
+</div>
+<!-- Process Guide -->
+<div class="w-full max-w-md px-6 mt-12 grid grid-cols-2 gap-4">
+<div class="p-6 rounded-[2rem] bg-secondary-container/30 border border-secondary-fixed/20 flex flex-col gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">bolt</span>
+<h3 class="text-on-secondary-container font-bold leading-tight">Instant Activation</h3>
+<p class="text-on-secondary-container/80 text-xs font-medium">Automatic deal detection across 10,000+ brands.</p>
+</div>
+<div class="p-6 rounded-[2rem] bg-tertiary-container/30 border border-tertiary-fixed/20 flex flex-col gap-3 translate-y-6">
+<span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<h3 class="text-on-tertiary-container font-bold leading-tight">Privacy First</h3>
+<p class="text-on-tertiary-container/80 text-xs font-medium">Bank-level encryption for your shopping profile.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Suppressed for Transactional/Onboarding Flow -->
+</body></html>

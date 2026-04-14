@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere with Groupon</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2f6900;
+    --primary-light: #3d8400;
+    --primary-bg: #f0fbe0;
+    --secondary: #116682;
+    --secondary-bg: #e6f5fc;
+    --tertiary: #006b19;
+    --tertiary-bg: #e8fbe8;
+    --surface: #fafbff;
+    --surface-dim: #f1f3f9;
+    --on-surface: #161c26;
+    --on-surface-muted: #5a6170;
+    --outline: #c0cab4;
+    --error: #ba1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--surface);
+    color: var(--on-surface);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+
+  /* Layout */
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    padding: 32px 24px;
+    background: #fff;
+    border-right: 1px solid rgba(0,0,0,0.06);
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .sidebar-sub {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .sidebar-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+    margin: 20px 0 16px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 0 -12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--on-surface-muted);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border-left: 3px solid transparent;
+  }
+  .nav-link::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: attr(data-color);
+    flex-shrink: 0;
+  }
+  .nav-link:nth-child(4)::before { background: #e65100; }  /* Problem */
+  .nav-link:nth-child(5)::before { background: #c62828; }  /* App Today */
+  .nav-link:nth-child(6)::before { background: var(--primary); }  /* Solution */
+  .nav-link:nth-child(7)::before { background: var(--primary); }  /* Why It Works */
+  .nav-link:nth-child(8)::before { background: var(--primary); }  /* Opportunity */
+  .nav-link:nth-child(9)::before { background: #7c3aed; }  /* Bucks */
+  .nav-link:nth-child(10)::before { background: var(--primary); } /* Hooks */
+  .nav-link:nth-child(11)::before { background: #e65100; } /* Unknowns */
+  .nav-link:nth-child(12)::before { background: var(--primary); } /* Plan */
+  .nav-link:nth-child(13)::before { background: var(--primary); } /* Ask */
+  .nav-link:nth-child(14)::before { background: #7c3aed; } /* Closing */
+  .nav-link:hover {
+    background: rgba(0,0,0,0.03);
+    color: var(--on-surface);
+  }
+  .nav-link.active {
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 600;
+    border-left-color: var(--primary);
+  }
+
+  /* Page layout */
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 32px 120px;
+    margin-left: 220px;
+  }
+
+  /* Hero / Opening */
+  .hero {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 64px;
+  }
+  .hero-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--on-surface);
+    margin-bottom: 16px;
+  }
+  .hero .subtitle {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 32px;
+  }
+  .callout {
+    padding: 24px 28px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .callout p strong {
+    color: var(--on-surface);
+    font-weight: 700;
+  }
+  .callout-green {
+    background: #edf8e8;
+    border-left: 3px solid var(--primary);
+  }
+  .callout-green .callout-label { color: var(--primary); }
+
+  /* Flow structured */
+  .flow-structured {
+    margin-top: 16px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .flow-row:last-child { border-bottom: none; }
+  .bridge-row {
+    background: #fffbeb;
+    margin: 4px -28px;
+    padding: 14px 28px;
+    border-bottom: none;
+    border-top: 2px dashed rgba(146,64,14,0.15);
+    border-bottom: 2px dashed rgba(146,64,14,0.15);
+  }
+  .flow-row-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .flow-row-label.green-label { color: var(--primary); }
+  .flow-row-label.blue-label { color: var(--secondary); }
+  .flow-row-label.bucks-label { color: #92400e; }
+  .flow-row-steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .fs {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .fs.grey { background: #eef0f3; color: var(--on-surface-muted); }
+  .fs.green { background: #e8f5e2; color: var(--primary); }
+  .fs.blue { background: #e4eefa; color: var(--secondary); }
+  .fs.bucks-highlight {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    font-weight: 700;
+  }
+  .fs-arrow {
+    color: rgba(0,0,0,0.18);
+    font-size: 14px;
+  }
+
+  /* Flow card (for Bucks section) */
+  .flow-card {
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    margin-top: 16px;
+  }
+  .flow-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .flow-step {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .flow-step.green { background: #e8f5e2; color: var(--primary); }
+  .flow-step.blue { background: #e4eefa; color: var(--secondary); }
+  .flow-arrow {
+    color: rgba(0,0,0,0.2);
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  /* Foundation section */
+  .foundation-section {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .foundation-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 12px;
+  }
+  .foundation-section h2 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--on-surface);
+    margin-bottom: 12px;
+  }
+  .foundation-section > p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 24px;
+  }
+  .detail-card {
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .detail-card h4 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 12px;
+  }
+  .detail-card > p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 16px;
+  }
+  .detail-card > p em {
+    font-style: italic;
+  }
+  .detail-list {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .detail-list li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+  }
+  .detail-card details {
+    margin-top: 8px;
+  }
+  .detail-card summary {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+    cursor: pointer;
+    padding: 4px 0;
+    list-style: none;
+  }
+  .detail-card summary::before {
+    content: '+ ';
+  }
+  .detail-card details[open] summary::before {
+    content: '- ';
+  }
+  .detail-expanded {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .detail-expanded p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 12px;
+  }
+  .detail-expanded p strong {
+    color: var(--on-surface);
+    font-weight: 700;
+  }
+  .detail-expanded ul {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .detail-expanded li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+  }
+
+  /* App today metrics */
+  .app-metrics {
+    display: flex;
+    gap: 12px;
+    margin: 28px 0;
+  }
+  .app-metric {
+    flex: 1;
+    padding: 18px 16px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    text-align: center;
+  }
+  .app-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .app-metric-label {
+    font-size: 11px;
+    color: var(--on-surface-muted);
+    font-weight: 500;
+  }
+  .app-problems {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .app-problem-card {
+    padding: 20px 22px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: #fff;
+  }
+  .app-problem-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .app-problem-card ul {
+    list-style: disc;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .app-problem-card li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--on-surface-muted);
+  }
+
+  /* Inline prototype */
+  .proto-inline {
+    margin-top: 32px;
+    border-radius: 16px;
+    background: #0a0a0f;
+    padding: 40px;
+    overflow: hidden;
+  }
+  .pi-container {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    justify-content: center;
+  }
+  .pi-phone-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .pi-phone {
+    position: relative;
+    width: 280px;
+    height: 607px;
+    background: #000;
+    border-radius: 42px;
+    border: 3px solid #2a2a2a;
+    box-shadow: 0 0 0 1px #111, 0 20px 60px rgba(0,0,0,0.7);
+    overflow: hidden;
+  }
+  .pi-island {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 28px;
+    background: #000;
+    border-radius: 16px;
+    z-index: 10;
+  }
+  .pi-screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .pi-screen.active { opacity: 1; }
+  .pi-timer {
+    width: 280px;
+    height: 2px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .pi-timer-fill {
+    height: 100%;
+    background: #53a318;
+    width: 0%;
+    transition: width 0.1s linear;
+    border-radius: 1px;
+  }
+  .pi-dots {
+    display: flex;
+    gap: 8px;
+  }
+  .pi-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .pi-dot.active {
+    background: #53a318;
+    box-shadow: 0 0 8px rgba(83,163,24,0.5);
+    transform: scale(1.3);
+  }
+  .pi-dot.visited { background: rgba(83,163,24,0.5); }
+  .pi-controls {
+    display: flex;
+    gap: 10px;
+  }
+  .pi-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .pi-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+  }
+  .pi-btn.playing {
+    background: rgba(83,163,24,0.15);
+    border-color: rgba(83,163,24,0.3);
+    color: #53a318;
+  }
+  .pi-narrative {
+    max-width: 320px;
+    min-width: 240px;
+    color: #fff;
+  }
+  .pi-phase {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .pi-phase-capture { background: rgba(83,163,24,0.15); color: #a2f968; }
+  .pi-phase-engage { background: rgba(255,149,0,0.15); color: #ffcc00; }
+  .pi-counter {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 6px;
+  }
+  .pi-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    color: #fff;
+    transition: opacity 0.3s ease;
+  }
+  .pi-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    transition: opacity 0.3s ease;
+  }
+  .pi-fade { opacity: 0 !important; }
+  .pi-phone { cursor: pointer; }
+
+  /* Prototype preview */
+  .prototype-preview {
+    margin-top: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .prototype-strip {
+    display: flex;
+    gap: 12px;
+    min-width: max-content;
+  }
+  .proto-screen {
+    flex-shrink: 0;
+    width: 96px;
+    text-align: center;
+  }
+  .proto-screen img {
+    width: 96px;
+    height: 208px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .proto-label {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+  }
+
+  /* Section structure */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  .section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--on-surface-muted);
+    margin-bottom: 16px;
+  }
+  .section p strong {
+    color: var(--on-surface);
+    font-weight: 600;
+  }
+
+  /* Opportunity section */
+  .shift-callout {
+    padding: 20px 24px;
+    border-radius: 12px;
+    background: #fff5f5;
+    border-left: 3px solid var(--error);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface);
+    margin: 24px 0;
+  }
+  .opportunity-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 28px 0;
+    align-items: start;
+  }
+  .sizing-rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .sizing-row {
+    display: flex;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    gap: 12px;
+  }
+  .sizing-row:last-child {
+    border-bottom: none;
+  }
+  .sizing-label {
+    flex: 1;
+    font-size: 14px;
+    color: var(--on-surface-muted);
+  }
+  .sizing-val {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--on-surface);
+    white-space: nowrap;
+  }
+  .sizing-src {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .revenue-hero {
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .revenue-number {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .revenue-sub {
+    font-size: 13px;
+    color: var(--on-surface-muted);
+    margin-bottom: 20px;
+  }
+  .revenue-detail {
+    text-align: left;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .revenue-detail p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 8px;
+  }
+  .bottom-banner {
+    padding: 20px 28px;
+    border-radius: 12px;
+    background: var(--primary-bg);
+    border: 1px solid rgba(47,105,0,0.1);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  /* Bucks economics */
+  .bucks-economics {
+    margin-top: 24px;
+    padding: 24px 28px;
+    border-radius: 16px;
+    background: #fffbf0;
+    border: 1px dashed rgba(245,158,11,0.3);
+  }
+  .bucks-econ-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #b45309;
+    margin-bottom: 10px;
+  }
+  .bucks-economics > p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 12px;
+  }
+  .bucks-economics ul {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .bucks-economics li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+  }
+  .bucks-economics li strong {
+    color: var(--on-surface);
+  }
+
+  /* Bucks section */
+  .bucks-card {
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border-left: 3px solid #f59e0b;
+    margin-top: 24px;
+  }
+  .bucks-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .bucks-card p strong {
+    color: var(--on-surface);
+    font-weight: 700;
+  }
+  .bucks-quote {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--on-surface);
+  }
+
+  /* Why it works */
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .why-item {
+    display: flex;
+    gap: 20px;
+    padding: 22px 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .why-item.highlight {
+    background: var(--primary-bg);
+    border: 1px solid rgba(47,105,0,0.1);
+  }
+  .why-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .why-icon .material-symbols-outlined {
+    font-size: 20px;
+    color: var(--on-surface-muted);
+  }
+  .why-icon.accent {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  }
+  .why-icon.accent .material-symbols-outlined {
+    color: #fff;
+  }
+  .why-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--on-surface);
+  }
+  .why-item p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* How it works - numbered cards */
+  .how-it-works-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .hiw-card {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .hiw-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .hiw-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--on-surface);
+  }
+  .hiw-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Data table */
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .data-card {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .data-card .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    margin-bottom: 8px;
+  }
+  .data-card .value {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    line-height: 1;
+  }
+  .data-card .value.green { color: var(--primary); }
+  .data-card .value.blue { color: var(--secondary); }
+  .data-card .value.red { color: var(--error); }
+  .data-card .context {
+    font-size: 13px;
+    color: var(--on-surface-muted);
+    margin-top: 6px;
+  }
+  .data-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Unknowns */
+  .unknowns-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .unknown-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: #fff8e1;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .unknown-item .material-symbols-outlined {
+    color: #f59e0b;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .unknown-item p {
+    font-size: 15px;
+    color: var(--on-surface);
+    margin-bottom: 0;
+  }
+
+  /* Three pillars */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .pillar {
+    padding: 28px 24px;
+    border-radius: 16px;
+    text-align: center;
+  }
+  .pillar.ext {
+    background: var(--primary-bg);
+    border: 1px solid rgba(47,105,0,0.1);
+  }
+  .pillar.bucks {
+    background: var(--secondary-bg);
+    border: 1px solid rgba(17,102,130,0.1);
+  }
+  .pillar.app {
+    background: var(--tertiary-bg);
+    border: 1px solid rgba(0,107,25,0.1);
+  }
+  .pillar .material-symbols-outlined {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .pillar.ext .material-symbols-outlined { color: var(--primary); }
+  .pillar.bucks .material-symbols-outlined { color: var(--secondary); }
+  .pillar.app .material-symbols-outlined { color: var(--tertiary); }
+  .pillar h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .pillar .role {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .pillar.ext .role { color: var(--primary); }
+  .pillar.bucks .role { color: var(--secondary); }
+  .pillar.app .role { color: var(--tertiary); }
+  .pillar p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Hooks grid */
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .hook-item {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .hook-item .material-symbols-outlined {
+    font-size: 22px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .hook-item h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 3px;
+  }
+  .hook-item p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .hook-mockup {
+    margin-top: 10px;
+  }
+  .mockup-popup {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .mockup-notif {
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .hooks-differentiator {
+    margin-top: 20px;
+    padding: 22px 26px;
+    border-radius: 12px;
+    background: var(--primary-bg);
+    border: 1px solid rgba(47,105,0,0.1);
+  }
+  .hooks-differentiator h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .hooks-differentiator p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .hooks-validated {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 12px;
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .hooks-validated .material-symbols-outlined {
+    color: var(--primary);
+    font-size: 20px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .hooks-validated p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Initiatives */
+  .initiatives-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .initiative-card {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .initiative-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .initiative-header .material-symbols-outlined {
+    font-size: 24px;
+  }
+  .initiative-status {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+  .initiative-status.executing {
+    background: var(--primary-bg);
+    color: var(--primary);
+  }
+  .initiative-status.scoping {
+    background: #f3e8ff;
+    color: #7c3aed;
+  }
+  .initiative-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 8px;
+  }
+  .initiative-card > p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+    margin-bottom: 16px;
+  }
+  .initiative-data {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .init-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .init-row span {
+    color: var(--on-surface-muted);
+  }
+  .init-row strong {
+    color: var(--on-surface);
+  }
+  .initiative-note {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--on-surface-muted);
+    margin-top: auto;
+    margin-bottom: 0 !important;
+  }
+  @media (max-width: 640px) {
+    .initiatives-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Three-without banner */
+  .three-without {
+    padding: 20px 28px;
+    border-radius: 12px;
+    background: var(--primary-bg);
+    border: 1px solid rgba(47,105,0,0.1);
+    margin-top: 8px;
+  }
+  .three-without p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .three-without p strong {
+    color: var(--on-surface);
+  }
+
+  /* Pillar detail cards */
+  .pillar-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .pillar-detail {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border-left: 4px solid;
+  }
+  .pillar-detail.ext { border-left-color: var(--primary); }
+  .pillar-detail.bucks { border-left-color: var(--secondary); }
+  .pillar-detail.app { border-left-color: var(--tertiary); }
+  .pillar-detail h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pillar-detail p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Coupons space section */
+  .trend-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 24px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    margin-bottom: 12px;
+  }
+  .trend-item .material-symbols-outlined {
+    font-size: 24px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .trend-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .trend-item p {
+    font-size: 14px;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Source tags */
+  .source {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+    background: rgba(0,0,0,0.04);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: rgba(0,0,0,0.06);
+    margin: 72px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 48px 0 24px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    margin-top: 48px;
+  }
+  .footer p {
+    font-size: 13px;
+    color: var(--on-surface-muted);
+  }
+
+  /* Quote block */
+  .quote {
+    padding: 24px 28px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border-left: 4px solid var(--primary);
+    margin: 24px 0;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--on-surface);
+  }
+
+  /* Plan phases */
+  .plan-phases {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .plan-phase {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .phase-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .phase-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .phase-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 2px;
+  }
+  .phase-desc {
+    font-size: 13px;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .plan-phase ul {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .plan-phase li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+  }
+
+  /* Ask section */
+  .ask-card {
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--primary-bg);
+    border: 2px solid rgba(47,105,0,0.15);
+    margin-top: 20px;
+  }
+  .ask-main h4 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .ask-main p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .ask-executing {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ask-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 14px;
+    color: var(--on-surface-muted);
+  }
+  .ask-item .material-symbols-outlined {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Closing section */
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .closing-card {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--surface-dim);
+  }
+  .closing-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .closing-focus {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    margin-bottom: 12px;
+  }
+  .closing-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .page { padding: 32px 20px 80px; }
+    .hero h1 { font-size: 32px; }
+    .hero .subtitle { font-size: 17px; }
+    .pillars { grid-template-columns: 1fr; }
+    .data-grid { grid-template-columns: 1fr; }
+    .data-card .value { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-title">Safari Extension</div>
+    <div class="sidebar-sub">Strategy Report - Apr 2026</div>
+    <div class="sidebar-divider"></div>
+    <a href="#premise" class="nav-link">The Problem</a>
+    <a href="#app-today" class="nav-link">The App Today</a>
+    <a href="#solution" class="nav-link">The Solution</a>
+    <a href="#why-it-works" class="nav-link">Why It Works</a>
+    <a href="#opportunity" class="nav-link">The Opportunity</a>
+    <a href="#bucks" class="nav-link">Groupon Bucks</a>
+    <a href="#hooks" class="nav-link">Hooks</a>
+    <a href="#unknowns" class="nav-link">Unknowns</a>
+    <a href="#plan" class="nav-link">The Plan</a>
+    <a href="#ask" class="nav-link">The Ask</a>
+    <a href="#closing" class="nav-link">Two Sides</a>
+  </nav>
+<div class="page">
+
+  <!-- ============================================ -->
+  <!-- THE PREMISE -->
+  <!-- ============================================ -->
+  <div class="hero" id="premise">
+    <div class="hero-label">The Problem</div>
+    <h1>The Groupon app has a retention problem. Coupons content can solve it.</h1>
+    <p class="subtitle">66% of users buy once and stop. The app only gets opened when someone wants to buy something. We need to give users a reason to come back between purchases.</p>
+
+    <div class="callout callout-green">
+      <div class="callout-label">Our solution</div>
+      <p>Coupons already drives <strong>29.6M sessions/yr</strong>, <strong>14.8M clicks</strong> and <strong>$12.6M in commission</strong> - but it's stuck on the web, disconnected from the app. People need promo codes constantly. By moving this into a Safari extension inside the Groupon app, we turn a web asset into a frequency engine - capturing users off-platform and bridging them back via Groupon Bucks. Target: <strong>$4-25M incremental</strong>.</p>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- THE APP TODAY -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" style="color: var(--error);" id="app-today">The app today</div>
+    <h2>High intent, low frequency, leaky funnel.</h2>
+
+    <p>The Groupon app generates ~$1.9M/day in revenue - but the engagement model is fragile. Most users visit rarely, few convert, and push notifications carry an outsized share of the load.</p>
+
+    <div class="app-metrics">
+      <div class="app-metric">
+        <div class="app-metric-value">~500K</div>
+        <div class="app-metric-label">Daily unique visitors</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-value">~7.2M</div>
+        <div class="app-metric-label">14-day unique users</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-value">$4.30</div>
+        <div class="app-metric-label">Revenue per visitor</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-value" style="color: #e65100;">5.5%</div>
+        <div class="app-metric-label">Purchasers / UV</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-value">$74</div>
+        <div class="app-metric-label">Avg order value</div>
+      </div>
+    </div>
+
+    <div class="app-problems">
+      <div class="app-problem-card">
+        <h4 style="color: var(--error);">Engagement problem</h4>
+        <ul>
+          <li>5% DAU/MAU stickiness (vs ~34% for Fetch)</li>
+          <li>66% buy once and stop (7.3M one-time buyers)</li>
+          <li>62% never click a deal, 77% abandon checkout</li>
+        </ul>
+      </div>
+      <div class="app-problem-card">
+        <h4 style="color: #e65100;">Revenue concentration</h4>
+        <ul>
+          <li>57% Direct, 19% Push, 12% SEM</li>
+          <li>Push drives ~$90K/day - high single-channel dependency</li>
+          <li>Organic/SEO accounts for <0.5% of app orders</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shift-callout" style="margin-top: 16px;">
+      <strong>Viktor's clickstream finding:</strong> $166M marketing spend drove +15% new users but only +1% revenue. "We're filling a bucket with a hole in the bottom." The value ladder shows clear potential ($18 -> $36 -> $53 -> $70 -> $121 per purchase tier) - but users need a reason to come back. That's the frequency gap this initiative fills.
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- THE SOLUTION -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="solution">The Solution</div>
+    <h2>Safari Extension Inside the Groupon App</h2>
+
+    <p>Nobody remembers to open Groupon at checkout. So don't make them. Ship a Safari extension inside the Groupon app - just like Honey lives inside PayPal.</p>
+
+    <h3 style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-surface-muted); margin-bottom: 12px;">How it works</h3>
+    <div class="flow-structured">
+      <div class="flow-row">
+        <div class="flow-row-label">Setup</div>
+        <div class="flow-row-steps">
+          <span class="fs grey">Installs Groupon app</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs grey">Extension added automatically</span>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-row-label green-label">Off-platform</div>
+        <div class="flow-row-steps">
+          <span class="fs green">Shops on Nike.com</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs green">Extension finds coupon</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs green">Applies code + cashback</span>
+        </div>
+      </div>
+      <div class="flow-row bridge-row">
+        <div class="flow-row-label bucks-label">The hook</div>
+        <div class="flow-row-steps">
+          <span class="fs bucks-highlight">Earns Groupon Bucks</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs bucks-highlight">Opens app to redeem</span>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-row-label blue-label">In-app</div>
+        <div class="flow-row-steps">
+          <span class="fs blue">Browses local deals</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs blue">Books a deal with Bucks</span>
+          <span class="fs-arrow">&#8594;</span>
+          <span class="fs blue">Earns more Bucks on the deal</span>
+          <span class="fs-arrow" style="color: var(--primary);">&#8635;</span>
+          <span class="fs green">Shops again off-platform</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-inline">
+      <div class="pi-container">
+        <div class="pi-phone-col">
+          <div class="pi-phone">
+            <div class="pi-island"></div>
+            <div id="piScreens"></div>
+          </div>
+          <div class="pi-timer"><div class="pi-timer-fill" id="piTimerFill"></div></div>
+          <div class="pi-dots" id="piDots"></div>
+          <div class="pi-controls">
+            <button class="pi-btn" onclick="piPrev()">&#8592; Prev</button>
+            <button class="pi-btn" id="piPlayBtn" onclick="piToggle()">&#9654; Play</button>
+            <button class="pi-btn" onclick="piNext()">Next &#8594;</button>
+          </div>
+        </div>
+        <div class="pi-narrative">
+          <div class="pi-phase" id="piPhase"></div>
+          <div class="pi-counter" id="piCounter"></div>
+          <div class="pi-title" id="piTitle"></div>
+          <div class="pi-desc" id="piDesc"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-card" style="margin-top: 32px;">
+      <p>Since iOS 15, apps can ship a Safari Web Extension inside their bundle. The user enables it once in Settings -> Safari -> Extensions and grants website access. Two taps, done forever. From then on, Groupon is there at every checkout - showing available codes <em>and</em> cashback rates. No separate install. No separate app. This is exactly how <strong>Honey</strong> (bundled inside PayPal since Sept 2021) and <strong>Rakuten</strong> both work on iOS today.</p>
+
+      <p><strong>Why this changes everything:</strong></p>
+      <ul class="detail-list">
+        <li>Solves the "remember to open Groupon" problem completely</li>
+        <li>Every activation is a Groupon brand touchpoint - even if the code isn't used</li>
+        <li>Two incentive layers: promo codes (instant discount) + cashback (rewards) - stacks the value</li>
+        <li>Genie already proves the model on desktop - this brings it to mobile without a separate product</li>
+        <li>Turns every Groupon app install into a Genie mobile install for free</li>
+      </ul>
+
+      <details>
+        <summary>How the extension works under the hood</summary>
+        <div class="detail-expanded">
+          <ul>
+            <li><strong>Content script</strong> injected into Safari pages detects merchant domains (matching against Groupon's coupon database)</li>
+            <li>On checkout/cart pages, it injects a floating banner at the bottom of the viewport - non-intrusive, dismissible</li>
+            <li>Tapping "Apply" pastes the code into the promo field on the page (same approach as Honey)</li>
+            <li>"Claim Bucks" button uses a <strong>universal link</strong> to deep-link into the Groupon app with the savings amount pre-loaded</li>
+            <li>The app lands on a success screen showing Bucks earned + a "Follow this store" prompt + local deals</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- WHY IT WORKS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="why-it-works">Why it works</div>
+    <h2>Why It Works</h2>
+
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-icon"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span></div>
+        <div>
+          <h4>Acquisition is already solved</h4>
+          <p>8-10M monthly active users are already in the app. But DAU/MAU is just 5% - and visit frequency is 1.2x per 14 days. The extension activates this massive dormant base without needing a single new install.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smartphone</span></div>
+        <div>
+          <h4>Works on mobile - where our customers shop</h4>
+          <p>61% of coupons traffic is mobile. Mobile popup CTR is 1.80% vs 0.81% desktop (2.2x higher intent). Genie can't reach these users. The Safari extension can.</p>
+        </div>
+      </div>
+
+      <div class="why-item highlight">
+        <div class="why-icon accent"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span></div>
+        <div>
+          <h4>Off-platform data feeds in-app personalisation</h4>
+          <p>Integrating data from users' off-Groupon shopping experience into their Groupon profile enhances opportunity for personalisation. We learn what brands they shop, what categories they buy in, and when - then use that to surface relevant local deals.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">layers</span></div>
+        <div>
+          <h4>Phased rollout - start lean, stack value</h4>
+          <p>Start with quality coupon offers only. Then layer in rewards. Then cashback. Each phase adds value independently - no big-bang dependency.</p>
+        </div>
+      </div>
+
+      <div class="why-item highlight">
+        <div class="why-icon accent"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sync</span></div>
+        <div>
+          <h4>Bucks drive the loop back to Groupon</h4>
+          <p>By layering Bucks onto coupon usage or cashback offers, we give users a reason to open the app. Bucks are only redeemable in-app on local deals - that's the pull-back mechanism.</p>
+        </div>
+      </div>
+
+      <div class="why-item highlight">
+        <div class="why-icon accent"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span></div>
+        <div>
+          <h4>Cashback gives us full control over content</h4>
+          <p>Cashback lets us create valuable offers on popular merchants without relying on merchant-issued codes. It's a lever we control - and it enhances coupons content with Bucks to bring users back.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 3: THE OPPORTUNITY -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="opportunity">The opportunity</div>
+    <h2>The Opportunity</h2>
+
+    <p>This takes Groupon's <strong>entire app user base (~8-10M MAU)</strong> and inserts Groupon into every mobile shopping session. Users already have the app - no new acquisition needed. The extension ships inside the app they already own.</p>
+
+    <div class="shift-callout">
+      <strong>The strategic shift:</strong> Today, Groupon only exists when users open the app (~1.5x/month). With the Safari extension, Groupon is present on <strong>every shopping site they visit in Safari</strong> - Nike, Amazon, Target, restaurants, travel. We go from "transactional app they visit monthly" to "always-on savings companion across their entire mobile shopping life."
+    </div>
+
+    <div class="opportunity-layout">
+      <div class="sizing-rows">
+        <div class="sizing-row"><span class="sizing-label">Groupon app MAU (US)</span><span class="sizing-val">~8-10M</span><span class="sizing-src">Tableau</span></div>
+        <div class="sizing-row"><span class="sizing-label">iPhone share (Safari-addressable)</span><span class="sizing-val">84%</span><span class="sizing-src">Tableau (Mar 15 - Apr 14)</span></div>
+        <div class="sizing-row"><span class="sizing-label">Extension activation rate</span><span class="sizing-val">10-30%</span><span class="sizing-src">To test</span></div>
+        <div class="sizing-row"><span class="sizing-label">Potential active ext users</span><span class="sizing-val">672K-2.5M</span><span class="sizing-src">Model</span></div>
+        <div class="sizing-row"><span class="sizing-label">Commission/user/yr (from Genie)</span><span class="sizing-val">$6.00</span><span class="sizing-src">Genie actual</span></div>
+        <div class="sizing-row"><span class="sizing-label">+ Bucks &amp; deals cross-sell</span><span class="sizing-val">+$3.81</span><span class="sizing-src">LTV model</span></div>
+      </div>
+      <div class="revenue-hero">
+        <div class="revenue-number">$4.0-5.0M</div>
+        <div class="revenue-sub">Conservative floor at 10% activation, $6/user (Genie-proven)</div>
+        <div style="font-size: 15px; color: var(--on-surface-muted); margin-top: 8px;">Upside: <strong style="color: var(--primary);">$15-25M</strong> at 30% activation with Bucks cross-sell ($9.81/user)</div>
+        <div class="revenue-detail">
+          <p>Honey does this with PayPal. Capital One does it with banking. <strong>We do it with deals.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-banner">
+      Groupon becomes present in every shopping session - not just when users open the app. Bucks earned everywhere, redeemed on local experiences.
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 4: GROUPON BUCKS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="bucks">Groupon Bucks</div>
+    <h2>Groupon Bucks: The Connective Tissue</h2>
+
+    <div class="bucks-card">
+      <p>Bucks are the shared currency between the affiliate coupon world and the core deals world. A visible, growing balance that gives users a reason to come back even when they're not shopping.</p>
+
+      <p style="margin-top: 12px;"><strong>Two ways to earn:</strong> Small amounts from coupon usage (you used a code, here's a reward). Larger amounts from cashback offers (% back on the purchase). Both are paid in Bucks, only redeemable in-app on local deals.</p>
+
+      <p style="margin-top: 12px;"><strong>Why cashback matters separately:</strong> Cashback gives us full control over which merchants we promote and at what rate - we're not reliant on merchants issuing codes. It's a content creation lever.</p>
+
+      <div class="bucks-quote">
+        "You've earned $14.20 this month" - users check their balance even when they're not shopping. That's the habit loop.
+      </div>
+    </div>
+
+    <div class="bucks-economics">
+      <div class="bucks-econ-label">Bucks program design - a lever, not a blocker</div>
+      <p>The earn rate, redemption ratio, and expiry policy are levers for the business to tune over time - managed by promotions, not something we need to solve upfront. The extension can ship with coupons only while the Bucks program takes shape.</p>
+      <p style="margin-top: 8px;">Note: the $6/user floor (Genie-proven, commission only) requires no Bucks at all. The $9.81/user upside adds $3.81 from Bucks redemption on deals - this is the part that depends on getting the economics right.</p>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 5: ENGAGEMENT HOOKS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="hooks">Engagement hooks</div>
+    <h2>Hooks: Pulling Users Back to the App</h2>
+
+    <p>Ideas to enhance retention beyond the core coupon + cashback mechanic. These are not committed features - they're levers we can layer in over time as the extension matures.</p>
+
+    <div class="hooks-grid">
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: #b45309; font-variation-settings: 'FILL' 1;">payments</span>
+        <div>
+          <h4>Cashback in Bucks</h4>
+          <p>% back on purchases, paid as Bucks only redeemable in the Groupon app.</p>
+          <div class="hook-mockup">
+            <div class="mockup-popup">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <div style="width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined" style="font-size: 12px; color: #fff; font-variation-settings: 'FILL' 1;">check</span></div>
+                <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Code applied - you saved $19.50</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #fef9ee; border-radius: 6px;">
+                <span style="font-size: 11px; color: #b45309; font-weight: 600;">+$2.40 Groupon Bucks earned</span>
+                <span style="font-size: 10px; color: #b45309; background: #fde68a; padding: 2px 6px; border-radius: 4px; font-weight: 700;">Claim</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: var(--primary); font-variation-settings: 'FILL' 1;">military_tech</span>
+        <div>
+          <h4>Rewards status tracking</h4>
+          <p>Progress towards next tier or reward. "2 more saves to unlock Gold" -> opens app to check.</p>
+          <div class="hook-mockup">
+            <div class="mockup-popup">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 10px; font-weight: 700; color: var(--on-surface-muted); letter-spacing: 0.05em; text-transform: uppercase;">Reward progress</span>
+                <span style="font-size: 10px; font-weight: 700; color: var(--primary);">Silver</span>
+              </div>
+              <div style="height: 6px; background: #e8e8e8; border-radius: 3px; overflow: hidden; margin-bottom: 6px;">
+                <div style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--tertiary)); border-radius: 3px;"></div>
+              </div>
+              <span style="font-size: 10px; color: var(--on-surface-muted);">2 more saves to unlock <strong style="color: #b45309;">Gold</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: var(--secondary); font-variation-settings: 'FILL' 1;">notifications_active</span>
+        <div>
+          <h4>Brand following</h4>
+          <p>"New Nike code dropped" -> push notification -> opens app.</p>
+          <div class="hook-mockup">
+            <div class="mockup-notif">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: var(--primary); display: flex; align-items: center; justify-content: center;"><span style="font-size: 9px; color: #fff; font-weight: 900;">G</span></div>
+                <span style="font-size: 10px; color: #999; font-weight: 600;">GROUPON</span>
+                <span style="font-size: 10px; color: #bbb; margin-left: auto;">now</span>
+              </div>
+              <div style="font-size: 12px; font-weight: 700; color: #222;">New Nike code dropped</div>
+              <div style="font-size: 11px; color: #666;">25% off sitewide - expires tomorrow. Tap to save.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: var(--error); font-variation-settings: 'FILL' 1;">monitoring</span>
+        <div>
+          <h4>Price watchdog</h4>
+          <p>"Best time to shop Amazon" alerts -> opens app to see deals.</p>
+          <div class="hook-mockup">
+            <div class="mockup-notif">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: var(--primary); display: flex; align-items: center; justify-content: center;"><span style="font-size: 9px; color: #fff; font-weight: 900;">G</span></div>
+                <span style="font-size: 10px; color: #999; font-weight: 600;">GROUPON</span>
+                <span style="font-size: 10px; color: #bbb; margin-left: auto;">2h ago</span>
+              </div>
+              <div style="font-size: 12px; font-weight: 700; color: #222;">Amazon prices dropped <span style="color: var(--error);">&#8595; 18%</span></div>
+              <div style="font-size: 11px; color: #666;">3 items on your watchlist are at their lowest price.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: var(--tertiary); font-variation-settings: 'FILL' 1;">mail</span>
+        <div>
+          <h4>Weekly digest</h4>
+          <p>Best codes + "You've earned $X this week, $Y available to spend on deals."</p>
+          <div class="hook-mockup">
+            <div class="mockup-popup">
+              <div style="font-size: 11px; font-weight: 700; color: var(--on-surface); margin-bottom: 6px;">Your week in savings</div>
+              <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+                <div style="text-align: center;"><div style="font-size: 16px; font-weight: 800; color: var(--primary);">$8.40</div><div style="font-size: 9px; color: #999;">earned</div></div>
+                <div style="width: 1px; background: #e8e8e8;"></div>
+                <div style="text-align: center;"><div style="font-size: 16px; font-weight: 800; color: var(--secondary);">$22.10</div><div style="font-size: 9px; color: #999;">to spend</div></div>
+                <div style="width: 1px; background: #e8e8e8;"></div>
+                <div style="text-align: center;"><div style="font-size: 16px; font-weight: 800; color: var(--on-surface);">5</div><div style="font-size: 9px; color: #999;">codes used</div></div>
+              </div>
+              <div style="font-size: 10px; color: var(--primary); font-weight: 600;">Top codes: Nike 25%, ASOS 30%, Uber Eats 20%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <span class="material-symbols-outlined" style="color: #7c3aed; font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+        <div>
+          <h4>Bucks balance visibility</h4>
+          <p>The balance itself is the daily-open trigger. 90-day expiry creates urgency to redeem.</p>
+          <div class="hook-mockup">
+            <div class="mockup-popup" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; padding: 12px 14px;">
+              <div style="font-size: 9px; font-weight: 600; opacity: 0.7; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px;">Your balance</div>
+              <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px;">$14.60 <span style="font-size: 12px; font-weight: 600; opacity: 0.8;">Bucks</span></div>
+              <div style="font-size: 10px; opacity: 0.7;">&#9888; $6.20 expires in 12 days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hooks-differentiator">
+      <h4>Why Groupon wins</h4>
+      <p>Honey/Rakuten bridge coupons -> retail rewards. Groupon bridges coupons -> <strong>local experiences</strong>. "Earn Bucks from Nike, spend them on a massage near you." No competitor has this.</p>
+    </div>
+
+    <div class="hooks-validated">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+      <p><strong>Validated by Genie:</strong> Same mechanic, $6/user/yr proven on desktop. Safari inherits the economics + the entire app user base (8-10M, not just coupons visitors).</p>
+    </div>
+
+    <div class="three-without" style="margin-top: 20px;">
+      <p><strong>The extension without Bucks</strong> is just a coupon tool ($6/user). <strong>Bucks without the extension</strong> has no earning mechanism outside the app. <strong>Both without account integration</strong> means no personalisation. All three together create a flywheel where each piece makes the others more valuable.</p>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 6: UNKNOWNS & RISKS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="unknowns">Unknowns</div>
+    <h2>Unknowns &amp; Risks</h2>
+
+    <p>The 2-week iOS engineering spike answers the biggest question. The rest are measurable through testing.</p>
+
+    <h4 style="font-size: 14px; font-weight: 700; color: var(--on-surface); margin-top: 28px; margin-bottom: 12px;">What we need to validate</h4>
+    <div class="unknowns-list">
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>iOS App Store - can we bundle it?</strong> Honey (PayPal) and Rakuten bundle Safari extensions inside their apps today, but Groupon's app structure may differ. The 2-week spike validates this before any build commitment. Should include a test submission to confirm review timeline and any guideline changes.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>Extension activation rate:</strong> Estimated 10-30% range. Honey achieves ~30% activation from the PayPal app. 10% is our conservative floor. Actual rate determines whether this is a <strong>$4M or $25M opportunity</strong>.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>New onboarding flow required:</strong> Existing users need to be guided through enabling the extension (Settings -> Safari -> Extensions). This is a new permission step that doesn't exist today. The onboarding UX will directly impact activation rate.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>iOS share of app users:</strong> Confirmed at <strong>84%</strong> (Tableau, Mar 15 - Apr 14, US). iPhone = 83.1%, iPad = 0.9%. Android = 16%. This is significantly higher than the initial ~55% market estimate.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>Monthly app install/update rates:</strong> New installs get the extension automatically. Existing users need an app update. Update velocity affects ramp timeline.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>Bucks unit economics:</strong> Earn rate, redemption ratio, breakage, and expiry policy all need modelling before Bucks can launch. The extension can ship with coupons-only while this gets figured out.</p>
+        </div>
+      </div>
+      <div class="unknown-item">
+        <span class="material-symbols-outlined">help_outline</span>
+        <div>
+          <p><strong>Cannibalization risk:</strong> Does the Safari extension compete with Groupon's existing coupons web pages ($12.6M revenue) or with Genie desktop? Initial view: the extension reaches mobile users who don't visit coupons pages, and Genie serves desktop - minimal overlap. But this needs monitoring.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size: 14px; font-weight: 700; color: var(--on-surface); margin-top: 32px; margin-bottom: 12px;">Technical constraints</h4>
+    <div class="unknowns-list">
+      <div class="unknown-item" style="background: #f3f4f6;">
+        <span class="material-symbols-outlined" style="color: var(--on-surface-muted);">block</span>
+        <div>
+          <p><strong>Safari only:</strong> Doesn't work in Chrome, Firefox, or in-app browsers. However, 84% of Groupon app users are on iOS where Safari is the default browser. Android users (16%) get nothing on day one.</p>
+        </div>
+      </div>
+      <div class="unknown-item" style="background: #f3f4f6;">
+        <span class="material-symbols-outlined" style="color: var(--on-surface-muted);">security</span>
+        <div>
+          <p><strong>Content Security Policy:</strong> Some sites with strict CSP may limit injected UI. The extension should gracefully fall back to Safari's native popup sheet rather than breaking.</p>
+        </div>
+      </div>
+      <div class="unknown-item" style="background: #f3f4f6;">
+        <span class="material-symbols-outlined" style="color: var(--on-surface-muted);">gavel</span>
+        <div>
+          <p><strong>App Store guidelines:</strong> Section 4.4 says extensions can't include "marketing or advertising," but Honey and Rakuten are approved, so coupon-finding is accepted practice.</p>
+        </div>
+      </div>
+      <div class="unknown-item" style="background: #f3f4f6;">
+        <span class="material-symbols-outlined" style="color: var(--on-surface-muted);">android</span>
+        <div>
+          <p><strong>Android (45% of users):</strong> Safari extensions are iOS-only. Android users get nothing from this initiative on day one. Future path: Chrome extension via Genie infrastructure already in development.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 7: THE PLAN -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="plan">The plan</div>
+    <h2>The Plan: Fast Proof of Concept</h2>
+
+    <p>We don't need a full build to validate this. A phased approach de-risks the investment and gives us clear decision points.</p>
+
+    <div class="plan-phases">
+      <div class="plan-phase">
+        <div class="phase-header">
+          <span class="phase-num">1</span>
+          <div>
+            <h4>Validate (Weeks 1-2)</h4>
+            <p class="phase-desc">iOS engineering spike</p>
+          </div>
+        </div>
+        <ul>
+          <li>Can we bundle a Safari extension inside the Groupon app?</li>
+          <li>Test submission to App Store</li>
+          <li>Confirm onboarding flow is technically feasible</li>
+          <li><strong>Gate:</strong> If App Store rejects, stop here. Total cost: 2 weeks.</li>
+        </ul>
+      </div>
+      <div class="plan-phase">
+        <div class="phase-header">
+          <span class="phase-num">2</span>
+          <div>
+            <h4>MVP (Weeks 3-8)</h4>
+            <p class="phase-desc">Extension with coupons only</p>
+          </div>
+        </div>
+        <ul>
+          <li>Ship extension with coupon auto-apply (no Bucks yet)</li>
+          <li>Onboarding flow for existing app users</li>
+          <li>Measure: activation rate, coupon usage, commission per user</li>
+          <li><strong>Gate:</strong> If activation &lt;5% after onboarding optimization, reassess approach.</li>
+        </ul>
+      </div>
+      <div class="plan-phase">
+        <div class="phase-header">
+          <span class="phase-num">3</span>
+          <div>
+            <h4>Scale (Weeks 9-14)</h4>
+            <p class="phase-desc">Layer in Bucks + cashback</p>
+          </div>
+        </div>
+        <ul>
+          <li>Add Groupon Bucks earning on coupon usage</li>
+          <li>Add cashback offers on select merchants</li>
+          <li>Measure: app opens from extension, Bucks redemption, deal bookings</li>
+          <li><strong>Gate:</strong> Revenue per user validates $9.81/yr model or identifies adjustment needed.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 8: THE ASK -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="ask">The ask</div>
+    <h2>The Ask</h2>
+
+    <p>One decision point. Everything else is already in motion.</p>
+
+    <div class="ask-card">
+      <div class="ask-main">
+        <h4>2-week iOS engineering spike</h4>
+        <p>Validate that we can bundle a Safari extension inside the Groupon app. Includes test App Store submission. This is the only blocker - if it works, we have a path to $4-25M incremental revenue from the existing app base.</p>
+      </div>
+    </div>
+
+    <p style="font-size: 14px; color: var(--on-surface-muted); margin-top: 16px;"><strong>To be clear:</strong> We're asking for 2 weeks to validate. If the spike succeeds, the full path is ~14 weeks to a scaled product. That decision comes after the spike - not now.</p>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- CLOSING: TWO SIDES -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-number" id="closing" style="color: var(--primary);">The bigger picture</div>
+    <h2>Two Sides of Retention, One Goal</h2>
+
+    <div class="closing-grid">
+      <div class="closing-card" style="border-left: 3px solid #7c3aed;">
+        <h4 style="color: #7c3aed;">GROUPON LIFE (Viktor)</h4>
+        <div class="closing-focus">Fixes in-app</div>
+        <p>Personalisation, feed relevance, frequency for users who are already in the app. Match users to what they want. Turn 1 purchase into 3.</p>
+      </div>
+      <div class="closing-card" style="border-left: 3px solid var(--primary);">
+        <h4 style="color: var(--primary);">Safari Extension (Coupons)</h4>
+        <div class="closing-focus">Captures off-platform</div>
+        <p>Follow users into their everyday shopping. Create new sessions through coupons content. Bridge them back via Bucks to spend on local deals.</p>
+      </div>
+    </div>
+
+    <div class="bottom-banner" style="margin-top: 20px;">
+      Viktor fixes the bucket. We fill it with more water. Together: a frequency-first Groupon across every touchpoint.
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Coupons Vertical - April 2026</p>
+    <p style="margin-top: 4px; font-size: 12px; color: rgba(0,0,0,0.3);">Data sourced from BigQuery, Tableau, CJ actuals, and industry benchmarks</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+// Sidebar active state on scroll
+const links = document.querySelectorAll('.nav-link');
+const ids = Array.from(links).map(l => l.getAttribute('href').slice(1));
+
+function updateActive() {
+  let current = ids[0];
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 120) current = id;
+  }
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActive);
+updateActive();
+
+// Smooth scroll
+links.forEach(l => {
+  l.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.getElementById(l.getAttribute('href').slice(1));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Inline prototype
+const PI_SCREENS = [
+  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers/4._shopping_on_nike/screen.png', title: 'Shopping on Nike', desc: 'User browses Nike.com in Safari. No Groupon intent needed - the extension works in the background.', phase: 'capture' },
+  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/5._extension_surface_ultra_polish/screen.png', title: 'Extension Surfaces Savings', desc: 'Groupon automatically detects the merchant and surfaces a coupon code plus cashback offer.', phase: 'capture' },
+  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/nike_mobile_savings_applied/screen.png', title: 'Savings Applied + Bucks Earned', desc: 'Code applied at checkout. $32.50 saved. $1.80 Groupon Bucks earned. The CTA: "Redeem Groupon Bucks in the app."', phase: 'capture' },
+  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/8._in_app_balance_ultra_polish/screen.png', title: 'User Opens the Groupon App', desc: 'Tapping "Redeem" deep-links into the Groupon app. $14.60 Bucks balance. Local deals ready to browse - the off-platform capture becomes in-app engagement.', phase: 'engage' },
+  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers/9._spending_bucks/screen.png', title: 'Books a Deal with Bucks', desc: 'User applies $14.60 Bucks to a local spa experience. Total: $113.85. They earn more Bucks on this deal - the loop continues.', phase: 'engage' }
+];
+
+let piCurrent = 0, piPlaying = false, piInterval = null, piTimerInt = null;
+const piDur = 4000;
+
+const piScreensEl = document.getElementById('piScreens');
+const piDotsEl = document.getElementById('piDots');
+
+PI_SCREENS.forEach((s, i) => {
+  const img = document.createElement('img');
+  img.className = 'pi-screen' + (i === 0 ? ' active' : '');
+  img.src = s.src;
+  img.alt = s.title;
+  img.draggable = false;
+  piScreensEl.appendChild(img);
+
+  const dot = document.createElement('div');
+  dot.className = 'pi-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => piGoTo(i);
+  piDotsEl.appendChild(dot);
+});
+
+function piGoTo(idx) {
+  if (idx === piCurrent) return;
+  document.getElementById('piTitle').classList.add('pi-fade');
+  document.getElementById('piDesc').classList.add('pi-fade');
+  piScreensEl.querySelectorAll('.pi-screen')[piCurrent].classList.remove('active');
+  piScreensEl.querySelectorAll('.pi-screen')[idx].classList.add('active');
+  const dots = piDotsEl.querySelectorAll('.pi-dot');
+  dots[piCurrent].classList.remove('active');
+  dots[piCurrent].classList.add('visited');
+  dots[idx].classList.remove('visited');
+  dots[idx].classList.add('active');
+  for (let i = 0; i < idx; i++) dots[i].classList.add('visited');
+  piCurrent = idx;
+  piResetTimer();
+  setTimeout(() => { piUpdateText(); document.getElementById('piTitle').classList.remove('pi-fade'); document.getElementById('piDesc').classList.remove('pi-fade'); }, 250);
+}
+
+function piUpdateText() {
+  const s = PI_SCREENS[piCurrent];
+  const ph = document.getElementById('piPhase');
+  ph.textContent = s.phase === 'capture' ? 'Capture' : 'Engage';
+  ph.className = 'pi-phase pi-phase-' + s.phase;
+  document.getElementById('piCounter').textContent = 'Step ' + (piCurrent + 1) + ' of ' + PI_SCREENS.length;
+  document.getElementById('piTitle').textContent = s.title;
+  document.getElementById('piDesc').textContent = s.desc;
+}
+
+function piNext() { if (piCurrent < PI_SCREENS.length - 1) piGoTo(piCurrent + 1); else if (piPlaying) piGoTo(0); }
+function piPrev() { if (piCurrent > 0) piGoTo(piCurrent - 1); }
+
+function piToggle() {
+  piPlaying = !piPlaying;
+  const btn = document.getElementById('piPlayBtn');
+  if (piPlaying) { btn.textContent = '\u23F8 Pause'; btn.classList.add('playing'); piInterval = setInterval(piNext, piDur); piStartTimer(); }
+  else { btn.textContent = '\u25B6 Play'; btn.classList.remove('playing'); clearInterval(piInterval); clearInterval(piTimerInt); document.getElementById('piTimerFill').style.width = '0%'; }
+}
+
+let piTimerStart = 0;
+function piStartTimer() { piTimerStart = Date.now(); clearInterval(piTimerInt); piTimerInt = setInterval(() => { document.getElementById('piTimerFill').style.width = Math.min(((Date.now() - piTimerStart) / piDur) * 100, 100) + '%'; }, 30); }
+function piResetTimer() { if (piPlaying) { clearInterval(piInterval); piInterval = setInterval(piNext, piDur); piStartTimer(); } }
+
+document.querySelector('.pi-phone').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  if (e.clientX - rect.left > rect.width / 2) piNext(); else piPrev();
+});
+
+piUpdateText();
+</script>
+
+</body>
+</html>

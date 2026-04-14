@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "outline": "#717a67",
+                    "inverse-on-surface": "#edf0ff",
+                    "secondary-fixed-dim": "#8bd0ef",
+                    "on-secondary-fixed": "#001f2a",
+                    "on-tertiary-fixed-variant": "#005311",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#306b00",
+                    "secondary-container": "#99defd",
+                    "inverse-primary": "#87dc4f",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#87dc4f",
+                    "primary": "#2f6900",
+                    "on-surface": "#161c26",
+                    "surface-dim": "#d5dae9",
+                    "background": "#f9f9ff",
+                    "tertiary": "#006b19",
+                    "primary-fixed": "#a2f968",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002203",
+                    "tertiary-container": "#188729",
+                    "surface-container-highest": "#dee2f1",
+                    "surface-bright": "#f9f9ff",
+                    "tertiary-fixed": "#91fa8c",
+                    "surface-variant": "#dee2f1",
+                    "secondary": "#116682",
+                    "outline-variant": "#c0cab4",
+                    "surface-container-high": "#e4e8f7",
+                    "surface-container": "#e9edfd",
+                    "on-surface-variant": "#414a39",
+                    "secondary-fixed": "#bde9ff",
+                    "tertiary-fixed-dim": "#75dd73",
+                    "inverse-surface": "#2b303c",
+                    "primary-container": "#3d8400",
+                    "on-tertiary-container": "#f7fff1",
+                    "on-primary-fixed": "#0a2100",
+                    "on-primary-container": "#f9ffed",
+                    "on-background": "#161c26",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed-variant": "#235100",
+                    "on-secondary-fixed-variant": "#004d64",
+                    "on-secondary-container": "#0a637f",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .asymmetric-clip {
+            border-top-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Top Navigation Anchor -->
+<nav class="bg-slate-50/85 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-slate-200/50 rounded-full transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight text-green-800">Review Booking</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional user profile portrait with warm studio lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSjzz4bskkQgH6uA5GovTmwExqZ0YhmpS3Nlz5Xh2_GvpCTTDaoaRqZiTOlNpteSSkrHZbTupwHNpV6PNKvqrtlP4kKLKrLvwmhtfHvFwVTgaOewwpFRqjp-RgXdmXLhwcC-UJg1G6UYmGQJWLPy3ejvMyTn4bYtpoX9EBPlDswkkIaVPMeGqPkZ_qGWazDD5mMYFcNcIO91QIGNKn9lj9Aq8ASFU3zmlSrDxeqZcprOiWvEeAcW0sZ5TFeDv5rnm4T8PuZvr3S6h5"/>
+</div>
+</div>
+</nav>
+<main class="max-w-2xl mx-auto px-6 pt-8 pb-32">
+<!-- Hero Summary Section -->
+<section class="mb-10 flex flex-col md:flex-row gap-8 items-start">
+<div class="relative w-full md:w-48 h-48 flex-shrink-0">
+<img alt="Zen Spa" class="w-full h-full object-cover asymmetric-clip shadow-lg" data-alt="Luxury spa interior with aromatic candles, stacked white towels, and a peaceful atmosphere with soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjUdDcR5qREx3jSK5fzuAxjQDv1OfgM8cxV6gy4Tlq01ibRJicJr8XfvMHw1F-ZHM4T73vTx2GWNIqIYtLQaURKwAFsgt4wkVMWIknrywLSleUlJAmlYGj8ZIJhfHZ1FSebRAiZ-eM7E9JH5h9Oc0uIAqm9L22jj-LiiN51qoe2LMzLuD3TirQLjQUVLsjALDZngJ20PONHtuhHi5wiKVcve6864shLc4n_SVZuiXh8c66Va6CSojP_jO940pNMuUpnKAef4n6ebs4"/>
+<div class="absolute -bottom-2 -right-2 bg-primary px-3 py-1 rounded-lg text-on-primary text-xs font-bold shadow-md">
+                    REWARD EARNED
+                </div>
+</div>
+<div class="flex-grow">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-semibold text-xs mb-3">
+<span class="material-symbols-outlined text-xs">local_activity</span>
+                    EXPERIENCE
+                </div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2 leading-tight">Deep Tissue Bliss at Zen Spa</h2>
+<div class="flex items-center gap-2 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-sm font-medium">Tribeca, New York</span>
+<span class="mx-1">•</span>
+<span class="material-symbols-outlined text-sm text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold">4.9 (124 reviews)</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed text-sm italic">
+                    "Bucks earned from Nike, spent on a local experience - and earning more"
+                </p>
+</div>
+</section>
+<!-- The Value Card (Bento Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<!-- Details Panel -->
+<div class="bg-surface-container-low p-6 rounded-3xl flex flex-col justify-between">
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-4">Appointment</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<div>
+<p class="font-bold text-on-surface">Tomorrow, Oct 12</p>
+<p class="text-xs text-on-surface-variant">10:30 AM — 11:45 AM</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">person_check</span>
+<div>
+<p class="font-bold text-on-surface">Practitioner</p>
+<p class="text-xs text-on-surface-variant">Sarah Mitchell (Senior Therapist)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bucks Applied Panel -->
+<div class="bg-primary/5 p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+<div class="absolute top-0 right-0 opacity-10">
+<span class="material-symbols-outlined text-[120px] translate-x-8 -translate-y-8">payments</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Bucks Applied</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-extrabold text-primary tracking-tighter">-$14.60</span>
+</div>
+<p class="text-xs font-medium text-primary-container mt-2">
+                        Applied from your Nike Rewards balance
+                    </p>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-background bg-slate-200 flex items-center justify-center overflow-hidden">
+<img alt="Nike" data-alt="Close up of a classic red sneaker with focus on texture and swoosh" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Q9SLbb-LBvZDOYVAzoP_2AQnf-GJeN-6I2uGPmfPRrrXtOZ_PEQjAWhujd7vnL2elEnm1WatJfxlXeWuUGrVRHwrRu2G85o2ueg6vB1MjfmKfs37qNSzriR6Gj23x9BkHCDIk3IOVRvfRsEa2U9-5iRPlLSHrnx2F_TU6WgbXPUaWX9kmM3Fh9cqE3j8-IB3dSNcaB_gJDTHGSABCl2QHZhYQy20dsHCEkI5muTqO_Zx9K0myH-YncBN3THmy_6gB_fUeGCs_ajc"/>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">Converted from Nike Purchase</span>
+</div>
+</div>
+</div>
+<!-- Checkout Detail List -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 mb-8 border border-outline-variant/15">
+<h3 class="text-lg font-bold mb-6">Price Breakdown</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="text-sm font-medium">90min Deep Tissue Massage</span>
+<span class="text-sm font-bold">$120.00</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="text-sm font-medium">Facility Fee &amp; Taxes</span>
+<span class="text-sm font-bold">$8.45</span>
+</div>
+<div class="flex justify-between items-center text-primary font-semibold py-4 border-y border-dashed border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span class="text-sm">Reward Credits (Bucks)</span>
+</div>
+<span class="text-sm">-$14.60</span>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="text-lg font-extrabold">Total Amount</span>
+<span class="text-2xl font-black text-on-surface tracking-tighter">$113.85</span>
+</div>
+</div>
+</div>
+<!-- Future Earnings Teaser -->
+<div class="bg-tertiary/10 p-6 rounded-2xl flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary flex-shrink-0">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-tertiary-fixed-variant">Earn more with this booking!</p>
+<p class="text-xs text-on-tertiary-fixed-variant/80">You'll receive <span class="font-bold text-tertiary">+$5.70 Bucks</span> after your visit today.</p>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full glass-panel px-6 pt-4 pb-10 border-t border-outline-variant/15 z-40">
+<div class="max-w-2xl mx-auto flex flex-col gap-4">
+<p class="text-[10px] text-center text-on-surface-variant px-4">
+                By tapping "Book Now", you agree to the 24-hour cancellation policy and confirm the use of $14.60 from your Bucks wallet.
+            </p>
+<button class="w-full h-16 bg-gradient-to-br from-primary to-primary-container text-on-primary text-lg font-bold rounded-2xl flex items-center justify-center gap-3 shadow-lg active:scale-[0.98] transition-transform duration-200">
+<span>Book Now</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Value Architect - App Store</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "outline": "#717a67",
+                    "inverse-on-surface": "#edf0ff",
+                    "secondary-fixed-dim": "#8bd0ef",
+                    "on-secondary-fixed": "#001f2a",
+                    "on-tertiary-fixed-variant": "#005311",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#306b00",
+                    "secondary-container": "#99defd",
+                    "inverse-primary": "#87dc4f",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#87dc4f",
+                    "primary": "#2f6900",
+                    "on-surface": "#161c26",
+                    "surface-dim": "#d5dae9",
+                    "background": "#f9f9ff",
+                    "tertiary": "#006b19",
+                    "primary-fixed": "#a2f968",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002203",
+                    "tertiary-container": "#188729",
+                    "surface-container-highest": "#dee2f1",
+                    "surface-bright": "#f9f9ff",
+                    "tertiary-fixed": "#91fa8c",
+                    "surface-variant": "#dee2f1",
+                    "secondary": "#116682",
+                    "outline-variant": "#c0cab4",
+                    "surface-container-high": "#e4e8f7",
+                    "surface-container": "#e9edfd",
+                    "on-surface-variant": "#414a39",
+                    "secondary-fixed": "#bde9ff",
+                    "tertiary-fixed-dim": "#75dd73",
+                    "inverse-surface": "#2b303c",
+                    "primary-container": "#3d8400",
+                    "on-tertiary-container": "#f7fff1",
+                    "on-primary-fixed": "#0a2100",
+                    "on-primary-container": "#f9ffed",
+                    "on-background": "#161c26",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed-variant": "#235100",
+                    "on-secondary-fixed-variant": "#004d64",
+                    "on-secondary-container": "#0a637f",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .iphone-frame {
+            width: 393px;
+            height: 852px;
+            border: 12px solid #161c26;
+            border-radius: 54px;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25);
+        }
+        .dynamic-island {
+            width: 120px;
+            height: 35px;
+            background: #000;
+            border-radius: 20px;
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container flex flex-col items-center justify-center min-h-screen p-8 text-on-surface">
+<!-- iOS Simulation Wrapper -->
+<div class="iphone-frame flex flex-col">
+<!-- Status Bar -->
+<div class="dynamic-island"></div>
+<div class="flex justify-between px-8 pt-4 pb-2 text-xs font-bold items-center">
+<span>9:41</span>
+<div class="flex gap-1 items-center">
+<span class="material-symbols-outlined text-[14px]">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[14px]">wifi</span>
+<span class="material-symbols-outlined text-[14px]">battery_full</span>
+</div>
+</div>
+<!-- App Store Content Area -->
+<div class="flex-1 overflow-y-auto bg-white">
+<!-- App Store Header -->
+<header class="px-5 pt-6 pb-4">
+<div class="flex justify-between items-end mb-2">
+<h1 class="text-3xl font-extrabold tracking-tight">Search</h1>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="Close up portrait of a young professional smiling softly with a clean blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvAfOz6gqR_aJamAs8p7sIlQkDytZo1EPKzCHmBWukyHxHEY2ytGigIOXmLxbtSLxEYlC5AdnnXL5F9M2vPZELByzCT9x3uJd0-pjTU92F_GiiAlCnBvMZ2UZiSeT0dQSt0gmnI8eDOC-B4x4-LIw6a7PE7DR1qAyFDjM5XVimH2qncxmsolJa3_3qL02Wo2tzpKPkgJiqjXZ3WTh_zTmUkaocUnr7ZYJ8-sBUaElotB5w8m8DaAXfCEmD4-YZgPTzToJaHzVQwDlP"/>
+</div>
+</div>
+<div class="relative mt-4">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-surface-container-low border-none rounded-xl text-sm focus:ring-0" placeholder="App Store" type="text" value="Groupon"/>
+</div>
+</header>
+<!-- App Listing -->
+<main class="px-5 pt-4">
+<div class="flex gap-4 items-start mb-6">
+<div class="w-28 h-28 rounded-[22px] bg-white shadow-md border border-slate-100 flex items-center justify-center p-4">
+<div class="w-full h-full bg-primary rounded-2xl flex items-center justify-center text-white text-5xl font-black">
+                            G
+                        </div>
+</div>
+<div class="flex-1 flex flex-col">
+<h2 class="text-xl font-bold leading-tight">Groupon - Local Deals &amp; More</h2>
+<p class="text-outline text-sm font-medium">Groupon, Inc.</p>
+<div class="mt-auto flex items-center justify-between">
+<button class="bg-secondary text-on-secondary px-6 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase">Get</button>
+<span class="material-symbols-outlined text-outline text-lg">share</span>
+</div>
+</div>
+</div>
+<!-- Stats Row -->
+<div class="flex items-center justify-between border-y border-slate-100 py-3 mb-6 overflow-x-auto no-scrollbar gap-8">
+<div class="flex flex-col items-center min-w-max">
+<span class="text-xs font-bold text-outline">4.7 ★</span>
+<span class="text-[10px] text-slate-400 font-medium">421K RATINGS</span>
+</div>
+<div class="w-px h-8 bg-slate-100"></div>
+<div class="flex flex-col items-center min-w-max">
+<span class="material-symbols-outlined text-outline text-lg">military_tech</span>
+<span class="text-[10px] text-slate-400 font-medium">EDITORS' CHOICE</span>
+</div>
+<div class="w-px h-8 bg-slate-100"></div>
+<div class="flex flex-col items-center min-w-max">
+<span class="text-xs font-bold text-outline">4+</span>
+<span class="text-[10px] text-slate-400 font-medium">AGE</span>
+</div>
+<div class="w-px h-8 bg-slate-100"></div>
+<div class="flex flex-col items-center min-w-max">
+<span class="text-xs font-bold text-outline">#1</span>
+<span class="text-[10px] text-slate-400 font-medium">SHOPPING</span>
+</div>
+</div>
+<!-- Screenshots Gallery -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-12">
+<div class="min-w-[220px] h-[480px] rounded-2xl bg-surface-container-low overflow-hidden shadow-sm relative">
+<img class="w-full h-full object-cover" data-alt="A smartphone screen showing vibrant shopping categories for travel, dining, and spa with high quality food photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6M56TxDDVBbl3NCIXH7IIvQQl6mGPBTHAL_uwy15TJfy7UV3Ab9Hx5d7y_UvlAiAjn36CHKzUwLCZRiloAcKGdB-D-1uLAuXONjIxo2-_0enw3Y9F8PgjZQ25JiC6sCDzSpTpab1Em22NnidNA0Y_0CxbZszUMZAqRaDeYryJG2xpEe1H9QHmnXJtGOT3Cl-2L-evy1Bdz67_OTBOuxZ1fj8LkbEsvaes3uSe_ngoW60O-8ssblMhAOnP8AipqjtcR1hKUbuU4hvF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="min-w-[220px] h-[480px] rounded-2xl bg-surface-container-low overflow-hidden shadow-sm relative">
+<img class="w-full h-full object-cover" data-alt="People laughing and enjoying a meal at a trendy restaurant, captured in warm natural lighting and soft focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoOKA8gk6lLHQqcUXqfwfD9UjRP0bYee-7lKGCBrzHfWbij6nNtZt1XwEekyBF8GobxIWaEfNb_O0tOgqyKDx-xOd0ClIumew8TC1MzI3rwk_uZ0xcJU1J4U4CHltlBeC-GQlPYpyKao-DpMsoVLheoZDOzOhWLUWl8ptWlKPbyeKbm9XRHV0UBEYJht7NDSSlL51Nxt9gJ8yHlXwEMN0wiEo5lDQYht18uvPCPW_WEnDOIAAGOo0aruMY_yyGMGgcmP5XlVGB0cYK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="min-w-[220px] h-[480px] rounded-2xl bg-surface-container-low overflow-hidden shadow-sm relative">
+<img class="w-full h-full object-cover" data-alt="Minimalist luxury spa environment with stacked towels and glowing candles, soft atmospheric teal lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDashc6YYQT-wv-g7y3y8RypwXH9qH6nNe8o6uEXe2Y0d6OZjSC_2wquahfXflW0cLwof_LwLxn3qjM2Rt4sp5Dy3LZaR_Opyc9OHVw2q-X9hS9p9iIhh7Ay6taw6jjoou9oVjGy8xF9AeKMHMicpWwEqadIdnGhGz3qbTo1_Oy_ZQCjjuyHx6la110FQ7is84mLae1ha9dG2leWNuKMIrbK-hZsQ-_1OJvznDIMIdPkCU1TuvIaU75TP9q1HAIofTXA3tXk_9NOc-0"/>
+</div>
+</div>
+</main>
+</div>
+<!-- iOS Bottom Tab Bar -->
+<nav class="bg-white/80 backdrop-blur-md border-t border-slate-100 h-20 flex justify-around items-start pt-2 px-2">
+<div class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined text-[24px]">today</span>
+<span class="text-[10px] mt-1 font-medium">Today</span>
+</div>
+<div class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+<span class="text-[10px] mt-1 font-medium">Games</span>
+</div>
+<div class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined text-[24px]">apps</span>
+<span class="text-[10px] mt-1 font-medium">Apps</span>
+</div>
+<div class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined text-[24px]">joystick</span>
+<span class="text-[10px] mt-1 font-medium">Arcade</span>
+</div>
+<div class="flex flex-col items-center text-secondary">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="text-[10px] mt-1 font-medium">Search</span>
+</div>
+</nav>
+<!-- Home Indicator -->
+<div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-black rounded-full mb-1"></div>
+</div>
+<!-- Caption -->
+<div class="mt-8 max-w-sm text-center">
+<p class="text-on-surface-variant font-medium leading-relaxed">
+            User downloads the Groupon app from the App Store
+        </p>
+</div>
+</body></html>

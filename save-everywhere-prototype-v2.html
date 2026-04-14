@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Everywhere - Interactive Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #2f6900;
+    --primary-container: #3d8400;
+    --secondary: #116682;
+    --surface: #f9f9ff;
+    --on-surface: #161c26;
+    --surface-dim: #d5dae9;
+    --outline-variant: #c0cab4;
+  }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Layout */
+  .prototype-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 24px;
+    max-width: 100vw;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    opacity: 0.9;
+  }
+  .header h1 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .header .title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #a2f968, #87dc4f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Phone Frame */
+  .phone-wrapper {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .phone-frame {
+    position: relative;
+    width: 320px;
+    height: 693px;
+    background: #000;
+    border-radius: 48px;
+    border: 10px solid #1a1a1e;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06),
+      0 40px 80px rgba(0,0,0,0.5),
+      0 0 120px rgba(47,105,0,0.08);
+    overflow: hidden;
+  }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background: #000;
+    border-radius: 16px;
+    z-index: 100;
+  }
+
+  /* Screen slides */
+  .screen-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .screen-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: scale(1.02);
+    will-change: opacity, transform;
+  }
+  .screen-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 10;
+  }
+  .screen-slide.exit {
+    opacity: 0;
+    transform: scale(0.98);
+    z-index: 5;
+  }
+
+  .screen-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Navigation arrows */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 50;
+  }
+  .nav-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-color: rgba(255,255,255,0.2);
+  }
+  .nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .nav-btn.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  .nav-prev { left: -64px; }
+  .nav-next { right: -64px; }
+
+  .nav-btn .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings: 'wght' 500;
+  }
+
+  /* Tap zone overlay */
+  .tap-zone {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 90;
+    cursor: pointer;
+  }
+  .tap-zone-left { left: 0; }
+  .tap-zone-right { right: 0; }
+
+  /* Progress bar */
+  .progress-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 320px;
+  }
+
+  .progress-bar {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+  }
+  .progress-segment {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .progress-segment:hover {
+    background: rgba(255,255,255,0.15);
+  }
+  .progress-segment.active {
+    background: rgba(255,255,255,0.15);
+  }
+  .progress-segment .fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--primary-container));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-segment.complete .fill { width: 100%; }
+  .progress-segment.active .fill { width: 100%; }
+
+  /* Step info */
+  .step-info {
+    text-align: center;
+    min-height: 60px;
+  }
+  .step-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 6px;
+  }
+  .step-label {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.3;
+  }
+  .step-description {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .control-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.5);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .control-btn:hover {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .control-btn.active {
+    background: rgba(47,105,0,0.15);
+    border-color: rgba(47,105,0,0.3);
+    color: #87dc4f;
+  }
+  .control-btn .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  /* Keyboard hint */
+  .keyboard-hint {
+    position: fixed;
+    bottom: 16px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.15);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .keyboard-hint kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    font-family: inherit;
+    font-size: 10px;
+    margin: 0 2px;
+  }
+
+  /* Transition for phase labels */
+  .phase-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    transition: all 0.4s ease;
+  }
+  .phase-setup {
+    background: rgba(17,102,130,0.15);
+    color: #8bd0ef;
+  }
+  .phase-capture {
+    background: rgba(47,105,0,0.15);
+    color: #87dc4f;
+  }
+  .phase-engage {
+    background: rgba(0,107,25,0.15);
+    color: #75dd73;
+  }
+
+  /* Responsive */
+  @media (max-height: 800px) {
+    .phone-frame {
+      width: 280px;
+      height: 607px;
+      border-radius: 42px;
+      border-width: 8px;
+    }
+    .dynamic-island {
+      width: 88px;
+      height: 26px;
+      top: 6px;
+    }
+    .progress-section { width: 280px; }
+    .header .title { font-size: 20px; }
+    .step-label { font-size: 16px; }
+    .prototype-container { gap: 20px; padding: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .phone-frame {
+      width: 300px;
+      height: 650px;
+      border-radius: 44px;
+    }
+    .nav-prev { left: -52px; }
+    .nav-next { right: -52px; }
+    .progress-section { width: 300px; }
+    .keyboard-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="prototype-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Groupon Safari Extension</h1>
+    <div class="title">Save Everywhere</div>
+  </div>
+
+  <!-- Phone -->
+  <div class="phone-wrapper">
+    <div class="phone-frame" id="phone">
+      <div class="dynamic-island"></div>
+      <div class="screen-container" id="screens"></div>
+      <div class="tap-zone tap-zone-left" id="tapLeft"></div>
+      <div class="tap-zone tap-zone-right" id="tapRight"></div>
+    </div>
+    <button class="nav-btn nav-prev disabled" id="prevBtn">
+      <span class="material-symbols-outlined">chevron_left</span>
+    </button>
+    <button class="nav-btn nav-next" id="nextBtn">
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- Progress & info -->
+  <div class="progress-section">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="step-info" id="stepInfo"></div>
+    <div class="controls">
+      <button class="control-btn" id="autoplayBtn">
+        <span class="material-symbols-outlined">play_arrow</span>
+        Auto-play
+      </button>
+      <button class="control-btn" id="resetBtn">
+        <span class="material-symbols-outlined">replay</span>
+        Restart
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="keyboard-hint">
+  <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate &middot; <kbd>Space</kbd> auto-play
+</div>
+
+<script>
+const SCREENS = [
+  {
+    src: 'stitch_groupon_safari_offers/1._app_store_download/screen.png',
+    label: 'App Store Download',
+    description: 'User searches for and downloads the Groupon app',
+    phase: 'setup'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/2._extension_onboarding/screen.png',
+    label: 'Extension Onboarding',
+    description: 'Prompted to enable the Safari extension during first launch',
+    phase: 'setup'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/3._ios_settings_toggle/screen.png',
+    label: 'iOS Settings Toggle',
+    description: 'One-time toggle in Safari settings to activate the extension',
+    phase: 'setup'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/4._shopping_on_nike/screen.png',
+    label: 'Shopping on Nike',
+    description: 'Later that week - user browses Nike.com in Safari',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/5._extension_surface/screen.png',
+    label: 'Extension Popup',
+    description: 'Groupon automatically surfaces a coupon code and cashback',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/6._savings_applied/screen.png',
+    label: 'Savings Applied',
+    description: 'Code applied - $19.50 saved plus $2.40 Bucks earned',
+    phase: 'capture'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/7._reward_notification/screen.png',
+    label: 'Reward Notification',
+    description: 'Push notification brings the user back to the Groupon app',
+    phase: 'engage'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/8._in_app_balance/screen.png',
+    label: 'In-App Balance',
+    description: '$14.60 Bucks balance - browse curated local deals',
+    phase: 'engage'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/9._spending_bucks/screen.png',
+    label: 'Spending Bucks',
+    description: 'Bucks applied to a local spa experience - earning more Bucks',
+    phase: 'engage'
+  },
+  {
+    src: 'stitch_groupon_safari_offers/10._the_ecosystem_loop/screen.png',
+    label: 'The Ecosystem Loop',
+    description: 'Off-platform capture drives in-app engagement - and it repeats',
+    phase: 'engage'
+  }
+];
+
+let current = 0;
+let autoplayInterval = null;
+let isAutoplay = false;
+
+// Build screens
+const screensEl = document.getElementById('screens');
+const progressEl = document.getElementById('progressBar');
+
+SCREENS.forEach((screen, i) => {
+  // Screen slide
+  const slide = document.createElement('div');
+  slide.className = 'screen-slide' + (i === 0 ? ' active' : '');
+  slide.innerHTML = `<img src="${screen.src}" alt="${screen.label}" loading="${i < 3 ? 'eager' : 'lazy'}">`;
+  screensEl.appendChild(slide);
+
+  // Progress segment
+  const seg = document.createElement('div');
+  seg.className = 'progress-segment' + (i === 0 ? ' active' : '');
+  seg.innerHTML = '<div class="fill"></div>';
+  seg.addEventListener('click', () => goTo(i));
+  progressEl.appendChild(seg);
+});
+
+function updateUI() {
+  const slides = document.querySelectorAll('.screen-slide');
+  const segments = document.querySelectorAll('.progress-segment');
+
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'exit');
+    if (i === current) s.classList.add('active');
+  });
+
+  segments.forEach((s, i) => {
+    s.classList.remove('active', 'complete');
+    if (i < current) s.classList.add('complete');
+    if (i === current) s.classList.add('active');
+  });
+
+  // Nav buttons
+  document.getElementById('prevBtn').classList.toggle('disabled', current === 0);
+  document.getElementById('nextBtn').classList.toggle('disabled', current === SCREENS.length - 1);
+
+  // Step info
+  const screen = SCREENS[current];
+  const phaseClass = 'phase-' + screen.phase;
+  const phaseLabel = screen.phase === 'setup' ? 'Setup' : screen.phase === 'capture' ? 'Capture' : 'Engage';
+
+  document.getElementById('stepInfo').innerHTML = `
+    <div class="phase-badge ${phaseClass}">${phaseLabel}</div>
+    <div class="step-number">Step ${current + 1} of ${SCREENS.length}</div>
+    <div class="step-label">${screen.label}</div>
+    <div class="step-description">${screen.description}</div>
+  `;
+}
+
+function goTo(index) {
+  if (index < 0 || index >= SCREENS.length || index === current) return;
+  current = index;
+  updateUI();
+}
+
+function next() {
+  if (current < SCREENS.length - 1) {
+    goTo(current + 1);
+  } else if (isAutoplay) {
+    stopAutoplay();
+  }
+}
+
+function prev() {
+  if (current > 0) goTo(current - 1);
+}
+
+function startAutoplay() {
+  isAutoplay = true;
+  document.getElementById('autoplayBtn').classList.add('active');
+  document.getElementById('autoplayBtn').innerHTML = '<span class="material-symbols-outlined">pause</span> Playing';
+  autoplayInterval = setInterval(next, 3000);
+}
+
+function stopAutoplay() {
+  isAutoplay = false;
+  clearInterval(autoplayInterval);
+  autoplayInterval = null;
+  document.getElementById('autoplayBtn').classList.remove('active');
+  document.getElementById('autoplayBtn').innerHTML = '<span class="material-symbols-outlined">play_arrow</span> Auto-play';
+}
+
+function toggleAutoplay() {
+  if (isAutoplay) {
+    stopAutoplay();
+  } else {
+    if (current === SCREENS.length - 1) goTo(0);
+    startAutoplay();
+  }
+}
+
+// Event listeners
+document.getElementById('tapLeft').addEventListener('click', prev);
+document.getElementById('tapRight').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('autoplayBtn').addEventListener('click', toggleAutoplay);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  stopAutoplay();
+  goTo(0);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+  if (e.key === ' ') { e.preventDefault(); toggleAutoplay(); }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(SCREENS.length - 1); }
+});
+
+// Touch swipe support
+let touchStartX = 0;
+let touchStartY = 0;
+document.getElementById('phone').addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.getElementById('phone').addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) next();
+    else prev();
+  }
+}, { passive: true });
+
+// Init
+updateUI();
+</script>
+</body>
+</html>
