@@ -223,17 +223,14 @@
     <div class="scenario scenario-a">
       <div class="scenario-header">
         <div class="scenario-label">Easy wins - existing traffic</div>
-        <div class="scenario-rev">Low effort, immediate</div>
       </div>
       <div class="scenario-pills">
         <span class="pill p1">01 Monetise</span>
         <span class="pill-arrow">+</span>
         <span class="pill p2">02 Register</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p4">04 Cashback</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>On-page monetisation</strong> of non-monetised sessions (display ads, deal promotion). <strong>Registration gating</strong> with rewards unlocks identity layer at $3.83/reg LTV. <strong>Cashback offers</strong> create content for merchants without codes, driving impressions across all surfaces and registration uplift. All three work on existing traffic with minimal engineering.<br>
+        <strong>On-page monetisation</strong> of non-monetised sessions (display ads, deal promotion). <strong>Registration gating</strong> with rewards unlocks identity layer at $3.83/reg LTV. Both work on existing 30M sessions with minimal engineering.<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">Display ad monetisation numbers: <em>pending from Rebecca</em></span>
       </div>
     </div>
@@ -241,48 +238,62 @@
     <!-- Future ideas -->
     <div class="scenario scenario-c">
       <div class="scenario-header">
-        <div class="scenario-label">Future ideas - more investment</div>
-        <div class="scenario-rev">Bigger bet, needs validation</div>
+        <div class="scenario-label">Newer ideas - more investment</div>
       </div>
       <div class="scenario-pills">
         <span class="pill p3">03 Genie</span>
         <span class="pill-arrow">+</span>
         <span class="pill p3s">Safari ext</span>
+        <span class="pill-arrow">+</span>
+        <span class="pill p4">04 Cashback</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Genie desktop extension</strong> with rewards (34 MD eng, 8-18K installs/mo target, $6-9.81/user). <strong>Safari extension</strong> inside the Groupon app - reaches ~7-8M users (84% iOS), $6/user commission (Genie-proven, small sample*). Requires iOS spike to validate feasibility first. These build on the easy wins - registration + cashback content feed directly into extension surfaces.<br>
+        <strong>Genie</strong> desktop extension with rewards ($6-9.81/user). <strong>Safari extension</strong> inside the Groupon app - reaches ~7-8M users (84% iOS), $6/user commission (small sample*). <strong>Cashback infrastructure</strong> creates content for any merchant, feeds impressions to all surfaces, drives registration uplift and SEO defense. Requires validation (Safari spike) and significant engineering (cashback is 40-50 MD, the most complex path).<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">* $6/user based on 981 installs, 388 transactions - directional, not statistically robust</span>
       </div>
     </div>
   </div>
 
-  <!-- Engineering effort -->
+  <!-- ROI comparison -->
   <div class="effort">
-    <h2>Engineering effort by path</h2>
-    <div class="effort-grid">
-      <div class="effort-card p1">
-        <div class="eff-label">01 Monetise</div>
-        <div class="eff-val">~4 MD</div>
+    <h2>Return on investment</h2>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px;">
+        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint);">Initiative</div>
+        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Effort</div>
+        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Return</div>
+        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint);">Why it matters</div>
+
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c1); flex-shrink: 0;"></span>01 Monetise</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c1); font-weight: 700;">~4 MD</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">~$0.6+/session</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Immediate revenue from non-monetised sessions</div>
+
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c2); flex-shrink: 0;"></span>02 Register</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c2); font-weight: 700;">2-3 wk</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$3.83/reg</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Identity layer unlocks LTV from anonymous traffic</div>
+
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-g); flex-shrink: 0;"></span>03 Genie</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c3-g); font-weight: 700;">~34 MD</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$6-9.81/user</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Proven model on desktop (39% of traffic)</div>
+
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-s); flex-shrink: 0;"></span>03 Safari</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c3-s); font-weight: 700;">2 wk spike + build</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$3.5-12M/yr</div>
+        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Biggest upside - existing ~7-8M app users, no acquisition needed</div>
+
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c4); flex-shrink: 0;"></span>04 Cashback</div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c4); font-weight: 700;">40-50 MD</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">Enables all paths</div>
+        <div style="padding: 10px 14px; color: var(--muted);">Content for any merchant, reg uplift, SEO defense, extension feed</div>
       </div>
-      <div class="effort-card p2">
-        <div class="eff-label">02 Register</div>
-        <div class="eff-val">2-3 wk</div>
+
+      <div class="effort-note">
+        <strong>Easy wins first:</strong> Monetise + Register have the highest ROI (low effort, immediate return on existing traffic). Extensions are the growth bet. Cashback is the most complex build but feeds every other path - it's infrastructure, not a standalone revenue line.
       </div>
-      <div class="effort-card p3g">
-        <div class="eff-label">03 Genie</div>
-        <div class="eff-val">34 MD</div>
-      </div>
-      <div class="effort-card p3s">
-        <div class="eff-label">03 Safari</div>
-        <div class="eff-val">2 wk spike</div>
-      </div>
-      <div class="effort-card p4">
-        <div class="eff-label">04 Cashback</div>
-        <div class="eff-val">Scoping</div>
-      </div>
-    </div>
-    <div class="effort-note">
-      <strong>Total: ~40 MD eng across all tracks in Q2.</strong> Easy wins (Monetise + Register + Cashback testing) can start immediately. Extensions (Genie + Safari) are the bigger investment, gated by Safari spike validation.
     </div>
   </div>
 
