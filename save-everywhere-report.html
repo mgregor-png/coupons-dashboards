@@ -687,6 +687,7 @@
   }
   .sizing-label {
     flex: 1;
+    min-width: 180px;
     font-size: 14px;
     color: var(--on-surface-muted);
   }
@@ -699,11 +700,23 @@
   .sizing-src {
     font-size: 11px;
     font-weight: 600;
-    color: rgba(0,0,0,0.25);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
     white-space: nowrap;
+    letter-spacing: 0.03em;
   }
+  .sizing-src.src-verified { color: var(--primary); }
+  .sizing-src.src-assumption { color: #e65100; }
+  .sizing-src.src-model { color: rgba(0,0,0,0.25); }
+  .sizing-src a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+  .sizing-src a:hover { text-decoration-style: solid; }
+  .sizing-row.row-verified { border-left: 3px solid var(--primary); padding-left: 12px; }
+  .sizing-row.row-assumption { border-left: 3px solid #e65100; padding-left: 12px; }
+  .sizing-row.row-model { border-left: 3px solid rgba(0,0,0,0.12); padding-left: 12px; }
   .revenue-hero {
     text-align: center;
     padding: 32px 24px;
@@ -1719,12 +1732,12 @@
 
     <div class="opportunity-layout">
       <div class="sizing-rows">
-        <div class="sizing-row"><span class="sizing-label">Groupon app MAU (US)</span><span class="sizing-val">~8-10M</span><span class="sizing-src">Tableau</span></div>
-        <div class="sizing-row"><span class="sizing-label">iPhone share (Safari-addressable)</span><span class="sizing-val">84%</span><span class="sizing-src">Tableau (Mar 15 - Apr 14)</span></div>
-        <div class="sizing-row"><span class="sizing-label">Extension activation rate</span><span class="sizing-val">10-30%</span><span class="sizing-src">To test</span></div>
-        <div class="sizing-row"><span class="sizing-label">Potential active ext users</span><span class="sizing-val">672K-2.5M</span><span class="sizing-src">Model</span></div>
-        <div class="sizing-row"><span class="sizing-label">Commission/user/yr (from Genie)</span><span class="sizing-val">$6.00</span><span class="sizing-src">Genie actual</span></div>
-        <div class="sizing-row"><span class="sizing-label">+ Bucks &amp; deals cross-sell</span><span class="sizing-val">+$1.13 net</span><span class="sizing-src">Adam's cashback model (gross +$3.81, -42% payout)</span></div>
+        <div class="sizing-row row-verified"><span class="sizing-label">Groupon app MAU (US)</span><span class="sizing-val">~8-10M</span><span class="sizing-src src-verified">Tableau</span></div>
+        <div class="sizing-row row-verified"><span class="sizing-label">iPhone share (Safari-addressable)</span><span class="sizing-val">84%</span><span class="sizing-src src-verified">Tableau (Mar 15 - Apr 14)</span></div>
+        <div class="sizing-row row-assumption"><span class="sizing-label">Extension activation rate</span><span class="sizing-val">10-30%</span><span class="sizing-src src-assumption">To test</span></div>
+        <div class="sizing-row row-model"><span class="sizing-label">Potential active ext users</span><span class="sizing-val">672K-2.5M</span><span class="sizing-src src-model">Model</span></div>
+        <div class="sizing-row row-verified"><span class="sizing-label">Commission/user/yr (from Genie)</span><span class="sizing-val">$6.00</span><span class="sizing-src src-verified">Genie actual</span></div>
+        <div class="sizing-row row-model"><span class="sizing-label">+ Bucks &amp; deals cross-sell</span><span class="sizing-val">+$1.13 net</span><span class="sizing-src src-model"><a href="https://docs.google.com/spreadsheets/d/1NEeEws2Phld5M2TUFiVWsMUtOIY4gX0rnd3A_BC9ICI/edit" target="_blank">Cashback model</a> (gross +$3.81, -42% payout)</span></div>
       </div>
       <div class="revenue-hero">
         <div class="revenue-number">$4.0-5.0M</div>
@@ -1763,7 +1776,7 @@
     <div class="bucks-economics">
       <div class="bucks-econ-label">Bucks program design - a lever, not a blocker</div>
       <p>The earn rate, redemption ratio, and expiry policy are levers for the business to tune over time - managed by promotions, not something we need to solve upfront. The extension can ship with coupons only while the Bucks program takes shape.</p>
-      <p style="margin-top: 8px;">Note: the $6/user floor (Genie-proven, commission only) requires no Bucks at all. Cashback adds gross $3.81/user but after payout costs (42% to users), the net uplift is +$1.13/user - an 11% improvement per Adam's cashback model. The primary value of Bucks is retention (pulling users back to the app), not direct margin.</p>
+      <p style="margin-top: 8px;">Note: the $6/user floor (Genie-proven, commission only) requires no Bucks at all. Cashback adds gross $3.81/user but after payout costs (42% to users), the net uplift is +$1.13/user - an 11% improvement per the <a href="https://docs.google.com/spreadsheets/d/1NEeEws2Phld5M2TUFiVWsMUtOIY4gX0rnd3A_BC9ICI/edit" target="_blank" style="color: var(--on-surface); text-decoration: underline; text-decoration-style: dotted;">cashback model</a>. The primary value of Bucks is retention (pulling users back to the app), not direct margin.</p>
     </div>
 
   </div>
