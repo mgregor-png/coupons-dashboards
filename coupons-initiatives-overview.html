@@ -257,43 +257,103 @@
   <!-- ROI comparison -->
   <div class="effort">
     <h2>Return on investment</h2>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
 
-      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px;">
-        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint);">Initiative</div>
-        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Effort</div>
-        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Return</div>
-        <div style="padding: 10px 14px; background: var(--dim); font-weight: 700; border-bottom: 1px solid var(--faint);">Why it matters</div>
+    <!-- 01 Monetise breakdown -->
+    <div style="margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c1);"></span><span style="font-size: 14px; font-weight: 700;">01 Monetise - sub-initiatives</span><span style="font-size: 11px; color: var(--muted); margin-left: 4px;">per 100K sessions for comparison</span></div>
+      <div style="border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; background: var(--dim);">
+          <div style="padding: 8px 12px; font-weight: 700; border-bottom: 1px solid var(--faint);">Feature</div>
+          <div style="padding: 8px 12px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Effort</div>
+          <div style="padding: 8px 12px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Cost</div>
+          <div style="padding: 8px 12px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Revenue</div>
+          <div style="padding: 8px 12px; font-weight: 700; border-bottom: 1px solid var(--faint);">Notes</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint);">
+          <div style="padding: 8px 12px; font-weight: 600;">Cross-sell Groupon deals</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">5 MD</div>
+          <div style="padding: 8px 12px; text-align: center;">$3,850</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">$83,750</div>
+          <div style="padding: 8px 12px; color: var(--muted);">5% CVR, $17/conv. Frontend exists. <a href="https://analytics.groupondev.com/#/views/CLTMDownstreamTrackerV2/CLTMTrackerSegmentView?:iid=2" target="_blank" style="color: var(--c1); font-size: 11px;">Source</a></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint);">
+          <div style="padding: 8px 12px; font-weight: 600;">Upsell Genie</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">1 MD</div>
+          <div style="padding: 8px 12px; text-align: center;">$550</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">$6/user/yr</div>
+          <div style="padding: 8px 12px; color: var(--muted);">CTA redirect to Chrome store. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c1); font-size: 11px;">LTV model</a></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint);">
+          <div style="padding: 8px 12px; font-weight: 600;">Display ads</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">3-5 MD</div>
+          <div style="padding: 8px 12px; text-align: center;">$2,750</div>
+          <div style="padding: 8px 12px; text-align: center; color: var(--muted); font-style: italic;">TBD</div>
+          <div style="padding: 8px 12px; color: var(--muted);">New ad spec needed from Ads team</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr;">
+          <div style="padding: 8px 12px; font-weight: 600;">Email signup (reward)</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">Minimal</div>
+          <div style="padding: 8px 12px; text-align: center;">$200</div>
+          <div style="padding: 8px 12px; text-align: center;">$171</div>
+          <div style="padding: 8px 12px; color: var(--muted);">5% CVR, $0.034/signup. Marginal standalone</div>
+        </div>
+      </div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 6px; padding-left: 4px;"><strong>Cross-sell dependency:</strong> Needs endpoint from another team to return deals based on parameters. Our eng is 5 MD once endpoint exists. Communication delays possible.</div>
+    </div>
 
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c1); flex-shrink: 0;"></span>01 Monetise</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c1); font-weight: 700;">~4 MD</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">~$0.6+/session</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Immediate revenue from non-monetised sessions</div>
+    <!-- Other initiatives -->
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px; margin-bottom: 16px;">
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; background: var(--dim);">
+        <div style="padding: 10px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">Initiative</div>
+        <div style="padding: 10px 14px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Effort</div>
+        <div style="padding: 10px 14px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Cost</div>
+        <div style="padding: 10px 14px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: center;">Return</div>
+        <div style="padding: 10px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">Notes</div>
+      </div>
 
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c2); flex-shrink: 0;"></span>02 Register</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c2); font-weight: 700;">2-3 wk</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$3.83/reg</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Identity layer unlocks LTV from anonymous traffic</div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint);">
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c2); flex-shrink: 0;"></span><strong>02 Register</strong></div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c2); font-weight: 700;">4 MD</div>
+        <div style="padding: 10px 14px; text-align: center;">-</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$3.83/reg</div>
+        <div style="padding: 10px 14px; color: var(--muted);">Needed for new platform anyway. Identity layer unlocks LTV</div>
+      </div>
 
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-g); flex-shrink: 0;"></span>03 Genie</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c3-g); font-weight: 700;">~34 MD</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$6-9.81/user</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Proven model on desktop (39% of traffic)</div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint); background: var(--c3-g-bg);">
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-g); flex-shrink: 0;"></span><strong>03 Genie + Rewards</strong></div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c3-g); font-weight: 700;">25 MD</div>
+        <div style="padding: 10px 14px; text-align: center;">-</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$7.74/user/yr</div>
+        <div style="padding: 10px 14px; color: var(--muted);">+29% vs commission only. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-size: 11px;">LTV model</a></div>
+      </div>
 
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-s); flex-shrink: 0;"></span>03 Safari</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; color: var(--c3-s); font-weight: 700;">2 wk spike + build</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); text-align: center; font-weight: 700;">$3.5-12M/yr</div>
-        <div style="padding: 10px 14px; border-bottom: 1px solid var(--faint); color: var(--muted);">Biggest upside - existing ~7-8M app users, no acquisition needed</div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint);">
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-g); flex-shrink: 0;"></span><strong>03 Genie + Deals</strong></div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c3-g); font-weight: 700;">~25 MD</div>
+        <div style="padding: 10px 14px; text-align: center;">-</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$9.81/user/yr</div>
+        <div style="padding: 10px 14px; color: var(--muted);">+$2.07/user from Groupon marketplace cross-sell (13% conv, $31.88 LTV)</div>
+      </div>
 
-        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c4); flex-shrink: 0;"></span>04 Cashback</div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; border-bottom: 1px solid var(--faint); background: var(--c3-s-bg);">
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-s); flex-shrink: 0;"></span><strong>03 Safari ext</strong></div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c3-s); font-weight: 700;">2 wk spike + build</div>
+        <div style="padding: 10px 14px; text-align: center;">-</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$3.5-12M/yr</div>
+        <div style="padding: 10px 14px; color: var(--muted);">Spike is validation only. Full build TBD. ~7-8M app users, 84% iOS</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; background: var(--c4-bg);">
+        <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c4); flex-shrink: 0;"></span><strong>04 Cashback</strong></div>
         <div style="padding: 10px 14px; text-align: center; color: var(--c4); font-weight: 700;">40-50 MD</div>
-        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">Enables all paths</div>
-        <div style="padding: 10px 14px; color: var(--muted);">Content for any merchant, reg uplift, SEO defense, extension feed</div>
+        <div style="padding: 10px 14px; text-align: center;">-</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">Enables all</div>
+        <div style="padding: 10px 14px; color: var(--muted);">Most complex. Content for any merchant, reg uplift, SEO, extension feed</div>
       </div>
+    </div>
 
-      <div class="effort-note">
-        <strong>Easy wins first:</strong> Monetise + Register have the highest ROI (low effort, immediate return on existing traffic). Extensions are the growth bet. Cashback is the most complex build but feeds every other path - it's infrastructure, not a standalone revenue line.
-      </div>
+    <div class="effort-note">
+      <strong>Highest ROI first:</strong> Cross-sell Groupon deals (22x ROI) and Registration (nearly free - needed for new platform) are the best bang for buck. Genie rewards (+29% per user at 25 MD) is the next clear step. Safari and Cashback are the bigger bets - Safari has the highest ceiling, Cashback is the infrastructure that feeds everything.
     </div>
   </div>
 
