@@ -642,8 +642,8 @@
   }
   .gallery-toggle:hover { background: rgba(0,0,0,0.02); }
   .gallery-toggle::before { content: '+ '; font-weight: 700; }
-  .screen-gallery[open] .gallery-toggle::before { content: '- '; }
-  .screen-gallery[open] .gallery-toggle {
+  details.screen-gallery[open] .gallery-toggle::before { content: '- '; }
+  details.screen-gallery[open] .gallery-toggle {
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
   .gallery-grid {
@@ -1681,32 +1681,7 @@
       </div>
     </div>
 
-    <div class="proto-inline">
-      <div class="pi-container">
-        <div class="pi-phone-col">
-          <div class="pi-phone">
-            <div class="pi-island"></div>
-            <div id="piScreens"></div>
-          </div>
-          <div class="pi-timer"><div class="pi-timer-fill" id="piTimerFill"></div></div>
-          <div class="pi-dots" id="piDots"></div>
-          <div class="pi-controls">
-            <button class="pi-btn" onclick="piPrev()">&#8592; Prev</button>
-            <button class="pi-btn" id="piPlayBtn" onclick="piToggle()">&#9654; Play</button>
-            <button class="pi-btn" onclick="piNext()">Next &#8594;</button>
-          </div>
-        </div>
-        <div class="pi-narrative">
-          <div class="pi-phase" id="piPhase"></div>
-          <div class="pi-counter" id="piCounter"></div>
-          <div class="pi-title" id="piTitle"></div>
-          <div class="pi-desc" id="piDesc"></div>
-        </div>
-      </div>
-    </div>
-
-    <details class="screen-gallery" style="margin-top: 24px;">
-      <summary class="gallery-toggle">View all screens with descriptions</summary>
+    <div class="screen-gallery" style="margin-top: 24px;">
       <div class="gallery-grid">
         <div class="gallery-item">
           <div class="gallery-phase capture">Capture</div>
@@ -1737,6 +1712,33 @@
           <img src="https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers/9._spending_bucks/screen.png" alt="Books a Deal with Bucks">
           <h4>5. Books a Deal with Bucks</h4>
           <p>User applies $14.60 Bucks to a local spa experience. Total: $113.85. They earn more Bucks on this deal - the loop continues.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="screen-gallery" style="margin-top: 16px;">
+      <summary class="gallery-toggle">View interactive prototype</summary>
+      <div class="proto-inline" style="margin: 0; border-radius: 0 0 16px 16px;">
+        <div class="pi-container">
+          <div class="pi-phone-col">
+            <div class="pi-phone">
+              <div class="pi-island"></div>
+              <div id="piScreens"></div>
+            </div>
+            <div class="pi-timer"><div class="pi-timer-fill" id="piTimerFill"></div></div>
+            <div class="pi-dots" id="piDots"></div>
+            <div class="pi-controls">
+              <button class="pi-btn" onclick="piPrev()">&#8592; Prev</button>
+              <button class="pi-btn" id="piPlayBtn" onclick="piToggle()">&#9654; Play</button>
+              <button class="pi-btn" onclick="piNext()">Next &#8594;</button>
+            </div>
+          </div>
+          <div class="pi-narrative">
+            <div class="pi-phase" id="piPhase"></div>
+            <div class="pi-counter" id="piCounter"></div>
+            <div class="pi-title" id="piTitle"></div>
+            <div class="pi-desc" id="piDesc"></div>
+          </div>
         </div>
       </div>
     </details>
