@@ -134,6 +134,17 @@
 
   .footer { text-align: center; font-size: 12px; color: rgba(0,0,0,0.25); margin-top: 64px; }
 
+  /* Visuals section */
+  .visuals { margin-bottom: 48px; }
+  .visuals h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .visual-group { margin-bottom: 28px; }
+  .visual-group-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .visual-group-header h3 { font-size: 14px; font-weight: 700; }
+  .visual-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .visual-card { flex-shrink: 0; width: 180px; text-align: center; }
+  .visual-card img { width: 180px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); border: 1px solid var(--faint); }
+  .visual-card .vc-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+
   @media (max-width: 700px) {
     .paths { grid-template-columns: repeat(2, 1fr); }
     .effort-grid { grid-template-columns: repeat(3, 1fr); }
@@ -361,6 +372,54 @@
     <div class="effort-note">
       <strong>Highest ROI first:</strong> Cross-sell Groupon deals ($17/conv at 5 MD) and Registration (nearly free - needed for new platform) are the best bang for buck. Genie rewards (+29% per user at 25 MD) is the next clear step. Safari and Cashback are the bigger bets - Safari has the highest ceiling, Cashback is the infrastructure that feeds everything.
     </div>
+  </div>
+
+  <!-- Visuals -->
+  <div class="visuals">
+    <h2>Design references</h2>
+
+    <div class="visual-group">
+      <div class="visual-group-header">
+        <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c1);"></span>
+        <h3>Cross-sell Groupon deals</h3>
+      </div>
+      <div class="visual-strip">
+        <div class="visual-card"><img src="img/initiatives/crosssell-deals-popup.png" alt="Post-redemption deals popup"><div class="vc-label">Post-redemption popup</div></div>
+        <div class="visual-card"><img src="img/initiatives/crosssell-deals-modal.png" alt="Deals modal overlay"><div class="vc-label">Deals modal on page</div></div>
+        <div class="visual-card"><img src="img/initiatives/crosssell-deals-page.png" alt="Related deals on merchant page"><div class="vc-label">Related deals section</div></div>
+      </div>
+    </div>
+
+    <div class="visual-group">
+      <div class="visual-group-header">
+        <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c1);"></span>
+        <h3>Post-redemption app upsell</h3>
+      </div>
+      <div class="visual-strip">
+        <div class="visual-card"><img src="img/initiatives/app-upsell.png" alt="Groupon app upsell"><div class="vc-label">App install CTA after code use</div></div>
+      </div>
+    </div>
+
+    <div class="visual-group">
+      <div class="visual-group-header">
+        <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c3-g);"></span>
+        <h3>Genie promotion</h3>
+      </div>
+      <div class="visual-strip">
+        <div class="visual-card" style="width: 320px;"><img src="img/initiatives/genie-banner.png" alt="Genie install banner" style="width: 320px;"><div class="vc-label">Install banner on coupons pages</div></div>
+      </div>
+    </div>
+
+    <div class="visual-group">
+      <div class="visual-group-header">
+        <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c2);"></span>
+        <h3>Registration gated behind rewards</h3>
+      </div>
+      <div class="visual-strip">
+        <div class="visual-card"><img src="img/initiatives/registration-rewards.png" alt="Email capture with reward incentive"><div class="vc-label">Email gate on reward claim</div></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Legend -->
