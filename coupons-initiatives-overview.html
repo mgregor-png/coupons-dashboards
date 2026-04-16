@@ -214,15 +214,15 @@
     <p style="font-size: 12px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--c4-border);"><strong>Testing approach:</strong> Build a cashback offer type, collect user emails, run a small number of manual delivery offers to validate the mechanics before scaling.</p>
   </div>
 
-  <!-- Two tiers -->
+  <!-- Three options -->
   <div class="scenarios">
-    <h2>Two tiers</h2>
-    <p>Initiatives split into what we can do now with existing traffic, and what requires new investment.</p>
+    <h2>Three options</h2>
+    <p>From quick wins on existing traffic, through extending what's already in progress, to bigger bets.</p>
 
-    <!-- Easy wins -->
+    <!-- Option 1: Easy wins -->
     <div class="scenario scenario-a">
       <div class="scenario-header">
-        <div class="scenario-label">Easy wins - existing traffic</div>
+        <div class="scenario-label">Option 1 - Easy wins</div>
       </div>
       <div class="scenario-pills">
         <span class="pill p1">01 Monetise</span>
@@ -230,25 +230,38 @@
         <span class="pill p2">02 Register</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>On-page monetisation</strong> of non-monetised sessions (display ads, deal promotion). <strong>Registration gating</strong> with rewards unlocks identity layer at $3.83/reg LTV. Both work on existing 30M sessions with minimal engineering.<br>
+        <strong>On-page monetisation</strong> of non-monetised sessions (display ads, deal cross-sell). <strong>Registration gating</strong> with rewards unlocks identity layer at $3.83/reg LTV. Both work on existing 30M sessions with minimal engineering.<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">Display ad monetisation numbers: <em>pending from Rebecca</em></span>
       </div>
     </div>
 
-    <!-- Future ideas -->
-    <div class="scenario scenario-c">
+    <!-- Option 2: Genie + Rewards -->
+    <div class="scenario scenario-b">
       <div class="scenario-header">
-        <div class="scenario-label">Newer ideas - more investment</div>
+        <div class="scenario-label">Option 2 - Genie + Rewards</div>
       </div>
       <div class="scenario-pills">
-        <span class="pill p3">03 Genie</span>
+        <span class="pill p3">03 Genie rewards</span>
         <span class="pill-arrow">+</span>
+        <span class="pill p3">03 Genie deals</span>
+      </div>
+      <div class="scenario-desc" style="margin-top: 12px;">
+        Genie is already live with 981 installs and $6/user/yr commission. <strong>Rewards is the planned next iteration</strong> (Iteration 2) - gating higher-value rewards behind the extension drives installs and lifts per-user value from $6 to $7.74/yr (+29%). Adding Groupon deals cross-sell takes it to $9.81/yr. This isn't a new bet - it's executing the existing roadmap. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-size: 12px; font-weight: 600;">Full LTV model &#8599;</a>
+      </div>
+    </div>
+
+    <!-- Option 3: Safari + Cashback -->
+    <div class="scenario scenario-c">
+      <div class="scenario-header">
+        <div class="scenario-label">Option 3 - Safari + Cashback</div>
+      </div>
+      <div class="scenario-pills">
         <span class="pill p3s">Safari ext</span>
         <span class="pill-arrow">+</span>
         <span class="pill p4">04 Cashback</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Genie</strong> desktop extension with rewards ($6-9.81/user). <strong>Safari extension</strong> inside the Groupon app - reaches ~7-8M users (84% iOS), $6/user commission (small sample*). <strong>Cashback infrastructure</strong> creates content for any merchant, feeds impressions to all surfaces, drives registration uplift and SEO defense. Requires validation (Safari spike) and significant engineering (cashback is 40-50 MD, the most complex path).<br>
+        <strong>Safari extension</strong> inside the Groupon app reaches ~7-8M users (84% iOS), $6/user commission (small sample*). Requires iOS spike to validate, then full build. <strong>Cashback infrastructure</strong> (40-50 MD, most complex) creates content for any merchant - feeding impressions to web, Genie, and Safari. Drives registration uplift and SEO defense. These are the bigger bets with the highest ceiling.<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">* $6/user based on 981 installs, 388 transactions - directional, not statistically robust</span>
       </div>
     </div>
