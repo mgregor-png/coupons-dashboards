@@ -250,9 +250,10 @@
     </div>
 
     <!-- Option 2: Genie + Rewards -->
-    <div class="scenario scenario-b">
+    <div class="scenario scenario-b" style="border: 2px solid var(--c3-g-border); background: var(--c3-g-bg);">
       <div class="scenario-header">
-        <div class="scenario-label">Option 2 - Genie + Rewards</div>
+        <div class="scenario-label">Layer 2 - Genie + Rewards</div>
+        <span style="font-size: 11px; font-weight: 700; color: var(--c3-g); background: #fff; padding: 2px 8px; border-radius: 4px;">Highest conviction</span>
       </div>
       <div class="scenario-pills">
         <span class="pill p3">03 Genie rewards</span>
@@ -260,7 +261,23 @@
         <span class="pill p3">03 Genie deals</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        Genie is already live with 981 installs and $6/user/yr commission. <strong>Rewards is the planned next iteration</strong> (Iteration 2) - gating higher-value rewards behind the extension drives installs and lifts per-user value from $6 to $7.74/yr (+29%). Adding Groupon deals cross-sell takes it to $9.81/yr. This isn't a new bet - it's executing the existing roadmap. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-size: 12px; font-weight: 600;">Full LTV model &#8599;</a>
+        <strong>Extension users are the most valuable audience in the entire ecosystem.</strong> Cross-channel data shows extension buyers are 6x more likely than web buyers to make 3+ purchases/yr, and Rewards participation delivers the highest lift of any channel (+110% revenue/user on extensions vs +41% on web).
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
+        <div style="padding: 12px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--c3-g-border);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--c3-g); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Without rewards</div>
+          <div style="font-size: 20px; font-weight: 800; color: var(--text);">$6.00<span style="font-size: 12px; font-weight: 600; color: var(--muted);">/user/yr</span></div>
+          <div style="font-size: 11px; color: var(--muted);">Commission only (Genie actual, 981 installs)</div>
+        </div>
+        <div style="padding: 12px 14px; border-radius: 8px; background: #fff; border: 2px solid var(--c3-g);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--c3-g); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">With rewards</div>
+          <div style="font-size: 20px; font-weight: 800; color: var(--c3-g);">$7.74-17.50<span style="font-size: 12px; font-weight: 600; color: var(--muted);">/user/yr</span></div>
+          <div style="font-size: 11px; color: var(--muted);">$7.74 = our model (+29%). $17.50 = cross-channel data (+110%)</div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.6;">
+        <strong>Why this is ready now:</strong> Genie is live. Rewards works on web (5.33x ROI, 74% conversion uplift at $2.97/txn cost). Designs exist. ~23 MD to integrate - mostly FE extension work + Giftcloud claim trigger (reuses existing web rewards infrastructure). No new architecture. This isn't a new bet - it's connecting two things that already work separately.
+        <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-weight: 600;"> LTV model &#8599;</a>
       </div>
     </div>
 
@@ -455,9 +472,9 @@
 
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint); background: var(--c3-g-bg);">
         <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c3-g); flex-shrink: 0;"></span><strong>03 Genie + Rewards</strong></div>
-        <div style="padding: 10px 14px; text-align: center; color: var(--c3-g); font-weight: 700;">25 MD</div>
-        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$7.74/user/yr</div>
-        <div style="padding: 10px 14px; color: var(--muted);">+29% vs commission only. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-size: 11px;">LTV model</a></div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c3-g); font-weight: 700;">~23 MD</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">$7.74-17.50/user/yr</div>
+        <div style="padding: 10px 14px; color: var(--muted);">+29% to +110%. Rewards 5.33x ROI on web. Extension + web infra exist. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c3-g); font-size: 11px;">LTV model</a></div>
       </div>
 
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
@@ -566,7 +583,7 @@
       </div>
       <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
         <div style="padding: 8px 14px; font-weight: 700; color: var(--c1);">Q2</div>
-        <div style="padding: 8px 14px;">Cross-sell deals (8 MD) + Genie rewards (25 MD)</div>
+        <div style="padding: 8px 14px;">Cross-sell deals (8 MD) + Genie rewards (~23 MD)</div>
         <div style="padding: 8px 14px; color: var(--muted);">6-8 weeks</div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
