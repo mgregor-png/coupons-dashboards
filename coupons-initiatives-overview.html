@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupons Initiatives Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2f6900;
+    --primary-light: #3d8400;
+    --primary-bg: #f0fbe0;
+    --secondary: #116682;
+    --secondary-bg: #e6f5fc;
+    --tertiary: #006b19;
+    --tertiary-bg: #e8fbe8;
+    --surface: #fafbff;
+    --surface-dim: #f1f3f9;
+    --on-surface: #161c26;
+    --on-surface-muted: #5a6170;
+    --error: #c62828;
+    --amber: #e65100;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--on-surface);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 32px 120px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 48px;
+  }
+  .hero-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    max-width: 680px;
+  }
+
+  /* Two problems */
+  .problems-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0 48px;
+  }
+  .problem-card {
+    padding: 24px;
+    border-radius: 14px;
+    border-left: 3px solid;
+  }
+  .problem-card.retention {
+    background: #fff5f5;
+    border-left-color: var(--error);
+  }
+  .problem-card.traffic {
+    background: var(--secondary-bg);
+    border-left-color: var(--secondary);
+  }
+  .problem-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .problem-card.retention .problem-label { color: var(--error); }
+  .problem-card.traffic .problem-label { color: var(--secondary); }
+  .problem-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .problem-card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .problem-card .stat {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .problem-card.retention .stat { color: var(--error); }
+  .problem-card.traffic .stat { color: var(--secondary); }
+
+  /* Section */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .section > p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-surface-muted);
+    margin-bottom: 20px;
+  }
+
+  /* Initiative card */
+  .initiative {
+    padding: 28px 32px;
+    border-radius: 14px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    margin-bottom: 16px;
+  }
+  .init-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 16px;
+  }
+  .init-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .init-badges {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .badge-effort-low { background: var(--primary-bg); color: var(--primary); }
+  .badge-effort-med { background: #fff8e1; color: #b45309; }
+  .badge-effort-high { background: #fce4ec; color: var(--error); }
+  .badge-retention { background: #ffebee; color: var(--error); }
+  .badge-traffic { background: var(--secondary-bg); color: var(--secondary); }
+  .badge-both { background: #f3e8ff; color: #7c3aed; }
+  .init-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 16px;
+  }
+  .init-metrics {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .init-metric {
+    display: flex;
+    flex-direction: column;
+  }
+  .init-metric-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .init-metric-value {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+  }
+  .init-metric-value.green { color: var(--primary); }
+  .init-metric-value.blue { color: var(--secondary); }
+  .init-metric-value.red { color: var(--error); }
+  .init-metric-note {
+    font-size: 11px;
+    color: var(--on-surface-muted);
+  }
+  .init-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .init-sub-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .init-sub-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .init-sub-icon .material-symbols-outlined { font-size: 18px; color: #fff; font-variation-settings: 'FILL' 1; }
+  .init-sub-icon.green { background: var(--primary); }
+  .init-sub-icon.blue { background: var(--secondary); }
+  .init-sub-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .init-sub-content p { font-size: 13px; color: var(--on-surface-muted); margin-bottom: 0; }
+  .init-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    margin-top: 12px;
+  }
+  .init-link:hover { text-decoration: underline; }
+  .init-link .material-symbols-outlined { font-size: 16px; }
+
+  /* Expandable features */
+  .init-expand {
+    margin-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding-top: 4px;
+  }
+  .init-expand summary {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-surface-muted);
+    cursor: pointer;
+    padding: 8px 0;
+    list-style: none;
+  }
+  .init-expand summary::before { content: '+ '; }
+  .init-expand[open] summary::before { content: '- '; }
+  .init-expand[open] summary { color: var(--on-surface); }
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 12px;
+  }
+  .feature-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.02);
+  }
+  .feature-item .material-symbols-outlined {
+    font-size: 18px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    color: var(--on-surface-muted);
+    font-variation-settings: 'FILL' 1;
+  }
+  .feature-item h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 2px;
+  }
+  .feature-item p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+
+  /* Summary table */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 24px 0;
+  }
+  .summary-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-surface-muted);
+    padding: 10px 12px;
+    border-bottom: 2px solid rgba(0,0,0,0.08);
+  }
+  .summary-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    vertical-align: top;
+  }
+  .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table .initiative-name {
+    font-weight: 700;
+    color: var(--on-surface);
+  }
+  .summary-table .rev { font-weight: 700; }
+
+  /* Sequencing */
+  .phase-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .phase-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .phase-content {
+    flex: 1;
+    padding: 4px 0;
+  }
+  .phase-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .phase-content p { font-size: 13px; color: var(--on-surface-muted); margin-bottom: 0; }
+
+  /* Callout */
+  .callout {
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin: 24px 0;
+  }
+  .callout-green {
+    background: var(--primary-bg);
+    border-left: 3px solid var(--primary);
+  }
+  .callout p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surface-muted);
+    margin-bottom: 0;
+  }
+  .callout p strong { color: var(--on-surface); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 0 24px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    margin-top: 40px;
+  }
+  .footer p { font-size: 12px; color: var(--on-surface-muted); }
+
+  /* Scenario tree */
+  .tree { margin-top: 28px; }
+  .tree-root { display: flex; justify-content: center; }
+  .tree-connector { text-align: center; font-size: 20px; color: rgba(0,0,0,0.15); padding: 8px 0; }
+  .tree-node {
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: var(--surface-dim);
+    border: 1px solid rgba(0,0,0,0.04);
+    border-left: 3px solid var(--on-surface-muted);
+  }
+  .tree-node.root-node { border-left-color: var(--on-surface); max-width: 500px; text-align: center; }
+  .tree-node.leaf { flex: 1; }
+  .tn-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .tn-label { font-size: 15px; font-weight: 700; color: var(--on-surface); }
+  .tn-value { font-size: 18px; font-weight: 800; margin-top: 4px; }
+  .tn-sub { font-size: 12px; color: var(--on-surface-muted); margin-top: 4px; }
+  .tn-gate { font-size: 11px; color: var(--amber); font-weight: 600; margin-top: 6px; }
+  .tn-effort { font-size: 11px; color: var(--on-surface-muted); margin-top: 2px; }
+  .tree-split { display: flex; gap: 16px; }
+  .tree-branch { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .tree-branch .tree-node { width: 100%; }
+  .tree-children { display: flex; gap: 12px; width: 100%; }
+
+  /* Scenarios */
+  .scenarios { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .scenario {
+    padding: 22px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .scenario.bad { background: #fff8f8; border-top: 3px solid var(--error); }
+  .scenario.base { background: var(--surface-dim); border-top: 3px solid var(--on-surface); }
+  .scenario.good { background: #f4faee; border-top: 3px solid var(--primary); }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-surface-muted); margin-bottom: 4px; }
+  .scenario-value { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; margin-bottom: 8px; }
+  .scenario-desc { font-size: 12px; line-height: 1.5; color: var(--on-surface-muted); margin-bottom: 14px; }
+  .scenario-items { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .si { display: flex; justify-content: space-between; font-size: 12px; color: var(--on-surface-muted); padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .si:last-child { border-bottom: none; }
+  .si.total { font-weight: 700; color: var(--on-surface); border-top: 1px solid rgba(0,0,0,0.08); border-bottom: none; padding-top: 8px; margin-top: 4px; }
+  .scenario-cost { font-size: 11px; color: var(--on-surface-muted); margin-top: auto; }
+
+  @media (max-width: 640px) {
+    .page { padding: 32px 20px 80px; }
+    .hero h1 { font-size: 28px; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .init-metrics { flex-direction: column; gap: 12px; }
+    .tree-split { flex-direction: column; }
+    .tree-children { flex-direction: column; }
+    .scenarios { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Coupons vertical - MBR</div>
+    <h1>Coupons Initiatives Overview</h1>
+    <p>The coupons vertical has 29.6M sessions generating $12.6M in commission - but it's declining 17% YoY. This document maps the initiatives to extract more value from this traffic, with effort, revenue potential, and dependencies to support investment decisions.</p>
+  </div>
+
+  <!-- TWO PROBLEMS -->
+  <div class="problem-card traffic" style="margin: 32px 0 48px;">
+    <div class="problem-label">The challenge</div>
+    <div class="stat">-17% YoY</div>
+    <h3>Underleveraged, declining traffic</h3>
+    <p>29.6M sessions generating $12.6M in commission - but declining. We're not extracting full value from the traffic we already have. These initiatives address that.</p>
+  </div>
+
+  <!-- SCENARIO TREE -->
+  <div class="section">
+    <div class="section-label">Decision map</div>
+    <h2>Scenario Tree</h2>
+    <p>Each initiative has a gate. The tree shows what happens at each decision point - and what the total outcome looks like across three scenarios.</p>
+
+    <div class="tree">
+      <div class="tree-root">
+        <div class="tree-node root-node">
+          <div class="tn-label">Coupons traffic</div>
+          <div class="tn-value">29.6M sessions/yr</div>
+          <div class="tn-sub">$12.6M commission (declining 17% YoY)</div>
+        </div>
+      </div>
+
+      <div class="tree-connector">&#8595;</div>
+      <div class="tree-split">
+        <div class="tree-branch">
+          <div class="tree-node" style="border-left-color: var(--secondary);">
+            <div class="tn-tag" style="color: var(--secondary);">Existing traffic</div>
+            <div class="tn-label">Leverage existing traffic</div>
+            <div class="tn-sub">Low effort, start now</div>
+          </div>
+          <div class="tree-connector">&#8595;</div>
+          <div class="tree-children">
+            <div class="tree-node leaf">
+              <div class="tn-label">Monetize traffic</div>
+              <div class="tn-value" style="color: var(--on-surface-muted);">TBD</div>
+              <div class="tn-gate">Gate: CTR doesn't drop >5%</div>
+              <div class="tn-effort">Effort: minimal</div>
+            </div>
+            <div class="tree-node leaf">
+              <div class="tn-label">Groupon registrations</div>
+              <div class="tn-value" style="color: var(--primary);">$2.1-4.6M/yr</div>
+              <div class="tn-gate">Gate: page revenue vs control</div>
+              <div class="tn-effort">Effort: 3-5 MD</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tree-branch">
+          <div class="tree-node" style="border-left-color: var(--error);">
+            <div class="tn-tag" style="color: var(--error);">New channels</div>
+            <div class="tn-label">Create new impressions</div>
+            <div class="tn-sub">High potential, needs validation</div>
+          </div>
+          <div class="tree-connector">&#8595;</div>
+          <div class="tree-children">
+            <div class="tree-node leaf">
+              <div class="tn-label">Genie desktop</div>
+              <div class="tn-value" style="color: var(--secondary);">$576K-1.3M/yr</div>
+              <div class="tn-gate">Gate: installs >2K/mo after 3mo</div>
+              <div class="tn-effort">Effort: 34 MD</div>
+            </div>
+            <div class="tree-node leaf" style="border-left-color: var(--primary);">
+              <div class="tn-label">Safari extension</div>
+              <div class="tn-value" style="color: var(--primary);">$4-15M/yr</div>
+              <div class="tn-gate">Gate: 2-wk spike passes</div>
+              <div class="tn-effort">Effort: 2wk + 12wk build</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="padding: 16px 20px; border-radius: 10px; background: #f8f0ff; border: 1px dashed rgba(124,58,237,0.2); margin-top: 16px; display: flex; gap: 12px; align-items: flex-start;">
+      <span class="material-symbols-outlined" style="color: #7c3aed; font-size: 20px; margin-top: 2px; font-variation-settings: 'FILL' 1;">layers</span>
+      <div>
+        <div style="font-size: 13px; font-weight: 700; color: #7c3aed;">Cashback (separate complex initiative - see below)</div>
+        <div style="font-size: 13px; color: #5a6170; margin-top: 4px;">Enhances all paths above but requires significant infrastructure (Bucks platform + merchant integrations). Net +$220K (+11%), risk -$500K. Currently a blocker for the Bucks-dependent parts of the model. Detailed in Initiative 4.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 16px; font-weight: 700; margin-top: 40px; margin-bottom: 16px;">Three scenarios</h3>
+    <div class="scenarios">
+      <div class="scenario bad">
+        <div class="scenario-label">Downside</div>
+        <div class="scenario-value" style="color: var(--error);">~$550K</div>
+        <div class="scenario-desc">Safari spike fails. Genie stays at 304/mo. Cashback net negative. Only registration delivers.</div>
+        <div class="scenario-items">
+          <div class="si"><span>Monetize traffic</span><span>$0</span></div>
+          <div class="si"><span>Registrations</span><span style="color: var(--primary);">$1.0M</span></div>
+          <div class="si"><span>Safari</span><span style="color: var(--error);">$0 (spike fails)</span></div>
+          <div class="si"><span>Genie</span><span>$50K</span></div>
+          <div class="si"><span>Cashback</span><span style="color: var(--error);">-$500K</span></div>
+          <div class="si total"><span>Total</span><span>~$550K</span></div>
+        </div>
+        <div class="scenario-cost">Cost: ~2 wks eng + cashback writeoff</div>
+      </div>
+
+      <div class="scenario base">
+        <div class="scenario-label">Base case</div>
+        <div class="scenario-value" style="color: var(--primary);">~$7M</div>
+        <div class="scenario-desc">Safari validates at 10% activation (672K users x $6/user = $4M). Genie rewards land 8K installs/mo ($576K). Registration at 2x ($2.1M). Cashback breaks even.</div>
+        <div class="scenario-items">
+          <div class="si"><span>Monetize traffic</span><span>TBD</span></div>
+          <div class="si"><span>Registrations</span><span style="color: var(--primary);">$2.1M</span></div>
+          <div class="si"><span>Safari (10%, $6/user)</span><span style="color: var(--primary);">$4.0M</span></div>
+          <div class="si"><span>Genie</span><span>$576K</span></div>
+          <div class="si"><span>Cashback</span><span>+$220K net</span></div>
+          <div class="si total"><span>Total</span><span style="color: var(--primary);">~$7M</span></div>
+        </div>
+        <div class="scenario-cost">Cost: ~40 MD eng total</div>
+      </div>
+
+      <div class="scenario good">
+        <div class="scenario-label">Upside</div>
+        <div class="scenario-value" style="color: var(--primary);">~$20M</div>
+        <div class="scenario-desc">Safari 30% activation. Genie 18K installs/mo. Registration at 3x. Cashback retention effect kicks in.</div>
+        <div class="scenario-items">
+          <div class="si"><span>Monetize traffic</span><span>TBD</span></div>
+          <div class="si"><span>Registrations</span><span style="color: var(--primary);">$4.6M</span></div>
+          <div class="si"><span>Safari (30%, $7.13/user)</span><span style="color: var(--primary);">$14.3M</span></div>
+          <div class="si"><span>Genie</span><span>$1.3M</span></div>
+          <div class="si"><span>Cashback</span><span>+$220K net</span></div>
+          <div class="si total"><span>Total</span><span style="color: var(--primary);">~$20M</span></div>
+        </div>
+        <div class="scenario-cost">Cost: ~40 MD eng total</div>
+      </div>
+    </div>
+
+    <div style="padding: 20px 24px; border-radius: 12px; background: var(--primary-bg); border-left: 3px solid var(--primary); margin-top: 24px;">
+      <p style="font-size: 15px; line-height: 1.6; color: #5a6170; margin-bottom: 0;"><strong style="color: #161c26;">The phased approach limits exposure.</strong> Each gate prevents the next phase if results don't support it. Downside is ~$550K and 2 weeks wasted. Upside is ~$20M incremental on a declining $12.6M base.</p>
+    </div>
+  </div>
+
+  <!-- INITIATIVE 1: MONETIZE EXISTING TRAFFIC -->
+  <div class="section">
+    <div class="section-label">Initiative 1</div>
+    <h2>Monetize Existing Traffic More</h2>
+
+    <div class="initiative">
+      <div class="init-header">
+        <div class="init-title">Extract more value from current sessions</div>
+        <div class="init-badges">
+          <span class="badge badge-traffic">Traffic</span>
+          <span class="badge badge-effort-low">Low effort</span>
+        </div>
+      </div>
+      <p class="init-desc">Add revenue-generating elements to existing coupons pages: promote Groupon deals, display advertising on non-monetized sessions, cross-promote app deals to web visitors.</p>
+      <div class="init-metrics">
+        <div class="init-metric">
+          <div class="init-metric-label">Addressable sessions</div>
+          <div class="init-metric-value">29.6M/yr</div>
+          <div class="init-metric-note">US coupons traffic (BQ 2025)</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Current commission</div>
+          <div class="init-metric-value">$12.6M</div>
+          <div class="init-metric-note">Declining 17% YoY</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Revenue potential</div>
+          <div class="init-metric-value green">TBD</div>
+          <div class="init-metric-note">Incremental on top of affiliate</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Engineering</div>
+          <div class="init-metric-value">Minimal</div>
+          <div class="init-metric-note">Banner placement, feed integration</div>
+        </div>
+      </div>
+      <details class="init-expand">
+        <summary>Feature ideas</summary>
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="material-symbols-outlined">ad_units</span>
+            <div><h5>Display ads on non-monetized pages</h5><p>Many coupons pages have traffic but no affiliate click. Programmatic display fills the gap without cannibalizing affiliate revenue.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: ~14.8M non-monetized sessions/yr</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Cost: 2,750 MD (Rebecca's sheet)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: BQ (50% non-click rate on 29.6M sessions)</span>
+              </div></div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">storefront</span>
+            <div><h5>Promote Groupon deals on coupons pages</h5><p>"Shopping at Nike? Here's a local spa deal" cross-promotion. Uses coupons traffic to drive awareness of core Groupon inventory.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: $83,750/yr at 5% CVR, $17/conversion</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Cost: 3,850 MD (Rebecca's sheet)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Rebecca's ROI sheet + CLTM Tracker</span>
+              </div></div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">install_mobile</span>
+            <div><h5>App download prompts</h5><p>Smart banners on mobile web coupons pages driving app installs. Each install becomes a Safari extension user in the future.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: 18M mobile sessions, 1% install = 180K installs/yr</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Effort: Low (banner implementation)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: BQ (61% mobile traffic)</span>
+              </div></div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">trending_up</span>
+            <div><h5>Dynamic merchant prioritization</h5><p>Surface higher-commission merchants more prominently. Optimize page layout by RPS (revenue per session) not just traffic.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: 5-10% RPS uplift = $630K-1.3M/yr</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Effort: 5-8 MD</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Model (on $12.6M base)</span>
+              </div></div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- INITIATIVE 2: REGISTRATIONS -->
+  <div class="section">
+    <div class="section-label">Initiative 2</div>
+    <h2>Drive Groupon Registrations from Existing Web Traffic</h2>
+
+    <div class="initiative">
+      <div class="init-header">
+        <div class="init-title">Gate rewards behind Groupon registration</div>
+        <div class="init-badges">
+          <span class="badge badge-traffic">Traffic</span>
+          <span class="badge badge-effort-low">Low effort</span>
+        </div>
+      </div>
+      <p class="init-desc">Convert anonymous coupons visitors into registered Groupon users by gating rewards behind registration on non-monetized pages. Each registration has measurable downstream value.</p>
+      <div class="init-metrics">
+        <div class="init-metric">
+          <div class="init-metric-label">Current registrations</div>
+          <div class="init-metric-value">540K/yr</div>
+          <div class="init-metric-note">From coupons pages (BI)</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Value per registration</div>
+          <div class="init-metric-value blue">$3.83</div>
+          <div class="init-metric-note">$31.88 LTV at 12% conversion</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Rewards gating uplift</div>
+          <div class="init-metric-value green">+1,247%</div>
+          <div class="init-metric-note">Tested (Rebecca's ROI model)</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Revenue potential</div>
+          <div class="init-metric-value green">$2.1-4.6M/yr</div>
+          <div class="init-metric-note">At 2x-3x current rate</div>
+        </div>
+      </div>
+      <details class="init-expand">
+        <summary>Feature ideas</summary>
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="material-symbols-outlined">redeem</span>
+            <div><h5>Rewards gating</h5><p>Gate rewards behind Groupon registration on coupons pages. +1,247% sign-up uplift tested. Applies across all page types.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: $2.1-4.6M/yr (540K regs x $3.83, 2-3x uplift)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Effort: 3-5 MD</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: BI (Behdad), +1,247% uplift tested</span>
+              </div></div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">language</span>
+            <div><h5>Rewards offers: international rollout</h5><p>Extend rewards gating to international coupons pages. Same mechanic, new markets.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: $500K-1M/yr (depends on intl traffic)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Effort: 5-8 MD</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Estimate based on US model</span>
+              </div></div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">mail</span>
+            <div><h5>Email capture with code delivery</h5><p>Require email to reveal full coupon code. Builds CRM list for re-engagement even if user doesn't register.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Opportunity: $171/yr at $0.034/email, 5% signup. CRM value higher long-term</span>
+                <span style="font-size: 11px; font-weight: 600; color: #5a6170;">Cost: 200 MD (Rebecca's sheet)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Rebecca's ROI sheet</span>
+              </div></div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- INITIATIVE 3: EXTENSIONS (REFERENCES) -->
+  <div class="section">
+    <div class="section-label">Initiative 3</div>
+    <h2>Increase Impressions via Extensions</h2>
+    <p>Create new coupons touchpoints through browser extensions. Both have their own detailed analysis - linked below.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+      <div style="padding: 22px 24px; border-radius: 14px; background: var(--surface-dim); border: 1px solid rgba(0,0,0,0.04); border-top: 3px solid var(--primary);">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px;">Using existing app base</div>
+        <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Safari Extension</h3>
+        <p style="font-size: 13px; color: var(--on-surface-muted); line-height: 1.5; margin-bottom: 12px;">Bundle inside Groupon app. 8-10M MAU (84% iOS). $4-15M/yr potential. Needs 2-week iOS spike to validate.</p>
+        <a class="init-link" href="https://mgregor-png.github.io/coupons-dashboards/save-everywhere-report.html" target="_blank">
+          Full Safari report <span class="material-symbols-outlined">arrow_outward</span>
+        </a>
+      </div>
+      <div style="padding: 22px 24px; border-radius: 14px; background: var(--surface-dim); border: 1px solid rgba(0,0,0,0.04); border-top: 3px solid var(--secondary);">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px;">Building a new base</div>
+        <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Genie Desktop</h3>
+        <p style="font-size: 13px; color: var(--on-surface-muted); line-height: 1.5; margin-bottom: 12px;">Chrome extension. 981 installs, $6/user actual. Rewards integration (34 MD) projected to unlock 8-18K installs/mo.</p>
+        <a class="init-link" href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--secondary);">
+          Genie LTV model <span class="material-symbols-outlined">arrow_outward</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INITIATIVE 4: CASHBACK -->
+  <div class="section">
+    <div class="section-label">Initiative 4</div>
+    <h2>Cashback & Conversion Programme</h2>
+
+    <div class="initiative">
+      <div class="init-header">
+        <div class="init-title">Performance-based cashback + voucher upsell</div>
+        <div class="init-badges">
+          <span class="badge badge-effort-high">40-50 MD eng</span>
+        </div>
+      </div>
+      <p class="init-desc">Two-part model: (1) Negotiate elevated CPA rates on select merchants and pass a share back to users as cashback. (2) Let users convert cashback balance into Groupon vouchers at a premium ($10 cash -> $12-15 voucher). Transforms one-off coupon seekers into logged-in, high-value Groupon customers.</p>
+
+      <div style="padding: 12px 16px; border-radius: 8px; background: #fff5f5; margin-bottom: 16px; font-size: 13px; color: #c62828; font-weight: 600;">
+        Honest economics: Gross commission nearly doubles but ~42% goes back to users as payout. Net uplift is +11% (+$220K). Downside risk (-$500K) is larger than upside. The strategic value is in registration uplift (+1M) and SEO defense, not direct margin.
+      </div>
+
+      <div class="init-metrics">
+        <div class="init-metric">
+          <div class="init-metric-label">Gross commission</div>
+          <div class="init-metric-value green">+92%</div>
+          <div class="init-metric-note">$2.0M -> $3.9M</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Payout cost</div>
+          <div class="init-metric-value red">-$1.64M</div>
+          <div class="init-metric-note">65% of commission to users, 65% claim rate</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Net uplift</div>
+          <div class="init-metric-value">+$220K (+11%)</div>
+          <div class="init-metric-note">ROI: 137%</div>
+        </div>
+        <div class="init-metric">
+          <div class="init-metric-label">Engineering</div>
+          <div class="init-metric-value">40-50 MD</div>
+          <div class="init-metric-note">Eng estimate (VC-5884)</div>
+        </div>
+      </div>
+
+      <!-- Target KPIs -->
+      <h4 style="font-size: 13px; font-weight: 700; color: var(--on-surface-muted); margin-top: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em;">Year 1 targets</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+        <div style="padding: 14px 16px; border-radius: 10px; background: rgba(0,0,0,0.02);">
+          <div style="font-size: 11px; color: var(--on-surface-muted); text-transform: uppercase; letter-spacing: 0.05em;">Registration rate</div>
+          <div style="font-size: 16px; font-weight: 800; margin-top: 2px;">4% -> 10%</div>
+          <div style="font-size: 11px; color: var(--on-surface-muted);">+1M new Groupon registrations</div>
+        </div>
+        <div style="padding: 14px 16px; border-radius: 10px; background: rgba(0,0,0,0.02);">
+          <div style="font-size: 11px; color: var(--on-surface-muted); text-transform: uppercase; letter-spacing: 0.05em;">Repeat purchase</div>
+          <div style="font-size: 16px; font-weight: 800; margin-top: 2px;">1.6 -> 1.92</div>
+          <div style="font-size: 11px; color: var(--on-surface-muted);">+20% within cashback cohort</div>
+        </div>
+        <div style="padding: 14px 16px; border-radius: 10px; background: rgba(0,0,0,0.02);">
+          <div style="font-size: 11px; color: var(--on-surface-muted); text-transform: uppercase; letter-spacing: 0.05em;">$10 min payout</div>
+          <div style="font-size: 16px; font-weight: 800; margin-top: 2px;">>=2 purchases</div>
+          <div style="font-size: 11px; color: var(--on-surface-muted);">Threshold drives repeat behavior</div>
+        </div>
+      </div>
+
+      <!-- Cashback model detail -->
+      <details class="init-expand">
+        <summary>Full cashback model (from strategy doc)</summary>
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="material-symbols-outlined">percent</span>
+            <div>
+              <h5>Part 1: Cashback offers</h5>
+              <p>Negotiate elevated CPA rates on select merchants using existing sales team. Pass 65% back to users. Commission rate: 4.21% -> 6.74% (+60%). $10 cash-out threshold drives >=2 purchases.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">195K purchasers, 374K transactions (vs 312K without)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Adam's cashback model</span>
+              </div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">card_giftcard</span>
+            <div>
+              <h5>Part 2: Voucher upsell</h5>
+              <p>Convert cashback balance into Groupon vouchers at a premium ($10 cash -> $12-15 voucher). Selected by margin and customer-value models. "Cashback that grows when you treat yourself."</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Unique differentiator: no competitor blends cashback with local experiences</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Strategy proposal</span>
+              </div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <div>
+              <h5>AI opportunities</h5>
+              <p>Automated programme management: evaluate CPA rates, conversion rates, claim rates to auto-suggest/create offers and flag underperformers. Personalised voucher upsell rates based on customer value models.</p>
+              <div style="display: flex; gap: 16px; margin-top: 6px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; color: #2f6900;">Reduces manual forecasting overhead</span>
+                <span style="font-size: 11px; font-weight: 600; color: #999;">Source: Strategy proposal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Strategic value callout -->
+      <div style="padding: 16px 20px; border-radius: 10px; background: var(--secondary-bg); border-left: 3px solid var(--secondary); margin-top: 16px;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Strategic value beyond margin</div>
+        <div style="font-size: 13px; color: var(--on-surface-muted);">Reduces SEO reliance by shifting users into logged-in, CRM-reachable cohorts. Builds first-party data (purchase intent, brand preferences). Defends against AI search disruption by adding value layers competitors lack.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section">
+    <div class="section-label">At a glance</div>
+    <h2>Initiative Comparison</h2>
+
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Initiative</th>
+          <th>Solves</th>
+          <th>Effort</th>
+          <th>Revenue Est.</th>
+          <th>Timeline</th>
+          <th>Eng Dependency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="initiative-name">Monetize traffic</td>
+          <td>Traffic</td>
+          <td>Low</td>
+          <td class="rev">TBD</td>
+          <td>Weeks</td>
+          <td>Minimal</td>
+        </tr>
+        <tr>
+          <td class="initiative-name">Groupon registration + rewards</td>
+          <td>Traffic</td>
+          <td>Low</td>
+          <td class="rev" style="color: var(--primary);">$2.1-4.6M</td>
+          <td>Weeks</td>
+          <td>Minimal</td>
+        </tr>
+        <tr>
+          <td class="initiative-name"><a href="https://mgregor-png.github.io/coupons-dashboards/save-everywhere-report.html" target="_blank" style="color: var(--primary); text-decoration: none;">Safari extension &#8599;</a></td>
+          <td>New impressions</td>
+          <td>High</td>
+          <td class="rev" style="color: var(--primary);">$4-15M</td>
+          <td>14 weeks</td>
+          <td>2-wk iOS spike</td>
+        </tr>
+        <tr>
+          <td class="initiative-name"><a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--secondary); text-decoration: none;">Genie + rewards &#8599;</a></td>
+          <td>Traffic</td>
+          <td>Medium</td>
+          <td class="rev">$576K-1.3M</td>
+          <td>Q2</td>
+          <td>34 MD</td>
+        </tr>
+        <tr>
+          <td class="initiative-name">Cashback + voucher</td>
+          <td>Content + retention</td>
+          <td>High</td>
+          <td class="rev">+$220K net (+11%)</td>
+          <td>Q3</td>
+          <td>40-50 MD (VC-5884)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Coupons Vertical - April 2026</p>
+    <p style="margin-top: 4px; font-size: 11px; color: rgba(0,0,0,0.25);">Data: BigQuery, Tableau, CJ actuals, BI models</p>
+  </div>
+
+</div>
+</body>
+</html>
