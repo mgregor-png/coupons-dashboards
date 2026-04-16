@@ -299,8 +299,8 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Cross-sell Groupon deals</div>
           <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">5 MD</div>
-          <div style="padding: 8px 12px; text-align: center; color: var(--muted); font-style: italic;">TBD</div>
-          <div style="padding: 8px 12px; color: var(--muted);">5-10% CTR, purchase conv. depends on deal quality. Frontend exists. <a href="https://analytics.groupondev.com/#/views/CLTMDownstreamTrackerV2/CLTMTrackerSegmentView?:iid=2" target="_blank" style="color: var(--c1); font-size: 11px;">Source</a></div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">~$66K/yr</div>
+          <div style="padding: 8px 12px; color: var(--muted);">6 merchants modeled. $40K from unmonetised pages (Costco, Regal). See breakdown below.</div>
         </div>
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Upsell Genie</div>
@@ -322,6 +322,82 @@
         </div>
       </div>
       <div style="font-size: 11px; color: var(--muted); margin-top: 6px; padding-left: 4px;"><strong>Cross-sell dependency:</strong> Needs endpoint from another team to return deals based on parameters. Our eng is 5 MD once endpoint exists. Communication delays possible.</div>
+
+      <!-- Cross-sell deal breakdown -->
+      <details style="margin-top: 12px;">
+        <summary style="font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; padding: 4px 0;">Cross-sell revenue model - 6 merchant breakdown</summary>
+        <div style="margin-top: 8px; border-radius: 8px; overflow: hidden; border: 1px solid var(--faint); font-size: 12px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; background: var(--dim);">
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint);">Merchant</div>
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">Sessions/yr</div>
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">CTR</div>
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">Deal Rev/S</div>
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">Curr Rev/S</div>
+            <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">Incr. Rev</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint); background: var(--c1-bg);">
+            <div style="padding: 6px 10px; font-weight: 600;">Costco</div>
+            <div style="padding: 6px 10px; text-align: right;">542,818</div>
+            <div style="padding: 6px 10px; text-align: right;">19%</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.37</div>
+            <div style="padding: 6px 10px; text-align: right; color: var(--c4);">$0.00</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$38,160</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+            <div style="padding: 6px 10px; font-weight: 600;">Sam's Club</div>
+            <div style="padding: 6px 10px; text-align: right;">131,681</div>
+            <div style="padding: 6px 10px; text-align: right;">10%</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.77</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.47</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$10,139</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+            <div style="padding: 6px 10px; font-weight: 600;">JCPenney Portraits</div>
+            <div style="padding: 6px 10px; text-align: right;">62,048</div>
+            <div style="padding: 6px 10px; text-align: right;">10%</div>
+            <div style="padding: 6px 10px; text-align: right;">$1.24</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.17</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$7,694</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+            <div style="padding: 6px 10px; font-weight: 600;">Shutterfly</div>
+            <div style="padding: 6px 10px; text-align: right;">112,345</div>
+            <div style="padding: 6px 10px; text-align: right;">10%</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.58</div>
+            <div style="padding: 6px 10px; text-align: right;">$1.45</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$6,516</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint); background: var(--c1-bg);">
+            <div style="padding: 6px 10px; font-weight: 600;">Regal Cinemas</div>
+            <div style="padding: 6px 10px; text-align: right;">54,080</div>
+            <div style="padding: 6px 10px; text-align: right;">10%</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.38</div>
+            <div style="padding: 6px 10px; text-align: right; color: var(--c4);">$0.00</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$2,055</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+            <div style="padding: 6px 10px; font-weight: 600;">Canvas On Demand</div>
+            <div style="padding: 6px 10px; text-align: right;">7,021</div>
+            <div style="padding: 6px 10px; text-align: right;">10%</div>
+            <div style="padding: 6px 10px; text-align: right;">$1.91</div>
+            <div style="padding: 6px 10px; text-align: right;">$0.45</div>
+            <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$1,341</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; background: var(--dim); font-weight: 700;">
+            <div style="padding: 6px 10px;">Total (6 merchants)</div>
+            <div style="padding: 6px 10px; text-align: right;">909,993</div>
+            <div style="padding: 6px 10px;"></div>
+            <div style="padding: 6px 10px;"></div>
+            <div style="padding: 6px 10px;"></div>
+            <div style="padding: 6px 10px; text-align: right; color: var(--c1);">$65,906</div>
+          </div>
+        </div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5;">
+          <strong>Model:</strong> Coupons sessions/yr x CTR x deal page revenue/session (from UNAGI). Costco CTR = 19% (actual, Rebecca). Others = 10% (estimate). Green rows = currently unmonetised ($0 coupons commission) - cross-sell is pure incremental.<br>
+          <strong>Note:</strong> Only 6 merchants with coupons pages modeled. Expanding to more crossover merchants would increase this. Deal page rev/session includes the deal's own conversion rate (5-16% depending on deal).<br>
+          <strong>Sources:</strong> Sessions from <code>rep.01_management_dashboard</code> (US, last 12 months). Deal rev/session from <code>supply.unagi_monthly</code> (US, all-time).
+        </div>
+      </details>
     </div>
 
     <!-- Other initiatives -->
