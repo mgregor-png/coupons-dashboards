@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bet GRO Proposal Draft - Content Automation & Quality</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #F8FAFC; color: #1E293B; line-height: 1.6; font-size: 15px;
+  }
+  .page-header {
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%);
+    color: white; padding: 32px 0; border-bottom: 3px solid #7C3AED;
+  }
+  .page-header .container { display: flex; justify-content: space-between; align-items: flex-start; }
+  .page-header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+  .page-header .subtitle { margin-top: 4px; font-size: 13px; color: #94A3B8; }
+  .draft-badge {
+    background: #F59E0B; color: #1E293B; font-size: 11px; font-weight: 700;
+    padding: 4px 12px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 32px; }
+  .content { padding: 32px 0 64px; }
+  .section {
+    background: white; border-radius: 10px; border: 1px solid #E2E8F0;
+    padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .section h2 {
+    font-size: 16px; font-weight: 700; color: #0F172A;
+    margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #E2E8F0;
+  }
+  .section h3 { font-size: 14px; font-weight: 600; color: #334155; margin: 18px 0 8px; }
+  .section p, .section li { color: #475569; margin-bottom: 8px; }
+  .section ul, .section ol { padding-left: 20px; }
+  .hypothesis {
+    background: #F0F9FF; border-left: 4px solid #2563EB;
+    padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 12px 0;
+  }
+  .hypothesis p { color: #1E40AF; margin: 0; font-style: italic; }
+  .workstream { border: 1px solid #E2E8F0; border-radius: 8px; margin: 12px 0; overflow: hidden; }
+  .ws-header {
+    display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+    background: #F8FAFC; cursor: pointer; user-select: none;
+  }
+  .ws-header:hover { background: #F1F5F9; }
+  .ws-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .ws-title { font-weight: 600; font-size: 14px; color: #0F172A; flex: 1; }
+  .ws-count {
+    font-size: 12px; background: #E2E8F0; padding: 2px 8px; border-radius: 10px; color: #64748B;
+  }
+  .ws-body { padding: 14px 18px; border-top: 1px solid #E2E8F0; }
+  .ws-body p { font-size: 14px; color: #64748B; margin-bottom: 8px; }
+  .task-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .task-table th {
+    text-align: left; font-weight: 600; color: #64748B; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 8px; border-bottom: 1px solid #E2E8F0;
+  }
+  .task-table td { padding: 8px; border-bottom: 1px solid #F1F5F9; color: #334155; }
+  .task-table tr:hover td { background: #F8FAFC; }
+  .task-table tr.stale td { color: #94A3B8; font-size: 12px; }
+  .assignee-badge {
+    display: inline-block; font-size: 11px; background: #EEF2FF;
+    color: #4338CA; padding: 2px 8px; border-radius: 10px;
+  }
+  .asana-link {
+    display: inline-block; font-size: 11px; color: #7C3AED; text-decoration: none;
+    padding: 2px 8px; border: 1px solid #DDD6FE; border-radius: 4px;
+  }
+  .asana-link:hover { background: #EDE9FE; }
+  .metrics-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  .metrics-table th {
+    text-align: left; font-weight: 600; color: #64748B; font-size: 12px;
+    padding: 8px 12px; border-bottom: 2px solid #E2E8F0; background: #F8FAFC;
+  }
+  .metrics-table td { padding: 10px 12px; border-bottom: 1px solid #F1F5F9; font-size: 14px; }
+  .capacity-bar { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+  .capacity-track {
+    flex: 1; height: 24px; background: #F1F5F9; border-radius: 12px; overflow: hidden;
+  }
+  .capacity-fill {
+    height: 100%; border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 11px; font-weight: 600; color: white;
+  }
+  .capacity-label { font-size: 13px; color: #64748B; min-width: 80px; }
+  .owners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0; }
+  .owner-card { border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px 16px; }
+  .owner-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B; margin-bottom: 4px; }
+  .owner-name { font-weight: 600; color: #0F172A; font-size: 15px; }
+  .owner-scope { font-size: 13px; color: #64748B; margin-top: 4px; }
+  .spec-callout {
+    background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px;
+    padding: 14px 18px; margin: 12px 0;
+  }
+  .spec-callout .label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #059669; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .spec-callout p { font-size: 13px; color: #065F46; margin: 0; }
+  .editable-note {
+    background: #FFFBEB; border: 1px dashed #F59E0B; border-radius: 6px;
+    padding: 10px 14px; font-size: 13px; color: #92400E; margin: 12px 0;
+  }
+  .editable-note::before { content: "Note: "; font-weight: 600; }
+  .covered-bet {
+    display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px;
+    border-radius: 4px; margin-right: 4px;
+  }
+  .bet-tag { background: #DBEAFE; color: #1E40AF; }
+  .nav-bar {
+    background: white; border-bottom: 1px solid #E2E8F0;
+    padding: 10px 0; position: sticky; top: 0; z-index: 10;
+  }
+  .nav-bar .container { display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav-link {
+    font-size: 12px; color: #64748B; text-decoration: none;
+    padding: 4px 10px; border-radius: 4px; transition: all 0.15s;
+  }
+  .nav-link:hover { background: #F1F5F9; color: #1E293B; }
+  @media print {
+    .page-header { padding: 16px 0; }
+    .nav-bar { display: none; }
+    .section { break-inside: avoid; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="container">
+    <div>
+      <h1>Bet GRO Proposal - Content Automation & Quality</h1>
+      <div class="subtitle">Coupons Team Bet | Draft v2 | 2026-04-14 | <a href="content-bet-tasks.html" style="color:#93C5FD;">View task analysis dashboard</a></div>
+    </div>
+    <span class="draft-badge">Draft v2</span>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="container">
+    <a href="#what" class="nav-link">What</a>
+    <a href="#hypothesis" class="nav-link">Hypothesis</a>
+    <a href="#covered" class="nav-link">Existing Bets</a>
+    <a href="#scope" class="nav-link">Scope</a>
+    <a href="#workstreams" class="nav-link">Workstreams</a>
+    <a href="#success" class="nav-link">Success Criteria</a>
+    <a href="#capacity" class="nav-link">Capacity</a>
+    <a href="#owners" class="nav-link">Owners</a>
+    <a href="#tasks" class="nav-link">Seed Tasks</a>
+    <a href="#next" class="nav-link">Next Steps</a>
+  </div>
+</nav>
+
+<div class="content">
+  <div class="container">
+
+    <!-- WHAT IS THIS BET -->
+    <div class="section" id="what">
+      <h2>What is this Bet?</h2>
+      <p>The content team operates at the intersection of offer pipelines, merchant management, and SEO - yet most of their critical workflows rely on manual processes, fragmented tooling, and workarounds that don't scale. Missing codes are not flowing into the pending queue. Bulk uploads still require manual CSV wrangling across territories. Tier updates for 1,000+ merchants happen through individual edits. Meanwhile, engineering has signaled that <strong>tickets without approved bets will not receive capacity starting Q2</strong>.</p>
+      <p>This bet creates a bounded, outcome-driven initiative to automate and improve the content pipeline - from offer ingestion through quality management to operational workflows - and resolve the SEO technical debt and CC tooling gaps that limit the content team's effectiveness. It covers 5 workstreams across content automation, SEO, and CC platform improvements.</p>
+    </div>
+
+    <!-- HYPOTHESIS -->
+    <div class="section" id="hypothesis">
+      <h2>Hypothesis</h2>
+      <div class="hypothesis">
+        <p>If we automate the content pipeline (missing codes ingestion, bulk offer generation, tier management), enable programmatic access to Control Cloud via MCP, and resolve SEO technical debt - then we will increase offer coverage per merchant, reduce manual content operations effort, and improve content freshness and organic traffic.</p>
+      </div>
+      <h3>Key Assumptions</h3>
+      <ul>
+        <li>Scaling missing codes ingestion from 500 to 1,500 merchants captures offers we're currently losing to competitors</li>
+        <li>AI-powered bulk offer generation maintains quality at 10x scale, keeping minimum offer thresholds for SEO</li>
+        <li>Control Cloud MCP unlocks automation workflows that currently require manual UI interaction</li>
+        <li>Unresolved SEO and CC platform issues are silently degrading performance of strategic bets</li>
+      </ul>
+    </div>
+
+    <!-- COVERED BY EXISTING BETS -->
+    <div class="section" id="covered">
+      <h2>Already Covered by Existing Bets</h2>
+      <p>These tasks from the engineering board are mapped to approved bets and are <strong>not</strong> part of this proposal:</p>
+      <table class="task-table">
+        <thead><tr><th>Task</th><th>Covered By</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Develop Scoring API Endpoint</td><td><span class="covered-bet bet-tag">P3 Offer Quality</span></td><td><a href="https://app.asana.com/0/1205497488895256/1213610507782559" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>PostHog Deployment</td><td><span class="covered-bet bet-tag">P6 PostHog</span></td><td><a href="https://app.asana.com/0/1205497488895256/1211877271388973" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>Post-Redemption screen upgrade</td><td><span class="covered-bet bet-tag">P9 Post Redemption</span></td><td><a href="https://app.asana.com/0/1205497488895256/1210471664273637" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>Add Nucleus Merchant Tracking Links</td><td><span class="covered-bet bet-tag">P4 Market Coverage</span></td><td><a href="https://app.asana.com/0/1205497488895256/1213528754712070" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>Network Direct API - Levanta</td><td><span class="covered-bet bet-tag">P4 Market Coverage</span></td><td><a href="https://app.asana.com/0/1205497488895256/1211663248680141" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>Network Direct API - Fintel Connect</td><td><span class="covered-bet bet-tag">P4 Market Coverage</span></td><td><a href="https://app.asana.com/0/1205497488895256/1211478885381137" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>CJ NA Publisher Tag Integration</td><td><span class="covered-bet bet-tag">P4 Market Coverage</span></td><td><a href="https://app.asana.com/0/1205497488895256/1211027606632143" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>Genie Impact Stand-Down</td><td><span class="covered-bet bet-tag">Genie (Proposal)</span></td><td><a href="https://app.asana.com/0/1205497488895256/1211720836984642" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td>[ENG] Seasonal Banner - CC Advert Type</td><td><span class="covered-bet" style="background:#FEF3C7;color:#92400E;">Excluded</span></td><td><a href="https://app.asana.com/0/1205497488895256/1213613549171160" class="asana-link" target="_blank">Asana</a></td></tr>
+          <tr><td colspan="3" style="font-size:12px;color:#64748B;padding-top:12px;border-top:1px solid #E2E8F0;"><strong>Also excluded (need separate container):</strong> Email & Marketing Platform (9 tasks - Shortstack, Blueshift, email templates), Operations & Maintenance (20 tasks - rewards bugs, app fixes, compliance, analytics)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SCOPE -->
+    <div class="section" id="scope">
+      <h2>Scope</h2>
+      <h3>In Scope - 5 Workstreams</h3>
+      <ul>
+        <li><strong>WS1: Content Pipeline & Missing Codes</strong> - Route scraped competitor codes into CC pending queue at scale (1,000+ merchants, 3 sources)</li>
+        <li><strong>WS2: Bulk Upload & Content Automation</strong> - Fix category failures, build AI-powered offer generation, CC MCP for programmatic access</li>
+        <li><strong>WS3: Content Operations & Tiering</strong> - Quarterly tier updates (INT + NA), feed quality, process improvements</li>
+        <li><strong>WS4: SEO Technical & Categories</strong> - Structured data, hreflang, CWV, category management, crawl issues</li>
+        <li><strong>WS5: CC Platform & Tooling</strong> - Merchant reactivation, account bulk updates, inline editing</li>
+      </ul>
+      <h3>Out of Scope</h3>
+      <ul>
+        <li>Offer quality scoring - <span class="covered-bet bet-tag">P3</span></li>
+        <li>New Coupons Platform build - <span class="covered-bet bet-tag">P1</span></li>
+        <li>SEO SOV stability - <span class="covered-bet bet-tag">P5</span></li>
+        <li>Affiliate network integrations / market coverage - <span class="covered-bet bet-tag">P4</span></li>
+        <li>PostHog deployment - <span class="covered-bet bet-tag">P6</span></li>
+        <li>Post-redemption optimization - <span class="covered-bet bet-tag">P9</span></li>
+        <li>Trust signals - <span class="covered-bet bet-tag">P12</span></li>
+        <li>Florence's broader AI orchestrator - only CC MCP interface is in scope</li>
+        <li>Email & marketing platform (Shortstack, Blueshift, email templates) - needs separate container</li>
+        <li>Rewards bugs, app fixes, compliance items - needs separate container</li>
+        <li>Seasonal banner CC advert type - not content automation related</li>
+      </ul>
+    </div>
+
+    <!-- WORKSTREAMS -->
+    <div class="section" id="workstreams">
+      <h2>Workstreams</h2>
+      <p>Prioritized by revenue impact. WS1-3 are the core (iteration 1). WS4-5 are absorbed in iteration 2.</p>
+
+      <!-- WS1 -->
+      <div class="workstream">
+        <div class="ws-header" onclick="this.parentElement.querySelector('.ws-body').style.display=this.parentElement.querySelector('.ws-body').style.display==='none'?'block':'none'">
+          <span class="ws-dot" style="background:#2563EB;"></span>
+          <span class="ws-title">WS1: Content Pipeline & Missing Codes</span>
+          <span class="ws-count">4 tasks</span>
+          <span style="font-size:11px;color:#059669;font-weight:600;">PRIORITY 1</span>
+        </div>
+        <div class="ws-body">
+          <p>Scale missing codes ingestion from 500 to 1,000+ merchants with 3 competitor sources. Route scraped codes into CC pending queue. Fix feed reliability (ScoopOn maxlength, low pending offers).</p>
+          <h3>Revenue Driver</h3>
+          <p>Every missing code is an offer a competitor has that we don't. Scaling to 1,500 merchants means hundreds of additional live offers on high-traffic pages.</p>
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Assignee</th><th>Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Include missing codes to CC feed</td><td><span class="assignee-badge">Minas</span></td><td>2026-04-08</td><td><a href="https://app.asana.com/0/1205497488895256/1213967856356045" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>Investigate low pending feed offers from network sources</td><td><span class="assignee-badge">Pawel</span></td><td>2026-04-03</td><td><a href="https://app.asana.com/0/1205497488895256/1213916740496243" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>CodeProviderReference: maxlength error in ScoopOn offers</td><td><span class="assignee-badge">Pawel</span></td><td>2026-04-10</td><td><a href="https://app.asana.com/0/1205497488895256/1213989294612891" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>ScoopOn - team feedback improvements</td><td><span class="assignee-badge">Pawel</span></td><td>2026-03-05</td><td><a href="https://app.asana.com/0/1205497488895256/1213514826624969" class="asana-link" target="_blank">Asana</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- WS2 -->
+      <div class="workstream">
+        <div class="ws-header" onclick="this.parentElement.querySelector('.ws-body').style.display=this.parentElement.querySelector('.ws-body').style.display==='none'?'block':'none'">
+          <span class="ws-dot" style="background:#7C3AED;"></span>
+          <span class="ws-title">WS2: Bulk Upload & Content Automation</span>
+          <span class="ws-count">2 tasks + spec</span>
+          <span style="font-size:11px;color:#059669;font-weight:600;">PRIORITY 1</span>
+        </div>
+        <div class="ws-body">
+          <p>Fix bulk upload blockers (category failures), build CC MCP for programmatic access, then iterate toward AI-powered offer generation replacing manual CSV workflows.</p>
+          <h3>Revenue Driver</h3>
+          <p>Manual uploads limit the team to ~100 merchants per batch. Automation enables continuous coverage for 1,500+ merchants, maintaining minimum offer thresholds for SEO ranking.</p>
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Assignee</th><th>Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Offers Bulk Upload - categories causing failures</td><td><span class="assignee-badge">Pawel</span></td><td>2026-03-13</td><td><a href="https://app.asana.com/0/1205497488895256/1213640906308975" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>Control Cloud MCP</td><td><span class="assignee-badge">Minas</span></td><td>2026-03-30</td><td><a href="https://app.asana.com/0/1205497488895256/1213860036850488" class="asana-link" target="_blank">Asana</a></td></tr>
+            </tbody>
+          </table>
+          <div class="spec-callout">
+            <div class="label">Detailed Spec Available</div>
+            <p><strong>AI-Powered Bulk Upload Tool</strong> - automated merchant scanning, AI offer generation (3-6 offers/merchant, 2 title variations), SEO-optimized copy, review/activation workflow, scheduled refresh. <a href="https://docs.google.com/document/d/1QUvjzUDh_w2VM3sy8g78PvWf4h6Z1H7HLGzK0D0v1Mg/edit" target="_blank" style="color:#059669;">View Google Doc</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WS3 -->
+      <div class="workstream">
+        <div class="ws-header" onclick="this.parentElement.querySelector('.ws-body').style.display=this.parentElement.querySelector('.ws-body').style.display==='none'?'block':'none'">
+          <span class="ws-dot" style="background:#0891B2;"></span>
+          <span class="ws-title">WS3: Content Operations & Tiering</span>
+          <span class="ws-count">3 tasks</span>
+          <span style="font-size:11px;color:#059669;font-weight:600;">PRIORITY 1</span>
+        </div>
+        <div class="ws-body">
+          <p>Quarterly tier updates across 1,000+ merchants (INT + NA). Tier allocation uses 50/50 SEO grading + commission data to optimize revenue yield per merchant.</p>
+          <h3>Revenue Driver</h3>
+          <p>Correct tiering drives premium placement and content investment toward high-commission merchants. Misaligned tiers mean wasted effort on low-yield merchants.</p>
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Assignee</th><th>Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>INT Tier Update - Q1 2026</td><td><span class="assignee-badge">Pawel</span></td><td>2026-04-13</td><td><a href="https://app.asana.com/0/1205497488895256/1213989563220301" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>NA Coupons Tiering Update</td><td><span class="assignee-badge">Daniel</span></td><td>2026-04-10</td><td><a href="https://app.asana.com/0/1205497488895256/1213831443899380" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>Quarterly tier update (recurring)</td><td><span class="assignee-badge">Unassigned</span></td><td>2026-04-13</td><td><a href="https://app.asana.com/0/1205497488895256/1214032178972779" class="asana-link" target="_blank">Asana</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- WS4 -->
+      <div class="workstream">
+        <div class="ws-header" onclick="this.parentElement.querySelector('.ws-body').style.display=this.parentElement.querySelector('.ws-body').style.display==='none'?'block':'none'">
+          <span class="ws-dot" style="background:#059669;"></span>
+          <span class="ws-title">WS4: SEO Technical & Categories</span>
+          <span class="ws-count">4 recent + 13 stale</span>
+          <span style="font-size:11px;color:#D97706;font-weight:600;">PRIORITY 2</span>
+        </div>
+        <div class="ws-body" style="display:none;">
+          <p>SEO infrastructure fixes not covered by P5 (SOV Stability): structured data, hreflang, crawl issues, CWV, and the long-standing category management limitations in CC. Many tasks are stale (6mo+ untouched) and need triage with Luca before scoping into iterations.</p>
+          <h3>Revenue Driver</h3>
+          <p>SEO technical health directly impacts organic traffic. Category management fixes enable better merchant classification, improving both search relevance and content team efficiency.</p>
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Assignee</th><th>Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>VC - connect LogFiles to OnCrawl</td><td><span class="assignee-badge">Luca</span></td><td>2026-03-03</td><td><a href="https://app.asana.com/0/1205497488895256/1213527136004437" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>VC - Seasonal pages parent page toggle</td><td><span class="assignee-badge">Luca</span></td><td>2026-03-10</td><td><a href="https://app.asana.com/0/1205497488895256/1213607866815697" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>GPN IE product pages in XML Sitemap</td><td><span class="assignee-badge">Luca</span></td><td>2026-03-23</td><td><a href="https://app.asana.com/0/1205497488895256/1213793792285234" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr><td>VC - URL search query parameter redirect issues</td><td><span class="assignee-badge">Luca</span></td><td>2026-03-12</td><td><a href="https://app.asana.com/0/1205497488895256/1213629647757991" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Categories & Sub-Categories Review (GPN/VC/WL)</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206337305177671" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>GPN - Populate categories for all countries</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1207214162166961" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>VC - Category page slug/name not changing</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1207526382356644" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Core Web Vitals 2023/2024 (Epic)</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206337305177677" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>VC/GPN - split Structured Data scripts</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1207274546701963" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>GPN - Hreflang tags on Seasonal pages</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206603247367113" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Canonical tags blog/hub pages</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206337305177623" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Duplicated blog homepage</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206337305177605" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>No HSTS header - all domains</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206467313822596" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>GPN - Google crawling URL patterns in scripts</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1207766705195986" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>VC - whitelist new SEO Tool IPs</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-12-09</td><td><a href="https://app.asana.com/0/1205497488895256/1212340814846629" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>GPN - seasonal page sub-nav styling</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1207274546701977" class="asana-link" target="_blank">Asana</a></td></tr>
+            </tbody>
+          </table>
+          <div class="editable-note">13 stale tasks need triage with Luca. Some may be obsolete given automation direction (Zlaurie's point). Review before scoping into iterations.</div>
+        </div>
+      </div>
+
+      <!-- WS5 -->
+      <div class="workstream">
+        <div class="ws-header" onclick="this.parentElement.querySelector('.ws-body').style.display=this.parentElement.querySelector('.ws-body').style.display==='none'?'block':'none'">
+          <span class="ws-dot" style="background:#D97706;"></span>
+          <span class="ws-title">WS5: CC Platform & Tooling</span>
+          <span class="ws-count">1 recent + 4 stale</span>
+          <span style="font-size:11px;color:#D97706;font-weight:600;">PRIORITY 2</span>
+        </div>
+        <div class="ws-body" style="display:none;">
+          <p>Control Cloud platform improvements: merchant page management, account bulk operations, inline editing. These improve content team daily workflows in CC.</p>
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Assignee</th><th>Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>CC Account owner bulk update</td><td><span class="assignee-badge">Minas</span></td><td>2026-02-27</td><td><a href="https://app.asana.com/0/1205497488895256/1212855476887277" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Unable to Reactivate Merchant Pages</td><td><span class="assignee-badge">Lydia</span></td><td style="color:#D97706;">2025-10-07</td><td><a href="https://app.asana.com/0/1205497488895256/1209293189676439" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Add 'Exclusive Discounts' tile on merchant pages</td><td><span class="assignee-badge">Luca</span></td><td style="color:#D97706;">2025-10-09</td><td><a href="https://app.asana.com/0/1205497488895256/1206337305177629" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>In-line edit view for offers</td><td><span class="assignee-badge">Lydia</span></td><td style="color:#D97706;">Archive</td><td><a href="https://app.asana.com/0/1205497488895256/1206264574994164" class="asana-link" target="_blank">Asana</a></td></tr>
+              <tr class="stale"><td>Create popup advert component (VC phase 2)</td><td><span class="assignee-badge">Unassigned</span></td><td style="color:#D97706;">2025-06-18</td><td><a href="https://app.asana.com/0/1205497488895256/1206264896545702" class="asana-link" target="_blank">Asana</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SUCCESS CRITERIA -->
+    <div class="section" id="success">
+      <h2>Success Criteria</h2>
+      <p>Measured per GROW2 iteration (proposed: 6-week cycles). Iteration 1 focuses on WS1-3 metrics.</p>
+      <table class="metrics-table">
+        <thead><tr><th>Metric</th><th>Baseline</th><th>Target</th><th>Measurement</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Missing codes captured</strong></td><td>500 merchants scraped</td><td>1,500 merchants, 3 competitor sources</td><td>Pipeline metrics</td></tr>
+          <tr><td><strong>Merchant coverage - offers/merchant</strong></td><td>Many merchants with &lt;5 live offers</td><td>All active merchants maintain min 5 live offers</td><td>CC data / BQ</td></tr>
+          <tr><td><strong>Manual content ops effort</strong></td><td>~X hrs/week on CSV uploads + tier updates</td><td>50% reduction</td><td>Team time tracking</td></tr>
+          <tr><td><strong>Bulk upload error rate</strong></td><td>Category failures blocking uploads</td><td>Zero category-related failures</td><td>CC error logs</td></tr>
+          <tr><td><strong>Content freshness</strong></td><td>Many offers without end dates</td><td>Automated refresh cycles for bulk content</td><td>CC offer age distribution</td></tr>
+          <tr><td><strong>Organic traffic (lagging)</strong></td><td>Current baseline</td><td>Measurable uplift on merchants with new content</td><td>GA4 / PostHog</td></tr>
+        </tbody>
+      </table>
+      <div class="editable-note">Baseline numbers need actual data before submission. Martin to pull from BQ/CC.</div>
+    </div>
+
+    <!-- CAPACITY -->
+    <div class="section" id="capacity">
+      <h2>Capacity Estimate</h2>
+      <p><strong>Bet Size: Small-Medium</strong> - Estimated 15-20% of engineering capacity per cycle, with iteration 1 focused on WS1-3.</p>
+      <div class="capacity-bar">
+        <span class="capacity-label">Engineering</span>
+        <div class="capacity-track">
+          <div class="capacity-fill" style="width:18%;background:linear-gradient(90deg,#7C3AED,#2563EB);">~18%</div>
+        </div>
+      </div>
+      <h3>Iteration 1 (WS1-3 only)</h3>
+      <table class="metrics-table">
+        <thead><tr><th>Workstream</th><th>Effort (est.)</th><th>Engineer</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>WS1: Content Pipeline</td><td>~8-10 MD</td><td>Minas + Pawel</td><td>Pipeline routing, ScoopOn fixes</td></tr>
+          <tr><td>WS2: Bulk Upload & MCP</td><td>~15-20 MD</td><td>Minas (MCP) + Pawel (upload)</td><td>Foundational. MCP enables future automation.</td></tr>
+          <tr><td>WS3: Tiering & Ops</td><td>~3-5 MD</td><td>Pawel</td><td>Mostly operational</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;font-size:13px;color:#64748B;"><strong>Iteration 1 total:</strong> ~26-35 MDs (6 weeks). WS4-5 scoped in iteration 2 after stale task triage with Luca.</p>
+      <div class="editable-note">Estimates are preliminary. Needs validation with Minas.</div>
+    </div>
+
+    <!-- OWNERS -->
+    <div class="section" id="owners">
+      <h2>DRI & Owners</h2>
+      <div class="owners-grid">
+        <div class="owner-card" style="border-left:3px solid #7C3AED;">
+          <div class="owner-role">DRI</div>
+          <div class="owner-name">Martin Gregor</div>
+          <div class="owner-scope">PM - triages, prioritizes, defines iterations</div>
+        </div>
+        <div class="owner-card" style="border-left:3px solid #2563EB;">
+          <div class="owner-role">Owner - Engineering</div>
+          <div class="owner-name">Minas Arustamyan</div>
+          <div class="owner-scope">CC MCP, pipeline routing, platform fixes</div>
+        </div>
+        <div class="owner-card" style="border-left:3px solid #059669;">
+          <div class="owner-role">Owner - Engineering</div>
+          <div class="owner-name">Pawel Gasior</div>
+          <div class="owner-scope">Bulk upload, feeds, ScoopOn, tiering</div>
+        </div>
+        <div class="owner-card" style="border-left:3px solid #D97706;">
+          <div class="owner-role">Owner - Content & Automation</div>
+          <div class="owner-name">Florence Aureart</div>
+          <div class="owner-scope">AI workflows, missing codes, automation</div>
+        </div>
+        <div class="owner-card" style="border-left:3px solid #0891B2;">
+          <div class="owner-role">Owner - Content Operations</div>
+          <div class="owner-name">Zoe Laurie</div>
+          <div class="owner-scope">Bulk upload reqs, tiering, content workflows</div>
+        </div>
+        <div class="owner-card" style="border-left:3px solid #059669;">
+          <div class="owner-role">Owner - SEO</div>
+          <div class="owner-name">Luca Malagigi</div>
+          <div class="owner-scope">SEO technical, categories, structured data</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEED TASKS -->
+    <div class="section" id="tasks">
+      <h2>Tasks Summary</h2>
+      <table class="metrics-table">
+        <thead><tr><th>Workstream</th><th>Recent</th><th>Stale (6mo+)</th><th>Priority</th><th>Iteration</th></tr></thead>
+        <tbody>
+          <tr><td><strong>WS1:</strong> Content Pipeline</td><td>4</td><td>1</td><td style="color:#059669;font-weight:600;">P1</td><td>1</td></tr>
+          <tr><td><strong>WS2:</strong> Bulk Upload & Automation</td><td>2 + spec</td><td>1</td><td style="color:#059669;font-weight:600;">P1</td><td>1</td></tr>
+          <tr><td><strong>WS3:</strong> Tiering & Ops</td><td>3</td><td>0</td><td style="color:#059669;font-weight:600;">P1</td><td>1</td></tr>
+          <tr><td><strong>WS4:</strong> SEO & Categories</td><td>4</td><td>13</td><td style="color:#D97706;font-weight:600;">P2</td><td>2</td></tr>
+          <tr><td><strong>WS5:</strong> CC Platform</td><td>1</td><td>4</td><td style="color:#D97706;font-weight:600;">P2</td><td>2</td></tr>
+          <tr style="background:#F8FAFC;font-weight:600;"><td>Total</td><td>15 + spec</td><td>18</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ITERATION 1 -->
+    <div class="section">
+      <h2>Proposed Iteration 1 (GROW2)</h2>
+      <h3>Goal</h3>
+      <p>Establish the content automation foundation: missing codes flowing into CC, bulk upload blockers resolved, CC MCP prototype live, Q1 tier updates completed.</p>
+      <h3>Results (Gate Criteria)</h3>
+      <ol>
+        <li>Missing codes pipeline routing 1,000+ merchants into CC pending queue</li>
+        <li>Zero category-related bulk upload failures</li>
+        <li>CC MCP v1 deployed (minimum: get-offer-by-ID endpoint)</li>
+        <li>Q1 tier updates completed for INT + NA</li>
+      </ol>
+      <h3>Workplan</h3>
+      <table class="metrics-table">
+        <thead><tr><th>Week</th><th>Focus</th><th>Deliverable</th></tr></thead>
+        <tbody>
+          <tr><td>1-2</td><td>Missing codes pipeline + ScoopOn fixes</td><td>Pipeline routing live; ScoopOn maxlength fixed</td></tr>
+          <tr><td>2-3</td><td>Bulk upload category fix + feed investigation</td><td>Categories resolved; feed gap analysis complete</td></tr>
+          <tr><td>3-5</td><td>CC MCP v1 development</td><td>MCP server with core read endpoints</td></tr>
+          <tr><td>5-6</td><td>Integration testing + tier updates</td><td>Q1 tiers completed; pipeline validated end-to-end</td></tr>
+        </tbody>
+      </table>
+      <h3>Help Needed</h3>
+      <ul>
+        <li>BI team - data pipeline ownership for missing codes (joint call: Minas, Mark, Zlaurie, Florence)</li>
+        <li>Florence - JSON export for testing + automation workflow coordination</li>
+        <li>Adam Korinek - coordination on SEO automation to avoid duplicate scraping</li>
+      </ul>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="section" id="next">
+      <h2>Next Steps</h2>
+      <ol>
+        <li><strong>Review draft</strong> with Florence and Zlaurie - validate scope and workstream boundaries</li>
+        <li><strong>Triage stale tasks</strong> with Luca (WS4) and Mark (WS6/7) - close obsolete items, re-scope active ones</li>
+        <li><strong>Validate capacity</strong> with Minas - confirm MD estimates and iteration 1 feasibility</li>
+        <li><strong>Fill baseline metrics</strong> - pull from BQ/CC before submission</li>
+        <li><strong>Submit as Bet GRO Proposal</strong> in Asana using Team Bets template</li>
+        <li><strong>Schedule joint technical review</strong> (Martin, Minas, Mark, Zlaurie, Florence)</li>
+      </ol>
+    </div>
+
+    <!-- CONTEXT -->
+    <div class="section" style="border-left:3px solid #94A3B8;">
+      <h2>Context & References</h2>
+      <ul>
+        <li><strong>Source meetings:</strong> Content & SEO Sync - Mar 10, Mar 24, Mar 31 2026</li>
+        <li><strong>Bulk Upload Spec:</strong> <a href="https://docs.google.com/document/d/1QUvjzUDh_w2VM3sy8g78PvWf4h6Z1H7HLGzK0D0v1Mg/edit" target="_blank">AI-Powered Bulk Upload Tool</a></li>
+        <li><strong>Meeting Notes:</strong> <a href="https://docs.google.com/document/d/1xwgA9QcUhY1CY0V5hnbgIdDeV3Ii8fwELYqGCNp3aDc/edit" target="_blank">Content Team Task Dashboard Discussion</a></li>
+        <li><strong>Engineering Board:</strong> <a href="https://app.asana.com/1/8437193015852/project/1205497488895256/list/1205498103063604" target="_blank">Asana Project</a></li>
+        <li><strong>Task Analysis:</strong> <a href="content-bet-tasks.html">Content Bet Tasks Dashboard</a></li>
+        <li><strong>Approved Bets:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211602817765316/list/1211606769464928" target="_blank">P1-P15 in Asana</a></li>
+        <li><strong>Bet Template:</strong> <a href="https://app.asana.com/1/8437193015852/project/1210695038843416/list/1210705485234489" target="_blank">GROW2 Template</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
