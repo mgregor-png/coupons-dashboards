@@ -1620,7 +1620,7 @@
     </div>
 
     <div class="detail-card" style="margin-top: 32px;">
-      <p>Since iOS 15, apps can ship a Safari Web Extension inside their bundle. The user enables it once in Settings -> Safari -> Extensions and grants website access. Two taps, done forever. From then on, Groupon is there at every checkout - showing available codes <em>and</em> cashback rates. No separate install. No separate app. This is exactly how <strong>Honey</strong> (bundled inside PayPal since Sept 2021) and <strong>Rakuten</strong> both work on iOS today.</p>
+      <p>Since iOS 15, apps can ship a Safari Web Extension inside their bundle. The user enables it once in Settings -> Safari -> Extensions and grants website access. Two taps, done forever. From then on, Groupon is there at every checkout - showing available codes <em>and</em> cashback rates. No separate install. No separate app. This is exactly how <strong>Honey</strong> (bundled inside PayPal since Sept 2021) and <strong>Rakuten</strong> both work on iOS today. <a href="https://app.asana.com/1/8437193015852/project/1208046402782685/task/1213861645172479?focus=true" target="_blank" style="color: var(--primary); font-size: 13px; font-weight: 600;">Validated: Jon's Safari extension test &#8599;</a></p>
 
       <p><strong>Why this changes everything:</strong></p>
       <ul class="detail-list">
@@ -2128,11 +2128,11 @@ links.forEach(l => {
 
 // Inline prototype
 const PI_SCREENS = [
-  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers/4._shopping_on_nike/screen.png', title: 'Shopping on Nike', desc: 'User browses Nike.com in Safari. No Groupon intent needed - the extension works in the background.', phase: 'capture' },
-  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/5._extension_surface_ultra_polish/screen.png', title: 'Extension Surfaces Savings', desc: 'Groupon automatically detects the merchant and surfaces a coupon code plus cashback offer.', phase: 'capture' },
-  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/nike_mobile_savings_applied/screen.png', title: 'Savings Applied + Bucks Earned', desc: 'Code applied at checkout. $32.50 saved. $1.80 Groupon Bucks earned. The CTA: "Redeem Groupon Bucks in the app."', phase: 'capture' },
-  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers 2/8._in_app_balance_ultra_polish/screen.png', title: 'User Opens the Groupon App', desc: 'Tapping "Redeem" deep-links into the Groupon app. $14.60 Bucks balance. Local deals ready to browse - the off-platform capture becomes in-app engagement.', phase: 'engage' },
-  { src: '../../CoS_coupons-dashboards/stitch_groupon_safari_offers/9._spending_bucks/screen.png', title: 'Books a Deal with Bucks', desc: 'User applies $14.60 Bucks to a local spa experience. Total: $113.85. They earn more Bucks on this deal - the loop continues.', phase: 'engage' }
+  { src: 'https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers/4._shopping_on_nike/screen.png', title: 'Shopping on Nike', desc: 'User browses Nike.com in Safari. No Groupon intent needed - the extension works in the background.', phase: 'capture' },
+  { src: 'https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers%202/5._extension_surface_ultra_polish/screen.png', title: 'Extension Surfaces Savings', desc: 'Groupon automatically detects the merchant and surfaces a coupon code plus cashback offer.', phase: 'capture' },
+  { src: 'https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers%202/nike_mobile_savings_applied/screen.png', title: 'Savings Applied + Bucks Earned', desc: 'Code applied at checkout. $32.50 saved. $1.80 Groupon Bucks earned. The CTA: "Redeem Groupon Bucks in the app."', phase: 'capture' },
+  { src: 'https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers%202/8._in_app_balance_ultra_polish/screen.png', title: 'User Opens the Groupon App', desc: 'Tapping "Redeem" deep-links into the Groupon app. $14.60 Bucks balance. Local deals ready to browse - the off-platform capture becomes in-app engagement.', phase: 'engage' },
+  { src: 'https://mgregor-png.github.io/coupons-dashboards/stitch_groupon_safari_offers/9._spending_bucks/screen.png', title: 'Books a Deal with Bucks', desc: 'User applies $14.60 Bucks to a local spa experience. Total: $113.85. They earn more Bucks on this deal - the loop continues.', phase: 'engage' }
 ];
 
 let piCurrent = 0, piPlaying = false, piInterval = null, piTimerInt = null;
