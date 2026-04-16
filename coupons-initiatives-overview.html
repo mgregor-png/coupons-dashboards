@@ -208,10 +208,14 @@
 
   <!-- Cashback detail callout -->
   <div class="cashback-detail">
-    <h3>Why cashback is a content + impressions lever</h3>
-    <p>Today, coupons pages only have content for merchants that provide promo codes. <strong>Cashback lets us create an offer for any retailer</strong> - even those with zero existing content. This generates new impressions across web (coupons pages), Genie (desktop), and Safari (mobile).</p>
-    <p>The primary value is <strong>registration uplift</strong> (gating cashback behind account creation), <strong>SEO defense</strong> (more pages with real offers = stronger organic presence), and <strong>extension exposure</strong> (more merchants in the extension = more activation surface). Direct margin is modest after payout costs - the real return is in the funnel it feeds.</p>
-    <p style="font-size: 12px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--c4-border);"><strong>Testing approach:</strong> Build a cashback offer type, collect user emails, run a small number of manual delivery offers to validate the mechanics before scaling.</p>
+    <h3>Cashback as a growth lever - 4 goals</h3>
+    <p><strong>1. User acquisition</strong> - gate cashback behind registration to turn anonymous traffic into Groupon users. <strong>2. App upsell</strong> - position the app as the cashback control center (tracking, notifications). <strong>3. Retention</strong> - cashback triggers bring users back to the app. <strong>4. Deal conversion</strong> - convert cashback into Groupon Bucks, cross-sell deals.</p>
+    <p style="margin-top: 6px;"><strong>Core funnel:</strong> Anonymous coupon traffic -> Registered user -> App user -> First deal -> Repeat</p>
+    <p style="margin-top: 6px;">Also creates content for any retailer (even without promo codes), generating impressions across web, Genie, and Safari. Drives SEO defense through more pages with real offers.</p>
+    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--c4-border);">
+      <p style="font-size: 12px; margin-bottom: 4px;"><strong>Funnel estimate:</strong> 95M sessions -> 25% reg rate -> 23M registrations -> 5% cashback txns (1.1M) -> 50% Bucks conversion -> <strong>2.8M annual Groupon purchases</strong></p>
+      <p style="font-size: 12px;"><strong>PoC scope:</strong> ~29 MD internal (merchant page 6MD, offer type 3MD, registration 2MD, profile 8MD, Bucks conversion 2MD, withdrawal 2MD + 40% coordination). External dependencies: Core B2C registration, Bloomreach emails, Financial dept for Bucks. <a href="https://docs.google.com/presentation/d/1teyJnZ-zrKWiJBjAQjBQrHwN0edrTPIP-m_B27jSFjU/edit" target="_blank" style="color: var(--c4); font-weight: 600;">Full deck &#8599;</a></p>
+    </div>
   </div>
 
   <!-- Three options -->
@@ -261,7 +265,7 @@
         <span class="pill p4">04 Cashback</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Safari extension</strong> inside the Groupon app reaches ~7-8M users (84% iOS), $6/user commission (small sample*). Requires iOS spike to validate, then full build. <strong>Cashback infrastructure</strong> (40-50 MD, most complex) creates content for any merchant - feeding impressions to web, Genie, and Safari. Drives registration uplift and SEO defense. These are the bigger bets with the highest ceiling.<br>
+        <strong>Safari extension</strong> inside the Groupon app reaches ~7-8M users (84% iOS), $6/user commission (small sample*). Requires iOS spike to validate, then full build. <strong>Cashback</strong> (~29 MD PoC + external deps) drives 4 goals: user acquisition via registration gating, app upsell, retention, and deal conversion through Bucks. Funnel target: 2.8M annual Groupon purchases from 95M sessions. Also creates content for any merchant, feeding impressions to all surfaces.<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">* $6/user based on 981 installs, 388 transactions - directional, not statistically robust</span>
       </div>
     </div>
@@ -284,12 +288,12 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Cross-sell Groupon deals</div>
           <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">5 MD</div>
-          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">$17/conv</div>
-          <div style="padding: 8px 12px; color: var(--muted);">5-10% CTR, purchase conv. depends on deal. Frontend exists. <a href="https://analytics.groupondev.com/#/views/CLTMDownstreamTrackerV2/CLTMTrackerSegmentView?:iid=2" target="_blank" style="color: var(--c1); font-size: 11px;">Source</a></div>
+          <div style="padding: 8px 12px; text-align: center; color: var(--muted); font-style: italic;">TBD</div>
+          <div style="padding: 8px 12px; color: var(--muted);">5-10% CTR, purchase conv. depends on deal quality. Frontend exists. <a href="https://analytics.groupondev.com/#/views/CLTMDownstreamTrackerV2/CLTMTrackerSegmentView?:iid=2" target="_blank" style="color: var(--c1); font-size: 11px;">Source</a></div>
         </div>
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Upsell Genie</div>
-          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">1 MD</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">2 MD</div>
           <div style="padding: 8px 12px; text-align: center; font-weight: 700;">$6/user/yr</div>
           <div style="padding: 8px 12px; color: var(--muted);">CTA redirect to Chrome store. <a href="https://mgregor-png.github.io/coupons-dashboards/genie-ltv-model.html" target="_blank" style="color: var(--c1); font-size: 11px;">LTV model</a></div>
         </div>
@@ -348,9 +352,9 @@
 
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; background: var(--c4-bg);">
         <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c4); flex-shrink: 0;"></span><strong>04 Cashback</strong></div>
-        <div style="padding: 10px 14px; text-align: center; color: var(--c4); font-weight: 700;">40-50 MD</div>
-        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">Enables all</div>
-        <div style="padding: 10px 14px; color: var(--muted);">Most complex. Content for any merchant, reg uplift, SEO, extension feed</div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c4); font-weight: 700;">~29 MD + external</div>
+        <div style="padding: 10px 14px; text-align: center; font-weight: 700;">2.8M purchases/yr</div>
+        <div style="padding: 10px 14px; color: var(--muted);">PoC scope. Ext deps: Core B2C, Bloomreach, Financial. <a href="https://docs.google.com/presentation/d/1teyJnZ-zrKWiJBjAQjBQrHwN0edrTPIP-m_B27jSFjU/edit" target="_blank" style="color: var(--c4); font-size: 11px;">Full deck</a></div>
       </div>
     </div>
 
