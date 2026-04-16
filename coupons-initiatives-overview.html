@@ -299,8 +299,8 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Cross-sell Groupon deals</div>
           <div style="padding: 8px 12px; text-align: center; font-weight: 700; color: var(--c1);">5 MD</div>
-          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">~$66K/yr</div>
-          <div style="padding: 8px 12px; color: var(--muted);">6 merchants modeled. $40K from unmonetised pages (Costco, Regal). See breakdown below.</div>
+          <div style="padding: 8px 12px; text-align: center; font-weight: 700;">$241-417K/yr</div>
+          <div style="padding: 8px 12px; color: var(--muted);">Two models combined: shared merchants ($66K) + top deals on all pages ($175-351K). See breakdown below.</div>
         </div>
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
           <div style="padding: 8px 12px; font-weight: 600;">Upsell Genie</div>
@@ -393,8 +393,47 @@
           </div>
         </div>
         <div style="font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5;">
-          <strong>Model:</strong> Coupons sessions/yr x CTR x deal page revenue/session (from UNAGI). Costco CTR = 19% (actual, Rebecca). Others = 10% (estimate). Green rows = currently unmonetised ($0 coupons commission) - cross-sell is pure incremental.<br>
-          <strong>Note:</strong> Only 6 merchants with coupons pages modeled. Expanding to more crossover merchants would increase this. Deal page rev/session includes the deal's own conversion rate (5-16% depending on deal).<br>
+          <strong>Model A - shared merchants:</strong> Show deals on matching coupons pages only. Costco CTR = 19% (actual, Rebecca). Others = 10% (estimate). Green rows = currently unmonetised ($0 commission) - pure incremental.<br>
+          Deal page rev/session from UNAGI includes the deal's own CVR (5-16%). Only 6 merchants with coupons pages modeled.
+        </div>
+
+        <div style="margin-top: 16px; padding: 14px 16px; border-radius: 8px; background: var(--dim); border: 1px solid var(--faint);">
+          <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Model B - top deals promoted across all pages</div>
+          <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">Promote top-performing Groupon deals (Costco, Regal, Sam's Club, etc.) on all coupons pages - not just matching merchants. Lower CTR since not contextually matched, but 27.3M sessions to work with.</div>
+          <div style="border-radius: 6px; overflow: hidden; border: 1px solid var(--faint); font-size: 12px;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; background: var(--dim);">
+              <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint);">Page pool</div>
+              <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">Sessions/yr</div>
+              <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">@ 1% CTR</div>
+              <div style="padding: 6px 10px; font-weight: 700; border-bottom: 1px solid var(--faint); text-align: right;">@ 2% CTR</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+              <div style="padding: 6px 10px;">All pages</div>
+              <div style="padding: 6px 10px; text-align: right;">27,346,180</div>
+              <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$175,562</div>
+              <div style="padding: 6px 10px; text-align: right; font-weight: 700;">$351,125</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; border-bottom: 1px solid var(--faint);">
+              <div style="padding: 6px 10px;">Non-monetised only</div>
+              <div style="padding: 6px 10px; text-align: right;">8,233,291</div>
+              <div style="padding: 6px 10px; text-align: right;">$52,858</div>
+              <div style="padding: 6px 10px; text-align: right;">$105,715</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;">
+              <div style="padding: 6px 10px;">Monetised only</div>
+              <div style="padding: 6px 10px; text-align: right;">19,112,889</div>
+              <div style="padding: 6px 10px; text-align: right;">$122,705</div>
+              <div style="padding: 6px 10px; text-align: right;">$245,409</div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--muted); margin-top: 6px;">Avg deal rev/session: $0.64 (weighted from top 5 deals). 1,606 monetised merchants (19.1M sessions), 2,107 non-monetised (8.2M sessions).</div>
+        </div>
+
+        <div style="margin-top: 12px; padding: 10px 14px; border-radius: 8px; background: var(--c1-bg); border: 1px solid var(--c1-border); font-size: 12px; font-weight: 600; color: var(--c1);">
+          Combined: Model A ($66K) + Model B ($176-351K) = <strong>$241-417K/yr</strong> incremental from cross-sell
+        </div>
+
+        <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
           <strong>Sources:</strong> Sessions from <code>rep.01_management_dashboard</code> (US, last 12 months). Deal rev/session from <code>supply.unagi_monthly</code> (US, all-time).
         </div>
       </details>
