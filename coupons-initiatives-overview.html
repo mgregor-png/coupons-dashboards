@@ -247,21 +247,19 @@
       </div>
     </div>
 
-    <!-- Layer 2: Genie + Rewards + Registration -->
+    <!-- Layer 2: Genie + Rewards -->
     <div class="scenario scenario-b" style="border: 2px solid var(--c3-g-border); background: var(--c3-g-bg);">
       <div class="scenario-header">
-        <div class="scenario-label">Layer 2 - Genie + Rewards + Registration</div>
-        <span style="font-size: 11px; font-weight: 700; color: var(--c3-g); background: #fff; padding: 2px 8px; border-radius: 4px;">Highest conviction</span>
+        <div class="scenario-label">Layer 2 - Genie + Rewards</div>
+        <span style="font-size: 11px; font-weight: 700; color: var(--c3-g); background: #fff; padding: 2px 8px; border-radius: 4px;">Highest conviction - no dependencies</span>
       </div>
       <div class="scenario-pills">
-        <span class="pill p2">02 Register</span>
-        <span class="pill-arrow">+</span>
         <span class="pill p3">03 Genie rewards</span>
         <span class="pill-arrow">+</span>
         <span class="pill p3">03 Genie deals</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Extension users are the most valuable audience in the entire ecosystem.</strong> Cross-channel data shows extension buyers are 6x more likely than web buyers to make 3+ purchases/yr, and Rewards participation delivers the highest lift of any channel (+110% revenue/user on extensions vs +41% on web). <strong>Registration</strong> (~15 MD) connects coupons to Groupon core identity via GraphQL, gates rewards behind account creation, and enables delayed registration via email (Bloomreach + Core B2C deps). This is the identity layer both Genie and cashback need downstream - 540K regs/yr at $3.83 LTV = ~$2.1M/yr.
+        <strong>Extension users are the most valuable audience in the entire ecosystem.</strong> Cross-channel data shows extension buyers are 6x more likely than web buyers to make 3+ purchases/yr, and Rewards participation delivers the highest lift of any channel (+110% revenue/user on extensions vs +41% on web). MVP is <strong>email-first, no login required</strong> - user enters email to claim reward, Giftcloud handles delivery. No Groupon registration dependency. Ships independently.
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
         <div style="padding: 12px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--c3-g-border);">
@@ -281,19 +279,55 @@
       </div>
     </div>
 
-    <!-- Option 3: Safari + Cashback -->
+    <!-- Layer 3: Registration + Safari + Cashback -->
     <div class="scenario scenario-c">
       <div class="scenario-header">
-        <div class="scenario-label">Option 3 - Safari + Cashback</div>
+        <div class="scenario-label">Layer 3 - Registration + Safari + Cashback</div>
       </div>
       <div class="scenario-pills">
+        <span class="pill p2">02 Register</span>
+        <span class="pill-arrow">+</span>
         <span class="pill p3s">Safari ext</span>
         <span class="pill-arrow">+</span>
         <span class="pill p4">04 Cashback</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Safari extension</strong> inside the Groupon app reaches ~7-8M users (84% iOS), $6/user commission (small sample*). Requires iOS spike to validate, then full build. <strong>Cashback</strong> (~29 MD PoC + external deps) drives 4 goals: user acquisition via registration gating, app upsell, retention, and deal conversion through Bucks. Funnel target: 2.8M annual Groupon purchases (from full deck). Also creates content for any merchant, feeding impressions to all surfaces.<br>
+        <strong>Registration</strong> (~15 MD + external deps) is the identity layer: connects coupons to Groupon core via GraphQL, enables delayed reg via email (Bloomreach), reward gating on web. Unlocks ~$2.1M/yr (540K regs x $3.83 LTV). Prerequisite for cashback and full cross-sell attribution. External deps: Core B2C, Bloomreach - start coordination early.<br>
+        <strong>Safari extension</strong> inside the Groupon app reaches ~7-8M users (84% iOS), $6/user commission (small sample*). Requires iOS spike to validate, then full build.<br>
+        <strong>Cashback</strong> (~20 MD PoC + external deps) drives registration uplift, app upsell, retention, and deal conversion. Funnel target: 2.8M annual Groupon purchases. Creates content for any merchant, feeding impressions to all surfaces.<br>
         <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">* $6/user based on 981 installs, 388 transactions - directional, not statistically robust</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div style="margin-bottom: 48px;">
+    <h2 style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px;">Timeline</h2>
+    <div style="display: flex; flex-direction: column; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px;">
+      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; background: var(--dim);">
+        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">When</div>
+        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">What</div>
+        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">First results</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
+        <div style="padding: 8px 14px; font-weight: 700; color: var(--c1);">Now</div>
+        <div style="padding: 8px 14px;">Display ads (2-3 MD) + Genie upsell CTA (1 MD) + Cross-sell deals (5 MD)</div>
+        <div style="padding: 8px 14px; color: var(--muted);">2-4 weeks</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint); background: var(--c3-g-bg);">
+        <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-g);">Q2</div>
+        <div style="padding: 8px 14px;"><strong>Genie rewards (~15 MD)</strong> - email-first, no external deps. In parallel: begin Registration coordination with Core B2C + Bloomreach</div>
+        <div style="padding: 8px 14px; color: var(--muted);">4-6 weeks</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
+        <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-s);">Q2-Q3</div>
+        <div style="padding: 8px 14px;">Registration (~15 MD + ext deps) + Safari 2-week spike (go/no-go)</div>
+        <div style="padding: 8px 14px; color: var(--muted);">6-10 weeks</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr;">
+        <div style="padding: 8px 14px; font-weight: 700; color: var(--c4);">Q3+</div>
+        <div style="padding: 8px 14px;">Cashback PoC (~20 MD + ext deps) + Safari full build if spike validates</div>
+        <div style="padding: 8px 14px; color: var(--muted);">Q3 for PoC data</div>
       </div>
     </div>
   </div>
@@ -500,7 +534,7 @@
     </div>
 
     <div class="effort-note">
-      <strong>Highest ROI first:</strong> Layer 1 monetisation (~$518-694K/yr at ~8 MD) ships now with zero dependencies. <strong>Genie rewards is the standout: +29-110% per user at ~15 MD</strong> with AI-first team - extension and web rewards infra already exist. Registration (~15 MD + external deps) is the identity layer that unlocks everything downstream - it's a prerequisite for both reward gating and cashback, not a quick win. Safari and Cashback are the bigger bets. All estimates reflect AI-assisted development (team at L3+ per Minas's AI-first framework).
+      <strong>Highest ROI first:</strong> Layer 1 monetisation (~$518-694K/yr at ~8 MD) ships now with zero dependencies. <strong>Genie rewards is the standout: +29-110% per user at ~15 MD, email-first, no external deps.</strong> Registration is separate infrastructure (~15 MD + Core B2C + Bloomreach) that unlocks the full identity layer for cashback and attribution. All estimates reflect AI-assisted development (team at L3+ per Minas's AI-first framework).
     </div>
   </div>
 
@@ -565,38 +599,6 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- Timeline -->
-  <div style="margin-bottom: 48px;">
-    <h2 style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px;">Timeline</h2>
-    <div style="display: flex; flex-direction: column; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--faint); font-size: 13px;">
-      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; background: var(--dim);">
-        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">When</div>
-        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">What</div>
-        <div style="padding: 8px 14px; font-weight: 700; border-bottom: 1px solid var(--faint);">First results</div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
-        <div style="padding: 8px 14px; font-weight: 700; color: var(--c1);">Now</div>
-        <div style="padding: 8px 14px;">Display ads (2-3 MD) + Genie upsell CTA (1 MD) + Cross-sell deals (5 MD)</div>
-        <div style="padding: 8px 14px; color: var(--muted);">2-4 weeks</div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
-        <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-g);">Q2</div>
-        <div style="padding: 8px 14px;"><strong>Genie rewards (~15 MD)</strong> + Registration identity layer (~15 MD). Registration has external deps (Core B2C, Bloomreach) - start coordination now</div>
-        <div style="padding: 8px 14px; color: var(--muted);">6-10 weeks</div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
-        <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-s);">Q2-Q3</div>
-        <div style="padding: 8px 14px;">Safari 2-week spike (go/no-go). If viable: full build scope TBD</div>
-        <div style="padding: 8px 14px; color: var(--muted);">2 weeks to decision</div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 3fr 1fr;">
-        <div style="padding: 8px 14px; font-weight: 700; color: var(--c4);">Q3+</div>
-        <div style="padding: 8px 14px;">Cashback PoC (~20 MD + external deps). Parallel to Safari if eng capacity allows</div>
-        <div style="padding: 8px 14px; color: var(--muted);">Q3 for PoC data</div>
-      </div>
-    </div>
   </div>
 
   <!-- Legend -->
