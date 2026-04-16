@@ -147,7 +147,7 @@
   <!-- Header -->
   <div class="header">
     <h1>Traffic Monetisation Map</h1>
-    <p>Four paths to extract more value from coupons traffic. Each scenario layers on the previous.</p>
+    <p>Four paths to extract more value from coupons traffic. Easy wins first, bigger bets once validated.</p>
     <div class="stat-row">
       <div class="stat"><strong>~30M</strong> organic sessions/yr</div>
       <div class="stat"><strong>$0.43</strong> /session today</div>
@@ -208,78 +208,50 @@
 
   <!-- Cashback detail callout -->
   <div class="cashback-detail">
-    <h3>Why cashback is a content lever, not just a monetisation path</h3>
-    <p>Today, coupons pages only have content for merchants that provide promo codes. <strong>Cashback lets us create an offer for any retailer</strong> - even those with zero existing content. This generates new impressions across both web (coupons pages) and extensions (Genie + Safari).</p>
-    <p>More merchants with offers means more pages with content, more reasons for users to visit, and more activation surface for the extensions. Cashback feeds every other path in the tree.</p>
+    <h3>Why cashback is a content + impressions lever</h3>
+    <p>Today, coupons pages only have content for merchants that provide promo codes. <strong>Cashback lets us create an offer for any retailer</strong> - even those with zero existing content. This generates new impressions across web (coupons pages), Genie (desktop), and Safari (mobile).</p>
+    <p>The primary value is <strong>registration uplift</strong> (gating cashback behind account creation), <strong>SEO defense</strong> (more pages with real offers = stronger organic presence), and <strong>extension exposure</strong> (more merchants in the extension = more activation surface). Direct margin is modest after payout costs - the real return is in the funnel it feeds.</p>
+    <p style="font-size: 12px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--c4-border);"><strong>Testing approach:</strong> Build a cashback offer type, collect user emails, run a small number of manual delivery offers to validate the mechanics before scaling.</p>
   </div>
 
-  <!-- Scenario trees -->
+  <!-- Two tiers -->
   <div class="scenarios">
-    <h2>How paths combine - scenario trees</h2>
-    <p>Each scenario layers on top of the previous. Scenarios A, B, C nest: each is a strict superset of the one before.</p>
+    <h2>Two tiers</h2>
+    <p>Initiatives split into what we can do now with existing traffic, and what requires new investment.</p>
 
-    <!-- Scenario A -->
+    <!-- Easy wins -->
     <div class="scenario scenario-a">
       <div class="scenario-header">
-        <div class="scenario-label">Scenario A - conservative</div>
-        <span class="scenario-effort">~6 wk eng</span>
-        <div class="scenario-rev">$4-7M/yr</div>
+        <div class="scenario-label">Easy wins - existing traffic</div>
+        <div class="scenario-rev">Low effort, immediate</div>
       </div>
       <div class="scenario-pills">
         <span class="pill p1">01 Monetise</span>
         <span class="pill-arrow">+</span>
         <span class="pill p2">02 Register</span>
-        <span class="pill-arrow">&#8594;</span>
-        <span style="font-size: 14px; font-weight: 700;">$4-7M/yr</span>
-      </div>
-      <div class="scenario-desc">
-        <strong>Quick wins, zero Safari risk.</strong> On-page monetisation of non-monetised sessions + registration gating unlocks identity layer and LTV. Can start immediately with minimal engineering.
-      </div>
-    </div>
-
-    <!-- Scenario B -->
-    <div class="scenario scenario-b">
-      <div class="scenario-header">
-        <div class="scenario-label">Scenario B - base case</div>
-        <span class="scenario-effort">+34 MD eng</span>
-        <div class="scenario-rev">$8-12M/yr</div>
-      </div>
-      <div class="scenario-pills">
-        <span class="pill p1 inherited">01</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p2 inherited">02</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p3">03 Genie</span>
-        <span class="pill-arrow">&#8594;</span>
-        <span style="font-size: 14px; font-weight: 700;">$8-12M/yr</span>
-      </div>
-      <div class="scenario-desc">
-        <strong>Add desktop extension.</strong> Genie with rewards targets 8-18K installs/mo at $6-9.81/user. Proves the off-platform model on desktop (39% of traffic) before committing to Safari.
-      </div>
-    </div>
-
-    <!-- Scenario C -->
-    <div class="scenario scenario-c">
-      <div class="scenario-header">
-        <div class="scenario-label">Scenario C - upside</div>
-        <span class="scenario-effort">Safari validates + Bucks infra</span>
-        <div class="scenario-rev">$14-25M/yr</div>
-      </div>
-      <div class="scenario-pills">
-        <span class="pill p1 inherited">01</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p2 inherited">02</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p3 inherited">03</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p3s">Safari ext</span>
         <span class="pill-arrow">+</span>
         <span class="pill p4">04 Cashback</span>
-        <span class="pill-arrow">&#8594;</span>
-        <span style="font-size: 14px; font-weight: 700;">$14-25M/yr</span>
       </div>
-      <div class="scenario-desc">
-        <strong>Full ecosystem.</strong> Safari extension reaches ~7-8M app users (84% iOS). $4-6/user net, no new acquisition needed, 90-day Bucks expiry loop. Cashback creates content for any merchant - feeding impressions to web, Genie, and Safari.
+      <div class="scenario-desc" style="margin-top: 12px;">
+        <strong>On-page monetisation</strong> of non-monetised sessions (display ads, deal promotion). <strong>Registration gating</strong> with rewards unlocks identity layer at $3.83/reg LTV. <strong>Cashback offers</strong> create content for merchants without codes, driving impressions across all surfaces and registration uplift. All three work on existing traffic with minimal engineering.<br>
+        <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">Display ad monetisation numbers: <em>pending from Rebecca</em></span>
+      </div>
+    </div>
+
+    <!-- Future ideas -->
+    <div class="scenario scenario-c">
+      <div class="scenario-header">
+        <div class="scenario-label">Future ideas - more investment</div>
+        <div class="scenario-rev">Bigger bet, needs validation</div>
+      </div>
+      <div class="scenario-pills">
+        <span class="pill p3">03 Genie</span>
+        <span class="pill-arrow">+</span>
+        <span class="pill p3s">Safari ext</span>
+      </div>
+      <div class="scenario-desc" style="margin-top: 12px;">
+        <strong>Genie desktop extension</strong> with rewards (34 MD eng, 8-18K installs/mo target, $6-9.81/user). <strong>Safari extension</strong> inside the Groupon app - reaches ~7-8M users (84% iOS), $6/user commission (Genie-proven, small sample*). Requires iOS spike to validate feasibility first. These build on the easy wins - registration + cashback content feed directly into extension surfaces.<br>
+        <span style="font-size: 12px; color: var(--muted); margin-top: 4px; display: inline-block;">* $6/user based on 981 installs, 388 transactions - directional, not statistically robust</span>
       </div>
     </div>
   </div>
@@ -310,7 +282,7 @@
       </div>
     </div>
     <div class="effort-note">
-      <strong>Total: ~40 MD eng across all tracks in Q2.</strong> Dashed borders in scenarios = inherited from previous scenario (no additional effort). Scenarios A&#8594;C nest: each is a strict superset of the one before.
+      <strong>Total: ~40 MD eng across all tracks in Q2.</strong> Easy wins (Monetise + Register + Cashback testing) can start immediately. Extensions (Genie + Safari) are the bigger investment, gated by Safari spike validation.
     </div>
   </div>
 
