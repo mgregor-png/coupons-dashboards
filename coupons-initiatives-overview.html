@@ -234,34 +234,34 @@
     <h2>Three layers</h2>
     <p>Each builds on the previous. Not mutually exclusive - they stack.</p>
 
-    <!-- Option 1: Easy wins -->
+    <!-- Layer 1: Easy wins -->
     <div class="scenario scenario-a">
       <div class="scenario-header">
-        <div class="scenario-label">Option 1 - Easy wins</div>
+        <div class="scenario-label">Layer 1 - Quick wins</div>
       </div>
       <div class="scenario-pills">
         <span class="pill p1">01 Monetise</span>
-        <span class="pill-arrow">+</span>
-        <span class="pill p2">02 Register</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>On-page monetisation</strong> of non-monetised sessions (display ads ~$277K/yr, deal cross-sell ~$241-417K/yr). <strong>Registration gating</strong> with rewards unlocks identity layer - 540K regs/yr at $3.83 LTV = ~$2.1M/yr. Both work on existing 30M sessions with minimal engineering.
+        <strong>On-page monetisation</strong> of non-monetised sessions: display ads (~$277K/yr, 2-3 MD), deal cross-sell (~$241-417K/yr, 5 MD), Genie upsell CTA (1 MD). Pure revenue extraction from existing 30M sessions. No registration needed. ~8 MD total.
       </div>
     </div>
 
-    <!-- Option 2: Genie + Rewards -->
+    <!-- Layer 2: Genie + Rewards + Registration -->
     <div class="scenario scenario-b" style="border: 2px solid var(--c3-g-border); background: var(--c3-g-bg);">
       <div class="scenario-header">
-        <div class="scenario-label">Layer 2 - Genie + Rewards</div>
+        <div class="scenario-label">Layer 2 - Genie + Rewards + Registration</div>
         <span style="font-size: 11px; font-weight: 700; color: var(--c3-g); background: #fff; padding: 2px 8px; border-radius: 4px;">Highest conviction</span>
       </div>
       <div class="scenario-pills">
+        <span class="pill p2">02 Register</span>
+        <span class="pill-arrow">+</span>
         <span class="pill p3">03 Genie rewards</span>
         <span class="pill-arrow">+</span>
         <span class="pill p3">03 Genie deals</span>
       </div>
       <div class="scenario-desc" style="margin-top: 12px;">
-        <strong>Extension users are the most valuable audience in the entire ecosystem.</strong> Cross-channel data shows extension buyers are 6x more likely than web buyers to make 3+ purchases/yr, and Rewards participation delivers the highest lift of any channel (+110% revenue/user on extensions vs +41% on web).
+        <strong>Extension users are the most valuable audience in the entire ecosystem.</strong> Cross-channel data shows extension buyers are 6x more likely than web buyers to make 3+ purchases/yr, and Rewards participation delivers the highest lift of any channel (+110% revenue/user on extensions vs +41% on web). <strong>Registration</strong> (~15 MD) connects coupons to Groupon core identity via GraphQL, gates rewards behind account creation, and enables delayed registration via email (Bloomreach + Core B2C deps). This is the identity layer both Genie and cashback need downstream - 540K regs/yr at $3.83 LTV = ~$2.1M/yr.
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
         <div style="padding: 12px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--c3-g-border);">
@@ -465,9 +465,9 @@
 
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint);">
         <div style="padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--c2); flex-shrink: 0;"></span><strong>02 Register</strong></div>
-        <div style="padding: 10px 14px; text-align: center; color: var(--c2); font-weight: 700;">2 MD</div>
+        <div style="padding: 10px 14px; text-align: center; color: var(--c2); font-weight: 700;">~15 MD + ext deps</div>
         <div style="padding: 10px 14px; text-align: center; font-weight: 700;">~$2.1M/yr</div>
-        <div style="padding: 10px 14px; color: var(--muted);">540K regs/yr x $3.83 LTV. Needed for new platform anyway. Identity layer unlocks LTV</div>
+        <div style="padding: 10px 14px; color: var(--muted);">540K regs/yr x $3.83 LTV. Requires: GraphQL core auth integration, delayed reg via email (Bloomreach), reward gating, identity linking. Ext deps: Core B2C, Bloomreach</div>
       </div>
 
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; border-bottom: 1px solid var(--faint); background: var(--c3-g-bg);">
@@ -500,7 +500,7 @@
     </div>
 
     <div class="effort-note">
-      <strong>Highest ROI first:</strong> Display ads (~$277K/yr at 2-3 MD) and Registration (nearly free - needed for new platform) are the best bang for buck. <strong>Genie rewards is the standout: +29-110% per user at just ~15 MD</strong> with AI-first team - extension and web rewards infra already exist. Safari and Cashback are the bigger bets - Safari has the highest ceiling, Cashback is the infrastructure that feeds everything. All estimates reflect AI-assisted development (team at L3+ per Minas's AI-first framework).
+      <strong>Highest ROI first:</strong> Layer 1 monetisation (~$518-694K/yr at ~8 MD) ships now with zero dependencies. <strong>Genie rewards is the standout: +29-110% per user at ~15 MD</strong> with AI-first team - extension and web rewards infra already exist. Registration (~15 MD + external deps) is the identity layer that unlocks everything downstream - it's a prerequisite for both reward gating and cashback, not a quick win. Safari and Cashback are the bigger bets. All estimates reflect AI-assisted development (team at L3+ per Minas's AI-first framework).
     </div>
   </div>
 
@@ -578,13 +578,13 @@
       </div>
       <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
         <div style="padding: 8px 14px; font-weight: 700; color: var(--c1);">Now</div>
-        <div style="padding: 8px 14px;">Display ads (2-3 MD) + Genie upsell CTA (1 MD) + Registration flow (2 MD)</div>
+        <div style="padding: 8px 14px;">Display ads (2-3 MD) + Genie upsell CTA (1 MD) + Cross-sell deals (5 MD)</div>
         <div style="padding: 8px 14px; color: var(--muted);">2-4 weeks</div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
-        <div style="padding: 8px 14px; font-weight: 700; color: var(--c1);">Q2</div>
-        <div style="padding: 8px 14px;">Cross-sell deals (5 MD) + Genie rewards (~15 MD)</div>
-        <div style="padding: 8px 14px; color: var(--muted);">6-8 weeks</div>
+        <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-g);">Q2</div>
+        <div style="padding: 8px 14px;"><strong>Genie rewards (~15 MD)</strong> + Registration identity layer (~15 MD). Registration has external deps (Core B2C, Bloomreach) - start coordination now</div>
+        <div style="padding: 8px 14px; color: var(--muted);">6-10 weeks</div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; border-bottom: 1px solid var(--faint);">
         <div style="padding: 8px 14px; font-weight: 700; color: var(--c3-s);">Q2-Q3</div>
