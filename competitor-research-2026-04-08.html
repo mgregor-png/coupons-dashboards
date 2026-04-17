@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Ecosystem Research — Groupon Coupons</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a14;
+    --surface: #13132a;
+    --surface-hover: #1a1a38;
+    --border: #252548;
+    --text: #e8e8f0;
+    --text-muted: #9090aa;
+    --text-dim: #606078;
+    --coral: #ff6b6b;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+  }
+
+  html.light {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface-hover: #f0f0f2;
+    --border: #d8d8dc;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --text-dim: #aeaeb2;
+    --coral: #e0443a;
+    --amber: #d48a00;
+    --teal: #1a9e8f;
+    --green: #28a745;
+    --blue: #0066cc;
+    --purple: #7c3aed;
+  }
+  html.light .stat { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  html.light .card { box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  html.light .highlight-box { border-width: 1px; }
+  html.light .header h1 { background: linear-gradient(135deg, #e0443a, #d48a00); -webkit-background-clip: text; background-clip: text; }
+  html.light .platform-table tr:hover td { background: rgba(0,0,0,0.02); }
+
+  .theme-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .theme-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--amber); color: var(--text); }
+  .theme-btn.active { border-color: var(--amber); color: var(--amber); background: rgba(251,191,36,0.08); }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 700px; margin: 0 auto; }
+  .header .meta { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.75rem; }
+
+  .section {
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(37,37,72,0.5);
+  }
+  .section:first-of-type { border-top: none; padding-top: 0; }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+  .section-label.coral { color: var(--coral); }
+  .section-label.amber { color: var(--amber); }
+  .section-label.teal { color: var(--teal); }
+  .section-label.green { color: var(--green); }
+  .section-label.blue { color: var(--blue); }
+  .section-label.purple { color: var(--purple); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .card p, .card li { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .card ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .card li { margin-bottom: 0.3rem; }
+  .card li strong { color: var(--text); }
+
+  .highlight-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .highlight-box.coral-box { background: rgba(255,107,107,0.06); border-color: rgba(255,107,107,0.15); }
+  .highlight-box.teal-box { background: rgba(45,212,191,0.06); border-color: rgba(45,212,191,0.15); }
+  .highlight-box.green-box { background: rgba(74,222,128,0.06); border-color: rgba(74,222,128,0.15); }
+  .highlight-box.muted-box { background: rgba(144,144,170,0.06); border-color: rgba(144,144,170,0.15); }
+  .highlight-box.blue-box { background: rgba(96,165,250,0.06); border-color: rgba(96,165,250,0.15); }
+  .highlight-box.purple-box { background: rgba(167,139,250,0.06); border-color: rgba(167,139,250,0.15); }
+  .highlight-box strong { color: var(--text); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .stat {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .stat .number { font-size: 1.5rem; font-weight: 800; display: block; }
+  .stat .label { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.25rem; display: block; }
+  .est { font-size: 0.55rem; color: var(--text-dim); display: block; }
+
+  .competitor-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .competitor-header h3 { margin-bottom: 0; }
+  .competitor-tagline {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* Platform tables */
+  .platform-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; }
+  .platform-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.4rem 0.6rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  .platform-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid rgba(37,37,72,0.5);
+    color: var(--text-muted);
+  }
+  .platform-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--coral); opacity: 0.5; }
+  .check-note { color: var(--amber); font-weight: 600; }
+
+  /* Summary comparison table */
+  .summary-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 1rem 0; }
+  .summary-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .summary-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid rgba(37,37,72,0.5);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+  .summary-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .summary-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+  .summary-table .highlight-row td { background: rgba(251,191,36,0.04); }
+
+  .ltv-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+  .ltv-list li {
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(37,37,72,0.3);
+  }
+  .ltv-list li:last-child { border-bottom: none; }
+  .ltv-list li strong { color: var(--text); }
+
+  .footer {
+    text-align: center;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  .timing-card {
+    background: linear-gradient(135deg, rgba(255,107,107,0.08) 0%, rgba(251,191,36,0.08) 100%);
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: 14px;
+    padding: 1.75rem;
+  }
+  .timing-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .timing-card p, .timing-card li { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .timing-card ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .timing-card li { margin-bottom: 0.3rem; }
+  .timing-card li strong { color: var(--text); }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .summary-table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Due Diligence &middot; April 2026</div>
+  <h1>Competitor Ecosystem Research</h1>
+  <div class="subtitle">How the savings industry captures user lifetime value &mdash; and where the gaps are for Groupon</div>
+  <div class="meta">Martin Gregor &middot; Coupons &amp; Ecosystem &middot; 7 Competitors Analysed</div>
+</div>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<div class="section">
+  <div class="section-label amber">Executive Summary</div>
+  <div class="card">
+    <h3>Five things you need to know</h3>
+    <ul>
+      <li><strong>Honey is hemorrhaging users</strong> &mdash; lost 8M Chrome users since the affiliate commission scandal broke. A class action lawsuit was filed in Jan 2026. The trust vacuum is real and unfilled.</li>
+      <li><strong>RetailMeNot is declining</strong> &mdash; Ziff Davis reported an 18% revenue decline in the Tech &amp; Shopping segment. Pure affiliate/SEO models are under structural pressure from AI and search shifts.</li>
+      <li><strong>Safari iOS extensions are the new battleground</strong> &mdash; Honey (via PayPal), Rakuten, and Capital One Shopping all have Safari Web Extensions on iOS. Capital One Shopping is the #2 free Safari app. This is where mobile shopping capture happens.</li>
+      <li><strong>Community = stickiness</strong> &mdash; Slickdeals achieves a 40% DAU/MAU ratio (social media-level) through user-generated deals and FOMO mechanics. Fetch Rewards hits 34% via receipt scanning gamification. Both dwarf typical shopping app engagement.</li>
+      <li><strong>Groupon has unique advantages nobody else has</strong> &mdash; 30M+ app installs for extension bundling, Local + Coupons cross-sell that no pure-play competitor can match, and deep direct merchant relationships. The pieces exist; the ecosystem doesn't.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== COMPETITOR 1: RETAILMENOT ===== -->
+<div class="section">
+  <div class="section-label coral">Competitor Profiles</div>
+
+  <div class="card">
+    <div class="competitor-header">
+      <h3>1. RetailMeNot</h3>
+      <span class="competitor-tagline">Closest comp, same model, declining</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--coral);">18M</span>
+        <span class="label">Monthly web visits</span>
+        <span class="est">SimilarWeb, May 2025</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral);">-18%</span>
+        <span class="label">Revenue decline (Q4)</span>
+        <span class="est">Ziff Davis segment</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">$100M+</span>
+        <span class="label">Cash back paid out</span>
+        <span class="est">Total to members</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--text-muted);">600K</span>
+        <span class="label">Chrome extension users</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website</td><td><span class="check">&#10003;</span></td><td>~18M monthly visits</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>Cash Back &amp; Codes</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>~600K users, 4.51 rating</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="check">&#10003;</span></td><td>Mac App Store</td></tr>
+      <tr><td>Safari iOS</td><td><span class="check">&#10003;</span></td><td>Mobile Safari extension available</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Guaranteed 1% cashback</strong> across 4,000+ merchants as affiliate hedge</li>
+        <li><strong>Brand consolidation</strong> &mdash; 6 shopping brands (Offers.com, BlackFriday.com, etc.) under one roof for cross-selling</li>
+        <li><strong>Stacking mechanic</strong> &mdash; cashback works on top of coupon codes</li>
+        <li><strong>AI shopping companion</strong> (beta) for personalized deal curation</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box coral-box">
+      <strong>What Groupon can learn:</strong> RetailMeNot's guaranteed 1% cashback across 4K merchants is a direct response to declining affiliate commissions. Their 18% revenue drop shows how vulnerable pure affiliate/SEO models are. Groupon has the same exposure &mdash; and the same opportunity to hedge with cashback.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 2: HONEY ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>2. Honey (PayPal)</h3>
+      <span class="competitor-tagline">$4B cautionary tale, hemorrhaging users</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--coral);">13M</span>
+        <span class="label">Chrome users (was 20M)</span>
+        <span class="est">Lost 8M since scandal</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral);">$4B</span>
+        <span class="label">Acquisition price</span>
+        <span class="est">PayPal, Jan 2020</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">33%</span>
+        <span class="label">Coupon success rate</span>
+        <span class="est">Per Coupert testing</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral);">Jan 2026</span>
+        <span class="label">Class action filed</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website</td><td><span class="check">&#10003;</span></td><td>joinhoney.com</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>PayPal Honey: Coupons, Rewards</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>13M users (down from 20M peak)</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="check">&#10003;</span></td><td>Available</td></tr>
+      <tr><td>Safari iOS</td><td><span class="check-note">&#10003; Bundled</span></td><td>Auto-installed with PayPal app; manual activation required</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Honey Gold points</strong> &mdash; earn on purchases, redeem for gift cards (1,000 pts ~ $10)</li>
+        <li><strong>Automatic coupon testing</strong> at checkout (the core value prop)</li>
+        <li><strong>Droplist</strong> &mdash; wishlist with price monitoring and alerts</li>
+        <li><strong>PayPal integration</strong> for seamless payments + bundled Safari distribution</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box coral-box">
+      <strong>What Groupon can learn:</strong> Bundling a Safari extension via the parent app is brilliant distribution &mdash; but activation rates are low because users must manually enable it in Settings. <strong>Trust is everything:</strong> Honey's scandal (stealing affiliate commissions from creators, showing worse coupons for higher commissions) destroyed user trust. Any extension intercepting checkout must be transparently beneficial.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 3: RAKUTEN ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>3. Rakuten</h3>
+      <span class="competitor-tagline">The gold standard &mdash; 17M US members, $3.7B paid out</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--green);">17M+</span>
+        <span class="label">US members</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">$3.7B+</span>
+        <span class="label">Total cashback paid</span>
+        <span class="est">Since 1997</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">$2.78B</span>
+        <span class="label">Q2 2024 GMS</span>
+        <span class="est">US division</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--text-muted);">3,500+</span>
+        <span class="label">Partner stores</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website</td><td><span class="check">&#10003;</span></td><td>rakuten.com &mdash; 3,500+ stores</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>Cash Back &amp; Deals</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>Cash Back &amp; Coupons</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="check">&#10003;</span></td><td>Mac App Store</td></tr>
+      <tr><td>Safari iOS</td><td><span class="check">&#10003;</span></td><td>Mobile Safari extension &mdash; activates cashback on store sites</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Cashback balance as retention moat</strong> &mdash; accumulated balance pays out quarterly, keeping users engaged</li>
+        <li><strong>&ldquo;Big Fat Check&rdquo;</strong> quarterly payout events create anticipation and marketing moments</li>
+        <li><strong>In-store cashback</strong> via linked credit/debit card for offline earning</li>
+        <li><strong>$30 referral program</strong> + flash deals with double/triple cashback promotions</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box green-box">
+      <strong>What Groupon can learn:</strong> The accumulated cashback balance is a powerful flywheel &mdash; users check back because they have money waiting. <strong>Quarterly payouts</strong> (not instant) keep users engaged longer and create marketing moments. Rakuten has already solved the mobile Safari extension challenge; their implementation is a direct reference for Genie.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 4: CAPITAL ONE SHOPPING ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>4. Capital One Shopping</h3>
+      <span class="competitor-tagline">Banking trojan horse &mdash; 10M+ users via 100M+ customer base</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--blue);">10M+</span>
+        <span class="label">Total users</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--blue);">6M+</span>
+        <span class="label">Chrome extension users</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">4.9&star;</span>
+        <span class="label">App Store rating</span>
+        <span class="est">960K+ reviews</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">#2</span>
+        <span class="label">Top Free Safari App</span>
+        <span class="est">Jul 2025</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website</td><td><span class="check">&#10003;</span></td><td>capitaloneshopping.com</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>4.9 stars, 960K+ reviews &mdash; best in class</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>6M+ users</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="check">&#10003;</span></td><td>#2 Top Free Safari App</td></tr>
+      <tr><td>Safari iOS</td><td><span class="check">&#10003;</span></td><td>Bundled with iOS app, manual activation</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Price comparison</strong> &mdash; automatically checks if a lower price exists at other retailers</li>
+        <li><strong>Shopping Rewards points</strong> redeemable for gift cards at 50+ retailers</li>
+        <li><strong>No Capital One account required</strong> &mdash; open to everyone, dramatically expanding TAM</li>
+        <li><strong>Universal coverage</strong> across Amazon, Walmart, and thousands of stores</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box blue-box">
+      <strong>What Groupon can learn:</strong> Capital One has 100M+ customers; even a small conversion yields massive scale. Groupon has 30M+ app installs &mdash; same principle for Genie. Their <strong>Safari #2 ranking</strong> proves the iOS extension model works. Making the service free for non-customers dramatically expanded TAM. Genie should not gate behind a Groupon account.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 5: SLICKDEALS ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>5. Slickdeals</h3>
+      <span class="competitor-tagline">The community flywheel &mdash; 40% DAU/MAU</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--teal);">12M+</span>
+        <span class="label">Monthly active users</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--teal);">40%</span>
+        <span class="label">DAU/MAU ratio</span>
+        <span class="est">Social media-level</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">$35-50M</span>
+        <span class="label">Est. annual revenue</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--text-muted);">25M</span>
+        <span class="label">Monthly visitors</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website + Forums</td><td><span class="check">&#10003;</span></td><td>25M monthly visitors &mdash; community is core</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>Redesigned March 2025</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>Available</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="cross">&#10007;</span></td><td>Limited / not a focus</td></tr>
+      <tr><td>Safari iOS</td><td><span class="cross">&#10007;</span></td><td>Not a primary focus</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Community-curated deals</strong> &mdash; users submit, vote, and discuss (Reddit-like frontpage)</li>
+        <li><strong>FOMO mechanics</strong> &mdash; deals expire, popular items sell out, community excitement creates urgency</li>
+        <li><strong>Reputation system</strong> &mdash; power users earn status, driving repeat engagement</li>
+        <li><strong>AI deal discovery</strong> via Amazon SageMaker</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box teal-box">
+      <strong>What Groupon can learn:</strong> Community = moat. The 40% DAU/MAU is driven by user-generated content and FOMO, not cashback. A small base of prolific deal-posters creates value for millions of lurkers. Groupon could explore user-submitted coupon codes or deal tips. <strong>But note:</strong> $35-50M revenue with 12M MAU suggests lower per-user monetization than cashback models.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 6: COUPERT ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>6. Coupert</h3>
+      <span class="competitor-tagline">Post-Honey trust winner &mdash; 73% coupon success rate</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--green);">8M+</span>
+        <span class="label">Total users</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--green);">73%</span>
+        <span class="label">Coupon success rate</span>
+        <span class="est">vs Honey's 33%</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">4.8/5</span>
+        <span class="label">Trustpilot rating</span>
+        <span class="est">10K+ reviews</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--text-muted);">70K+</span>
+        <span class="label">Supported stores</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Website</td><td><span class="check">&#10003;</span></td><td>coupert.com</td></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>Available</td></tr>
+      <tr><td>Chrome Extension</td><td><span class="check">&#10003;</span></td><td>Primary distribution channel</td></tr>
+      <tr><td>Safari Desktop</td><td><span class="check">&#10003;</span></td><td>Available</td></tr>
+      <tr><td>Edge / Firefox</td><td><span class="check">&#10003;</span></td><td>Available</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Real cash, not points</strong> &mdash; cashback paid via PayPal or bank transfer, not gift cards</li>
+        <li><strong>Privacy-first positioning</strong> &mdash; no PII collection, no third-party data sharing</li>
+        <li><strong>High success rate</strong> &mdash; 73% vs Honey's 33%, actively marketed as differentiator</li>
+        <li><strong>70K store coverage</strong> &mdash; 2x Rakuten's count for broader coverage</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box green-box">
+      <strong>What Groupon can learn:</strong> Coupert is directly benefiting from Honey's trust crisis. <strong>Real cash beats points</strong> &mdash; users respond better to actual money. In a post-Honey world, explicit privacy commitments and high coupon success rates are real differentiators. If Groupon can deliver higher hit rates than 33%, that alone is a competitive advantage.
+    </div>
+  </div>
+
+  <!-- ===== COMPETITOR 7: FETCH REWARDS ===== -->
+  <div class="card">
+    <div class="competitor-header">
+      <h3>7. Fetch Rewards</h3>
+      <span class="competitor-tagline">The engagement monster &mdash; $500M ARR, 34% DAU/MAU</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="number" style="color: var(--purple);">12.5M+</span>
+        <span class="label">Active users</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--purple);">$500M</span>
+        <span class="label">ARR (Q4 2024)</span>
+        <span class="est">65% YoY growth</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--purple);">34%</span>
+        <span class="label">DAU/MAU ratio</span>
+        <span class="est">Top 50 shopping apps</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--amber);">$2.5B</span>
+        <span class="label">Valuation</span>
+        <span class="est">5x revenue multiple</span>
+      </div>
+    </div>
+
+    <table class="platform-table">
+      <tr><th>Platform</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>iOS / Android App</td><td><span class="check">&#10003;</span></td><td>Primary platform &mdash; app-first</td></tr>
+      <tr><td>Website</td><td><span class="check-note">Minimal</span></td><td>App is the product</td></tr>
+      <tr><td>Browser Extension</td><td><span class="check-note">Secondary</span></td><td>Not a focus</td></tr>
+      <tr><td>Safari iOS</td><td><span class="cross">&#10007;</span></td><td>Not a focus</td></tr>
+    </table>
+
+    <div style="margin-top: 0.75rem;">
+      <strong style="font-size: 0.82rem;">How they capture LTV:</strong>
+      <ul class="ltv-list">
+        <li><strong>Receipt scanning</strong> &mdash; scan any receipt from any store, 5 seconds for instant dopamine hit</li>
+        <li><strong>Zero-friction earning</strong> &mdash; no need to activate offers before purchase or shop through links</li>
+        <li><strong>Gamification</strong> &mdash; in-app games delivered an extra $25M in rewards; streaks drive daily opens</li>
+        <li><strong>Brand partnerships</strong> as a data/advertising platform, not traditional affiliate</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box purple-box">
+      <strong>What Groupon can learn:</strong> Fetch flipped the model &mdash; capturing users <strong>after</strong> purchase instead of before. Receipt scanning is a data goldmine that brands pay for. The 34% DAU/MAU is driven by gamification and the dopamine of scanning receipts. <strong>$500M ARR on $2.5B valuation</strong> tells investors this is a data/advertising business, not a coupons business.
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUMMARY COMPARISON TABLE ===== -->
+<div class="section">
+  <div class="section-label amber">Summary Comparison</div>
+  <div class="card" style="overflow-x: auto;">
+    <h3>All competitors at a glance</h3>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Users</th>
+          <th>Revenue / Scale</th>
+          <th>Chrome Ext</th>
+          <th>Safari iOS</th>
+          <th>Cashback</th>
+          <th>DAU/MAU</th>
+          <th>Key Insight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RetailMeNot</td>
+          <td>18M visits/mo</td>
+          <td style="color: var(--coral);">-18% rev</td>
+          <td>600K</td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span> 1-20%</td>
+          <td>&mdash;</td>
+          <td>Affiliate hedge via cashback</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>Honey</td>
+          <td style="color: var(--coral);">13M (was 20M)</td>
+          <td>$4B acq.</td>
+          <td style="color: var(--coral);">13M (-8M)</td>
+          <td><span class="check-note">Bundled</span></td>
+          <td>Points only</td>
+          <td>&mdash;</td>
+          <td>Trust crisis = opportunity</td>
+        </tr>
+        <tr>
+          <td>Rakuten</td>
+          <td style="color: var(--green);">17M members</td>
+          <td>$3.7B CB paid</td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span> 1-15%</td>
+          <td>&mdash;</td>
+          <td>Balance retention moat</td>
+        </tr>
+        <tr>
+          <td>Capital One</td>
+          <td>10M+</td>
+          <td>$160M saved/yr</td>
+          <td>6M</td>
+          <td><span class="check">&#10003;</span> <span style="color: var(--amber); font-size: 0.7rem;">#2</span></td>
+          <td>Points</td>
+          <td>&mdash;</td>
+          <td>Safari #2 proves the model</td>
+        </tr>
+        <tr>
+          <td>Slickdeals</td>
+          <td>12M MAU</td>
+          <td>$35-50M est.</td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10007;</span></td>
+          <td><span class="cross">&#10007;</span></td>
+          <td style="color: var(--teal); font-weight: 700;">40%</td>
+          <td>Community = stickiness</td>
+        </tr>
+        <tr>
+          <td>Coupert</td>
+          <td>8M+</td>
+          <td>&mdash;</td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span> Real cash</td>
+          <td>&mdash;</td>
+          <td>73% success rate</td>
+        </tr>
+        <tr>
+          <td>Fetch</td>
+          <td>12.5M active</td>
+          <td style="color: var(--purple); font-weight: 600;">$500M ARR</td>
+          <td>Secondary</td>
+          <td><span class="cross">&#10007;</span></td>
+          <td>Points</td>
+          <td style="color: var(--purple); font-weight: 700;">34%</td>
+          <td>Post-purchase data platform</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== MARKET TIMING ===== -->
+<div class="section">
+  <div class="section-label coral">Market Timing</div>
+  <div class="timing-card">
+    <h3>The Honey Crisis &mdash; Why NOW Is the Right Time</h3>
+    <p>The savings industry is experiencing its biggest trust disruption in a decade. Honey &mdash; the category leader with 20M users &mdash; lost 8M users in 2025 after revelations that it was:</p>
+    <ul>
+      <li><strong>Stealing affiliate commissions</strong> from content creators by replacing their tracking cookies</li>
+      <li><strong>Showing worse coupons</strong> to users to earn higher commissions from merchants</li>
+      <li><strong>Prioritizing PayPal's revenue</strong> over user savings</li>
+    </ul>
+    <p style="margin-top: 1rem;">The timeline tells the story:</p>
+    <div class="stat-row" style="margin-top: 0.75rem;">
+      <div class="stat">
+        <span class="number" style="color: var(--coral); font-size: 1.2rem;">-3M</span>
+        <span class="label">First 2 weeks</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral); font-size: 1.2rem;">-4M</span>
+        <span class="label">By May 2025</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral); font-size: 1.2rem;">-8M</span>
+        <span class="label">By end of 2025</span>
+      </div>
+      <div class="stat">
+        <span class="number" style="color: var(--coral); font-size: 1.2rem;">Lawsuit</span>
+        <span class="label">Class action Jan 2026</span>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top: 1rem;">
+      <strong>The window is open:</strong> 8 million users are actively looking for an alternative they can trust. Coupert is capturing some (73% success rate, privacy-first), but no major brand has moved to fill the vacuum. Groupon has the brand recognition, merchant relationships, and existing extension (Genie) to claim this space &mdash; but the window won't stay open forever as Rakuten and Capital One Shopping accelerate.
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <a href="ecosystem-recommendation-2026-04-08.html">&larr; Back to Ecosystem Decision Framework</a>
+  <br><br>
+  Prepared by Martin Gregor &middot; April 2026 &middot; Coupons &amp; Ecosystem Team<br>
+  Sources: Web research April 2026. Financial data from company reports, SimilarWeb, PitchBook, Statista, and press releases.
+
+  <div class="theme-switcher">
+    <button class="theme-btn active" onclick="setTheme('dark')">&#9790; Dark</button>
+    <button class="theme-btn" onclick="setTheme('light')">&#9788; Light</button>
+  </div>
+</div>
+
+<script>
+function setTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.classList.add('light');
+  } else {
+    document.documentElement.classList.remove('light');
+  }
+  document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  localStorage.setItem('theme', theme);
+}
+// Restore saved preference
+if (!localStorage.getItem('theme') || localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.theme-btn:last-child').classList.add('active');
+  });
+}
+</script>
+
+</body>
+</html>
