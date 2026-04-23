@@ -126,14 +126,61 @@
 <body>
 
 <h1>New Platform Rollout — US Coupons</h1>
-<p class="subtitle">Phased migration from legacy to new merchant template · Phase 2 live — 3,524 merchants · April 22, 2026</p>
+<p class="subtitle">Phased migration from legacy to new merchant template · Phase 2 live — 3,524 merchants · Data through Apr 22, 2026 · <span style="color:#34c759;font-weight:600">Tableau attribution corrected</span></p>
 <!-- BEGIN REFRESH BUTTONS -->
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
-  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-22 08:46 CET</span>
+  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-23 11:00 CET</span>
 </div>
 <!-- END REFRESH BUTTONS -->
+
+<!-- BEGIN DATA CORRECTION BANNER -->
+<div class="card" style="border-left:4px solid #34c759;background:#f0faf3;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">Tableau attribution corrected — clean A/B signal now visible<span class="badge up" style="margin-left:8px">New wins</span></h2>
+  <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
+    Two data-quality issues were resolved in the New Platform Dashboard (Veronika, Apr 22-23): <strong>(1)</strong> <code style="background:#fff;padding:1px 6px;border-radius:3px;font-size:11px">bcookie</code> platform assignment is now correct, so sessions no longer misattribute between new and old; <strong>(2)</strong> <code style="background:#fff;padding:1px 6px;border-radius:3px;font-size:11px">experiment_impression</code> now fires only for the new UI (previously double-counted on both UIs). Earlier aggregate numbers were contaminated by Mar 25–Apr 14 noise (see CTR dip to 19-28% on 50/50 New in that window). The clean post-fix window below is the first uncontaminated read.
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">50/50 A/B (41 merchants) · Apr 16–22</div>
+      <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#34c759">60.0%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
+        <div style="color:#86868b;font-size:14px">vs</div>
+        <div><div style="font-size:22px;font-weight:700;color:#6e6e73">53.4%</div><div style="font-size:11px;color:#86868b">Old CTR</div></div>
+      </div>
+      <div style="font-size:12px;color:#1a7f37;font-weight:600">+6.6pp absolute · +12.3% relative · New wins all 7 days</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Sessions: New +34% · Clicks: New +51%</div>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">33/67 long-tail · Apr 16–22</div>
+      <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#34c759">51.4%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
+        <div style="color:#86868b;font-size:14px">vs</div>
+        <div><div style="font-size:22px;font-weight:700;color:#6e6e73">45.9%</div><div style="font-size:11px;color:#86868b">Old CTR</div></div>
+      </div>
+      <div style="font-size:12px;color:#1a7f37;font-weight:600">+5.6pp absolute · +12.1% relative · New wins all 7 days</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Split tracking ~40/60 (vs target 33/67)</div>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">Phase 1 (100% new) · Apr 16–22</div>
+      <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#34c759">51.5%</div><div style="font-size:11px;color:#86868b">New CTR (KFC sample)</div></div>
+      </div>
+      <div style="font-size:12px;color:#1a7f37;font-weight:600">Recovery to ~baseline levels</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Legacy baseline (pre-rollout) ran at 37–44%</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
+    <strong>What this means:</strong> Across all three cohorts, the new platform now shows a consistent ~6pp absolute CTR lift on the clean post-fix window. The aggregate Mar 1–Apr 30 table in Tableau still includes the buggy period, so individual-merchant CTR differences there will look mixed — treat that table as directional only until a post-Apr 16 slice is available.
+    Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
+  </div>
+</div>
+<!-- END DATA CORRECTION BANNER -->
 
 
 
@@ -320,7 +367,7 @@
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards: 50/50 backtab redirect to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#5856d6;font-weight:600">&#x1F7E3; QA</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Fix deployed. Backtab on 50/50 merchants was redirecting to legacy. Non-offer tile CTAs verified working (shein). Needs QA confirmation.</td></tr>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards CTA not redirecting to merchant</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">"Yes I understand" CTA now redirects correctly.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">SEO test pages reverting to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; Monitoring</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard / Routing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">ATT, AliExpress + others. May be related to 50/50 fix — verifying.</td></tr>
-      <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 experiment_impression tracking</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Done</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Marcos</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">GTM updated for all 41 merchants. <a href="https://groupondev.atlassian.net/wiki/spaces/COUP/pages/82711478404" style="color:#007aff" target="_blank">Documented</a>. Awaiting BI validation.</td></tr>
+      <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 experiment_impression tracking</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Validated</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Marcos / BI</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">GTM fix + bcookie assignment live Apr 16. Tableau dashboard now shows clean signal (New +6.6pp CTR on 50/50, Apr 16–22). <a href="https://groupondev.atlassian.net/wiki/spaces/COUP/pages/82711478404" style="color:#007aff" target="_blank">Doc</a> · <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau</a>.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rich content / backend data update</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress — ~1.5h remaining</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Jakub</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">1,500 / 3,450 merchants updated. ~105 merchants per 5 min. Remaining ~1,950 merchants ETA ~13:00 CET.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">BI database switchover</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#86868b;font-weight:600">&#x26A0;&#xFE0F; Caution</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Mark / BI</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Dashboards/reports may fail intermittently this week.</td></tr>
     </tbody>
@@ -410,7 +457,7 @@
 </div>
 
 <div style="margin-top:12px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:12px; color:#636366; line-height:1.5;">
-  <strong>Cross-check:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard</a><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#ff9500;color:#fff;margin-left:8px">Minor discrepancy</span><br>
+  <strong>Cross-check:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard (corrected)</a><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#34c759;color:#fff;margin-left:8px">Aligned post Apr 16</span><br>
   <strong>Data note:</strong> This data shows blended CTR (new + legacy traffic combined per merchant). The dev BQ table (<code style="font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code>) separates platform traffic — chase access for true A/B comparison.<br>
   <strong>Decision point:</strong> Apr 8-9 after one full week of Phase 2 data. Soft monitoring until then.
 </div>
@@ -1172,7 +1219,7 @@ function switchTab(tabId, btn) {
 </script>
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Last updated:</strong> 2026-04-22 08:46 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-22</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-22</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
+  <strong>Last updated:</strong> 2026-04-23 11:00 CET (manual pull after Tableau fix) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-22</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_5050: 2026-04-22</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_3367: 2026-04-22</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bcookie+exp_impr: fixed Apr 16</span> &middot;
   <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
   &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
