@@ -131,7 +131,7 @@
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
-  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-27 11:02 CET</span>
+  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-27 14:14 CET</span>
 </div>
 <!-- END REFRESH BUTTONS -->
 
@@ -169,15 +169,18 @@
     </div>
 
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #ffcdd2">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#cf222e;margin-bottom:6px">P0 broken merchants</div>
-      <div style="font-size:22px;font-weight:700;color:#cf222e">6</div>
-      <div style="font-size:12px;color:#424245;font-weight:500">Single-digit New CTR vs 30%+ Old (last 7 days)</div>
-      <div style="font-size:11px;color:#86868b;margin-top:4px">Keeper Security, Kay Jewelers, Chime, Zales, 1-800 Contacts...</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#cf222e;margin-bottom:6px">Anomaly counts</div>
+      <div style="display:flex;gap:14px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#cf222e">5</div><div style="font-size:11px;color:#86868b">chronic</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#e65100">1</div><div style="font-size:11px;color:#86868b">single-day</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#cf222e">0</div><div style="font-size:11px;color:#86868b">routing</div></div>
+      </div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Apr 27: rule fires on email-blast days; chronic = real signal, single-day = needs PostHog confirm.</div>
     </div>
   </div>
 
   <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
-    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 33/67 has 6 broken merchants blocking ramp. Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + broken merchants triaged</strong>.
+    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 5 chronic / 1 single-day anomaly / 0 routing — see card below. Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + chronic merchants triaged + utm-segmented confirmation</strong>.
     Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
   </div>
 </div>
@@ -185,21 +188,24 @@
 
 <!-- BEGIN P0 BROKEN MERCHANTS -->
 <div class="card" style="border-left:4px solid #cf222e;background:#fef5f5;margin-bottom:20px">
-  <h2 style="margin-bottom:4px;color:#cf222e">🔴 P0 — 6 broken merchants on new platform <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · single-digit New CTR vs 30%+ Old</span></h2>
-  <p class="subtitle" style="margin-bottom:12px">Detection rule: any merchant-day where New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Single-digit New CTR vs healthy Old is not noise — the new platform's CTA / code-reveal is broken specifically for these merchants. <strong>Pattern:</strong> traffic-spike sensitive — looks fine on low-volume days, breaks when external traffic (SEM/affiliate/email) lands on the new merchant page.</p>
+  <h2 style="margin-bottom:4px;color:#cf222e">🔴 P0 — 5 chronic / 1 anomaly / 0 routing <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days</span></h2>
+  <p class="subtitle" style="margin-bottom:12px">Detection rule: New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Apr 27 update: rule fires heavily on email-blast days (5 of 6 Apr 27 hits had healthy direct-traffic CTR per PostHog). Now stratified into <strong>chronic</strong> (multi-day pattern, real signal) vs <strong>single-day anomaly</strong> (likely email/scanner artifact, needs confirmation) vs <strong>routing anomaly</strong> (legacy-only merchant on new platform).</p>
 
-  <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px">
-    <thead>
-      <tr style="background:#f5f5f7">
-        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Merchant</th>
-        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Worst day</th>
-        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">New CTR</th>
-        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Old CTR</th>
-        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">UV</th>
-        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Pattern</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div style="margin-bottom:14px">
+    <h3 style="margin:0 0 6px 0;color:#cf222e;font-size:14px">🔴 Chronic — 5 merchants broken across multiple days</h3>
+    <p style="margin:0 0 8px 0;font-size:12px;color:#636366">Multiple low-CTR days OR &gt;50% of recent days below threshold. These are systemic and need eng investigation.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:#f5f5f7">
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Merchant</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Worst day</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">New CTR</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Old CTR</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">UV</th>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Pattern</th>
+        </tr>
+      </thead>
+      <tbody>
       <tr style="background:#ffebee">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Keeper Security <span style="font-size:10px;color:#86868b;font-weight:400">[33/67]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 24</td>
@@ -233,14 +239,6 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
       </tr>
       <tr style="background:#ffebee">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">1-800 Contacts <span style="font-size:10px;color:#86868b;font-weight:400">[50/50]</span></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 23</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">7.3%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">36.2%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">287 new / 58 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Acute — single-day spike, traffic-spike sensitive</td>
-      </tr>
-      <tr style="background:#ffebee">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Sixt Car Rental <span style="font-size:10px;color:#86868b;font-weight:400">[33/67]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 24</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">11.5%</td>
@@ -248,16 +246,42 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">191 new / 64 old</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
       </tr>
-    </tbody>
-  </table>
-
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-bottom:14px">
+    <h3 style="margin:0 0 6px 0;color:#e65100;font-size:14px">🟠 Single-day anomalies — 1 merchant with one-shot CTR drop</h3>
+    <p style="margin:0 0 8px 0;font-size:12px;color:#636366">Only one bad day in the window. Likely email-blast or scanner-traffic artifacts (Apr 27 PostHog finding: email-Desktop $direct = bot/scanner, ~5% CTR with no clicks). <strong>Do not treat as page bugs without PostHog confirmation.</strong> See deep-dive below.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:#f5f5f7">
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Merchant</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Worst day</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">New CTR</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Old CTR</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">UV</th>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Pattern</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">1-800 Contacts <span style="font-size:10px;color:#86868b;font-weight:400">[50/50]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 23</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#e65100;font-weight:700">7.3%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">36.2%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">287 new / 58 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Single-day anomaly — UV spike 5.5× normal (likely email-blast / scanner artifact)</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <div style="padding:10px 12px;background:#fff3e0;border-radius:6px;font-size:12px;color:#424245;line-height:1.5">
-    <strong style="color:#cf222e">Eng action needed:</strong>
+    <strong style="color:#cf222e">Action ladder:</strong>
     <ol style="margin:6px 0 0 18px;padding:0">
-      <li><strong>Reproduce</strong> by visiting each merchant's new-platform page via paid-traffic UTM params (SEM/affiliate landing parameters). The bug appears to surface on external referrers, not direct traffic.</li>
-      <li><strong>Triage chronic merchants first</strong> — those with 3+ bad days in 7 are systemic, not transient.</li>
-      <li><strong>Open PostHog session replays</strong> filtered to the merchant's new-platform URL on the worst day to see what users actually clicked / didn't click.</li>
-      <li>Open Asana subtasks under the New Platform rollout project; tag Richard.</li>
+      <li><strong>Chronic</strong> → file Jira bug, tag Richard, link PostHog session replays.</li>
+      <li><strong>Single-day anomaly</strong> → confirm via PostHog (does direct-traffic CTR look healthy?) before filing. Often email-blast or scanner artifact.</li>
+      <li><strong>Routing anomaly</strong> → Richard / routing config audit. Don't file as a page bug.</li>
+      <li>Open PostHog session replays filtered to the merchant's new-platform URL on the worst day; check direct vs email source split before raising P0.</li>
     </ol>
   </div>
 </div>
@@ -378,72 +402,6 @@
 </div>
 <!-- END 33/67 LONG-TAIL TREND -->
 
-<!-- BEGIN POSTHOG DEEPDIVE -->
-<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
-  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · 50/50 cohort · new platform only</span></h2>
-  <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Headline:</strong> email traffic on new-platform pages converts at a fraction of direct traffic (~3-19% vs ~30-41% direct CTR). Email campaigns are a real, measurable CTR confounder on the aggregate Tableau view. <strong>But that doesn't fully explain the recent drop:</strong> direct-only CTR has also fallen ~10pp week-over-week (Apr 14-19 ~40% → Apr 21-27 ~30%) — that residual signal is real and not a traffic-mix artifact.</div>
-
-  <div style="background:#fff8e1;border-left:3px solid #ff9500;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.55;color:#424245">
-    <strong style="color:#0d47a1">📊 Cohort-wide validation</strong> — across all 30 50/50 merchants, daily CTR by traffic source on new platform:
-    <table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:12px">
-      <tr style="background:#fef3c7;color:#1d1d1f">
-        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Window</th>
-        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Direct CTR</th>
-        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Email CTR</th>
-        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">CPC CTR</th>
-        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Note</th>
-      </tr>
-      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Apr 14-19 (Wk1)</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">39-41%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">4-19%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">29-37%</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Strong direct CTR</td></tr>
-      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Apr 21-27 (Wk2)</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7;color:#cf222e"><strong>29-32%</strong></td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">2-13%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">23-32%</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;color:#cf222e"><strong>Direct -10pp WoW — not email-explained</strong></td></tr>
-      <tr><td style="padding:4px 8px">Apr 26 spike</td><td style="text-align:right;padding:4px 8px">30.2%</td><td style="text-align:right;padding:4px 8px;color:#cf222e"><strong>2.1%</strong> on 803 pv</td><td style="text-align:right;padding:4px 8px">31.5%</td><td style="padding:4px 8px">Email volume 2.5× normal — drags aggregate</td></tr>
-    </table>
-    <div style="margin-top:8px;font-size:12px;color:#636366">Email is consistently 2-10× lower CTR than direct. Email-spike days (Apr 26 = 803 pv vs ~300 typical) materially drag the aggregate Tableau number. <strong>BUT</strong> the ~10pp direct-only drop Wk1→Wk2 is independent of mix and needs its own explanation.</div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
-    <div>
-      <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Email-traffic mix is a real CTR drag</div>
-      <ul style="margin:0 0 12px 18px;padding:0">
-        <li><strong>Home Depot Apr 26:</strong> 1,047 pv (vs ~350 normal), CTA CTR 13.1% — recovered to 31.1% Apr 27. Single-day email-campaign spike (utm_medium=email URLs dominant).</li>
-        <li><strong>Zoro Apr 21:</strong> 116 pv (vs ~14-50 normal), CTA CTR 2.6%. Other days CTR 33-70%. Same email-spike pattern.</li>
-        <li><strong>Hotels.com Apr 22-23:</strong> 378/342 pv with CTR 20-25% — recovered to 33-46% Apr 24-27.</li>
-        <li><strong>Implication:</strong> the aggregate Tableau CTR deltas partially conflate organic vs email traffic. <strong>utm-segmented view (assigned to Veronika)</strong> needed to isolate email confound from real platform signal.</li>
-      </ul>
-
-      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Home Depot has a separate UX friction (not email-explained)</div>
-      <ul style="margin:0 0 12px 18px;padding:0">
-        <li>Two email-gated CTA variants on the page: <code>Get Code Email Sign Up Required</code> (285 clicks / 209 users) and <code>Get Code Email Sign Up</code> (145 clicks / 115 users).</li>
-        <li>Other merchants in the queue use direct codes (e.g. <code>Get Code GRHOT8</code>, <code>Get Code GPCHICAGO10</code>) — no email gate.</li>
-        <li>Session sequences show retry behavior: one user clicked the same button 4× across 4 sessions in 2 minutes; another submitted the form 3× consecutively (<code>Submit | Submit | Submit</code>).</li>
-        <li><strong>Hypothesis:</strong> slow / failing modal or submit handler on the email-signup gate. Worth eng investigation independent of the email-mix issue.</li>
-      </ul>
-    </div>
-
-    <div>
-      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Direct-only CTR also dropped ~10pp Wk1→Wk2</div>
-      <ul style="margin:0 0 12px 18px;padding:0">
-        <li>50/50 cohort, direct traffic only (utm_medium empty/null): <strong>Apr 14-19 ~39-41% → Apr 21-27 ~29-32%</strong>.</li>
-        <li>This is NOT a traffic-mix artifact — same source, same merchants, same definition. Real signal.</li>
-        <li>Possible drivers: content/template change late Apr 19-20, Apr 17→18 routing drift (33/67 split shifted 63→59% — unconfirmed if 50/50 cohort affected too), week-over-week seasonality (less likely at this magnitude).</li>
-        <li><strong>Action:</strong> ask Richard if any deploy/config change landed Apr 19-20; pull direct-only Tableau slice to confirm at full scale.</li>
-      </ul>
-
-      <div style="font-weight:600;color:#e65100;margin-bottom:6px">🟠 Expedia: Google organic dips, NOT email</div>
-      <ul style="margin:0 0 12px 18px;padding:0">
-        <li><strong>Apr 23 google organic</strong> (srsltid traffic): 61 pv, CTA CTR 9.8% — vs Apr 22: 28.6%, Apr 24: 23.9%.</li>
-        <li><strong>Apr 25 google organic:</strong> 29 pv, CTA CTR 13.8%.</li>
-        <li>Email volume too small to confound on Expedia (1–6 pv/day in this window).</li>
-      </ul>
-
-      <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 PostHog error tracking is empty</div>
-      <ul style="margin:0 0 12px 18px;padding:0">
-        <li><code>error-tracking-issues-list</code> returns <strong>0 issues, project-wide</strong>; no <code>$exception</code> events on any merchant URL in the last 7 days. Should be turned on — without it we can't catch JS errors that would explain UX retry patterns.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-<!-- END POSTHOG DEEPDIVE -->
-
 <!-- BEGIN INSIGHTS SIGNALS -->
 <div class="card" style="border-left:4px solid #5856d6;margin-bottom:20px">
   <h2 style="margin-bottom:8px">📊 Insights & signals — what to take seriously</h2>
@@ -459,7 +417,8 @@
 
       <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Broken</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li><strong>6 merchants broken on new platform</strong>. Single-digit New CTR. P0 — see card above.</li>
+        <li><strong>5 chronic merchants on new platform</strong> (multi-day low-CTR pattern). P0 — see card above.</li>
+<li><strong>1 single-day anomaly</strong> — needs PostHog direct-traffic confirm before action. Apr 27 finding: most are email-blast / scanner artifacts.</li>
 <li><strong>33/67 had recent inversion days</strong> in long-tail cohort. Resets the 7-day-clean ramp counter.</li>
       </ul>
     </div>
@@ -470,14 +429,14 @@
         <li><strong>Verizon Wireless:</strong> was +1.0pp clean → -6.8pp recent. Fresh regression on previously winning merchant.</li>
 <li><strong>Edible Arrangements:</strong> was +7.0pp clean → -5.2pp recent. Fresh regression on previously winning merchant.</li>
 <li><strong>Tripadvisor:</strong> was +7.5pp clean → -2.1pp recent. Fresh regression on previously winning merchant.</li>
-<li><strong>The Home Depot (high volume):</strong> -19.3pp on 6,746 UV. Largest absolute click impact. <em style="color:#5856d6">Apr 27 PostHog read: Apr 26 single-day collapse was email-traffic-mix; underlying issue is the email-gated CTA retry pattern (see deep-dive card above).</em></li>
+<li><strong>The Home Depot (high volume):</strong> -19.3pp on 6,746 UV. Largest absolute click impact.</li>
       </ul>
 
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 Open questions</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Routing drift:</strong> 33/67 actual split running ~40/60 (target 33/67). Richard ownership.</li>
-<li><strong>Why did direct-only CTR drop ~10pp Apr 14-19 → Apr 21-27?</strong> Cohort-wide, direct traffic CTR fell from ~40% to ~30%. Not explained by email-mix (which is real but separate). Candidates: deploy Apr 19-20, routing change correlated with the 33/67 drift, content/template tweak. Needs ownership.</li>
-<li><strong>Why does new platform break on traffic spikes?</strong> Broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection? <em style="color:#5856d6">Apr 27 PostHog finding: email-mix is part of the story (email CTR 2-10× lower), but doesn't explain the direct-only drop above. utm-segmented view (Veronika) needed to isolate.</em></li>
+<li><strong>Email-flow on new platform:</strong> Apr 27 PostHog cohort-wide finding — email CTR 5-25% vs direct 45-79%, dragging aggregates. Email-Desktop $direct (3,379 sessions, 35s, 0.07 CTAs) is bot/scanner profile. Needs (a) email-flow audit on new platform, (b) bot filter on PostHog/Tableau, (c) utm-segmented Tableau view.</li>
+<li><strong>Direct-only CTR drop Wk1→Wk2 (~10pp):</strong> 50/50 cohort direct CTR fell ~40% → ~30% from Apr 14-19 to Apr 21-27. Not explained by traffic-mix. Check deploys Apr 19-20 with Richard.</li>
 <li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/67 cohorts — blocks RPV cross-check. Mark/BI follow-up.</li>
       </ul>
     </div>
@@ -501,15 +460,22 @@
     <tbody>
       <tr style="background:#fef5f5">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Triage 6 broken merchants (Keeper Security, Kay Jewelers, Chime, Zales, 1-800 Contacts…). Reproduce via paid-traffic UTMs. Open Asana subtasks under New Platform project.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">File Jira bugs for 5 chronic merchants (Keeper Security, Kay Jewelers, Chime, Zales, Sixt Car Rental). Tag Richard. Link PostHog session replays.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
       </tr>
-      <tr style="background:#fef5f5">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog session replays for the broken merchants on their worst days — what did users actually click?</td>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog confirm on 1 single-day anomaly (1-800 Contacts) — does direct-traffic CTR look healthy? If yes, mark as email-blast/scanner artifact and skip Jira. <em>Apr 27 finding: 5 of 6 Apr 27 hits were healthy on direct traffic.</em></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Email-flow / bot-traffic spike: investigate why email-Desktop $direct (3,379 sessions, 35s, ~0.07 CTAs) dominates email volume on new platform. Add bot filter to PostHog + Tableau; audit email-link landing experience vs legacy.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard / BI</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
@@ -529,45 +495,15 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Daily standup</td>
       </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate ~10pp direct-only CTR drop Wk1→Wk2 on 50/50 cohort.</strong> Apr 14-19 direct CTR ~39-41% → Apr 21-27 ~29-32%. Not a traffic-mix artifact. Check for deploy/config change Apr 19-20, possible link to Apr 17→18 routing drift. <em>Cohort-wide PostHog query Apr 27.</em></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard / eng</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
-      </tr>
       <tr>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag commission_usd null on rep.new_platform_dashboard to Mark/BI — blocks RPV cross-check.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Segment Tableau rollout CTR by utm_source.</strong> Aggregate CTR is conflating organic vs email/paid traffic — email-day spikes drag CTR down regardless of platform. Blocks reliable per-merchant signal until split. <em>Flagged Apr 27.</em></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Veronika (BI)</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
-      </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate Home Depot email-gated CTA</strong> — two button variants (<code>Get Code Email Sign Up Required</code> + <code>Get Code Email Sign Up</code>), retry-click sessions (4× same button, 3× consecutive Submit). Likely slow/failing modal or submit handler. Pull session replays + check with eng.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
-      </tr>
-      <tr>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Turn on PostHog error tracking</strong> for new platform pages. <code>error-tracking-issues-list</code> currently returns 0 issues project-wide; no <code>$exception</code> events captured. Without it we can't catch JS errors that would explain UX patterns like the Home Depot CTA retries.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → eng</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
-      </tr>
-      <tr>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate Expedia Google-organic dips</strong> (Apr 23: 9.8% CTR / Apr 25: 13.8% on srsltid traffic) — separate from email-mix finding. Query-mix shift, SERP layout change, or genuine page issue?</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Next week</td>
-      </tr>
       <tr style="background:#f0faf3">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#1a7f37">HOLD</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend 33→50% ramp until:</strong> (a) broken merchants triaged + fixed, AND (b) 7 consecutive days ≥+5pp in 33/67, AND (c) utm-segmented Tableau view confirms platform signal isn't traffic-mix artifact.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend 33→50% ramp until:</strong> (a) chronic broken merchants triaged + fixed, (b) 7 consecutive days ≥+5pp in 33/67, AND (c) utm-segmented Tableau view confirms platform signal isn't traffic-mix / scanner-bot artifact.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Decision: Adam</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">≥7 clean days</td>
       </tr>
@@ -576,6 +512,83 @@
 </div>
 <!-- END ACTION PLAN -->
 <!-- END ROLLOUT INTELLIGENCE -->
+
+<!-- BEGIN POSTHOG DEEPDIVE -->
+<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
+  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · 50/50 cohort · new platform only · external to auto-pipeline</span></h2>
+  <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Three findings reframe the auto-detected "broken merchants":</strong> (1) the rule fires heavily on email-blast days — 5 of 6 flagged merchants have healthy 45-79% direct-traffic CTR; (2) email-Desktop $direct is dominated by bot/email-security-gateway URL scanners that inflate pageviews with zero clicks (3,379 sessions, 35s avg, 0.07 CTAs each); (3) keeper-security is the one merchant that may have a real page issue — zero offer-engagement CTAs captured in 14 days, only modal-close + outbound clicks. Possibly the new-platform page has no offer data for that merchant.</div>
+
+  <div style="background:#fff8e1;border-left:3px solid #ff9500;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.55;color:#424245">
+    <strong style="color:#0d47a1">📊 Cohort-wide validation</strong> — 30 50/50 merchants, last 14 days, by source × device:
+    <table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:12px">
+      <tr style="background:#fef3c7;color:#1d1d1f">
+        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Source</th>
+        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Device</th>
+        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Referrer</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Sessions</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Avg session</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">% with CTA</th>
+      </tr>
+      <tr style="background:#ffebee"><td style="padding:4px 8px;border-bottom:1px solid #fef3c7"><strong>email</strong></td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7"><strong>Desktop</strong></td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;font-family:monospace">$direct</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">3,379</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">35s</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7;color:#cf222e"><strong>5.7%</strong> ❌</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">email</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Desktop</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;font-family:monospace">www.groupon.com</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">312</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">163s</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">27.6%</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">email</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Mobile</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;font-family:monospace">$direct</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">1,108</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">110s</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">24.0%</td></tr>
+      <tr style="background:#f0faf3"><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">non-email</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Desktop</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;font-family:monospace">www.groupon.com</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">35,001</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">94s</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7;color:#1a7f37"><strong>48.2%</strong> ✅</td></tr>
+      <tr style="background:#f0faf3"><td style="padding:4px 8px">non-email</td><td style="padding:4px 8px">Mobile</td><td style="padding:4px 8px;font-family:monospace">www.groupon.com</td><td style="text-align:right;padding:4px 8px">67,930</td><td style="text-align:right;padding:4px 8px">54s</td><td style="text-align:right;padding:4px 8px;color:#1a7f37">41.7%</td></tr>
+    </table>
+    <div style="margin-top:8px;font-size:12px;color:#636366">The email-Desktop $direct row (3,379 sessions, 35s, 5.7% CTA) is the textbook fingerprint of email-security-gateway URL scanners (Microsoft Defender / Proofpoint / Mimecast). They land with utm_medium=email but don't render the email — referrer is $direct, no clicks, ~30s timeout. When email-Desktop has a real <code>www.groupon.com</code> referrer (real human clicks from webmail context), CTR jumps to 27.6% — much closer to a normal cohort.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
+    <div>
+      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 5 of 6 chronic merchants are likely false positives</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>1-800 Contacts, Kay Jewelers, Chime, Zales, Sixt Car Rental: <strong>direct-traffic CTR 45-79%</strong> on new platform — pages work fine for non-email visitors. Aggregate dragged down by email-blast cohorts (CTR 0-20%).</li>
+        <li>Pattern across all 5: a single-day or recurring email blast (60-185 pv) drove most of the 7-day volume; CTAs and modal flows function correctly on direct/google/chatgpt traffic.</li>
+        <li><strong>keeper-security is the one possible real bug</strong> — over 14 days / 162 PVs, only modal-close + outbound clicks captured. Zero offer-engagement CTAs (Get Code/Get Deal/Get Reward) in the event stream. Could be: empty offer state for new-platform routing, blocking modal, or page template mismatch. Worth eng look.</li>
+        <li><strong>Action:</strong> file 1 keeper-security bug + 1 spike (email-flow / bot-traffic measurement). Don't file 5 P0 tickets for the false positives.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🤖 Email-Desktop $direct is bot/scanner traffic</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>3,379 sessions over 14 days, 35s avg duration, 0.07 CTAs each, $direct referrer.</li>
+        <li>Profile matches enterprise email-security URL scanners — they pre-scan all links before delivery to detect phishing.</li>
+        <li>Inflates "email" pageview volume materially while contributing zero engagement. Pulls aggregate email CTR down even when real-human email CTR is healthy.</li>
+        <li><strong>Action:</strong> add bot-filtering to PostHog (sessions with $direct + Desktop + utm_medium=email + 0 clicks + &lt;60s should be flagged); ask Veronika to consider similar filter on Tableau.</li>
+      </ul>
+    </div>
+
+    <div>
+      <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Real-email CTR is still lower than direct (but not catastrophically)</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>Email-Mobile CTR: 27%; non-email-Mobile: 51% — email is ~half conversion of direct on mobile. Not a bug, but a real cohort intent gap.</li>
+        <li>Email-Desktop with real referrer: 28% vs non-email-Desktop 48% — same ~half ratio.</li>
+        <li>Aggregate Tableau CTR is sensitive to email-blast volume. utm-segmented view (Veronika) needed for clean per-merchant signal.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Direct-only CTR dropped ~10pp Wk1→Wk2</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>50/50 cohort, direct only: <strong>Apr 14-19 ~39-41% → Apr 21-27 ~29-32%</strong>. NOT a traffic-mix artifact.</li>
+        <li>Possible drivers: deploy/config change Apr 19-20, link to Apr 17→18 routing drift, content/template tweak.</li>
+        <li><strong>Action:</strong> ask Richard about deploys Apr 19-20; pull direct-only Tableau slice.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 PostHog error tracking is empty project-wide</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><code>error-tracking-issues-list</code> returns 0 issues; no <code>$exception</code> events on any merchant URL. Either error capture isn't wired up or it's filtered out. Turn on for new platform pages.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END POSTHOG DEEPDIVE -->
+
+
+
+
+
+
+
+
+
 
 
 
@@ -625,6 +638,9 @@
   </p>
 </div>
 <!-- END EXEC SUMMARY -->
+
+
+
 
 
 
@@ -804,6 +820,9 @@
   </details>
 </div>
 <!-- END POSTHOG_UX -->
+
+
+
 
 
 
@@ -1509,6 +1528,9 @@ const P2_CTR_HEADLINE = [39.493, 38.394, 39.055, 39.009, 39.182, 39.362, 39.486,
 
 
 
+
+
+
 const p2RolloutPlugin = {
   id: 'p2rollout',
   beforeDraw(chart) {
@@ -1630,7 +1652,7 @@ function switchTab(tabId, btn) {
 </script>
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Last updated:</strong> 2026-04-27 11:02 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
+  <strong>Last updated:</strong> 2026-04-27 14:14 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
   <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
   &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
@@ -1643,6 +1665,12 @@ function switchTab(tabId, btn) {
   <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
   <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
 </div>
+
+
+
+
+
+
 
 
 
