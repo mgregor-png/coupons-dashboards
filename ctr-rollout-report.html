@@ -380,17 +380,34 @@
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
 <div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
-  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · Home Depot / Hotels.com / Expedia / Zoro · new platform only</span></h2>
-  <div style="font-size:13px;color:#636366;margin-bottom:14px">Drilling into the four merchants flagged by the rollout report — what the per-page click data actually shows. <strong>Headline:</strong> the aggregate CTR deltas mostly reflect a traffic-mix issue, not a merchant defect — except for Home Depot, which has a separate UX friction layered on top.</div>
+  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · 50/50 cohort · new platform only</span></h2>
+  <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Headline:</strong> email traffic on new-platform pages converts at a fraction of direct traffic (~3-19% vs ~30-41% direct CTR). Email campaigns are a real, measurable CTR confounder on the aggregate Tableau view. <strong>But that doesn't fully explain the recent drop:</strong> direct-only CTR has also fallen ~10pp week-over-week (Apr 14-19 ~40% → Apr 21-27 ~30%) — that residual signal is real and not a traffic-mix artifact.</div>
+
+  <div style="background:#fff8e1;border-left:3px solid #ff9500;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.55;color:#424245">
+    <strong style="color:#0d47a1">📊 Cohort-wide validation</strong> — across all 30 50/50 merchants, daily CTR by traffic source on new platform:
+    <table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:12px">
+      <tr style="background:#fef3c7;color:#1d1d1f">
+        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Window</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Direct CTR</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">Email CTR</th>
+        <th style="text-align:right;padding:5px 8px;border-bottom:1px solid #fde68a">CPC CTR</th>
+        <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Note</th>
+      </tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Apr 14-19 (Wk1)</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">39-41%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">4-19%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">29-37%</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Strong direct CTR</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Apr 21-27 (Wk2)</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7;color:#cf222e"><strong>29-32%</strong></td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">2-13%</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">23-32%</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;color:#cf222e"><strong>Direct -10pp WoW — not email-explained</strong></td></tr>
+      <tr><td style="padding:4px 8px">Apr 26 spike</td><td style="text-align:right;padding:4px 8px">30.2%</td><td style="text-align:right;padding:4px 8px;color:#cf222e"><strong>2.1%</strong> on 803 pv</td><td style="text-align:right;padding:4px 8px">31.5%</td><td style="padding:4px 8px">Email volume 2.5× normal — drags aggregate</td></tr>
+    </table>
+    <div style="margin-top:8px;font-size:12px;color:#636366">Email is consistently 2-10× lower CTR than direct. Email-spike days (Apr 26 = 803 pv vs ~300 typical) materially drag the aggregate Tableau number. <strong>BUT</strong> the ~10pp direct-only drop Wk1→Wk2 is independent of mix and needs its own explanation.</div>
+  </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
     <div>
-      <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Email-traffic mix is the dominant CTR confounder</div>
+      <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Email-traffic mix is a real CTR drag</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Home Depot Apr 26:</strong> 1,047 pv (vs ~350 normal), CTA CTR 13.1% — recovered to 31.1% Apr 27. Single-day email-campaign spike (utm_medium=email URLs dominant).</li>
         <li><strong>Zoro Apr 21:</strong> 116 pv (vs ~14-50 normal), CTA CTR 2.6%. Other days CTR 33-70%. Same email-spike pattern.</li>
         <li><strong>Hotels.com Apr 22-23:</strong> 378/342 pv with CTR 20-25% — recovered to 33-46% Apr 24-27.</li>
-        <li><strong>Implication:</strong> the aggregate Tableau CTR deltas conflate organic vs email traffic. <strong>Need utm_source-segmented view</strong> before trusting merchant-level signals — flagged to Veronika in BI.</li>
+        <li><strong>Implication:</strong> the aggregate Tableau CTR deltas partially conflate organic vs email traffic. <strong>utm-segmented view (assigned to Veronika)</strong> needed to isolate email confound from real platform signal.</li>
       </ul>
 
       <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Home Depot has a separate UX friction (not email-explained)</div>
@@ -403,19 +420,24 @@
     </div>
 
     <div>
+      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Direct-only CTR also dropped ~10pp Wk1→Wk2</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>50/50 cohort, direct traffic only (utm_medium empty/null): <strong>Apr 14-19 ~39-41% → Apr 21-27 ~29-32%</strong>.</li>
+        <li>This is NOT a traffic-mix artifact — same source, same merchants, same definition. Real signal.</li>
+        <li>Possible drivers: content/template change late Apr 19-20, Apr 17→18 routing drift (33/67 split shifted 63→59% — unconfirmed if 50/50 cohort affected too), week-over-week seasonality (less likely at this magnitude).</li>
+        <li><strong>Action:</strong> ask Richard if any deploy/config change landed Apr 19-20; pull direct-only Tableau slice to confirm at full scale.</li>
+      </ul>
+
       <div style="font-weight:600;color:#e65100;margin-bottom:6px">🟠 Expedia: Google organic dips, NOT email</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Apr 23 google organic</strong> (srsltid traffic): 61 pv, CTA CTR 9.8% — vs Apr 22: 28.6%, Apr 24: 23.9%.</li>
         <li><strong>Apr 25 google organic:</strong> 29 pv, CTA CTR 13.8%.</li>
         <li>Email volume too small to confound on Expedia (1–6 pv/day in this window).</li>
-        <li><strong>Different signal</strong> from the email-mix finding above. Google query-mix shift, SERP layout change, or genuine page issue on those days. Worth a separate look before grouping with the broader rollout question.</li>
       </ul>
 
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 PostHog error tracking is empty</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li><code>error-tracking-issues-list</code> returns <strong>0 issues, project-wide</strong>.</li>
-        <li>No <code>$exception</code> events on any merchant URL in the last 7 days.</li>
-        <li>Either error capture isn't wired up or it's filtered out. Should be turned on for the rollout — without it we can't catch JS errors that would explain patterns like the Home Depot CTA retry sequences.</li>
+        <li><code>error-tracking-issues-list</code> returns <strong>0 issues, project-wide</strong>; no <code>$exception</code> events on any merchant URL in the last 7 days. Should be turned on — without it we can't catch JS errors that would explain UX retry patterns.</li>
       </ul>
     </div>
   </div>
@@ -454,7 +476,8 @@
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 Open questions</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Routing drift:</strong> 33/67 actual split running ~40/60 (target 33/67). Richard ownership.</li>
-<li><strong>Why does new platform break on traffic spikes?</strong> Broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection? <em style="color:#5856d6">Apr 27 PostHog finding: at least part of this is traffic-mix dilution — email/google-organic users convert lower than direct, and when those campaigns spike, aggregate CTR drops. utm-segmented view will separate "broken" from "different traffic mix".</em></li>
+<li><strong>Why did direct-only CTR drop ~10pp Apr 14-19 → Apr 21-27?</strong> Cohort-wide, direct traffic CTR fell from ~40% to ~30%. Not explained by email-mix (which is real but separate). Candidates: deploy Apr 19-20, routing change correlated with the 33/67 drift, content/template tweak. Needs ownership.</li>
+<li><strong>Why does new platform break on traffic spikes?</strong> Broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection? <em style="color:#5856d6">Apr 27 PostHog finding: email-mix is part of the story (email CTR 2-10× lower), but doesn't explain the direct-only drop above. utm-segmented view (Veronika) needed to isolate.</em></li>
 <li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/67 cohorts — blocks RPV cross-check. Mark/BI follow-up.</li>
       </ul>
     </div>
@@ -505,6 +528,12 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Ask Richard about the Apr 17→18 routing drift (33/67 split shifted 63/37 → 59/41 and held).</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Daily standup</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate ~10pp direct-only CTR drop Wk1→Wk2 on 50/50 cohort.</strong> Apr 14-19 direct CTR ~39-41% → Apr 21-27 ~29-32%. Not a traffic-mix artifact. Check for deploy/config change Apr 19-20, possible link to Apr 17→18 routing drift. <em>Cohort-wide PostHog query Apr 27.</em></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard / eng</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
       <tr>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
