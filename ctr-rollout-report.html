@@ -131,7 +131,7 @@
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
-  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-27 14:14 CET</span>
+  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-27 16:42 CET</span>
 </div>
 <!-- END REFRESH BUTTONS -->
 
@@ -168,28 +168,31 @@
       <div style="font-size:11px;color:#86868b;margin-top:4px">New share: 40.5% (target 33%)</div>
     </div>
 
-    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #ffcdd2">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#cf222e;margin-bottom:6px">Anomaly counts</div>
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #ffe0b2">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#e65100;margin-bottom:6px">Auto-rule flags <span style="color:#86868b;text-transform:none;letter-spacing:0">(needs PostHog confirm)</span></div>
       <div style="display:flex;gap:14px;align-items:baseline;margin-bottom:4px">
-        <div><div style="font-size:22px;font-weight:700;color:#cf222e">5</div><div style="font-size:11px;color:#86868b">chronic</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#e65100">5</div><div style="font-size:11px;color:#86868b">multi-day</div></div>
         <div><div style="font-size:22px;font-weight:700;color:#e65100">1</div><div style="font-size:11px;color:#86868b">single-day</div></div>
-        <div><div style="font-size:22px;font-weight:700;color:#cf222e">0</div><div style="font-size:11px;color:#86868b">routing</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#e65100">0</div><div style="font-size:11px;color:#86868b">routing</div></div>
       </div>
-      <div style="font-size:11px;color:#86868b;margin-top:4px">Apr 27: rule fires on email-blast days; chronic = real signal, single-day = needs PostHog confirm.</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Apr 27 finding: 5 of 6 flagged were healthy on direct traffic — email/scanner artifacts, not page bugs.</div>
     </div>
   </div>
 
   <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
-    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 5 chronic / 1 single-day anomaly / 0 routing — see card below. Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + chronic merchants triaged + utm-segmented confirmation</strong>.
+    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 6 merchants flagged by auto-rule but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (email/scanner traffic, not page bugs) — see deep-dive card. Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + utm-segmented Tableau view from Veronika</strong>.
     Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
   </div>
 </div>
 <!-- END STATUS HEADLINE -->
 
 <!-- BEGIN P0 BROKEN MERCHANTS -->
-<div class="card" style="border-left:4px solid #cf222e;background:#fef5f5;margin-bottom:20px">
-  <h2 style="margin-bottom:4px;color:#cf222e">🔴 P0 — 5 chronic / 1 anomaly / 0 routing <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days</span></h2>
-  <p class="subtitle" style="margin-bottom:12px">Detection rule: New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Apr 27 update: rule fires heavily on email-blast days (5 of 6 Apr 27 hits had healthy direct-traffic CTR per PostHog). Now stratified into <strong>chronic</strong> (multi-day pattern, real signal) vs <strong>single-day anomaly</strong> (likely email/scanner artifact, needs confirmation) vs <strong>routing anomaly</strong> (legacy-only merchant on new platform).</p>
+<div class="card" style="border-left:4px solid #e65100;background:#fff8e1;margin-bottom:20px">
+  <h2 style="margin-bottom:4px;color:#e65100">⚠️ 6 merchants flagged by auto-rule — needs PostHog confirm <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · downgraded from P0 after Apr 27 PostHog validation</span></h2>
+  <div style="padding:10px 12px;background:#fef3c7;border-left:3px solid #ff9500;border-radius:4px;font-size:12px;color:#424245;line-height:1.5;margin-bottom:14px">
+    <strong style="color:#cf222e">Apr 27 finding — these are likely false positives.</strong> Cohort-wide PostHog cross-check: 5 of 6 merchants flagged by this rule had healthy 45-79% direct-traffic CTR on new platform. Aggregate CTR was dragged below 15% by email-attributed traffic (mostly bot/email-security-gateway URL scanners with $direct referrer, 35s sessions, 0 clicks). The rule fires on email-blast days, not on real page bugs. <strong>Do NOT file Jira tickets from this list without PostHog direct-traffic confirmation</strong> — see deep-dive card below.
+  </div>
+  <p class="subtitle" style="margin-bottom:12px;font-size:12px;color:#636366">Detection rule: New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Stratified into chronic (multi-day) vs single-day anomaly (one-shot drop). Both buckets need PostHog direct-traffic confirm before treating as bugs.</p>
 
   <div style="margin-bottom:14px">
     <h3 style="margin:0 0 6px 0;color:#cf222e;font-size:14px">🔴 Chronic — 5 merchants broken across multiple days</h3>
@@ -276,12 +279,12 @@
     </table>
   </div>
   <div style="padding:10px 12px;background:#fff3e0;border-radius:6px;font-size:12px;color:#424245;line-height:1.5">
-    <strong style="color:#cf222e">Action ladder:</strong>
+    <strong style="color:#cf222e">Verification ladder before any Jira ticket:</strong>
     <ol style="margin:6px 0 0 18px;padding:0">
-      <li><strong>Chronic</strong> → file Jira bug, tag Richard, link PostHog session replays.</li>
-      <li><strong>Single-day anomaly</strong> → confirm via PostHog (does direct-traffic CTR look healthy?) before filing. Often email-blast or scanner artifact.</li>
-      <li><strong>Routing anomaly</strong> → Richard / routing config audit. Don't file as a page bug.</li>
-      <li>Open PostHog session replays filtered to the merchant's new-platform URL on the worst day; check direct vs email source split before raising P0.</li>
+      <li><strong>Confirm direct-traffic CTR is unhealthy</strong> on new platform. Run PostHog HogQL: <code>SELECT countIf($pageview)/countIf($autocapture matching 'Get Code|Get Deal|Get Reward'…)</code> with utm_medium null/empty for the merchant URL. If direct CTR is &gt;30%, the rule fired on email/scanner traffic — skip ticket.</li>
+      <li><strong>Check if scanner/bot traffic dominates</strong>. If email-Desktop $direct sessions with &lt;60s and 0 clicks are &gt;50% of pageviews, it's URL scanner traffic, not a bug.</li>
+      <li><strong>Only if both checks fail</strong> (real users, real low CTR): file Jira bug, tag Richard, link PostHog session replays.</li>
+      <li><strong>Pipeline upgrade pending:</strong> wire in Florence's 407 legacy-protected list to skip those merchants from detection entirely; wire in utm-segmented Tableau view (assigned to Veronika) for source-stratified CTR.</li>
     </ol>
   </div>
 </div>
@@ -417,8 +420,7 @@
 
       <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Broken</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li><strong>5 chronic merchants on new platform</strong> (multi-day low-CTR pattern). P0 — see card above.</li>
-<li><strong>1 single-day anomaly</strong> — needs PostHog direct-traffic confirm before action. Apr 27 finding: most are email-blast / scanner artifacts.</li>
+        <li><strong>6 merchants flagged by auto-rule</strong> — but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (healthy direct CTR, dragged by email/scanner traffic). Don't treat as P0 page bugs without PostHog confirm.</li>
 <li><strong>33/67 had recent inversion days</strong> in long-tail cohort. Resets the 7-day-clean ramp counter.</li>
       </ul>
     </div>
@@ -458,19 +460,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="background:#fef5f5">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">File Jira bugs for 5 chronic merchants (Keeper Security, Kay Jewelers, Chime, Zales, Sixt Car Rental). Tag Richard. Link PostHog session replays.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
-      </tr>
-
-      <tr style="background:#fff3e0">
+      <tr style="background:#fff8e1">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog confirm on 1 single-day anomaly (1-800 Contacts) — does direct-traffic CTR look healthy? If yes, mark as email-blast/scanner artifact and skip Jira. <em>Apr 27 finding: 5 of 6 Apr 27 hits were healthy on direct traffic.</em></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog direct-traffic check on 6 auto-flagged merchants (Keeper Security, Kay Jewelers, Chime, Zales, Sixt Car Rental, 1-800 Contacts) — pull <code>countIf($pageview)</code> and <code>countIf(Get Code/Deal/Reward $autocapture)</code> filtered to <code>utm_medium</code> empty/null on the merchant URL. <strong>If direct CTR ≥ 30%, no Jira ticket</strong> — it's email/scanner traffic dragging aggregate. <em>Apr 27 cohort-wide check: 5 of 6 were false positives.</em></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
       </tr>
+
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Email-flow / bot-traffic spike: investigate why email-Desktop $direct (3,379 sessions, 35s, ~0.07 CTAs) dominates email volume on new platform. Add bot filter to PostHog + Tableau; audit email-link landing experience vs legacy.</td>
@@ -512,6 +508,9 @@
 </div>
 <!-- END ACTION PLAN -->
 <!-- END ROLLOUT INTELLIGENCE -->
+
+
+
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
 <div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
@@ -638,6 +637,7 @@
   </p>
 </div>
 <!-- END EXEC SUMMARY -->
+
 
 
 
@@ -820,6 +820,7 @@
   </details>
 </div>
 <!-- END POSTHOG_UX -->
+
 
 
 
@@ -1531,6 +1532,7 @@ const P2_CTR_HEADLINE = [39.493, 38.394, 39.055, 39.009, 39.182, 39.362, 39.486,
 
 
 
+
 const p2RolloutPlugin = {
   id: 'p2rollout',
   beforeDraw(chart) {
@@ -1652,7 +1654,7 @@ function switchTab(tabId, btn) {
 </script>
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Last updated:</strong> 2026-04-27 14:14 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
+  <strong>Last updated:</strong> 2026-04-27 16:42 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-27</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
   <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
   &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
@@ -1665,6 +1667,8 @@ function switchTab(tabId, btn) {
   <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
   <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
 </div>
+
+
 
 
 
