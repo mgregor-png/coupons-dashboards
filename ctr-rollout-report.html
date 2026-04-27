@@ -378,6 +378,50 @@
 </div>
 <!-- END 33/67 LONG-TAIL TREND -->
 
+<!-- BEGIN POSTHOG DEEPDIVE -->
+<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
+  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · Home Depot / Hotels.com / Expedia / Zoro · new platform only</span></h2>
+  <div style="font-size:13px;color:#636366;margin-bottom:14px">Drilling into the four merchants flagged by the rollout report — what the per-page click data actually shows. <strong>Headline:</strong> the aggregate CTR deltas mostly reflect a traffic-mix issue, not a merchant defect — except for Home Depot, which has a separate UX friction layered on top.</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
+    <div>
+      <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Email-traffic mix is the dominant CTR confounder</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>Home Depot Apr 26:</strong> 1,047 pv (vs ~350 normal), CTA CTR 13.1% — recovered to 31.1% Apr 27. Single-day email-campaign spike (utm_medium=email URLs dominant).</li>
+        <li><strong>Zoro Apr 21:</strong> 116 pv (vs ~14-50 normal), CTA CTR 2.6%. Other days CTR 33-70%. Same email-spike pattern.</li>
+        <li><strong>Hotels.com Apr 22-23:</strong> 378/342 pv with CTR 20-25% — recovered to 33-46% Apr 24-27.</li>
+        <li><strong>Implication:</strong> the aggregate Tableau CTR deltas conflate organic vs email traffic. <strong>Need utm_source-segmented view</strong> before trusting merchant-level signals — flagged to Veronika in BI.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Home Depot has a separate UX friction (not email-explained)</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li>Two email-gated CTA variants on the page: <code>Get Code Email Sign Up Required</code> (285 clicks / 209 users) and <code>Get Code Email Sign Up</code> (145 clicks / 115 users).</li>
+        <li>Other merchants in the queue use direct codes (e.g. <code>Get Code GRHOT8</code>, <code>Get Code GPCHICAGO10</code>) — no email gate.</li>
+        <li>Session sequences show retry behavior: one user clicked the same button 4× across 4 sessions in 2 minutes; another submitted the form 3× consecutively (<code>Submit | Submit | Submit</code>).</li>
+        <li><strong>Hypothesis:</strong> slow / failing modal or submit handler on the email-signup gate. Worth eng investigation independent of the email-mix issue.</li>
+      </ul>
+    </div>
+
+    <div>
+      <div style="font-weight:600;color:#e65100;margin-bottom:6px">🟠 Expedia: Google organic dips, NOT email</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>Apr 23 google organic</strong> (srsltid traffic): 61 pv, CTA CTR 9.8% — vs Apr 22: 28.6%, Apr 24: 23.9%.</li>
+        <li><strong>Apr 25 google organic:</strong> 29 pv, CTA CTR 13.8%.</li>
+        <li>Email volume too small to confound on Expedia (1–6 pv/day in this window).</li>
+        <li><strong>Different signal</strong> from the email-mix finding above. Google query-mix shift, SERP layout change, or genuine page issue on those days. Worth a separate look before grouping with the broader rollout question.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 PostHog error tracking is empty</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><code>error-tracking-issues-list</code> returns <strong>0 issues, project-wide</strong>.</li>
+        <li>No <code>$exception</code> events on any merchant URL in the last 7 days.</li>
+        <li>Either error capture isn't wired up or it's filtered out. Should be turned on for the rollout — without it we can't catch JS errors that would explain patterns like the Home Depot CTA retry sequences.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END POSTHOG DEEPDIVE -->
+
 <!-- BEGIN INSIGHTS SIGNALS -->
 <div class="card" style="border-left:4px solid #5856d6;margin-bottom:20px">
   <h2 style="margin-bottom:8px">📊 Insights & signals — what to take seriously</h2>
@@ -404,13 +448,13 @@
         <li><strong>Verizon Wireless:</strong> was +1.0pp clean → -6.8pp recent. Fresh regression on previously winning merchant.</li>
 <li><strong>Edible Arrangements:</strong> was +7.0pp clean → -5.2pp recent. Fresh regression on previously winning merchant.</li>
 <li><strong>Tripadvisor:</strong> was +7.5pp clean → -2.1pp recent. Fresh regression on previously winning merchant.</li>
-<li><strong>The Home Depot (high volume):</strong> -19.3pp on 6,746 UV. Largest absolute click impact.</li>
+<li><strong>The Home Depot (high volume):</strong> -19.3pp on 6,746 UV. Largest absolute click impact. <em style="color:#5856d6">Apr 27 PostHog read: Apr 26 single-day collapse was email-traffic-mix; underlying issue is the email-gated CTA retry pattern (see deep-dive card above).</em></li>
       </ul>
 
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 Open questions</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Routing drift:</strong> 33/67 actual split running ~40/60 (target 33/67). Richard ownership.</li>
-<li><strong>Why does new platform break on traffic spikes?</strong> Broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection?</li>
+<li><strong>Why does new platform break on traffic spikes?</strong> Broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection? <em style="color:#5856d6">Apr 27 PostHog finding: at least part of this is traffic-mix dilution — email/google-organic users convert lower than direct, and when those campaigns spike, aggregate CTR drops. utm-segmented view will separate "broken" from "different traffic mix".</em></li>
 <li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/67 cohorts — blocks RPV cross-check. Mark/BI follow-up.</li>
       </ul>
     </div>
@@ -468,9 +512,33 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Segment Tableau rollout CTR by utm_source.</strong> Aggregate CTR is conflating organic vs email/paid traffic — email-day spikes drag CTR down regardless of platform. Blocks reliable per-merchant signal until split. <em>Flagged Apr 27.</em></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Veronika (BI)</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate Home Depot email-gated CTA</strong> — two button variants (<code>Get Code Email Sign Up Required</code> + <code>Get Code Email Sign Up</code>), retry-click sessions (4× same button, 3× consecutive Submit). Likely slow/failing modal or submit handler. Pull session replays + check with eng.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Turn on PostHog error tracking</strong> for new platform pages. <code>error-tracking-issues-list</code> currently returns 0 issues project-wide; no <code>$exception</code> events captured. Without it we can't catch JS errors that would explain UX patterns like the Home Depot CTA retries.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → eng</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Investigate Expedia Google-organic dips</strong> (Apr 23: 9.8% CTR / Apr 25: 13.8% on srsltid traffic) — separate from email-mix finding. Query-mix shift, SERP layout change, or genuine page issue?</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Next week</td>
+      </tr>
       <tr style="background:#f0faf3">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#1a7f37">HOLD</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend 33→50% ramp until:</strong> (a) broken merchants triaged + fixed, AND (b) 7 consecutive days ≥+5pp in 33/67.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend 33→50% ramp until:</strong> (a) broken merchants triaged + fixed, AND (b) 7 consecutive days ≥+5pp in 33/67, AND (c) utm-segmented Tableau view confirms platform signal isn't traffic-mix artifact.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Decision: Adam</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">≥7 clean days</td>
       </tr>
