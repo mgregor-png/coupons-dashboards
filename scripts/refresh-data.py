@@ -35,11 +35,22 @@ def run_bq_query(query):
 
 
 def load_merchant_buckets():
-    """Load merchant name -> bucket mapping from merchants.json."""
-    merchants = json.load(open(MERCHANTS_FILE))
-    mapping = {}
-    for m in merchants:
-        mapping[m['n'].lower()] = m['b']
+    """Load cc_merchant_id -> bucket mapping live from rep.new_platform_dashboard.
+
+    Authoritative source — same table Tableau uses. Merchants not present in
+    new_platform_dashboard are the legacy-protected cohort (~407 merchants).
+    """
+    print("Loading live bucket mapping from rep.new_platform_dashboard...")
+    rows = run_bq_query("""
+        SELECT cc_merchant_id, ANY_VALUE(traffic_allocation) AS traffic_allocation
+        FROM `prj-grp-coupons-prod-8892.rep.new_platform_dashboard`
+        WHERE country_short = 'US' AND domain = 'Groupon'
+            AND full_date >= '2026-03-10'
+        GROUP BY cc_merchant_id
+    """)
+    cohort_map = {'50/50': '5050', '33/67': '33pct', '100': 'phase1_100'}
+    mapping = {int(r['cc_merchant_id']): cohort_map.get(r['traffic_allocation'], '33pct') for r in rows}
+    print(f"  Got {len(mapping)} merchants assigned to non-legacy cohorts")
     return mapping
 
 
@@ -49,7 +60,7 @@ def pull_cohort_data():
     raw = run_bq_query("""
         SELECT
             transaction_date,
-            merchant_name,
+            cc_merchant_id,
             SUM(Clicks) as clicks,
             SUM(Unique_Views) as unique_views,
             SUM(Transactions) as transactions,
@@ -57,11 +68,11 @@ def pull_cohort_data():
         FROM `prj-grp-coupons-prod-8892.rep.12_offer_dashboard`
         WHERE country = "US" AND domain = "Groupon"
             AND transaction_date >= "2026-03-10"
-        GROUP BY transaction_date, merchant_name
+        GROUP BY transaction_date, cc_merchant_id
     """)
     print(f"  Got {len(raw)} rows")
 
-    name_to_bucket = load_merchant_buckets()
+    id_to_bucket = load_merchant_buckets()
 
     # Aggregate by date + cohort
     daily = defaultdict(lambda: defaultdict(lambda: {
@@ -70,8 +81,8 @@ def pull_cohort_data():
 
     for r in raw:
         date = r['transaction_date']
-        name = r['merchant_name']
-        bucket = name_to_bucket.get(name.lower(), '33pct')
+        mid = int(r['cc_merchant_id']) if r['cc_merchant_id'] is not None else None
+        bucket = id_to_bucket.get(mid, 'legacy')
         d = daily[date][bucket]
         d['clicks'] += int(r['clicks'] or 0)
         d['uv'] += int(r['unique_views'] or 0)
