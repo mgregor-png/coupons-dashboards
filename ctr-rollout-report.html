@@ -135,6 +135,352 @@
 </div>
 <!-- END REFRESH BUTTONS -->
 
+<!-- BEGIN STATUS HEADLINE -->
+<div class="card" style="border-left:4px solid #34c759;background:#f0faf3;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">Status — Apr 16 → Apr 25 (Tableau-source)<span class="badge up" style="margin-left:8px">50/50 wins</span></h2>
+  <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
+    Two attribution fixes (bcookie platform assignment + experiment_impression dedup) make Apr 16+ the first uncontaminated read. <strong>50/50 cohort holds a steady +5pp lift across 10 days.</strong> 33/67 long-tail wobbled Apr 23-24 (single-day inversion) and recovered Apr 25 — clean-week ramp counter resets.
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">50/50 A/B (41 merch) · Apr 16–25</div>
+      <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#34c759">59.0%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
+        <div style="color:#86868b;font-size:14px">vs</div>
+        <div><div style="font-size:22px;font-weight:700;color:#6e6e73">53.1%</div><div style="font-size:11px;color:#86868b">Old CTR</div></div>
+      </div>
+      <div style="font-size:12px;color:#1a7f37;font-weight:600">+5.9pp absolute · +11.1% relative · New wins all 10 days</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Sessions: New 58.7% share (slight skew vs target 50%)</div>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">33/67 long-tail · Apr 16–25</div>
+      <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
+        <div><div style="font-size:22px;font-weight:700;color:#ff9500">49.4%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
+        <div style="color:#86868b;font-size:14px">vs</div>
+        <div><div style="font-size:22px;font-weight:700;color:#6e6e73">45.5%</div><div style="font-size:11px;color:#86868b">Old CTR</div></div>
+      </div>
+      <div style="font-size:12px;color:#e65100;font-weight:600">+3.9pp · Apr 24 inverted to -1.0pp (first since launch)</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Split tracking ~41/59 (vs target 33/67)</div>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #ffcdd2">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#cf222e;margin-bottom:6px">P0 broken merchants</div>
+      <div style="font-size:22px;font-weight:700;color:#cf222e">5</div>
+      <div style="font-size:12px;color:#424245;font-weight:500">Single-digit New CTR vs 30–50% Old</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Zales · Chime · Sixt · lastminute.com · WSJ</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
+    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 33/67 inversion + 5 broken merchants block ramp until either (a) eng triages the broken merchants, or (b) we see 7 consecutive +5pp days post-Apr 25 in 33/67. Earliest ramp window: <strong>May 1</strong>.
+    Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
+  </div>
+</div>
+<!-- END STATUS HEADLINE -->
+
+<!-- BEGIN P0 BROKEN MERCHANTS -->
+<div class="card" style="border-left:4px solid #cf222e;background:#fef5f5;margin-bottom:20px">
+  <h2 style="margin-bottom:4px;color:#cf222e">🔴 P0 — broken merchants on new platform <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">discovered Apr 23-24 inversion · 33/67 cohort</span></h2>
+  <p class="subtitle" style="margin-bottom:12px">These five merchants drove ~80% of the Apr 23-24 long-tail negative delta. Single-digit New CTR vs 30-50% Old CTR is not normal variance — the new platform's CTA / code-reveal is broken specifically for these merchants. <strong>Pattern:</strong> traffic-spike sensitive — looks fine on low-volume days, breaks when external traffic (SEM/affiliate/email) lands on the new merchant page.</p>
+
+  <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px">
+    <thead>
+      <tr style="background:#f5f5f7">
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Merchant</th>
+        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Worst day</th>
+        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">New CTR</th>
+        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Old CTR</th>
+        <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">UV</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Pattern</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#ffebee">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Zales</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 23</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">7.1%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">37.9%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">593 new / 625 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — also broke Apr 18 at 4.4% on 227 UV. Always breaks when traffic spikes.</td>
+      </tr>
+      <tr style="background:#ffebee">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Chime</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 22</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">5.1%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">36.8%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">157 new / 68 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Chronic since Apr 17</strong> — declining trend (17.6% → 13% → 10% → 5%). Not just a spike issue.</td>
+      </tr>
+      <tr style="background:#ffebee">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Sixt Car Rental</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 24</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">11.5%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">51.6%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">191 new / 64 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Acute — was 60-75% all week. UV 4x normal Apr 24 → broke. Strong traffic-spike signal.</td>
+      </tr>
+      <tr style="background:#ffebee">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">lastminute.com</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 24</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">4.0%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">24.7%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">250 new / 93 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Chronic + acute</strong> — trending low all week (19-32%), then collapsed Apr 24.</td>
+      </tr>
+      <tr style="background:#ffebee">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">The Wall Street Journal</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">Apr 24</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#e65100;font-weight:700">29.4%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">49.1%</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">153 new / 165 old</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Acute — was healthy 50-65% Apr 15-23, dropped Apr 24, recovered Apr 25 to 50.5%.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="padding:10px 12px;background:#fff3e0;border-radius:6px;font-size:12px;color:#424245;line-height:1.5">
+    <strong style="color:#cf222e">Eng action needed:</strong>
+    <ol style="margin:6px 0 0 18px;padding:0">
+      <li><strong>Reproduce</strong> by visiting each merchant's new-platform page via paid-traffic UTM params (SEM/affiliate landing parameters). The bug appears to surface only on external referrers, not direct traffic.</li>
+      <li><strong>Triage Chime + lastminute.com first</strong> — they're chronically broken (lasting 7+ days), not transient.</li>
+      <li><strong>Open PostHog session replays</strong> filtered to <code style="background:#fff;padding:1px 4px;border-radius:3px">$current_url LIKE '%zales%'</code> etc. on Apr 23-24 to see what users actually clicked / didn't click.</li>
+      <li>Open Asana subtask under the New Platform rollout project per merchant; tag Richard.</li>
+    </ol>
+  </div>
+</div>
+<!-- END P0 BROKEN MERCHANTS -->
+
+<!-- BEGIN 50/50 PER-MERCHANT TABLE -->
+<div class="card" style="border-left:4px solid #af52de;margin-bottom:20px">
+  <h2 style="margin-bottom:4px">Per-merchant 50/50 CTR delta — clean-week vs latest <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 16–22 vs Apr 23–25 · 41 merchants</span></h2>
+  <p class="subtitle" style="margin-bottom:12px">Each merchant compared in two windows. <strong>Trend column</strong> shows whether the gap improved (good) or widened (bad) recently. Worst-first sort by recent delta. <strong>Investigate</strong> = recent Δ &lt; -3pp AND recent UV ≥ 200.</p>
+
+  <div style="max-height:600px;overflow-y:auto;border:1px solid #e5e5ea;border-radius:8px">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead style="position:sticky;top:0;background:#fff;z-index:1">
+        <tr>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Merchant</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Clean Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(Apr 16-22)</span></th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Recent Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(Apr 23-25)</span></th>
+          <th style="text-align:center;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Trend</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Recent UV</th>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">T-Mobile Home Internet</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+13.0</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−27.5</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">26</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">noise · tiny sample</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">1-800 Contacts</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−6.8</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−23.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">477</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:600">🔴 INVESTIGATE · degrading</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Hotels.com</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−3.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−20.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">1,254</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:600">🔴 INVESTIGATE · travel + big volume</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">ReadyRX</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−2.2</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−16.7</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">13</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">tiny sample</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">AT&amp;T Wireless</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−12.0</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−15.2</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">37</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">chronic · small sample</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Expedia</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−6.7</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−13.6</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">1,010</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:600">🔴 INVESTIGATE · travel cluster</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">The Home Depot</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−9.3</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−12.5</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">3,846</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:600">🔴 INVESTIGATE · MASSIVE volume (~480 lost clicks/day)</td></tr>
+        <tr style="background:#ffebee"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Viator</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−6.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:700">−8.7</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">872</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e;font-weight:600">🔴 INVESTIGATE · travel cluster</td></tr>
+        <tr style="background:#fff4e6"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">AT&amp;T</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−1.3</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100;font-weight:700">−6.2</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">121</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">degrading · small sample</td></tr>
+        <tr style="background:#fff4e6"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Verizon Wireless</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+1.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100;font-weight:700">−5.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">341</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100;font-weight:600">🟠 BIG REGRESSION · was winning, now losing</td></tr>
+        <tr><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Shutterfly</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−4.8</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−2.2</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">569</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">improving</td></tr>
+        <tr><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Target</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+1.1</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−1.8</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">460</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">flat</td></tr>
+        <tr style="background:#fff4e6"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Udemy</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−1.6</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">625</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100;font-weight:600">🟠 BIG REGRESSION · was +8.5, now negative</td></tr>
+        <tr><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Simply Piano</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−8.0</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−0.6</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">127</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">improving</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Macy's</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+4.1</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">+0.2</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">419</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">flat</td></tr>
+        <tr><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">LegalZoom</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−8.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">+0.4</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">106</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">recovered</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Wayfair</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">+0.4</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">558</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Avis</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+3.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+1.3</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">731</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Tripadvisor</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+7.1</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+1.5</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">330</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">narrowing · still wins</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Kohl's</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.9</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+1.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">683</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Noom</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−1.6</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.3</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">241</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">improving</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">SHEIN</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+7.6</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.5</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">3,261</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">narrowing · high volume</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Disney+</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+11.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.7</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">▼▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">1,410</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">narrowing fast · watch</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Costco</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+5.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+2.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">4,314</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win · high volume</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Edible Arrangements</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+7.3</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+3.3</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">349</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">narrowing</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Walmart</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.1</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+4.6</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">4,421</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">narrowing · high volume</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Palmetto State Armory</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+5.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+6.6</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">357</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">improving</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Domino's</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+6.8</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">711</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">AliExpress</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+10.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+7.0</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#e65100">▼</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">760</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">narrowing · still strong</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Priceline</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.9</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+7.4</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">883</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady · travel-cluster outlier</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Budget</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.7</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.0</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">869</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Lowe's</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+9.6</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+8.1</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">1,466</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win · high volume</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Temu</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+11.3</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+9.7</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">5,461</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win · highest volume after Amazon</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Dell</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−10.6</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+9.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">80</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">recovered · small sample</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Booking.com</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+14.4</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+10.8</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">979</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">steady win · travel outlier</td></tr>
+        <tr style="background:#f0faf3"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Valvoline</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+9.6</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+11.3</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">954</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">improving</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Amazon</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+13.5</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+13.1</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">12,957</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37;font-weight:600">⭐ steady · highest volume</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;font-weight:700">Nike</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+14.1</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+14.5</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">2,389</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37;font-weight:600">⭐ improving</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">eBay</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">−0.3</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+16.3</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">4,055</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37;font-weight:600">⭐ MAJOR IMPROVEMENT · was flat, now winning big</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">TurboTax</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+20.9</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+17.8</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#86868b">≈</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">1,445</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37;font-weight:600">⭐ steady big win</td></tr>
+        <tr style="background:#d1f5d9"><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7">Zoro</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#cf222e">−21.2</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">+31.9</td><td style="text-align:center;padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37">▲▲</td><td style="text-align:right;padding:6px 10px;border-bottom:1px solid #f5f5f7">67</td><td style="padding:6px 10px;border-bottom:1px solid #f5f5f7;color:#1a7f37;font-weight:600">RECOVERED — was investigate-priority, now winning. Confirm sustained.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;font-size:13px;line-height:1.55;color:#424245">
+    <strong style="color:#1d1d1f">Top 50/50 takeaways:</strong>
+    <ul style="margin:6px 0 0 18px;padding:0">
+      <li><strong>30/41 still positive in latest window</strong> (down from 30/41 in clean week — net unchanged but composition shifted).</li>
+      <li><strong>4 to investigate now</strong> (recent Δ &lt; -3pp AND ≥200 UV): The Home Depot (-12.5pp · 3,846 UV — biggest impact), Hotels.com (-20.9pp · 1,254 UV), Expedia (-13.6pp · 1,010 UV), Viator (-8.7pp · 872 UV).</li>
+      <li><strong>Travel cluster regression confirmed:</strong> Hotels.com, Expedia, Viator all worsening AND degrading. Booking.com + Priceline still winning — a specific travel-component bug, not the whole vertical.</li>
+      <li><strong>2 fresh regressions to watch:</strong> Verizon Wireless (was +1.5pp clean → -5.9pp recent), Udemy (was +8.5pp → -1.6pp). Both flipped from positive to negative — different pattern than the chronic losers.</li>
+      <li><strong>Recovery story:</strong> Zoro went from worst regression (-21.2pp) to best (+31.9pp) — confirm the fix held in the next cycle.</li>
+    </ul>
+  </div>
+</div>
+<!-- END 50/50 PER-MERCHANT TABLE -->
+
+<!-- BEGIN 33/67 LONG-TAIL TREND -->
+<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
+  <h2 style="margin-bottom:4px">33/67 long-tail — daily trend with Apr 24 inversion <span class="badge" style="background:#fff3e0;color:#e65100;margin-left:8px">watch</span></h2>
+  <p class="subtitle" style="margin-bottom:12px">2,861 long-tail merchants, page-level CTR (Tableau-source). New platform held a +5-12pp lift Apr 16-22, then narrowed and inverted Apr 24 (first day Old beat New since launch). Apr 25 recovered to +4.9pp.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="background:#f9f9f9;border-radius:8px;padding:14px">
+      <div style="font-size:11px;text-transform:uppercase;color:#86868b;margin-bottom:8px">33/67 daily CTR (New − Old, pp)</div>
+      <table style="width:100%;font-size:13px;border-collapse:collapse">
+        <thead><tr><th style="text-align:left;padding:4px 8px;color:#86868b;font-size:11px">Day</th><th style="text-align:right;padding:4px 8px;color:#86868b;font-size:11px">New</th><th style="text-align:right;padding:4px 8px;color:#86868b;font-size:11px">Old</th><th style="text-align:right;padding:4px 8px;color:#86868b;font-size:11px">Δ pp</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:4px 8px">Apr 16</td><td style="text-align:right;padding:4px 8px">57.9%</td><td style="text-align:right;padding:4px 8px">46.1%</td><td style="text-align:right;padding:4px 8px;color:#1a7f37;font-weight:600">+11.7</td></tr>
+          <tr><td style="padding:4px 8px">Apr 17</td><td style="text-align:right;padding:4px 8px">53.5%</td><td style="text-align:right;padding:4px 8px">46.6%</td><td style="text-align:right;padding:4px 8px;color:#1a7f37;font-weight:600">+6.9</td></tr>
+          <tr><td style="padding:4px 8px">Apr 18</td><td style="text-align:right;padding:4px 8px">52.5%</td><td style="text-align:right;padding:4px 8px">48.2%</td><td style="text-align:right;padding:4px 8px;color:#1a7f37;font-weight:600">+4.3</td></tr>
+          <tr><td style="padding:4px 8px">Apr 19</td><td style="text-align:right;padding:4px 8px">50.8%</td><td style="text-align:right;padding:4px 8px">48.0%</td><td style="text-align:right;padding:4px 8px;color:#e65100;font-weight:600">+2.8</td></tr>
+          <tr><td style="padding:4px 8px">Apr 20</td><td style="text-align:right;padding:4px 8px">51.7%</td><td style="text-align:right;padding:4px 8px">44.8%</td><td style="text-align:right;padding:4px 8px;color:#1a7f37;font-weight:600">+6.9</td></tr>
+          <tr><td style="padding:4px 8px">Apr 21</td><td style="text-align:right;padding:4px 8px">48.0%</td><td style="text-align:right;padding:4px 8px">44.2%</td><td style="text-align:right;padding:4px 8px;color:#e65100;font-weight:600">+3.8</td></tr>
+          <tr><td style="padding:4px 8px">Apr 22</td><td style="text-align:right;padding:4px 8px">46.1%</td><td style="text-align:right;padding:4px 8px">43.1%</td><td style="text-align:right;padding:4px 8px;color:#e65100;font-weight:600">+3.0</td></tr>
+          <tr><td style="padding:4px 8px">Apr 23</td><td style="text-align:right;padding:4px 8px">45.1%</td><td style="text-align:right;padding:4px 8px">45.1%</td><td style="text-align:right;padding:4px 8px;color:#e65100;font-weight:700">0.0</td></tr>
+          <tr style="background:#ffebee"><td style="padding:4px 8px;font-weight:700">Apr 24</td><td style="text-align:right;padding:4px 8px;font-weight:700">44.0%</td><td style="text-align:right;padding:4px 8px;font-weight:700">45.0%</td><td style="text-align:right;padding:4px 8px;color:#cf222e;font-weight:700">−1.0 ⚠️</td></tr>
+          <tr><td style="padding:4px 8px;font-weight:700">Apr 25</td><td style="text-align:right;padding:4px 8px;font-weight:700">48.9%</td><td style="text-align:right;padding:4px 8px;font-weight:700">44.0%</td><td style="text-align:right;padding:4px 8px;color:#1a7f37;font-weight:700">+4.9</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:#86868b;margin-top:8px">Apr 24: first day Old beat New since rollout. Recovery Apr 25.</div>
+    </div>
+
+    <div style="font-size:13px;line-height:1.55;color:#424245">
+      <strong style="color:#1d1d1f">Apr 24 inversion — what we know:</strong>
+      <ol style="margin:8px 0 0 18px;padding:0">
+        <li style="margin-bottom:8px"><strong>5 broken merchants drove ~80% of the negative delta</strong> (Sixt -102, lastminute -71, Zales -66, WSJ -63, Chime -52 weighted impact). See P0 card above.</li>
+        <li style="margin-bottom:8px"><strong>Pattern is traffic-spike dependent.</strong> These merchants look fine on low-volume days. When external traffic (SEM/affiliate/email campaigns) sends users to the new merchant page, the conversion path breaks.</li>
+        <li style="margin-bottom:8px"><strong>Recovery on Apr 25</strong> back to +4.9pp suggests the inversion was driven by these specific bugs, not a systemic platform issue.</li>
+        <li><strong>Routing drift unchanged:</strong> 33/67 actual split running ~41/59 since Apr 18 (target 33/67). Stable but unexplained — Richard?</li>
+      </ol>
+      <div style="margin-top:12px;padding:10px;background:#fff3e0;border-radius:6px;font-size:12px">
+        <strong style="color:#1d1d1f">Ramp-decision criteria:</strong> need 7 consecutive days ≥+5pp before recommending 33→50% ramp. Apr 25 is day 1. <strong>Earliest recommendation window: May 1</strong> — assuming no further wobble and broken merchants get fixed.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END 33/67 LONG-TAIL TREND -->
+
+<!-- BEGIN INSIGHTS SIGNALS -->
+<div class="card" style="border-left:4px solid #5856d6;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">📊 Insights & signals — what to take seriously</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
+    <div>
+      <div style="font-weight:600;color:#1a7f37;margin-bottom:6px">✅ Working</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>50/50 case for ramp is solid.</strong> +5.9pp lift across 10 days, every single day positive. 30/41 merchants positive.</li>
+        <li><strong>Top-volume merchants are crushing it:</strong> Amazon (+13pp · 13k UV), Nike (+14.5pp), Temu (+9.7pp · 5.5k UV), Costco, Lowe's, Walmart all winning steadily.</li>
+        <li><strong>Attribution fixes held:</strong> Mar 25-Apr 14 contamination period is over. Apr 16+ data is the canonical read.</li>
+        <li><strong>Zoro recovered</strong> from worst regression to top winner — eng fix appears to have worked.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Broken</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>5 merchants broken on new platform</strong> (Zales · Chime · Sixt · lastminute · WSJ). Single-digit New CTR. P0 — see card above.</li>
+        <li><strong>Travel cluster degrading:</strong> Hotels.com, Expedia, Viator. NOT the whole travel vertical (Booking.com, Priceline still winning) — points to a specific shared component bug.</li>
+        <li><strong>Apr 24 first-ever inversion</strong> in 33/67. Single day, recovered Apr 25, but resets the 7-day-clean ramp counter.</li>
+      </ul>
+    </div>
+
+    <div>
+      <div style="font-weight:600;color:#e65100;margin-bottom:6px">🟠 Watch closely</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>Verizon Wireless:</strong> was +1.5pp clean week → -5.9pp recent. Fresh regression on a previously winning merchant.</li>
+        <li><strong>Udemy:</strong> +8.5pp → -1.6pp. Bigger absolute swing than Verizon.</li>
+        <li><strong>Disney+ narrowing fast:</strong> +11.4 → +2.7. Still wins but trajectory flattening.</li>
+        <li><strong>The Home Depot:</strong> -9.3 → -12.5pp on 3,846 UV → ~480 lost clicks/day. Biggest absolute click impact in 50/50.</li>
+      </ul>
+
+      <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 Open questions</div>
+      <ul style="margin:0 0 12px 18px;padding:0">
+        <li><strong>Routing drift Apr 17→18:</strong> 33/67 actual split shifted from ~63/37 to ~59/41 and held. Richard ownership.</li>
+        <li><strong>Why does new platform break on traffic spikes?</strong> Five broken merchants share the pattern: low-volume days fine, external-referrer traffic breaks them. Race condition? Cache miss? Bot-protection misfire?</li>
+        <li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/67 cohorts — blocks RPV cross-check. Mark/BI follow-up.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END INSIGHTS SIGNALS -->
+
+<!-- BEGIN ACTION PLAN -->
+<div class="card" style="border-left:4px solid #1d1d1f;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">✅ Action plan</h2>
+
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead>
+      <tr style="background:#f5f5f7">
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:60px">P</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Action</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:120px">Owner</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:80px">By when</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Triage 5 broken merchants (Zales, Chime, Sixt, lastminute.com, WSJ). Reproduce via paid-traffic UTMs. Open Asana subtasks under New Platform project.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today (Mon Apr 27)</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog session replays for the 5 broken merchants on Apr 23-24 — what did users actually click?</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog deep-dive on Home Depot (biggest absolute impact: ~480 lost clicks/day). Filter <code style="background:#f5f5f7;padding:1px 4px">$current_url LIKE '%home-depot%'</code>, watch 10 recordings.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Tue Apr 28</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Travel cluster investigation — Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Tue Apr 28</td>
+      </tr>
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Ask Richard about the Apr 17→18 routing drift (33/67 split shifted 63/37 → 59/41 and held).</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Mon daily standup</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Watch fresh regressions (Verizon Wireless, Udemy, Disney+ narrowing) — flag in next 5/15 if degrading further.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Wed Apr 29</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag commission_usd null on rep.new_platform_dashboard to Mark/BI — blocks RPV cross-check.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+      <tr style="background:#f0faf3">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#1a7f37">HOLD</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend 33→50% ramp until:</strong> (a) broken merchants triaged + fixed, AND (b) 7 consecutive days ≥+5pp in 33/67. Apr 25 is day 1. <strong>Earliest recommendation: May 1.</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Decision: Adam</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">May 1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- END ACTION PLAN -->
+
+
+
 
 
 
