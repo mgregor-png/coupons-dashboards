@@ -131,7 +131,7 @@
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
-  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-28 09:34 CET</span>
+  <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-04-28 10:03 CET</span>
 </div>
 <!-- END REFRESH BUTTONS -->
 
@@ -169,18 +169,18 @@
     </div>
 
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #ffe0b2">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#e65100;margin-bottom:6px">Auto-rule flags <span style="color:#86868b;text-transform:none;letter-spacing:0">(needs PostHog confirm)</span></div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#cf222e;margin-bottom:6px">Anomaly counts</div>
       <div style="display:flex;gap:14px;align-items:baseline;margin-bottom:4px">
         <div><div style="font-size:22px;font-weight:700;color:#e65100">5</div><div style="font-size:11px;color:#86868b">multi-day</div></div>
         <div><div style="font-size:22px;font-weight:700;color:#e65100">1</div><div style="font-size:11px;color:#86868b">single-day</div></div>
-        <div><div style="font-size:22px;font-weight:700;color:#e65100">0</div><div style="font-size:11px;color:#86868b">routing</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#cf222e">58</div><div style="font-size:11px;color:#86868b">routing 🔴</div></div>
       </div>
-      <div style="font-size:11px;color:#86868b;margin-top:4px">Apr 27 finding: 5 of 6 flagged were healthy on direct traffic — email/scanner artifacts, not page bugs.</div>
+      <div style="font-size:11px;color:#86868b;margin-top:4px">Multi-day/single-day need PostHog confirm (likely email/scanner). Routing = legacy-protected merchants leaking onto new-platform — real config bug.</div>
     </div>
   </div>
 
   <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
-    <strong>Bottom line:</strong> 50/50 case for ramp is strong. 6 merchants flagged by auto-rule but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (email/scanner traffic, not page bugs) — see deep-dive card. Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + utm-segmented Tableau view from Veronika</strong>.
+    <strong>Bottom line:</strong> 50/50 case for ramp is strong. <strong style='color:#cf222e'>58 legacy-protected merchants leaking onto new-platform</strong> — file routing config Jira (P0). 6 other merchants flagged by auto-rule but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (email/scanner). Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/67 + routing-leak fixed + utm-segmented Tableau view from Veronika</strong>.
     Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
   </div>
 </div>
@@ -274,6 +274,311 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">36.2%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">287 new / 58 old</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Single-day anomaly — UV spike 5.5× normal (likely email-blast / scanner artifact)</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-bottom:14px">
+    <h3 style="margin:0 0 6px 0;color:#cf222e;font-size:14px">🚦 Routing anomalies — 58 legacy-cohort merchants receiving new-platform traffic</h3>
+    <p style="margin:0 0 8px 0;font-size:12px;color:#636366">Merchants in <code>phase1_100</code> / <code>100</code> cohorts (legacy-only) are showing pageviews on the new platform. Indicates a routing-config drift, not a merchant page bug. Tag Richard for routing audit.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:#f5f5f7">
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Merchant</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Days w/ new traffic (last 7)</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Total new UV</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Groupon <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">3105</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">LaserAway <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">2268</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Coach <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">2077</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Nordstrom Rack <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1682</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">AAA <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1658</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">L.L.Bean <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1539</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Foot Locker <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1489</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">GameStop <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1426</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Ancestry <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1345</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Hulu <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1291</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Instacart <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1166</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Hobby Lobby <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">7</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1089</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Enterprise Rent-a-Car <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1071</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Chewy <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">1067</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">GNC <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">897</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">TJ Maxx <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">853</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">SharkNinja <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">853</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Marriott <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">822</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Bogg Bag <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">771</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Wonderbly <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">770</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Namecheap <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">747</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Vivid Seats <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">744</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Factor <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">674</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Walgreens <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">664</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Comfrt <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">622</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">PartsGeek <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">595</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Weber <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">594</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">MoneyGram <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">8</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">593</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">1800 Flowers <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">6</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">509</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">adidas <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">5</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">463</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">CapCut <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">7</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">449</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Plaud AI <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">5</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">372</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Ripley&#x27;s Believe It or Not <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">6</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">362</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">From You Flowers <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">352</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">The Parking Spot <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">5</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">338</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Staples <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">6</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">334</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">FlightHub <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">5</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">320</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Abebooks <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">5</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">286</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Skullcandy <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">4</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">249</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Belk <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">3</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">184</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">CheapOair <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">2</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">156</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">UGG <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">137</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">RVshare <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">129</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">QVC <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">2</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">125</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Sonos <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">121</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Sunglass Hut <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">113</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">KitchenAid <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">2</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">112</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Polynesian Cultural Center <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">78</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Ulta Beauty <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">69</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Camping World <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">67</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Empire Today <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">54</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">CVS <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">52</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Angara <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">52</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">CityPass <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">52</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Xfinity Mobile <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">52</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Tracfone <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">51</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">JR Cigars <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">51</td>
+      </tr>
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Custom Ink <span style="font-size:10px;color:#86868b;font-weight:400">[100]</span></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">1</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">50</td>
       </tr>
       </tbody>
     </table>
@@ -466,7 +771,12 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
       </tr>
-
+      <tr style="background:#fef5f5">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#cf222e">P0</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Routing audit: 58 legacy-cohort merchants (1800 Flowers, AAA, Abebooks, Ancestry, Angara…) showing new-platform traffic. Should be 100% legacy. File 1 Jira ticket for routing config fix.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
+      </tr>
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Email-flow / bot-traffic spike: investigate why email-Desktop $direct (3,379 sessions, 35s, ~0.07 CTAs) dominates email volume on new platform. Add bot filter to PostHog + Tableau; audit email-link landing experience vs legacy.</td>
@@ -508,6 +818,12 @@
 </div>
 <!-- END ACTION PLAN -->
 <!-- END ROLLOUT INTELLIGENCE -->
+
+
+
+
+
+
 
 
 
@@ -640,6 +956,8 @@
   </p>
 </div>
 <!-- END EXEC SUMMARY -->
+
+
 
 
 
@@ -824,6 +1142,8 @@
   </details>
 </div>
 <!-- END POSTHOG_UX -->
+
+
 
 
 
@@ -1539,6 +1859,8 @@ const P2_CTR_HEADLINE = [39.476, 38.385, 39.045, 39.0, 39.171, 39.352, 39.472, 4
 
 
 
+
+
 const p2RolloutPlugin = {
   id: 'p2rollout',
   beforeDraw(chart) {
@@ -1660,7 +1982,7 @@ function switchTab(tabId, btn) {
 </script>
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
-  <strong>Last updated:</strong> 2026-04-28 09:34 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-28</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-28</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
+  <strong>Last updated:</strong> 2026-04-28 10:03 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-04-28</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-04-28</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: 2026-04-02</span> &middot; 
   <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
   &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
@@ -1673,6 +1995,10 @@ function switchTab(tabId, btn) {
   <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
   <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
 </div>
+
+
+
+
 
 
 
