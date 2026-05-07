@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genie Performance Dashboard - May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f4f5f7;
+    color: #1a1a2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .header h1 span { color: #53a318; }
+  .header p { font-size: 15px; color: rgba(255,255,255,0.65); font-weight: 400; }
+  .header .meta { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 12px; }
+  .header .meta a { color: rgba(255,255,255,0.7); text-decoration: none; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* Headline KPI strip */
+  .kpi-strip {
+    margin-top: -28px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 900px) { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+  .kpi-strip .kpi {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 24px rgba(26,26,46,0.08);
+    border-top: 3px solid #53a318;
+  }
+  .kpi-strip .kpi .label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .kpi-strip .kpi .value { font-size: 26px; font-weight: 800; margin: 4px 0; }
+  .kpi-strip .kpi .delta { font-size: 12px; color: #53a318; font-weight: 500; }
+  .kpi-strip .kpi.warn { border-top-color: #e17055; }
+  .kpi-strip .kpi.warn .delta { color: #e17055; }
+
+  .section { margin-top: 36px; }
+  .section-header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 10px 10px 0 0;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-header .badge {
+    background: #53a318;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-header .badge.new { background: #6c5ce7; }
+  .section-body {
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(26,26,46,0.06);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    background: #f4f5f7;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    font-weight: 600;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  td { padding: 12px 14px; border-bottom: 1px solid #f0f1f4; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  .text-right { text-align: right; }
+  .text-bold { font-weight: 600; }
+  .text-green { color: #53a318; }
+  .text-orange { color: #f59e0b; }
+  .text-red { color: #e17055; }
+  .text-muted { color: #9ca3af; }
+  tr.highlight-row { background: rgba(83,163,24,0.05); }
+
+  .funnel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .funnel-step {
+    flex: 1;
+    text-align: center;
+    background: #f4f5f7;
+    padding: 16px;
+    border-radius: 8px;
+    min-width: 140px;
+  }
+  .funnel-label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .funnel-metric { font-size: 13px; color: #6b7280; }
+  .funnel-metric strong { font-size: 22px; color: #1a1a2e; display: block; }
+  .funnel-arrow { font-size: 24px; color: #9ca3af; }
+  .funnel-conversion { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .fc-item { background: rgba(83,163,24,0.06); border-left: 3px solid #53a318; padding: 14px 16px; border-radius: 6px; }
+  .fc-val { font-size: 22px; font-weight: 700; color: #53a318; }
+  .fc-label { font-size: 12px; color: #6b7280; }
+
+  .callout {
+    background: rgba(108,92,231,0.06);
+    border-left: 3px solid #6c5ce7;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #1a1a2e;
+  }
+  .callout strong { color: #1a1a2e; }
+  .callout.green { background: rgba(83,163,24,0.06); border-color: #53a318; }
+
+  .mau-chart { display: flex; align-items: flex-end; gap: 8px; height: 140px; padding: 12px 0 28px; }
+  .mau-bar { flex: 1; border-radius: 4px 4px 0 0; position: relative; min-width: 30px; min-height: 8px; }
+  .mau-bar .mau-val { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .mau-bar .mau-label { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #6b7280; white-space: nowrap; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    color: #9ca3af;
+    font-size: 12px;
+  }
+  .footer a { color: #6b7280; text-decoration: none; }
+
+  .links-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+  .links-row a {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1a1a2e;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .links-row a:hover { border-color: #53a318; color: #53a318; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>Genie</span> Performance Dashboard</h1>
+  <p>Landing Page funnel, install acquisition, CJ affiliate performance</p>
+  <div class="meta">
+    Generated 2026-05-07 from <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/export?format=csv&gid=0" target="_blank">tracking sheet</a>
+    + GA4 export (Feb 6 - May 6, 2026)
+  </div>
+</div>
+
+<div class="container">
+
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="label">Cumulative Installs (CWS)</div>
+    <div class="value">1,000+</div>
+    <div class="delta">Display capped</div>
+  </div>
+  <div class="kpi warn">
+    <div class="label">30-Day MAU (GA4)</div>
+    <div class="value">771</div>
+    <div class="delta">Peak 1,377 (Mar 31)</div>
+  </div>
+  <div class="kpi">
+    <div class="label">CJ Commission (last 4 wks)</div>
+    <div class="value">$2,012</div>
+    <div class="delta">$26,160/yr run-rate</div>
+  </div>
+  <div class="kpi">
+    <div class="label">LP -> Install Rate (last 4 wks)</div>
+    <div class="value">35.3%</div>
+    <div class="delta">Target: 20.9%</div>
+  </div>
+</div>
+
+<!-- Section: LP Performance -->
+<div class="section">
+  <div class="section-header">
+    Landing Page Performance (Last 8 Weeks)
+    <span class="badge">Weekly</span>
+  </div>
+  <div class="section-body">
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>W/C</th>
+            <th class="text-right">LP Views</th>
+            <th class="text-right">LP AU</th>
+            <th class="text-right">Install Views</th>
+            <th class="text-right">Install AU</th>
+            <th class="text-right">Install Rate</th>
+            <th class="text-right">CWS Users</th>
+            <th class="text-right">GA4 Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-bold">Wk11</td>
+            <td>09.03.26</td>
+            <td class="text-right">579</td>
+            <td class="text-right">270</td>
+            <td class="text-right">88</td>
+            <td class="text-right">63</td>
+            <td class="text-right ">15.2%</td>
+            <td class="text-right">944</td>
+            <td class="text-right">205</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk12</td>
+            <td>16.03.26</td>
+            <td class="text-right">281</td>
+            <td class="text-right">203</td>
+            <td class="text-right">88</td>
+            <td class="text-right">66</td>
+            <td class="text-right text-green">31.3%</td>
+            <td class="text-right">981</td>
+            <td class="text-right">336</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk13</td>
+            <td>23.03.26</td>
+            <td class="text-right">197</td>
+            <td class="text-right">159</td>
+            <td class="text-right">69</td>
+            <td class="text-right">52</td>
+            <td class="text-right text-green">35.0%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">192</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk14</td>
+            <td>30.03.26</td>
+            <td class="text-right">202</td>
+            <td class="text-right">150</td>
+            <td class="text-right">76</td>
+            <td class="text-right">48</td>
+            <td class="text-right text-green">37.6%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">329</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk15</td>
+            <td>06.04.26</td>
+            <td class="text-right">194</td>
+            <td class="text-right">139</td>
+            <td class="text-right">55</td>
+            <td class="text-right">46</td>
+            <td class="text-right text-orange">28.4%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">148</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk16</td>
+            <td>13.04.26</td>
+            <td class="text-right">274</td>
+            <td class="text-right">186</td>
+            <td class="text-right">78</td>
+            <td class="text-right">63</td>
+            <td class="text-right text-orange">28.5%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">386</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk17</td>
+            <td>20.04.26</td>
+            <td class="text-right">175</td>
+            <td class="text-right">130</td>
+            <td class="text-right">68</td>
+            <td class="text-right">52</td>
+            <td class="text-right text-green">38.9%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">199</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk18</td>
+            <td>27.04.26</td>
+            <td class="text-right">241</td>
+            <td class="text-right">151</td>
+            <td class="text-right">111</td>
+            <td class="text-right">81</td>
+            <td class="text-right text-green">46.1%</td>
+            <td class="text-right">1,000</td>
+            <td class="text-right">274</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout green">
+      <strong>Install rate climbing.</strong> Wk11 (15.2%) -> Wk18 (46.1%). Either LP optimisations are working or popup is sending higher-intent traffic. Last 4 weeks avg: 35.3%. CWS user count capped at 1,000 in display - true count is higher.
+    </div>
+  </div>
+</div>
+
+<!-- Section: Lifetime Funnel -->
+<div class="section">
+  <div class="section-header">
+    Acquisition Funnel
+    <span class="badge">Lifetime + 90d GA4</span>
+  </div>
+  <div class="section-body">
+    <h3 style="margin-bottom: 12px; font-size: 14px; color: #6b7280;">Sheet (lifetime cumulative)</h3>
+    <div class="funnel-container">
+      <div class="funnel-step">
+        <div class="funnel-label">Landing Page</div>
+        <div class="funnel-metric"><strong>12,895</strong>views / 9,566 AU</div>
+      </div>
+      <div class="funnel-arrow">-&gt;</div>
+      <div class="funnel-step">
+        <div class="funnel-label">Install Complete</div>
+        <div class="funnel-metric"><strong>2,619</strong>views / 1,891 AU</div>
+      </div>
+      <div class="funnel-arrow">-&gt;</div>
+      <div class="funnel-step">
+        <div class="funnel-label">Active Extension (latest)</div>
+        <div class="funnel-metric"><strong>274</strong>weekly active</div>
+      </div>
+    </div>
+    <div class="funnel-conversion">
+      <div class="fc-item"><div class="fc-val">20.3%</div><div class="fc-label">LP -&gt; Install (views)</div></div>
+      <div class="fc-item"><div class="fc-val">19.8%</div><div class="fc-label">LP -&gt; Install (AU)</div></div>
+      <div class="fc-item"><div class="fc-val">27.4%</div><div class="fc-label">CWS -&gt; Weekly Active</div></div>
+    </div>
+
+    <h3 style="margin-top: 28px; margin-bottom: 12px; font-size: 14px; color: #6b7280;">GA4 (90 days, Feb 6 - May 6)</h3>
+    <div class="funnel-container">
+      <div class="funnel-step">
+        <div class="funnel-label">Total Active Users</div>
+        <div class="funnel-metric"><strong>2,505</strong>90-day visitors</div>
+      </div>
+      <div class="funnel-arrow">-&gt;</div>
+      <div class="funnel-step">
+        <div class="funnel-label">Sessions</div>
+        <div class="funnel-metric"><strong>2,650</strong>90-day sessions</div>
+      </div>
+      <div class="funnel-arrow">-&gt;</div>
+      <div class="funnel-step">
+        <div class="funnel-label">Installs (event)</div>
+        <div class="funnel-metric"><strong>570</strong>90-day installs</div>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Geo:</strong> US 1,939 (87.1%) | CA 104 (4.7%) | IN 54 (2.4%) | GB 41 (1.8%) | AU 31 (1.4%) | DE 31 (1.4%)
+    </div>
+  </div>
+</div>
+
+<!-- Section: CJ Commission -->
+<div class="section">
+  <div class="section-header">
+    CJ Affiliate Performance
+    <span class="badge new">v4 New</span>
+  </div>
+  <div class="section-body">
+    <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
+      Window: Wk42 (13.10.25) - Wk18 (27.04.26) (29 weeks). Commission attribution from CJ confirms weeks-to-months after a transaction, so retroactive boosts are normal.
+    </p>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size: 14px; color: #6b7280; margin-bottom: 12px;">Cumulative (29 weeks)</h3>
+        <table>
+          <tbody>
+            <tr><td>Total clicks</td><td class="text-right text-bold">9,272</td></tr>
+            <tr><td>Total transactions</td><td class="text-right text-bold">509</td></tr>
+            <tr><td>Total sale amount</td><td class="text-right text-bold">$122,818.84</td></tr>
+            <tr class="highlight-row"><td class="text-bold">Total commission</td><td class="text-right text-bold text-green">$14,459.97</td></tr>
+            <tr><td>Avg commission per txn</td><td class="text-right text-bold">$28.41</td></tr>
+            <tr><td>CVR (txn / click)</td><td class="text-right">5.5%</td></tr>
+            <tr><td>Annualized commission</td><td class="text-right text-bold text-green">$25,928</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-size: 14px; color: #6b7280; margin-bottom: 12px;">Last 4 weeks run-rate</h3>
+        <table>
+          <tbody>
+            <tr><td>Commission</td><td class="text-right text-bold">$2,012.29</td></tr>
+            <tr><td>Weekly avg</td><td class="text-right text-bold">$503.07</td></tr>
+            <tr class="highlight-row"><td class="text-bold">Annualized</td><td class="text-right text-bold text-green">$26,160</td></tr>
+            <tr><td>Per cumulative install (1,000)</td><td class="text-right text-bold">$26.16/yr</td></tr>
+            <tr><td>Transactions (4w)</td><td class="text-right">91</td></tr>
+            <tr><td>Clicks (4w)</td><td class="text-right">1,765</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 28px; margin-bottom: 12px; font-size: 14px; color: #6b7280;">12-Week trend</h3>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>W/C</th>
+            <th class="text-right">Clicks</th>
+            <th class="text-right">Txn</th>
+            <th class="text-right">Sale Amt</th>
+            <th class="text-right">Commission</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-bold">Wk7</td>
+            <td>09.02.26</td>
+            <td class="text-right">93</td>
+            <td class="text-right">5</td>
+            <td class="text-right">$889.82</td>
+            <td class="text-right  text-bold">$26.70</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk8</td>
+            <td>16.02.26</td>
+            <td class="text-right">134</td>
+            <td class="text-right">14</td>
+            <td class="text-right">$4,897.84</td>
+            <td class="text-right  text-bold">$103.36</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk9</td>
+            <td>23.02.26</td>
+            <td class="text-right">138</td>
+            <td class="text-right">9</td>
+            <td class="text-right">$9,045.19</td>
+            <td class="text-right  text-bold">$123.66</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk10</td>
+            <td>02.03.26</td>
+            <td class="text-right">207</td>
+            <td class="text-right">11</td>
+            <td class="text-right">$1,288.51</td>
+            <td class="text-right  text-bold">$124.88</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk11</td>
+            <td>09.03.26</td>
+            <td class="text-right">304</td>
+            <td class="text-right">13</td>
+            <td class="text-right">$5,151.86</td>
+            <td class="text-right  text-bold">$330.89</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk12</td>
+            <td>16.03.26</td>
+            <td class="text-right">276</td>
+            <td class="text-right">11</td>
+            <td class="text-right">$2,904.05</td>
+            <td class="text-right  text-bold">$129.49</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk13</td>
+            <td>23.03.26</td>
+            <td class="text-right">258</td>
+            <td class="text-right">13</td>
+            <td class="text-right">$3,081.23</td>
+            <td class="text-right  text-bold">$245.95</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk14</td>
+            <td>30.03.26</td>
+            <td class="text-right">335</td>
+            <td class="text-right">17</td>
+            <td class="text-right">$3,839.98</td>
+            <td class="text-right  text-bold">$279.34</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk15</td>
+            <td>06.04.26</td>
+            <td class="text-right">251</td>
+            <td class="text-right">11</td>
+            <td class="text-right">$2,083.02</td>
+            <td class="text-right  text-bold">$168.53</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk16</td>
+            <td>13.04.26</td>
+            <td class="text-right">519</td>
+            <td class="text-right">18</td>
+            <td class="text-right">$3,962.88</td>
+            <td class="text-right  text-bold">$286.92</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk17</td>
+            <td>20.04.26</td>
+            <td class="text-right">467</td>
+            <td class="text-right">32</td>
+            <td class="text-right">$11,559.57</td>
+            <td class="text-right text-green text-bold">$897.64</td>
+          </tr>
+          <tr>
+            <td class="text-bold">Wk18</td>
+            <td>27.04.26</td>
+            <td class="text-right">528</td>
+            <td class="text-right">30</td>
+            <td class="text-right">$8,247.50</td>
+            <td class="text-right text-green text-bold">$659.20</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout green">
+      <strong>v3 -&gt; v4 shift:</strong> v3 saw $2,622 over Wk42-Wk12 (23 wks). Same window now shows $11,922 in the sheet - retroactive CJ attribution. Recent 4-week run-rate ($503.07/wk) confirms current monetisation level. See <a href="genie-ltv-model.html" style="color: #53a318;">LTV Model v4</a> for full impact.
+    </div>
+  </div>
+</div>
+
+<!-- Section: MAU Trajectory -->
+<div class="section">
+  <div class="section-header">
+    Active User Trajectory
+    <span class="badge new">GA4</span>
+  </div>
+  <div class="section-body">
+    <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">30-day rolling MAU from Chrome Web Store GA4 property (Feb 6 - May 6, 2026).</p>
+    <div class="mau-chart">
+        <div class="mau-bar" style="height: 14%; background: linear-gradient(180deg, #e1705566, #e170551a)">
+          <div class="mau-val" style="color: #e17055">193</div>
+          <div class="mau-label">Feb 06</div>
+        </div>
+        <div class="mau-bar" style="height: 42%; background: linear-gradient(180deg, #e1705566, #e170551a)">
+          <div class="mau-val" style="color: #e17055">572</div>
+          <div class="mau-label">Mar 08</div>
+        </div>
+        <div class="mau-bar" style="height: 100%; background: linear-gradient(180deg, #6c5ce766, #6c5ce71a)">
+          <div class="mau-val" style="color: #6c5ce7">1,377</div>
+          <div class="mau-label">Mar 31</div>
+        </div>
+        <div class="mau-bar" style="height: 71%; background: linear-gradient(180deg, #53a31866, #53a3181a)">
+          <div class="mau-val" style="color: #53a318">980</div>
+          <div class="mau-label">Apr 14</div>
+        </div>
+        <div class="mau-bar" style="height: 56%; background: linear-gradient(180deg, #e1705566, #e170551a)">
+          <div class="mau-val" style="color: #e17055">776</div>
+          <div class="mau-label">Apr 30</div>
+        </div>
+        <div class="mau-bar" style="height: 56%; background: linear-gradient(180deg, #e1705566, #e170551a)">
+          <div class="mau-val" style="color: #e17055">771</div>
+          <div class="mau-label">May 06</div>
+        </div>
+    </div>
+    <div class="callout">
+      <strong>30-day MAU declining post-peak.</strong> Peak 1,377 -&gt; latest 771. Without retention features (auto-apply, rewards), churn pulls MAU back down. Auto-apply roadmap is what stabilises this.
+    </div>
+    <h3 style="margin-top: 24px; font-size: 14px; color: #6b7280;">Top traffic sources (GA4 90d)</h3>
+    <table style="margin-top: 8px;">
+      <thead><tr><th>Source</th><th class="text-right">Sessions</th></tr></thead>
+      <tbody>
+          <tr>
+            <td>genie</td>
+            <td class="text-right text-bold">1,102</td>
+          </tr>
+          <tr>
+            <td>Genie_Landing_page</td>
+            <td class="text-right text-bold">910</td>
+          </tr>
+          <tr>
+            <td>google</td>
+            <td class="text-right text-bold">156</td>
+          </tr>
+          <tr>
+            <td>ext_sidebar</td>
+            <td class="text-right text-bold">81</td>
+          </tr>
+          <tr>
+            <td>ext_app_menu</td>
+            <td class="text-right text-bold">23</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Section: Reference -->
+<div class="section">
+  <div class="section-header">
+    Related Reports & Sources
+  </div>
+  <div class="section-body">
+    <div class="links-row">
+      <a href="genie-ltv-model.html">LTV Model v4 (May 2026)</a>
+      <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/export?format=csv&gid=0" target="_blank">Source Tracking Sheet</a>
+      <a href="https://app.asana.com/1/8437193015852/project/1212996568683037" target="_blank">Genie Asana Project</a>
+      <a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview" target="_blank">Rewards Dashboard (Tableau)</a>
+    </div>
+    <p style="color: #6b7280; font-size: 12px; margin-top: 16px;">
+      Auto-refreshed weekly via <code>projects/genie/scripts/refresh_genie_data.py</code> + <code>build_performance_dashboard.py</code>.
+      The March 2026 dashboard with growth projections and rewards-impact modelling is preserved at
+      <a href="genie-dashboard-2026-03.html" style="color: #53a318;">genie-dashboard-2026-03.html</a>.
+    </p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  Martin Gregor · Coupons · Generated 2026-05-07 · v4 (Apr 2026 sheet + GA4 refresh)
+</div>
+
+</body>
+</html>
