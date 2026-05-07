@@ -84,24 +84,30 @@
   .au-source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   @media (max-width: 900px) { .au-source-grid { grid-template-columns: 1fr; } }
   .au-tile { background: rgba(42,45,58,0.4); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .au-tile.primary { border-color: var(--green); background: rgba(0,184,148,0.08); }
   .au-tile .src { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
   .au-tile .val { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
   .au-tile .lbl { font-size: 12px; color: var(--muted); }
   .au-tile .note { font-size: 11px; color: var(--muted); margin-top: 8px; font-style: italic; }
+  .au-tile .pin { display: inline-block; background: var(--green); color: #0f1117; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-bottom: 6px; font-weight: 700; }
 </style>
 </head>
 <body>
 
 <h1>Genie User LTV Model</h1>
 <div class="subtitle">
-  <span>2026-05-07 (v4 - Apr 2026 sheet + GA4 refresh)</span>
+  <span>2026-05-07 (v4.1 - BQ MAU swap)</span>
   <span>Audience: Dusan, Adam, Rebecca</span>
 </div>
 
 <div class="section callout-accent" style="background: rgba(108,92,231,0.10); border-color: rgba(108,92,231,0.25);">
-  <h2 style="color: var(--accent); margin-bottom: 8px;">What changed since v3 <span class="badge badge-new">NEW</span></h2>
+  <h2 style="color: var(--accent); margin-bottom: 8px;">What changed since v4 <span class="badge badge-new">v4.1</span></h2>
   <p style="font-size: 14px; color: var(--text); line-height: 1.6;">
-    <strong>CJ commission was retroactively boosted.</strong> The same Wk42-Wk12 window that v3 saw as $2,622 now shows $11,922 in the sheet. CJ confirms commission weeks-to-months after a transaction, so v3 reflected unconfirmed data. v4 uses fresh data through Wk18'26 (Apr 27): <strong>$14,460 commission over 29 weeks</strong>. Per-install commission now <strong>$25.93/yr</strong> (vs $6.00 in v3). Reward ROI thesis flips from "less efficient at Genie" to "more efficient at Genie".
+    <strong>Switched the denominator from GA4 30d MAU (771) to BQ Extension_Active monthly MAU (618 for April 2026).</strong>
+    BQ measures actual extension usage; GA4 includes Chrome Web Store landing page visitors and is not the right unit for monetisation. Per-MAU revenue jumps from $33.93/yr (v4) to <strong>$42.33/yr (v4.1)</strong>.
+  </p>
+  <p style="font-size: 14px; color: var(--text); line-height: 1.6; margin-top: 8px;">
+    <strong>Narrative also flips: MAU is GROWING, not declining.</strong> BQ Extension_Active monthly: Feb 266 -> Mar 532 -> Apr 618 (+132% in 2 months). The "decline" v4 cited was GA4 LP traffic normalising after a paid spike, not extension churn.
   </p>
 </div>
 
@@ -109,27 +115,27 @@
   <div class="hero-col current-product">
     <div class="hero-label">Current Product</div>
     <div class="hero-title" style="color: var(--orange)">Incomplete - no auto-apply</div>
-    <div class="hero-sub">Retention: 1.79x (BQ-observed, Feb 2026 - needs re-pull)</div>
+    <div class="hero-sub">MAU lifetime: 1.79x (assumed years-in-MAU multiplier)</div>
 
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--muted)">Current state</div>
       <div class="scenario-vals">
-        <div><div class="v">$25.93</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--orange)">$46.41</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$42.33</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$75.77</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--accent)">+ Rewards</div>
       <div class="scenario-vals">
-        <div><div class="v">$48.70</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--orange)">$104.71</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$79.57</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$170.91</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--green)">+ Deals</div>
       <div class="scenario-vals">
-        <div><div class="v">$50.77</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--orange)">$108.44</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$81.64</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--orange)">$174.64</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
   </div>
@@ -137,135 +143,135 @@
   <div class="hero-col full-product">
     <div class="hero-label">Full Product</div>
     <div class="hero-title" style="color: var(--green)">Auto-apply + Rewards shipped</div>
-    <div class="hero-sub">Retention: 2.0-2.4x (industry benchmark target)</div>
+    <div class="hero-sub">MAU lifetime: 2.0-2.4x (industry benchmark target)</div>
 
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--muted)">Current state</div>
       <div class="scenario-vals">
-        <div><div class="v">$25.93</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--green)">$52-$62</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$42.33</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$85-$102</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--accent)">+ Rewards</div>
       <div class="scenario-vals">
-        <div><div class="v">$48.70</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--green)">$117-$140</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$79.57</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$191-$229</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
     <div class="hero-row">
       <div class="scenario-name" style="color: var(--green)">+ Deals</div>
       <div class="scenario-vals">
-        <div><div class="v">$50.77</div><div class="lbl">1Y</div></div>
-        <div><div class="v big" style="color: var(--green)">$121-$144</div><div class="lbl">Lifetime</div></div>
+        <div><div class="v">$81.64</div><div class="lbl">1Y</div></div>
+        <div><div class="v big" style="color: var(--green)">$195-$233</div><div class="lbl">Lifetime</div></div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="section">
-  <h2>Active User Sources <span class="badge badge-new">NEW v4</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Three independent sources for "active Genie user" - they measure different things.</p>
+  <h2>Active User Sources <span class="badge badge-bq">BQ primary</span></h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">BQ Extension_Active is the source of truth for monetisation economics. GA4 is shown for context but includes LP visitors and overstates the active extension base.</p>
   <div class="au-source-grid">
+    <div class="au-tile primary">
+      <div class="pin">PRIMARY</div>
+      <div class="src">BQ Monthly MAU</div>
+      <div class="val" style="color: var(--green)">618</div>
+      <div class="lbl">April 2026 (last full month)</div>
+      <div class="note">Extension_Active true monthly uniques. +16% MoM vs March (532). +132% vs Feb (266).</div>
+    </div>
     <div class="au-tile">
-      <div class="src">Chrome Web Store (sheet)</div>
-      <div class="val" style="color: var(--blue)">1,000+</div>
-      <div class="lbl">Cumulative installed users</div>
-      <div class="note">Display capped at 1,000. True count higher.</div>
+      <div class="src">BQ DAU (7d avg)</div>
+      <div class="val" style="color: var(--accent)">59</div>
+      <div class="lbl">Through May 6, 2026</div>
+      <div class="note">+22.8% WoW. DAU/MAU ratio 9.5%.</div>
     </div>
     <div class="au-tile">
       <div class="src">GA4 30-day MAU</div>
-      <div class="val" style="color: var(--accent)">771</div>
-      <div class="lbl">May 6, 2026</div>
-      <div class="note">Down from 1,377 peak (mid-March). 44% decline.</div>
-    </div>
-    <div class="au-tile">
-      <div class="src">BQ Monthly Active</div>
-      <div class="val" style="color: var(--red)">736</div>
-      <div class="lbl">Feb 2026 (stale)</div>
-      <div class="note">Needs re-pull from prj-grp-coupons-prod-8892.</div>
-    </div>
-    <div class="au-tile">
-      <div class="src">Sheet Extension_Active</div>
-      <div class="val">266</div>
-      <div class="lbl">Avg weekly, last 7 weeks</div>
-      <div class="note">Range 148-386. Volatile WAU.</div>
+      <div class="val">771</div>
+      <div class="lbl">May 6, 2026 (LP + extension)</div>
+      <div class="note">Broader population. Down from 1,377 peak; that was paid LP spike, not extension churn.</div>
     </div>
     <div class="au-tile">
       <div class="src">GA4 7-day WAU</div>
       <div class="val">189</div>
       <div class="lbl">May 6, 2026</div>
-      <div class="note">Trending down ~15% MoM.</div>
+      <div class="note">Includes LP visitors.</div>
     </div>
     <div class="au-tile">
       <div class="src">GA4 1-day DAU</div>
       <div class="val">27</div>
       <div class="lbl">May 6, 2026</div>
-      <div class="note">DAU/MAU ratio 3.5%.</div>
+      <div class="note">Single-day snapshot, not avg.</div>
+    </div>
+    <div class="au-tile">
+      <div class="src">Chrome Web Store</div>
+      <div class="val">1,000+</div>
+      <div class="lbl">Cumulative installed (sheet)</div>
+      <div class="note">Display-capped at 1,000. Don't use for economics - unreliable.</div>
     </div>
   </div>
-  <p class="source-tag" style="margin-top: 14px;">LTV-per-install denominator uses 1,000 (CWS cumulative). Per-MAU/WAU economics shown separately in Scenario 1.</p>
 </div>
 
 <div class="section">
   <h2>The Investment Question</h2>
   <div class="callout-green callout">
-    <strong>1,000+ installed users generating $26K/yr commission with no auto-apply, no rewards.</strong> That is $25.93/install/yr - 4.3x what v3 estimated. The retention gap between current product (1.79x BQ-observed) and industry benchmark (2.0-2.4x) is the value that shipping auto-apply + rewards unlocks. Rewards ROI now favours Genie (9.6x) over the wider Groupon marketplace (5.3x).
+    <strong>BQ MAU more than doubled in 2 months (266 -> 618) with no auto-apply, no rewards.</strong> That is genuine product-market signal. Per-MAU run-rate of $42.33/yr at 618 MAU = $26K/yr from CJ alone. Reward ROI thesis remains in Genie's favour (9.6x vs Groupon 5.3x). The case for accelerating auto-apply + rewards is now stronger, not weaker.
   </div>
   <p style="color: var(--muted); font-size: 14px; margin-top: 12px;">
-    <strong>Decision gate:</strong> If 30-day MAU stabilises above 800 within 90 days of auto-apply launch, continue investment. If MAU continues the 1,377 -> 771 decline trajectory after feature completion, reassess.
+    <strong>Decision gate (revised):</strong> If BQ MAU continues +10% MoM through Q2, ship rewards. If MAU growth stalls, investigate before adding feature complexity.
   </p>
   <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">
-    <strong>Benchmark:</strong> Honey (pre-acquisition) reported ~60% 12-month retention -> ~2.5x multiplier. Auto-apply creates a "set and forget" habit loop that dramatically improves retention vs. active-use extensions.
+    <strong>Benchmark:</strong> Honey (pre-acquisition) reported ~60% 12-month retention -> ~2.5x multiplier. Genie's MAU growth rate is currently consistent with (or ahead of) early-Honey trajectory adjusting for scale.
   </p>
 </div>
 
 <div class="section">
-  <h2>Active User Trajectory <span class="badge badge-new">GA4</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">30-day rolling MAU from Chrome Web Store GA4 property (Feb 6 - May 6, 2026, 90-day window).</p>
+  <h2>BQ MAU Trajectory <span class="badge badge-bq">Source of truth</span></h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">BQ <code>rep.genie_dashboard</code>, Period=Monthly, event_name=Extension_Active. True monthly uniques.</p>
 
   <div class="mau-chart">
-    <div class="mau-bar" style="height: 14%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">193</div><div class="mau-label">Feb 6</div></div>
-    <div class="mau-bar" style="height: 35%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">469</div><div class="mau-label">Mar 6</div></div>
-    <div class="mau-bar" style="height: 51%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">698</div><div class="mau-label">Mar 11</div></div>
-    <div class="mau-bar" style="height: 100%; background: linear-gradient(180deg, rgba(108,92,231,0.5), rgba(108,92,231,0.15))"><div class="mau-val" style="color:var(--accent)">1,377</div><div class="mau-label">Mar 31</div></div>
-    <div class="mau-bar" style="height: 86%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">1,191</div><div class="mau-label">Apr 7</div></div>
-    <div class="mau-bar" style="height: 71%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">980</div><div class="mau-label">Apr 14</div></div>
-    <div class="mau-bar" style="height: 65%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">889</div><div class="mau-label">Apr 17</div></div>
-    <div class="mau-bar" style="height: 56%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">769</div><div class="mau-label">Apr 28</div></div>
-    <div class="mau-bar" style="height: 56%; background: linear-gradient(180deg, rgba(225,112,85,0.5), rgba(225,112,85,0.15))"><div class="mau-val" style="color:var(--red)">771</div><div class="mau-label">May 6</div></div>
+    <div class="mau-bar" style="height: 18%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">112</div><div class="mau-label">Jul'25</div></div>
+    <div class="mau-bar" style="height: 21%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">131</div><div class="mau-label">Aug'25</div></div>
+    <div class="mau-bar" style="height: 25%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">156</div><div class="mau-label">Sep'25</div></div>
+    <div class="mau-bar" style="height: 32%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">198</div><div class="mau-label">Oct'25</div></div>
+    <div class="mau-bar" style="height: 36%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">224</div><div class="mau-label">Nov'25</div></div>
+    <div class="mau-bar" style="height: 38%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">237</div><div class="mau-label">Dec'25</div></div>
+    <div class="mau-bar" style="height: 49%; background: linear-gradient(180deg, rgba(139,143,163,0.5), rgba(139,143,163,0.15))"><div class="mau-val">304</div><div class="mau-label">Jan'26</div></div>
+    <div class="mau-bar" style="height: 43%; background: linear-gradient(180deg, rgba(225,112,85,0.4), rgba(225,112,85,0.1))"><div class="mau-val">266</div><div class="mau-label">Feb'26</div></div>
+    <div class="mau-bar" style="height: 86%; background: linear-gradient(180deg, rgba(0,184,148,0.5), rgba(0,184,148,0.15))"><div class="mau-val" style="color:var(--green)">532</div><div class="mau-label">Mar'26</div></div>
+    <div class="mau-bar" style="height: 100%; background: linear-gradient(180deg, rgba(0,184,148,0.6), rgba(0,184,148,0.2))"><div class="mau-val" style="color:var(--green)">618</div><div class="mau-label">Apr'26</div></div>
+    <div class="mau-bar" style="height: 37%; background: linear-gradient(180deg, rgba(108,92,231,0.4), rgba(108,92,231,0.1))"><div class="mau-val" style="color:var(--accent)">228</div><div class="mau-label">May'26 *</div></div>
   </div>
-  <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">Peak: 1,377 (Mar 31) -> Latest: 771 (May 6) = 44% decline in 6 weeks. Spring traffic + popup-on-zero-commission-pages drove install peak; no retention features mean churn pulls MAU back down.</p>
+  <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">* May 2026 partial: 6 days observed. April was the last full month. Trend is up + right since Feb dip.</p>
 
-  <div class="callout" style="margin-top: 16px;">
-    <strong>Why MAU declines matter:</strong> the LTV per install ($25.93/yr) assumes 1,000 active installs holds. If MAU continues declining, future revenue shrinks. Auto-apply + rewards roadmap is what stabilises this number.
+  <div class="callout-green callout" style="margin-top: 16px;">
+    <strong>Growth interpretation:</strong> +132% Feb to Apr suggests popup acquisition (Wk9 launch) is feeding actual extension usage, not just LP curiosity. Auto-apply + rewards would compound this.
   </div>
 
-  <h3>Retention Multipliers</h3>
+  <h3>MAU Lifetime Multipliers</h3>
   <table>
     <thead><tr><th>Scenario</th><th style="text-align:right">Multiplier</th><th>Basis</th></tr></thead>
     <tbody>
-      <tr><td style="color: var(--orange)">Current Product (observed)</td><td class="num bold orange">1.79x</td><td class="muted">BQ MAU data (Feb 2026): 64% decay Sep -> Feb. Re-pull pending.</td></tr>
+      <tr><td style="color: var(--orange)">Current Product (assumed)</td><td class="num bold orange">1.79x</td><td class="muted">Approx years a user remains in MAU. v4 carryover. Re-validate with Genie cohort retention data.</td></tr>
       <tr><td style="color: var(--green)">Full Product (low)</td><td class="num bold green">2.0x</td><td class="muted">Conservative target with auto-apply shipped</td></tr>
-      <tr><td style="color: var(--green)">Full Product (high)</td><td class="num bold green">2.4x</td><td class="muted">Honey-class retention (~60% Y1, "set and forget")</td></tr>
+      <tr><td style="color: var(--green)">Full Product (high)</td><td class="num bold green">2.4x</td><td class="muted">Honey-class retention</td></tr>
     </tbody>
   </table>
-  <p class="source-tag" style="margin-top: 8px;">Sources: <code>prj-grp-coupons-prod-8892.rep.genie_dashboard</code> (BQ, Feb 2026); GA4 Chrome Web Store property (May 2026)</p>
+  <p class="source-tag" style="margin-top: 8px;">Note: multipliers were calibrated for per-install LTV in v3. Per-MAU semantics translate as "average years a user remains an MAU". A v5 of this model should validate with Genie-specific cohort data.</p>
 </div>
 
 <div class="section">
   <h2>Scenario 1: Current State - Affiliate Commission <span class="badge badge-actual">Actual Data</span></h2>
   <table>
-    <thead><tr><th>Metric</th><th style="text-align:right">v4 Value</th><th style="text-align:right">v3 Value</th><th>Source</th></tr></thead>
+    <thead><tr><th>Metric</th><th style="text-align:right">v4.1 Value</th><th style="text-align:right">v4 Value</th><th>Source</th></tr></thead>
     <tbody>
-      <tr><td>Cumulative installs (CWS, capped)</td><td class="num bold">1,000+</td><td class="num muted">981</td><td class="muted">Chrome Web Store, Wk18 Apr 27 2026</td></tr>
-      <tr><td>CJ transactions (29 weeks)</td><td class="num bold">509</td><td class="num muted">388 (23wk)</td><td class="muted">CJ PID (tracking sheet)</td></tr>
-      <tr><td>CJ commission (29 weeks)</td><td class="num bold">$14,460</td><td class="num muted">$2,622 (23wk)</td><td class="muted">CJ PID (sheet) - retroactive</td></tr>
-      <tr><td>CJ sale amount (29 weeks)</td><td class="num bold">$122,819</td><td class="num muted">n/a</td><td class="muted">CJ PID (tracking sheet)</td></tr>
-      <tr><td>Avg commission per transaction</td><td class="num bold">$28.41</td><td class="num muted">$6.76</td><td class="muted">$14,460 / 509 - merchant mix shift</td></tr>
-      <tr><td>CVR (txn/click)</td><td class="num">5.49%</td><td class="num muted">n/a</td><td class="muted">509 / 9,272</td></tr>
-      <tr><td>Commission per click</td><td class="num">$1.56</td><td class="num muted">$0.84</td><td class="muted">$14,460 / 9,272</td></tr>
-      <tr class="highlight-row"><td class="bold">Annualized commission per install</td><td class="num bold green">$25.93/yr</td><td class="num muted">$6.00/yr</td><td class="muted">($14,460 / 29 x 52) / 1,000</td></tr>
+      <tr><td>BQ MAU (April 2026)</td><td class="num bold">618</td><td class="num muted">771 (GA4)</td><td class="muted">Switched to BQ Extension_Active</td></tr>
+      <tr><td>CJ transactions (29 weeks)</td><td class="num bold">509</td><td class="num muted">509</td><td class="muted">CJ PID (tracking sheet)</td></tr>
+      <tr><td>CJ commission (29 weeks)</td><td class="num bold">$14,460</td><td class="num muted">$14,460</td><td class="muted">CJ PID (sheet)</td></tr>
+      <tr><td>Avg commission per transaction</td><td class="num bold">$28.41</td><td class="num muted">$28.41</td><td class="muted">$14,460 / 509</td></tr>
+      <tr><td>Annualized commission</td><td class="num bold">$25,928/yr</td><td class="num muted">$25,928/yr</td><td class="muted">$14,460 / 29 x 52</td></tr>
+      <tr class="highlight-row"><td class="bold">Annualized commission per MAU</td><td class="num bold green">$42.33/yr</td><td class="num muted">$33.93/yr (GA4)</td><td class="muted">$26,160 / 618</td></tr>
     </tbody>
   </table>
 
@@ -275,33 +281,24 @@
     <tbody>
       <tr><td>Commission</td><td class="num bold">$2,012 ($503/wk)</td><td class="num green bold">$26,160/yr</td></tr>
       <tr><td>Transactions</td><td class="num">91 (22.8/wk)</td><td class="num">1,183/yr</td></tr>
-      <tr><td>Per cumulative install (1,000)</td><td class="num">-</td><td class="num green bold">$26.16/install/yr</td></tr>
+      <tr><td>vs prior 4 weeks</td><td class="num green bold">+104.2%</td><td class="num green">Doubled</td></tr>
+      <tr><td>Per MAU (618)</td><td class="num">-</td><td class="num green bold">$42.33/MAU/yr</td></tr>
+      <tr><td>Per DAU (59, 7d avg)</td><td class="num">-</td><td class="num green bold">$443.39/DAU/yr</td></tr>
     </tbody>
   </table>
   <div class="callout-green callout">
-    <strong>Run-rate confirms steady-state.</strong> Last 4 weeks ($26.2K/yr) matches the 29-week annualized ($25.9K/yr). This is not historical noise - it is the current monetisation level.
+    <strong>Run-rate has accelerated.</strong> Last 4 weeks ($26.2K/yr) doubled vs prior 4 weeks ($12.8K/yr). Steady-state is moving up, not stable.
   </div>
 
-  <h3>Per-active-user economics (annualized)</h3>
-  <table>
-    <thead><tr><th>Denominator</th><th style="text-align:right">Per-User Revenue</th><th>Notes</th></tr></thead>
-    <tbody>
-      <tr><td>Cumulative installed (1,000)</td><td class="num bold">$25.93/yr</td><td class="muted">CWS sheet, capped at 1,000</td></tr>
-      <tr><td>30-day MAU (771, GA4)</td><td class="num">$33.63/yr</td><td class="muted">Latest May 6 MAU</td></tr>
-      <tr><td>Avg Extension_Active (266)</td><td class="num">$97.47/yr</td><td class="muted">Sheet GA4 weekly active, avg last 7w</td></tr>
-      <tr><td>7-day WAU (189, GA4)</td><td class="num">$137/yr</td><td class="muted">Latest May 6 WAU</td></tr>
-    </tbody>
-  </table>
-
-  <h3>Lifetime LTV per install</h3>
+  <h3>Lifetime LTV per MAU</h3>
   <table>
     <thead><tr><th></th><th style="text-align:right">Current Product (1.79x)</th><th style="text-align:right">Full Product (2.0x)</th><th style="text-align:right">Full Product (2.4x)</th></tr></thead>
     <tbody>
-      <tr><td>1Y</td><td class="num">$25.93</td><td class="num">$25.93</td><td class="num">$25.93</td></tr>
-      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$46.41</td><td class="num bold green">$51.86</td><td class="num bold green">$62.23</td></tr>
+      <tr><td>1Y</td><td class="num">$42.33</td><td class="num">$42.33</td><td class="num">$42.33</td></tr>
+      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$75.77</td><td class="num bold green">$84.66</td><td class="num bold green">$101.59</td></tr>
     </tbody>
   </table>
-  <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0">Genie Tracking Sheet</a></p>
+  <p class="source-tag" style="margin-top: 8px;">Sources: <a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0">Tracking Sheet</a> + BQ <code>rep.genie_dashboard</code></p>
 </div>
 
 <div class="section">
@@ -320,31 +317,31 @@
       </table>
     </div>
     <div>
-      <h3 style="margin-top:0">Reward ROI - Thesis Flips <span class="badge badge-new">NEW v4</span></h3>
+      <h3 style="margin-top:0">Reward ROI <span class="badge badge-new">v4 finding stands</span></h3>
       <table>
         <thead><tr><th>Setting</th><th style="text-align:right">Comm/Txn</th><th style="text-align:right">ROI</th></tr></thead>
         <tbody>
           <tr><td>Groupon marketplace</td><td class="num">$15.82</td><td class="num green">5.33x</td></tr>
           <tr><td>Genie v3 (stale CJ)</td><td class="num muted">$6.76</td><td class="num orange">2.28x</td></tr>
-          <tr class="highlight-row"><td class="bold">Genie v4 (current)</td><td class="num bold">$28.41</td><td class="num green bold">9.57x</td></tr>
+          <tr class="highlight-row"><td class="bold">Genie v4.1 (current)</td><td class="num bold">$28.41</td><td class="num green bold">9.57x</td></tr>
         </tbody>
       </table>
-      <div class="callout-green callout" style="margin-top: 8px; font-size: 12px;">Rewards now <strong>1.8x more efficient</strong> at Genie's commission rate vs. Groupon's. Highly accretive.</div>
+      <div class="callout-green callout" style="margin-top: 8px; font-size: 12px;">Rewards <strong>1.8x more efficient</strong> at Genie's commission rate vs Groupon's. Highly accretive.</div>
     </div>
   </div>
 
-  <h3>Calculation: $48.70/install/yr (net)</h3>
-  <div class="calc-step"><div class="step-num">1</div><div class="formula">v4 base: $25.93/install/yr</div><div class="result">$25.93</div></div>
-  <div class="calc-step"><div class="step-num">2</div><div class="formula">x 2.06 combined uplift ($1.73 / $0.84)</div><div class="result">$53.42 gross</div></div>
-  <div class="calc-step"><div class="step-num">3</div><div class="formula">0.913 txns/yr (509/1000 x 52/29) x 1.74 uplift = 1.59 txns x $2.97</div><div class="result red">-$4.72</div></div>
-  <div class="calc-step"><div class="step-num">4</div><div class="formula">Net: $53.42 - $4.72</div><div class="result green">$48.70 (+88%)</div></div>
+  <h3>Calculation: $79.57/MAU/yr (net)</h3>
+  <div class="calc-step"><div class="step-num">1</div><div class="formula">v4.1 base: $42.33/MAU/yr</div><div class="result">$42.33</div></div>
+  <div class="calc-step"><div class="step-num">2</div><div class="formula">x 2.06 combined uplift ($1.73 / $0.84)</div><div class="result">$87.20 gross</div></div>
+  <div class="calc-step"><div class="step-num">3</div><div class="formula">Txn/MAU/yr 1.48 (913 / 618) x 1.74 uplift = 2.57 txns x $2.97</div><div class="result red">-$7.63</div></div>
+  <div class="calc-step"><div class="step-num">4</div><div class="formula">Net: $87.20 - $7.63</div><div class="result green">$79.57 (+88%)</div></div>
 
-  <h3>Lifetime LTV per install (with +20% retention uplift from rewards)</h3>
+  <h3>Lifetime LTV per MAU (with +20% retention uplift from rewards)</h3>
   <table>
     <thead><tr><th></th><th style="text-align:right">Current Product (2.15x)</th><th style="text-align:right">Full Product (2.4x)</th><th style="text-align:right">Full Product (2.88x)</th></tr></thead>
     <tbody>
-      <tr><td>1Y</td><td class="num">$48.70</td><td class="num">$48.70</td><td class="num">$48.70</td></tr>
-      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$104.71</td><td class="num bold green">$116.88</td><td class="num bold green">$140.26</td></tr>
+      <tr><td>1Y</td><td class="num">$79.57</td><td class="num">$79.57</td><td class="num">$79.57</td></tr>
+      <tr class="highlight-row"><td class="bold">Lifetime</td><td class="num bold orange">$170.91</td><td class="num bold green">$190.96</td><td class="num bold green">$229.15</td></tr>
     </tbody>
   </table>
   <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview">Rewards Dashboard (Tableau)</a></p>
@@ -352,98 +349,62 @@
 
 <div class="section">
   <h2>Scenario 3: + Groupon Deals <span class="badge badge-estimated">Data + Estimate</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Cross-sell into Groupon marketplace. Uses separate lifetime multiplier (1.8x) - marketplace retention is independent of extension retention.</p>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Cross-sell into Groupon marketplace. Deals revenue uses separate marketplace lifetime multiplier (1.8x).</p>
 
-  <h3 style="margin-top: 0">Calculation: +$2.07/install/yr</h3>
-  <div class="calc-step"><div class="step-num">1</div><div class="formula">50% of installs register on Groupon <span class="confidence conf-low">Assumption</span></div><div class="result">50%</div></div>
+  <h3 style="margin-top: 0">Calculation: +$2.07/MAU/yr</h3>
+  <div class="calc-step"><div class="step-num">1</div><div class="formula">50% of MAU register on Groupon <span class="confidence conf-low">Assumption</span></div><div class="result">50%</div></div>
   <div class="calc-step"><div class="step-num">2</div><div class="formula">13% of registered convert to deals buyer (Behdad actual)</div><div class="result">13%</div></div>
   <div class="calc-step"><div class="step-num">3</div><div class="formula">Effective: 50% x 13% = 6.5% x $31.88 LTV</div><div class="result blue">$2.07/yr</div></div>
-  <div class="calc-step"><div class="step-num">4</div><div class="formula">Total 1Y: $48.70 + $2.07</div><div class="result green">$50.77/yr</div></div>
+  <div class="calc-step"><div class="step-num">4</div><div class="formula">Total 1Y: $79.57 + $2.07</div><div class="result green">$81.64/yr</div></div>
 
-  <h3>Lifetime LTV per install (commission x ext. retention + deals x 1.8x)</h3>
+  <h3>Lifetime LTV per MAU</h3>
   <table>
     <thead><tr><th></th><th style="text-align:right">Current Product</th><th style="text-align:right">Full Product (low)</th><th style="text-align:right">Full Product (high)</th></tr></thead>
     <tbody>
-      <tr><td>Commission component</td><td class="num">$48.70 x 2.15 = $104.71</td><td class="num">$48.70 x 2.4 = $116.88</td><td class="num">$48.70 x 2.88 = $140.26</td></tr>
+      <tr><td>Commission component</td><td class="num">$79.57 x 2.15 = $170.91</td><td class="num">$79.57 x 2.4 = $190.96</td><td class="num">$79.57 x 2.88 = $229.15</td></tr>
       <tr><td>Deals component</td><td class="num">$2.07 x 1.8 = $3.73</td><td class="num">$2.07 x 1.8 = $3.73</td><td class="num">$2.07 x 1.8 = $3.73</td></tr>
-      <tr class="highlight-row"><td class="bold">Total Lifetime</td><td class="num bold orange">$108.44</td><td class="num bold green">$120.61</td><td class="num bold green">$143.99</td></tr>
+      <tr class="highlight-row"><td class="bold">Total Lifetime</td><td class="num bold orange">$174.64</td><td class="num bold green">$194.69</td><td class="num bold green">$232.88</td></tr>
     </tbody>
   </table>
   <p class="source-tag" style="margin-top: 8px;">Source: <a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true">Behdad Karimi, Asana Mar 28 2026</a></p>
 </div>
 
 <div class="section">
-  <h2>Install Funnel <span class="badge badge-new">GA4 90d</span></h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Feb 6 - May 6, 2026 from Chrome Web Store GA4 property.</p>
-  <div class="grid-2">
-    <div>
-      <table>
-        <thead><tr><th>Funnel Step</th><th style="text-align:right">Count</th></tr></thead>
-        <tbody>
-          <tr><td>Total active users</td><td class="num bold">2,505</td></tr>
-          <tr><td>Sessions</td><td class="num">2,650</td></tr>
-          <tr><td>Page views</td><td class="num">2,977</td></tr>
-          <tr><td>First visits</td><td class="num">2,509</td></tr>
-          <tr class="highlight-row"><td class="bold">Installs</td><td class="num bold green">570</td></tr>
-          <tr><td class="bold">LP -> Install CVR</td><td class="num bold green">21.5%</td></tr>
-        </tbody>
-      </table>
-      <p style="color: var(--muted); font-size: 12px; margin-top: 8px;">Target was 20.9% - hit it.</p>
-    </div>
-    <div>
-      <h3 style="margin-top:0">Top sources (sessions)</h3>
-      <table>
-        <thead><tr><th>Source</th><th style="text-align:right">Sessions</th></tr></thead>
-        <tbody>
-          <tr><td>genie (LP)</td><td class="num bold">1,102</td></tr>
-          <tr><td>Genie_Landing_page</td><td class="num">910</td></tr>
-          <tr><td>google</td><td class="num">156</td></tr>
-          <tr><td>ext_sidebar</td><td class="num">81</td></tr>
-          <tr><td>ext_app_menu</td><td class="num">23</td></tr>
-        </tbody>
-      </table>
-      <h3>Geo (active users)</h3>
-      <p style="color: var(--muted); font-size: 13px;">US 1,939 (89.5%) | CA 104 | IN 54 | GB 41 | AU 31 | DE 31 | PL 26</p>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>At Scale - Lifetime Value</h2>
-  <p style="color: var(--muted); font-size: 14px; margin-bottom: 12px;">Full Product (high, 2.88x) shown. Ranges in parentheses = Current Product (1.79x) -> Full Product (high).</p>
+  <h2>At Scale - Annual + Lifetime Value</h2>
+  <p style="color: var(--muted); font-size: 14px; margin-bottom: 12px;">Stable MAU baseline. Lifetime uses Full Product (high, 2.88x for + Rewards/Deals scenarios).</p>
 
   <div class="scale-grid">
-    <div class="scale-cell header">Scenario</div>
-    <div class="scale-cell header">10K installs/yr</div>
-    <div class="scale-cell header">50K installs/yr</div>
-    <div class="scale-cell header">190K installs/yr</div>
+    <div class="scale-cell header">Scenario (LT)</div>
+    <div class="scale-cell header">10K MAU</div>
+    <div class="scale-cell header">50K MAU</div>
+    <div class="scale-cell header">190K MAU</div>
 
     <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--muted)">Current State</div></div>
-    <div class="scale-cell"><div class="val">$464K-$622K</div></div>
-    <div class="scale-cell"><div class="val">$2.32M-$3.11M</div></div>
-    <div class="scale-cell"><div class="val">$8.82M-$11.82M</div></div>
+    <div class="scale-cell"><div class="val">$758K-$1.02M</div></div>
+    <div class="scale-cell"><div class="val">$3.79M-$5.08M</div></div>
+    <div class="scale-cell"><div class="val">$14.4M-$19.3M</div></div>
 
     <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--accent)">+ Rewards</div></div>
-    <div class="scale-cell"><div class="val">$1.05M-$1.40M</div></div>
-    <div class="scale-cell"><div class="val">$5.24M-$7.01M</div></div>
-    <div class="scale-cell"><div class="val" style="color: var(--accent)">$19.9M-$26.6M</div></div>
+    <div class="scale-cell"><div class="val">$1.71M-$2.29M</div></div>
+    <div class="scale-cell"><div class="val">$8.55M-$11.5M</div></div>
+    <div class="scale-cell"><div class="val" style="color: var(--accent)">$32.5M-$43.5M</div></div>
 
     <div class="scale-cell"><div class="val" style="font-size: 13px; color: var(--green)">+ Deals</div></div>
-    <div class="scale-cell"><div class="val">$1.08M-$1.44M</div></div>
-    <div class="scale-cell"><div class="val">$5.42M-$7.20M</div></div>
-    <div class="scale-cell"><div class="val" style="color: var(--green)">$20.6M-$27.4M</div></div>
+    <div class="scale-cell"><div class="val">$1.75M-$2.33M</div></div>
+    <div class="scale-cell"><div class="val">$8.73M-$11.6M</div></div>
+    <div class="scale-cell"><div class="val" style="color: var(--green)">$33.2M-$44.2M</div></div>
   </div>
-  <p style="color: var(--muted); font-size: 12px; margin-top: 12px;">v3 estimated 50K installs at $720K-$1.30M lifetime. v4 says $2.32M-$7.20M (3.2x to 5.5x higher) due to corrected CJ commission baseline.</p>
+  <p style="color: var(--muted); font-size: 12px; margin-top: 12px;">v4 (per-install) said 50K installs at $7.20M LT. v4.1 (per-MAU) at 50K MAU: $11.6M LT. Different units, but the MAU framing is the right one for monetisation.</p>
 </div>
 
 <div class="section">
-  <h2>v3 -> v4 Summary</h2>
+  <h2>v3 -> v4 -> v4.1 Summary</h2>
   <table>
-    <thead><tr><th>Scenario</th><th style="text-align:right">v3 1Y LTV</th><th style="text-align:right">v4 1Y LTV</th><th style="text-align:right">v3 LT (Mod)</th><th style="text-align:right">v4 LT (Mod)</th></tr></thead>
+    <thead><tr><th>Scenario</th><th style="text-align:right">v3 1Y</th><th style="text-align:right">v4 1Y (per install)</th><th style="text-align:right">v4.1 1Y (per MAU)</th><th>Note</th></tr></thead>
     <tbody>
-      <tr><td>Current state</td><td class="num muted">$6.00</td><td class="num bold">$25.93</td><td class="num muted">$14.40</td><td class="num bold green">$62.23</td></tr>
-      <tr><td>+ Rewards</td><td class="num muted">$7.74</td><td class="num bold">$48.70</td><td class="num muted">$22.28</td><td class="num bold green">$140.26</td></tr>
-      <tr><td>+ Groupon Deals</td><td class="num muted">$9.81</td><td class="num bold">$50.77</td><td class="num muted">$26.01</td><td class="num bold green">$143.99</td></tr>
+      <tr><td>Current state</td><td class="num muted">$6.00</td><td class="num muted">$25.93</td><td class="num bold green">$42.33</td><td class="muted">Denominator: 1,000 (CWS, capped) -> 618 (BQ MAU)</td></tr>
+      <tr><td>+ Rewards</td><td class="num muted">$7.74</td><td class="num muted">$48.70</td><td class="num bold green">$79.57</td><td class="muted">Same 2.06x uplift, recomputed reward cost</td></tr>
+      <tr><td>+ Groupon Deals</td><td class="num muted">$9.81</td><td class="num muted">$50.77</td><td class="num bold green">$81.64</td><td class="muted">Same +$2.07 deals revenue per active user</td></tr>
     </tbody>
   </table>
 </div>
@@ -451,18 +412,19 @@
 <div class="section">
   <h2>Assumptions & Confidence</h2>
   <table>
-    <thead><tr><th>Assumption</th><th style="text-align:right">v3</th><th style="text-align:right">v4</th><th>Confidence</th><th>Validation</th></tr></thead>
+    <thead><tr><th>Assumption</th><th style="text-align:right">v4</th><th style="text-align:right">v4.1</th><th>Confidence</th><th>Validation</th></tr></thead>
     <tbody>
-      <tr><td>Commission per install</td><td class="num muted">$6.00/yr</td><td class="num bold">$25.93/yr</td><td><span class="confidence conf-high">High</span></td><td class="muted">29 weeks actuals + 4-week run-rate confirms</td></tr>
-      <tr><td>Observed retention (current product)</td><td class="num">1.79x</td><td class="num">1.79x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">BQ data Feb 2026 (stale - re-pull needed)</td></tr>
-      <tr><td>Target retention (full product)</td><td class="num">2.0-2.4x</td><td class="num">2.0-2.4x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">Industry benchmark (Honey ~2.5x). Gate: stabilise MAU above 800.</td></tr>
+      <tr><td>Active user denominator</td><td class="num muted">1,000 (CWS)</td><td class="num bold">618 (BQ MAU)</td><td><span class="confidence conf-high">High</span></td><td class="muted">BQ rep.genie_dashboard, true monthly uniques</td></tr>
+      <tr><td>Annual commission</td><td class="num">$25,928/yr</td><td class="num">$26,160/yr</td><td><span class="confidence conf-high">High</span></td><td class="muted">29 weeks actuals + 4-week run-rate confirms</td></tr>
+      <tr><td>Per-MAU commission</td><td class="num muted">$33.93/yr (GA4)</td><td class="num bold green">$42.33/yr (BQ)</td><td><span class="confidence conf-high">High</span></td><td class="muted">$26,160 / 618</td></tr>
+      <tr><td>MAU lifetime multiplier (current)</td><td class="num">1.79x</td><td class="num">1.79x</td><td><span class="confidence conf-low">Low</span></td><td class="muted">v3 carryover - was per-install, used here as proxy for years-in-MAU. Re-validate.</td></tr>
+      <tr><td>MAU lifetime (full product)</td><td class="num">2.0-2.4x</td><td class="num">2.0-2.4x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">Industry benchmark (Honey ~2.5x)</td></tr>
       <tr><td>Combined reward uplift</td><td class="num">2.06x</td><td class="num">2.06x</td><td><span class="confidence conf-med">Medium-High</span></td><td class="muted">Actual Groupon data; Genie transferability unvalidated</td></tr>
       <tr><td>Reward cost per txn</td><td class="num">$2.97</td><td class="num">$2.97</td><td><span class="confidence conf-high">High</span></td><td class="muted">Direct measurement</td></tr>
-      <tr><td>Reward ROI at Genie rates</td><td class="num orange">2.28x</td><td class="num bold green">9.57x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">Derived from new $28.41 comm/txn</td></tr>
+      <tr><td>Reward ROI at Genie rates</td><td class="num bold green">9.57x</td><td class="num bold green">9.57x</td><td><span class="confidence conf-med">Medium</span></td><td class="muted">$28.41 comm/txn / $2.97 reward cost</td></tr>
       <tr><td>Retention uplift from rewards</td><td class="num">+20%</td><td class="num">+20%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption</td></tr>
       <tr><td>Genie -> registration rate</td><td class="num">50%</td><td class="num">50%</td><td><span class="confidence conf-low">Low</span></td><td class="muted">Assumption</td></tr>
       <tr><td>Deals conversion</td><td class="num">13%</td><td class="num">13%</td><td><span class="confidence conf-high">High</span></td><td class="muted">Behdad's actual NA data</td></tr>
-      <tr><td>Deals marketplace retention</td><td class="num">1.8x</td><td class="num">1.8x</td><td><span class="confidence conf-low">Low-Med</span></td><td class="muted">E-commerce estimate, independent of extension</td></tr>
     </tbody>
   </table>
 </div>
@@ -472,18 +434,18 @@
   <table>
     <thead><tr><th>Source</th><th>What</th><th>Access</th></tr></thead>
     <tbody>
+      <tr><td>BQ <code>rep.genie_dashboard</code></td><td>Monthly + Daily Extension_Active (true MAU/DAU)</td><td class="muted"><code>prj-grp-coupons-prod-8892</code></td></tr>
       <tr><td>Genie Tracking Sheet</td><td>CJ commission ($28.41/txn avg, 509 txns over 29wks)</td><td class="muted"><a href="https://docs.google.com/spreadsheets/d/1hzMz_Dj4dJjniGrC-_YPHLQYkXJRF0r_tbBKw7JiodY/edit?gid=0#gid=0" style="color:var(--blue);text-decoration:none">Google Sheet</a></td></tr>
-      <tr><td>Chrome Web Store GA4</td><td>30d MAU 771, 90d installs 570, geo, sources</td><td class="muted"><code>projects/genie/inputs/genie GA data/</code></td></tr>
-      <tr><td>BigQuery genie_dashboard</td><td>MAU retention curve (stale - Feb 2026)</td><td class="muted"><code>prj-grp-coupons-prod-8892.rep.genie_dashboard</code></td></tr>
+      <tr><td>Chrome Web Store GA4</td><td>LP funnel (570 installs, 21.5% CVR), geo, sources - context only</td><td class="muted"><code>projects/genie/inputs/genie GA data/</code></td></tr>
       <tr><td>Rewards Dashboard</td><td>Reward uplift (2.06x), cost economics ($2.97/txn)</td><td class="muted"><a href="https://analytics.groupondev.com/#/views/07RewardsDashboard_17591580155130/Overview" style="color:var(--blue);text-decoration:none">Tableau</a></td></tr>
       <tr><td>Behdad Karimi (BI)</td><td>NA registrant conversion (13%), discount LTV ($31.88)</td><td class="muted"><a href="https://app.asana.com/1/8437193015852/task/1213804728929738/comment/1213821285294140?focus=true" style="color:var(--blue);text-decoration:none">Asana comment</a></td></tr>
     </tbody>
   </table>
-  <p style="color: var(--muted); font-size: 12px; margin-top: 12px;">Refresh script: <code>projects/genie/scripts/refresh_genie_data.py</code> -> <code>dashboards/genie-data.json</code></p>
+  <p style="color: var(--muted); font-size: 12px; margin-top: 12px;">Refresh: <code>projects/genie/scripts/refresh_genie_data.py</code> -> <code>genie-data.json</code> + auto-rebuilt performance dashboard. LTV model is currently hand-edited; v5 will parameterise it.</p>
 </div>
 
 <div class="footer">
-  Genie LTV Model v4 - 2026-05-07 - Apr 2026 sheet refresh + GA4 install funnel + ROI thesis flip
+  Genie LTV Model v4.1 - 2026-05-07 - BQ MAU swap (618 vs 771), narrative flip (growing not declining), per-MAU economics
 </div>
 
 </body>
