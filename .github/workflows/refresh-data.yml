@@ -2,7 +2,7 @@ name: Refresh Phase 2 Data
 
 on:
   schedule:
-    # Run daily at 7:00 UTC (9:00 CET) — after BQ data refreshes overnight
+    # Run daily at 7:00 UTC (9:00 CET) - after BQ data refreshes overnight
     - cron: '0 7 * * *'
   workflow_dispatch: # Allow manual trigger
 
@@ -29,6 +29,12 @@ jobs:
 
       - name: Run data refresh
         run: python scripts/refresh-data.py
+
+      - name: Refresh PostHog data
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+        run: python scripts/refresh-posthog.py
+        continue-on-error: true  # don't fail the cron if PostHog API has a hiccup
 
       - name: Commit and push if changed
         run: |

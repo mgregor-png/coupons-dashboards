@@ -172,7 +172,8 @@
   <a href="#trend-5050" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">50/50</a>
   <a href="#trend-3366" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">33/66</a>
   <a href="#action-plan" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">Actions</a>
-  <a href="#posthog-deepdive" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">PostHog</a>
+  <a href="#posthog-daily" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#fff5e6;font-weight:500;border:1px solid #ffd9b3">PostHog daily</a>
+  <a href="#posthog-deepdive" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">PostHog deep</a>
 </nav>
 <!-- END ANCHOR NAV -->
 
@@ -450,9 +451,9 @@
 
 <!-- BEGIN P0 BROKEN MERCHANTS -->
 <div class="card" id="anomalies" style="border-left:4px solid #e65100;background:#fff8e1;margin-bottom:20px">
-  <h2 style="margin-bottom:4px;color:#e65100">⚠️ 4 merchants flagged by auto-rule - needs PostHog confirm <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · downgraded from P0 after Apr 27 PostHog validation</span></h2>
-  <div style="padding:10px 12px;background:#fef3c7;border-left:3px solid #ff9500;border-radius:4px;font-size:12px;color:#424245;line-height:1.5;margin-bottom:14px">
-    <strong style="color:#cf222e">Apr 27 finding - these are likely false positives.</strong> Cohort-wide PostHog cross-check: 5 of 6 merchants flagged by this rule had healthy 45-79% direct-traffic CTR on new platform. Aggregate CTR was dragged below 15% by email-attributed traffic (mostly bot/email-security-gateway URL scanners with $direct referrer, 35s sessions, 0 clicks). The rule fires on email-blast days, not on real page bugs. <strong>Do NOT file Jira tickets from this list without PostHog direct-traffic confirmation</strong> - see deep-dive card below.
+  <h2 style="margin-bottom:4px;color:#e65100">4 merchants flagged by auto-rule - auto-validated against PostHog <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · validated <span id="phValidatedAt">-</span></span></h2>
+  <div id="phVerdictBanner" style="padding:10px 12px;background:#fef3c7;border-left:3px solid #ff9500;border-radius:4px;font-size:12px;color:#424245;line-height:1.5;margin-bottom:14px">
+    Loading PostHog validation...
   </div>
   <p class="subtitle" style="margin-bottom:12px;font-size:12px;color:#636366">Detection rule: New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Stratified into chronic (multi-day) vs single-day anomaly (one-shot drop). Both buckets need PostHog direct-traffic confirm before treating as bugs. <em>Cohorts shown: 0% New Platform (Florence's protected list), 33/66 long-tail, 50/50 A/B, 100% New Platform (Phase 1 fully migrated).</em></p>
 
@@ -466,56 +467,105 @@
           <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Worst day</th>
           <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">New CTR</th>
           <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Old CTR</th>
-          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">UV</th>
-          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Pattern</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">BQ Old CTR</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;background:#f0fff8">PostHog 7d CTR</th>
+          <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;background:#f0fff8">PostHog Verdict</th>
         </tr>
       </thead>
       <tbody>
-      <tr style="background:#ffebee">
+      <tr style="background:#ffebee" data-merchant-id="114950">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Athleta <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">May 9</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">4.3%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">42.6%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">161 new / 197 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
+        <td class="ph-ctr" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;background:#f0fff8">-</td>
+        <td class="ph-verdict" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;background:#f0fff8">-</td>
       </tr>
-      <tr style="background:#ffebee">
+      <tr style="background:#ffebee" data-merchant-id="144774">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Oakley <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">May 7</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">9.6%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">55.7%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">104 new / 61 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
+        <td class="ph-ctr" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;background:#f0fff8">-</td>
+        <td class="ph-verdict" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;background:#f0fff8">-</td>
       </tr>
-      <tr style="background:#ffebee">
+      <tr style="background:#ffebee" data-merchant-id="134954">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Build-A-Bear <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">May 6</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">12.8%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">43.2%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">117 new / 81 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
+        <td class="ph-ctr" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;background:#f0fff8">-</td>
+        <td class="ph-verdict" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;background:#f0fff8">-</td>
       </tr>
-      <tr style="background:#ffebee">
+      <tr style="background:#ffebee" data-merchant-id="115806">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Levi&#x27;s <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">May 10</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">13.9%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">45.2%</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">208 new / 279 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
+        <td class="ph-ctr" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;background:#f0fff8">-</td>
+        <td class="ph-verdict" style="padding:8px 10px;border-bottom:1px solid #f5f5f7;background:#f0fff8">-</td>
       </tr>
       </tbody>
     </table>
   </div>
   <div style="padding:10px 12px;background:#fff3e0;border-radius:6px;font-size:12px;color:#424245;line-height:1.5">
-    <strong style="color:#cf222e">Verification ladder before any Jira ticket:</strong>
-    <ol style="margin:6px 0 0 18px;padding:0">
-      <li><strong>Confirm direct-traffic CTR is unhealthy</strong> on new platform. Run PostHog HogQL: <code>SELECT countIf($pageview)/countIf($autocapture matching 'Get Code|Get Deal|Get Reward'…)</code> with utm_medium null/empty for the merchant URL. If direct CTR is &gt;30%, the rule fired on email/scanner traffic - skip ticket.</li>
-      <li><strong>Check if scanner/bot traffic dominates</strong>. If email-Desktop $direct sessions with &lt;60s and 0 clicks are &gt;50% of pageviews, it's URL scanner traffic, not a bug.</li>
-      <li><strong>Only if both checks fail</strong> (real users, real low CTR): file Jira bug, tag Richard, link PostHog session replays.</li>
-      <li><strong>Open BI question:</strong> reconcile <code>rep.new_platform_dashboard.traffic_allocation='100'</code> against Florence's 407 0%-protected list (327 merchants double-tagged; raised with Mark Brinded).</li>
-    </ol>
+    <strong>How the auto-validation works:</strong> for each flagged merchant, we query PostHog for outbound clicks and pageviews on <code>/coupons/{merchant}</code> over the last 7 days, then classify:
+    <ul style="margin:6px 0 0 18px;padding:0">
+      <li><strong style="color:#34c759">FALSE_POSITIVE</strong> (PostHog CTR ≥ 70%) - real users are clicking; the BQ low CTR is the email/scanner artifact. Skip ticket.</li>
+      <li><strong style="color:#ff9500">INCONCLUSIVE</strong> (30-70%) - signal is mixed. Watch for another week.</li>
+      <li><strong style="color:#86868b">LOW_VOLUME</strong> (&lt;15 clicks in 7d) - not enough PostHog data to validate. Often a sign cache was still active for this merchant pre-May 8.</li>
+      <li><strong style="color:#cf222e">REAL_ISSUE</strong> (&lt;30% CTR with 15+ clicks) - file Jira bug, tag Richard, link PostHog session replays.</li>
+    </ul>
+    Source data: <code>posthog-validation.json</code> in the repo root. Refreshed daily by the GH Actions cron once <code>POSTHOG_API_KEY</code> is set as a repo secret (currently seeded manually from MCP - see <code>scripts/refresh-posthog.py</code>).
   </div>
 </div>
+<script>
+  (function(){
+    fetch('posthog-validation.json?t=' + Date.now()).then(function(r){return r.json();}).then(function(data){
+      var ts = document.getElementById('phValidatedAt');
+      if (ts) ts.textContent = data.generated_at || 'unknown';
+
+      // Populate per-merchant cells
+      (data.merchants || []).forEach(function(m){
+        var row = document.querySelector('tr[data-merchant-id="' + m.cc_merchant_id + '"]');
+        if (!row) return;
+        var ctrCell = row.querySelector('.ph-ctr');
+        var verdictCell = row.querySelector('.ph-verdict');
+        if (ctrCell) {
+          ctrCell.innerHTML = '<span style="font-weight:600;color:' + m.verdict_color + '">' + m.posthog_ctr_pct.toFixed(1) + '%</span>' +
+            '<div style="font-size:10px;color:#86868b">' + m.posthog_clicks_7d + ' clicks / ' + m.posthog_pageviews_7d + ' views</div>';
+        }
+        if (verdictCell) {
+          verdictCell.innerHTML = '<span style="display:inline-block;background:' + m.verdict_color + ';color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">' + m.verdict + '</span>' +
+            '<div style="font-size:11px;color:#424245;margin-top:4px;max-width:280px">' + m.notes + '</div>';
+        }
+      });
+
+      // Update banner with summary
+      var banner = document.getElementById('phVerdictBanner');
+      var s = data.summary || {};
+      if (banner) {
+        var tone = (s.real_issues > 0) ? '#fee' : '#f0fff8';
+        var border = (s.real_issues > 0) ? '#cf222e' : '#34c759';
+        banner.style.background = tone;
+        banner.style.borderLeftColor = border;
+        var headline = (s.real_issues > 0)
+          ? '<strong style="color:#cf222e">' + s.real_issues + ' real issue(s) need attention.</strong> '
+          : '<strong style="color:#1a7f37">No real issues found.</strong> ';
+        banner.innerHTML = headline +
+          'Auto-validation against PostHog: <strong>' + s.false_positives + ' false positive</strong>, ' +
+          '<strong>' + s.inconclusive + ' inconclusive</strong>, ' +
+          '<strong>' + s.low_volume + ' low-volume</strong>, ' +
+          '<strong>' + s.real_issues + ' real issue</strong>. ' +
+          'Recommended tickets to file: <strong>' + s.tickets_to_file + '</strong>.';
+      }
+    }).catch(function(e){
+      console.warn('posthog-validation.json fetch failed', e);
+      var banner = document.getElementById('phVerdictBanner');
+      if (banner) banner.innerHTML = '<em style="color:#86868b">PostHog validation data not available - run <code>scripts/refresh-posthog.py</code> to regenerate.</em>';
+    });
+  })();
+</script>
 <!-- END P0 BROKEN MERCHANTS -->
 
 <!-- BEGIN 50/50 PER-MERCHANT TABLE -->
@@ -809,6 +859,77 @@
 
 
 
+
+<!-- BEGIN POSTHOG DAILY -->
+<div class="card" id="posthog-daily" style="border-left:4px solid #ff9500;background:#fff8ee;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">PostHog daily activity <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">new-platform US health · last 14 days · auto-refreshed</span></h2>
+
+  <p style="font-size:12px;color:#86868b;margin-bottom:14px;line-height:1.5">
+    PostHog is the only client-side signal we have on the new platform - it sees what BQ can't (rage clicks, dead clicks, real user interaction). <strong>Caveat:</strong> pre-May 8 numbers are undercounted because Cloudflare cache was suppressing the snippet. The May 8 step-change in pageviews / rage / dead is measurement instrumentation, not UX regression - rates per pageview stayed flat.
+  </p>
+
+  <div id="phDailyGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px"></div>
+
+  <div id="phDailyFooter" style="padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea"></div>
+</div>
+
+<script>
+  (function(){
+    fetch('posthog-daily.json?t=' + Date.now()).then(function(r){return r.json();}).then(function(data){
+      var dates = data.dates || [];
+      var m = data.metrics || {};
+      var fixIdx = data.cloudflare_fix_index;
+      // Last complete day (skip today if incomplete - last entry is today)
+      var lastIdx = dates.length - 2;  // assume last entry is partial
+      var prevIdx = lastIdx - 1;
+
+      function fmt(n){ return (typeof n === 'number') ? n.toLocaleString() : '-'; }
+      function delta(curr, prev){
+        if (typeof curr !== 'number' || typeof prev !== 'number' || prev === 0) return '';
+        var pct = (curr - prev) / prev * 100;
+        var sign = pct > 0 ? '+' : '';
+        var color = pct > 0 ? '#1a7f37' : (pct < 0 ? '#cf222e' : '#86868b');
+        return '<span style="color:' + color + ';font-size:11px;font-weight:600;margin-left:4px">' + sign + pct.toFixed(0) + '%</span>';
+      }
+
+      var cards = [
+        {label:'Outbound clicks (US new)',  key:'outbound_click_us_new', kind:'count'},
+        {label:'Pageviews on /coupons/* (US)', key:'pageview_coupons_us', kind:'count'},
+        {label:'Rage clicks (/coupons/*)',  key:'rageclick', kind:'count'},
+        {label:'Dead clicks (/coupons/*)',  key:'dead_click', kind:'count'}
+      ];
+      var html = '';
+      cards.forEach(function(c){
+        var arr = m[c.key] || [];
+        var curr = arr[lastIdx];
+        var prev = arr[prevIdx];
+        html += '<div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">' +
+          '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px;font-weight:600">' + c.label + '</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1d1d1f">' + fmt(curr) + delta(curr, prev) + '</div>' +
+          '<div style="font-size:11px;color:#86868b;margin-top:2px">' + dates[lastIdx] + ' vs ' + dates[prevIdx] + '</div>' +
+        '</div>';
+      });
+      document.getElementById('phDailyGrid').innerHTML = html;
+
+      // Footer with headline cross-check + rate interpretation
+      var head = data.headline_today || {};
+      var rates = data.rates || {};
+      var footer = '';
+      if (head.us_new_platform_clicks) {
+        footer += '<strong>BQ cross-check:</strong> PostHog records <strong>' + head.us_new_platform_clicks.toLocaleString() + '</strong> US new-platform clicks today vs BQ\'s implied <strong>~' + head.bq_implied_clicks.toLocaleString() + '</strong> from cohort labels (' + head.delta_pct.toFixed(0) + '% gap). ' + head.interpretation + '<br>';
+      }
+      if (rates.interpretation) {
+        footer += '<strong>UX rates (flat across cache fix):</strong> rage ' + rates.rageclick_pct_pre_fix + '% &rarr; ' + rates.rageclick_pct_post_fix + '%, dead ' + rates.dead_click_pct_pre_fix + '% &rarr; ' + rates.dead_click_pct_post_fix + '% per pageview. ' + rates.interpretation;
+      }
+      document.getElementById('phDailyFooter').innerHTML = footer;
+    }).catch(function(e){
+      console.warn('posthog-daily.json fetch failed', e);
+      var grid = document.getElementById('phDailyGrid');
+      if (grid) grid.innerHTML = '<em style="color:#86868b">PostHog daily data not available - run <code>scripts/refresh-posthog.py</code></em>';
+    });
+  })();
+</script>
+<!-- END POSTHOG DAILY -->
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
 <div class="card" id="posthog-deepdive" style="border-left:4px solid #ff9500;margin-bottom:20px">

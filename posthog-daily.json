@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-05-12 09:50 UTC",
+  "scope": "US, /coupons/* pages, x_service=coupons-ui where applicable",
+  "caveat": "PostHog is only instrumented on the new platform for US traffic (coupons-itier-global is tagged countryCode=IE only). PostHog cannot be used for legacy-vs-new comparison; it is a new-platform health monitor. Pre-May 8 numbers are undercounted because Cloudflare cache was preventing the PostHog snippet from firing on cached responses - data quality jumped 2.4x on May 8 when the cache bypass landed.",
+  "dates": ["Apr 28","Apr 29","Apr 30","May 1","May 2","May 3","May 4","May 5","May 6","May 7","May 8","May 9","May 10","May 11","May 12"],
+  "metrics": {
+    "outbound_click_us_new": [29324,32093,33571,35008,34794,34521,32413,31315,31308,30476,28198,26840,28748,25426,7362],
+    "outbound_click_us_legacy": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "outbound_click_legacy_global": [1553,1317,1456,1203,1042,1143,1096,1239,784,1000,1137,1019,1203,1066,94],
+    "pageview_coupons_us": [null,null,null,null,null,null,null,11104,11078,11518,26992,33040,32530,29693,9192],
+    "pageview_coupons_us_dau": [null,null,null,null,null,null,null,5671,5674,5813,16594,20353,19537,18197,5407],
+    "rageclick": [50,77,91,80,95,74,81,67,59,63,144,171,200,194,46],
+    "dead_click": [1040,1014,1005,1011,1004,967,781,851,798,860,1922,2486,2454,2101,599]
+  },
+  "cloudflare_fix_index": 10,
+  "cloudflare_fix_date": "May 8",
+  "rates": {
+    "rageclick_pct_pre_fix": 0.55,
+    "rageclick_pct_post_fix": 0.61,
+    "dead_click_pct_pre_fix": 7.5,
+    "dead_click_pct_post_fix": 7.5,
+    "interpretation": "Rage and dead click RATES per pageview are flat across the cache fix - the visible spikes are pageview-measurement artifacts, not UX regression."
+  },
+  "headline_today": {
+    "us_new_platform_clicks": 25426,
+    "bq_implied_clicks": 13000,
+    "delta_pct": 95.6,
+    "interpretation": "PostHog records ~2x the new-platform clicks that BQ's cohort labels imply. Corroborates the open BQ traffic_allocation labeling bug - more merchants are being served the new template than the labels say."
+  }
+}
