@@ -30,11 +30,26 @@ jobs:
       - name: Run data refresh
         run: python scripts/refresh-data.py
 
+      - name: Install certifi for HTTPS calls
+        run: pip install certifi
+
       - name: Refresh PostHog data
         env:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
         run: python scripts/refresh-posthog.py
         continue-on-error: true  # don't fail the cron if PostHog API has a hiccup
+
+      - name: Compute day-of-week (UTC)
+        id: dow
+        # Mon=1 .. Sun=7. Mirror on Sunday so GIQ reflects a full week of fresh data.
+        run: echo "dow=$(date -u +%u)" >> "$GITHUB_OUTPUT"
+
+      - name: Mirror to Groupon IQ (Sundays + manual triggers)
+        if: steps.dow.outputs.dow == '7' || github.event_name == 'workflow_dispatch'
+        env:
+          GROUPON_IQ_TOKEN: ${{ secrets.GROUPON_IQ_TOKEN }}
+        run: python scripts/mirror-to-iq.py
+        continue-on-error: true  # don't fail the cron if GIQ has a hiccup
 
       - name: Commit and push if changed
         run: |
