@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Platform Rollout — US Coupons</title>
+<title>New Platform Rollout - US Coupons</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -125,8 +125,8 @@
 </head>
 <body>
 
-<h1>New Platform Rollout — US Coupons</h1>
-<p class="subtitle">Phased migration from legacy to new merchant template · Phase 2 live — 3,524 merchants · May 12, 2026</p>
+<h1>New Platform Rollout - US Coupons</h1>
+<p class="subtitle">Phased migration from legacy to new merchant template · Phase 2 live - 3,524 merchants · May 12, 2026</p>
 <!-- BEGIN REFRESH BUTTONS -->
 <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
@@ -138,7 +138,7 @@
 <!-- BEGIN ROLLOUT INTELLIGENCE -->
 <!-- BEGIN STATUS HEADLINE -->
 <div class="card" style="border-left:4px solid #34c759;background:#f0faf3;margin-bottom:20px">
-  <h2 style="margin-bottom:8px">Status — Apr 16 → May 10 (Tableau-source)<span class="badge up" style="margin-left:8px">50/50 wins</span></h2>
+  <h2 style="margin-bottom:8px">Status - Apr 16 → May 10 (Tableau-source)<span class="badge up" style="margin-left:8px">50/50 wins</span></h2>
   <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
     Two attribution fixes (bcookie platform assignment + experiment_impression dedup) make Apr 16+ the first uncontaminated read.
     <strong>50/50 A/B holds +5.0pp lift across 25 days</strong> (23/25 days won).
@@ -148,7 +148,7 @@
 
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">50/50 A/B (41 merch) · Apr 16–May 10</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">50/50 A/B (41 merch) · Apr 16-May 10</div>
       <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
         <div><div style="font-size:22px;font-weight:700;color:#34c759">58.8%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
         <div style="color:#86868b;font-size:14px">vs</div>
@@ -159,7 +159,7 @@
     </div>
 
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">33/66 long-tail · Apr 16–May 10</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px">33/66 long-tail · Apr 16-May 10</div>
       <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:4px">
         <div><div style="font-size:22px;font-weight:700;color:#ff9500">48.2%</div><div style="font-size:11px;color:#86868b">New CTR</div></div>
         <div style="color:#86868b;font-size:14px">vs</div>
@@ -174,7 +174,7 @@
       <div style="display:flex;gap:14px;align-items:baseline;margin-bottom:4px">
         <div><div style="font-size:22px;font-weight:700;color:#e65100">4</div><div style="font-size:11px;color:#86868b">multi-day</div></div>
         <div><div style="font-size:22px;font-weight:700;color:#e65100">0</div><div style="font-size:11px;color:#86868b">single-day</div></div>
-        <div><div style="font-size:22px;font-weight:700;color:#86868b">—</div><div style="font-size:11px;color:#86868b">routing</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#86868b">-</div><div style="font-size:11px;color:#86868b">routing</div></div>
       </div>
       <div style="font-size:11px;color:#86868b;margin-top:4px">Multi-day/single-day need PostHog direct-traffic confirm (Apr 27 finding: most are email/scanner artifacts).</div>
     </div>
@@ -182,21 +182,60 @@
 
   <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
     <strong>Bottom line:</strong> 50/50 A/B case for ramp is strong. 33/66 long-tail wobbled into inversion territory Apr 23-24, recovering since. 4 merchants flagged by auto-rule but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (email/scanner). Earliest ramp window: <strong>need 7 consecutive days +5pp in 33/66 + utm-segmented Tableau view from Veronika</strong>.
-    Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard &#x2197;</a>
+    Source: <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/5050TrafficSplit-Table?:iid=1" style="color:#007aff" target="_blank">Tableau - New Platform Dashboard &#x2197;</a>
   </div>
 </div>
 <!-- END STATUS HEADLINE -->
 
+<!-- BEGIN MAY 12 STATUS UPDATE -->
+<div class="card" style="border-left:4px solid #007aff;background:#f0f7ff;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">Status update - 12 May 2026<span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">two data-quality fixes in flight; recommend holding ramp decision until end of May</span></h2>
+
+  <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
+    Headline unchanged from the green card above: <strong>50/50 +5.0pp lift, 23/25 days won</strong> on Apr 16 → May 10 attribution-clean data. Two new data-quality issues identified since the last update, both being actively worked. Neither changes the apples-to-apples A/B verdict, but both affect the readiness of the underlying data for a ramp-up decision.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">Cloudflare cache distortion</span>
+        <span style="background:#34c759;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIXED MAY 8</span>
+      </div>
+      <p style="font-size:12px;color:#424245;line-height:1.5;margin-bottom:0">
+        Cloudflare was serving cached HTML on <code>/coupons/*</code> without a bucketed b-cookie, skewing 50/50 routing to ~75/25 (Richard's finding May 6). Gopinath shipped a cache-bypass rule on May 8; routing is now true 50/50. <strong>Independent confirmation:</strong> PostHog <code>$pageview</code> events on <code>/coupons/*</code> tripled on May 8 (11k → 30k/day) - pre-fix client-side analytics were silently undercounted. <strong>Open:</strong> did the same issue distort 33/67? If yes, 33/67 also needs a clean May 8+ baseline (question pending with Richard).
+      </p>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">BQ cohort-label mis-tagging</span>
+        <span style="background:#ff9500;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIX DUE MAY 18</span>
+      </div>
+      <p style="font-size:12px;color:#424245;line-height:1.5;margin-bottom:0">
+        <code>traffic_allocation='100'</code> in <code>rep.new_platform_dashboard</code> currently mixes the real Phase 1 ramped merchants with 327 legacy-protected merchants from Florence's list (column was set up to mean "100% held back" by mistake). Mark confirmed the fix Apr 28 ("easily done"); <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">subtask</a> assigned to Artur today, due May 18 with Mark cc'd. <strong>Implication:</strong> the Phase 1 / 100% New Platform cohort below is a blended frankenstein and shouldn't be cited until the fix lands. 50/50 and 33/67 cohorts are clean.
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
+    <strong>Timing recommendation:</strong> hold the next ramp-up decision until <strong>end of May</strong> - ≥ 2 weeks of clean post-Cloudflare-fix data plus BQ labeling fix landed. Only 4 days of post-fix data so far (May 8-11), spanning a weekend, too short to read in isolation.<br>
+    <strong>Ops:</strong> Mark Brinded OOO until May 18. Adam looped <strong>Artur Kacprzycki</strong> in today to keep momentum on the <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">AB test measurement task</a>; Artur agreed to step in.<br>
+    <strong>Noise to head off:</strong> if anyone hears "new platform performance dropped" - the blended cohort CTR moved as an <em>artifact</em> of the 75/25 → 50/50 correction (legacy was slightly higher absolute CTR, so the corrected mix lowered the blended average). Apples-to-apples A/B comparison is still +5.0pp.
+  </div>
+</div>
+<!-- END MAY 12 STATUS UPDATE -->
+
 <!-- BEGIN P0 BROKEN MERCHANTS -->
 <div class="card" style="border-left:4px solid #e65100;background:#fff8e1;margin-bottom:20px">
-  <h2 style="margin-bottom:4px;color:#e65100">⚠️ 4 merchants flagged by auto-rule — needs PostHog confirm <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · downgraded from P0 after Apr 27 PostHog validation</span></h2>
+  <h2 style="margin-bottom:4px;color:#e65100">⚠️ 4 merchants flagged by auto-rule - needs PostHog confirm <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · downgraded from P0 after Apr 27 PostHog validation</span></h2>
   <div style="padding:10px 12px;background:#fef3c7;border-left:3px solid #ff9500;border-radius:4px;font-size:12px;color:#424245;line-height:1.5;margin-bottom:14px">
-    <strong style="color:#cf222e">Apr 27 finding — these are likely false positives.</strong> Cohort-wide PostHog cross-check: 5 of 6 merchants flagged by this rule had healthy 45-79% direct-traffic CTR on new platform. Aggregate CTR was dragged below 15% by email-attributed traffic (mostly bot/email-security-gateway URL scanners with $direct referrer, 35s sessions, 0 clicks). The rule fires on email-blast days, not on real page bugs. <strong>Do NOT file Jira tickets from this list without PostHog direct-traffic confirmation</strong> — see deep-dive card below.
+    <strong style="color:#cf222e">Apr 27 finding - these are likely false positives.</strong> Cohort-wide PostHog cross-check: 5 of 6 merchants flagged by this rule had healthy 45-79% direct-traffic CTR on new platform. Aggregate CTR was dragged below 15% by email-attributed traffic (mostly bot/email-security-gateway URL scanners with $direct referrer, 35s sessions, 0 clicks). The rule fires on email-blast days, not on real page bugs. <strong>Do NOT file Jira tickets from this list without PostHog direct-traffic confirmation</strong> - see deep-dive card below.
   </div>
   <p class="subtitle" style="margin-bottom:12px;font-size:12px;color:#636366">Detection rule: New CTR &lt; 15% AND Old CTR &gt; 30% AND New UV ≥ 100. Stratified into chronic (multi-day) vs single-day anomaly (one-shot drop). Both buckets need PostHog direct-traffic confirm before treating as bugs. <em>Cohorts shown: 0% New Platform (Florence's protected list), 33/66 long-tail, 50/50 A/B, 100% New Platform (Phase 1 fully migrated).</em></p>
 
   <div style="margin-bottom:14px">
-    <h3 style="margin:0 0 6px 0;color:#cf222e;font-size:14px">🔴 Chronic — 4 merchants broken across multiple days</h3>
+    <h3 style="margin:0 0 6px 0;color:#cf222e;font-size:14px">🔴 Chronic - 4 merchants broken across multiple days</h3>
     <p style="margin:0 0 8px 0;font-size:12px;color:#636366">Multiple low-CTR days OR &gt;50% of recent days below threshold. These are systemic and need eng investigation.</p>
     <table style="width:100%;border-collapse:collapse;font-size:13px">
       <thead>
@@ -216,7 +255,7 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">4.3%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">42.6%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">161 new / 197 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
       </tr>
       <tr style="background:#ffebee">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Oakley <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
@@ -224,7 +263,7 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">9.6%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">55.7%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">104 new / 61 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
       </tr>
       <tr style="background:#ffebee">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Build-A-Bear <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
@@ -232,7 +271,7 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">12.8%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">43.2%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">117 new / 81 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
       </tr>
       <tr style="background:#ffebee">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;font-weight:600">Levi&#x27;s <span style="font-size:10px;color:#86868b;font-weight:400">[33/66]</span></td>
@@ -240,7 +279,7 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right;color:#cf222e;font-weight:700">13.9%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">45.2%</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7;text-align:right">208 new / 279 old</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic — most days broken</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Chronic - most days broken</td>
       </tr>
       </tbody>
     </table>
@@ -248,7 +287,7 @@
   <div style="padding:10px 12px;background:#fff3e0;border-radius:6px;font-size:12px;color:#424245;line-height:1.5">
     <strong style="color:#cf222e">Verification ladder before any Jira ticket:</strong>
     <ol style="margin:6px 0 0 18px;padding:0">
-      <li><strong>Confirm direct-traffic CTR is unhealthy</strong> on new platform. Run PostHog HogQL: <code>SELECT countIf($pageview)/countIf($autocapture matching 'Get Code|Get Deal|Get Reward'…)</code> with utm_medium null/empty for the merchant URL. If direct CTR is &gt;30%, the rule fired on email/scanner traffic — skip ticket.</li>
+      <li><strong>Confirm direct-traffic CTR is unhealthy</strong> on new platform. Run PostHog HogQL: <code>SELECT countIf($pageview)/countIf($autocapture matching 'Get Code|Get Deal|Get Reward'…)</code> with utm_medium null/empty for the merchant URL. If direct CTR is &gt;30%, the rule fired on email/scanner traffic - skip ticket.</li>
       <li><strong>Check if scanner/bot traffic dominates</strong>. If email-Desktop $direct sessions with &lt;60s and 0 clicks are &gt;50% of pageviews, it's URL scanner traffic, not a bug.</li>
       <li><strong>Only if both checks fail</strong> (real users, real low CTR): file Jira bug, tag Richard, link PostHog session replays.</li>
       <li><strong>Open BI question:</strong> reconcile <code>rep.new_platform_dashboard.traffic_allocation='100'</code> against Florence's 407 0%-protected list (327 merchants double-tagged; raised with Mark Brinded).</li>
@@ -259,7 +298,7 @@
 
 <!-- BEGIN 50/50 PER-MERCHANT TABLE -->
 <div class="card" style="border-left:4px solid #af52de;margin-bottom:20px">
-  <h2 style="margin-bottom:4px">Per-merchant 50/50 CTR delta — clean-week vs latest <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 16–May 7 vs May 8–May 10 · 41 merchants</span></h2>
+  <h2 style="margin-bottom:4px">Per-merchant 50/50 CTR delta - clean-week vs latest <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 16-May 7 vs May 8-May 10 · 41 merchants</span></h2>
   <p class="subtitle" style="margin-bottom:12px">Each merchant compared in two windows. <strong>Trend column</strong> shows whether the gap improved or widened recently. Sorted worst-first by recent delta. <strong>Investigate</strong> = recent Δ &lt; -3pp AND recent UV ≥ 200.</p>
 
   <div style="max-height:600px;overflow-y:auto;border:1px solid #e5e5ea;border-radius:8px">
@@ -267,8 +306,8 @@
       <thead style="position:sticky;top:0;background:#fff;z-index:1">
         <tr>
           <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Merchant</th>
-          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Clean Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(Apr 16–May 7)</span></th>
-          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Recent Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(May 8–May 10)</span></th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Clean Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(Apr 16-May 7)</span></th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Recent Δ pp<br><span style="font-weight:400;text-transform:none;font-size:9px">(May 8-May 10)</span></th>
           <th style="text-align:center;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Trend</th>
           <th style="text-align:right;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Recent UV</th>
           <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:10px;text-transform:uppercase">Status</th>
@@ -333,7 +372,7 @@
 
 <!-- BEGIN 33/67 LONG-TAIL TREND -->
 <div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
-  <h2 style="margin-bottom:4px">33/66 long-tail — daily trend <span class="badge" style="background:#fff3e0;color:#e65100;margin-left:8px">inversion</span></h2>
+  <h2 style="margin-bottom:4px">33/66 long-tail - daily trend <span class="badge" style="background:#fff3e0;color:#e65100;margin-left:8px">inversion</span></h2>
   <p class="subtitle" style="margin-bottom:12px">2,861 long-tail merchants on 33% new platform / 66% legacy split, page-level CTR (Tableau-source). Daily New − Old delta from Apr 16 through May 10.</p>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -374,7 +413,7 @@
     <div style="font-size:13px;line-height:1.55;color:#424245">
       <strong style="color:#1d1d1f">What we know:</strong>
       <ol style="margin:8px 0 0 18px;padding:0">
-        <li style='margin-bottom:8px'><strong>May 7 inversion</strong> — first day Old beat New (47.7% vs 46.9%). See P0 broken merchants card above for the merchant-level cause.</li>
+        <li style='margin-bottom:8px'><strong>May 7 inversion</strong> - first day Old beat New (47.7% vs 46.9%). See P0 broken merchants card above for the merchant-level cause.</li>
         <li style="margin-bottom:8px"><strong>Pattern is traffic-spike dependent.</strong> Broken merchants look fine on low-volume days. When external traffic (SEM/affiliate/email) sends users to the new merchant page, the conversion path breaks.</li>
         <li style="margin-bottom:8px"><strong>Routing drift unchanged:</strong> 33/66 actual split running ~41/59 on new vs legacy (target 33/66). Stable but unexplained.</li>
       </ol>
@@ -388,20 +427,20 @@
 
 <!-- BEGIN INSIGHTS SIGNALS -->
 <div class="card" style="border-left:4px solid #5856d6;margin-bottom:20px">
-  <h2 style="margin-bottom:8px">📊 Insights & signals — what to take seriously</h2>
+  <h2 style="margin-bottom:8px">📊 Insights & signals - what to take seriously</h2>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
     <div>
       <div style="font-weight:600;color:#1a7f37;margin-bottom:6px">✅ Working</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>50/50 case for ramp is solid.</strong> +5.0pp lift across 25 days, 23/25 days won.</li>
-<li><strong>Top-volume merchants are crushing it</strong> — see the 50/50 table above for ⭐ winners.</li>
+<li><strong>Top-volume merchants are crushing it</strong> - see the 50/50 table above for ⭐ winners.</li>
 <li><strong>Attribution fixes held:</strong> Mar 25-Apr 14 contamination period is over. Apr 16+ data is the canonical read.</li>
       </ul>
 
       <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 Broken</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li><strong>4 merchants flagged by auto-rule</strong> — but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (healthy direct CTR, dragged by email/scanner traffic). Don't treat as P0 page bugs without PostHog confirm.</li>
+        <li><strong>4 merchants flagged by auto-rule</strong> - but Apr 27 PostHog cohort-wide validation showed 5 of 6 were false positives (healthy direct CTR, dragged by email/scanner traffic). Don't treat as P0 page bugs without PostHog confirm.</li>
 <li><strong>33/66 had recent inversion days</strong> in long-tail cohort. Resets the 7-day-clean ramp counter.</li>
       </ul>
     </div>
@@ -418,9 +457,9 @@
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🟣 Open questions</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li><strong>Routing drift:</strong> 33/66 cohort actual split running ~41/59 new vs legacy (target 33/66). Richard ownership.</li>
-<li><strong>Email-flow on new platform:</strong> Apr 27 PostHog cohort-wide finding — email CTR 5-25% vs direct 45-79%, dragging aggregates. Email-Desktop $direct (3,379 sessions, 35s, 0.07 CTAs) is bot/scanner profile. Needs (a) email-flow audit on new platform, (b) bot filter on PostHog/Tableau, (c) utm-segmented Tableau view.</li>
+<li><strong>Email-flow on new platform:</strong> Apr 27 PostHog cohort-wide finding - email CTR 5-25% vs direct 45-79%, dragging aggregates. Email-Desktop $direct (3,379 sessions, 35s, 0.07 CTAs) is bot/scanner profile. Needs (a) email-flow audit on new platform, (b) bot filter on PostHog/Tableau, (c) utm-segmented Tableau view.</li>
 <li><strong>Direct-only CTR drop Wk1→Wk2 (~10pp):</strong> 50/50 cohort direct CTR fell ~40% → ~30% from Apr 14-19 to Apr 21-27. Not explained by traffic-mix. Check deploys Apr 19-20 with Richard.</li>
-<li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/66 cohorts — blocks RPV cross-check. Mark/BI follow-up.</li>
+<li><strong>commission_usd null</strong> in rep.new_platform_dashboard for 50/50 + 33/66 cohorts - blocks RPV cross-check. Mark/BI follow-up.</li>
       </ul>
     </div>
   </div>
@@ -443,13 +482,13 @@
     <tbody>
       <tr style="background:#fff8e1">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog direct-traffic check on 4 auto-flagged merchants (Athleta, Oakley, Build-A-Bear, Levi&#x27;s) — pull <code>countIf($pageview)</code> and <code>countIf(Get Code/Deal/Reward $autocapture)</code> filtered to <code>utm_medium</code> empty/null on the merchant URL. <strong>If direct CTR ≥ 30%, no Jira ticket</strong> — it's email/scanner traffic dragging aggregate. <em>Apr 27 cohort-wide check: 5 of 6 were false positives.</em></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog direct-traffic check on 4 auto-flagged merchants (Athleta, Oakley, Build-A-Bear, Levi&#x27;s) - pull <code>countIf($pageview)</code> and <code>countIf(Get Code/Deal/Reward $autocapture)</code> filtered to <code>utm_medium</code> empty/null on the merchant URL. <strong>If direct CTR ≥ 30%, no Jira ticket</strong> - it's email/scanner traffic dragging aggregate. <em>Apr 27 cohort-wide check: 5 of 6 were false positives.</em></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
       </tr>
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">BQ schema reconcile with Mark Brinded: <code>rep.new_platform_dashboard.traffic_allocation='100'</code> contains 327 merchants from Florence's 0%-protected list (double-tagged). PostHog/logs confirm those merchants don't actually receive new-platform traffic — BQ has a stale Phase 1 planning snapshot. Need reconciled view before trusting 100-cohort numbers.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">BQ schema reconcile with Mark Brinded: <code>rep.new_platform_dashboard.traffic_allocation='100'</code> contains 327 merchants from Florence's 0%-protected list (double-tagged). PostHog/logs confirm those merchants don't actually receive new-platform traffic - BQ has a stale Phase 1 planning snapshot. Need reconciled view before trusting 100-cohort numbers.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
@@ -467,7 +506,7 @@
       </tr>
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Travel cluster investigation — Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Travel cluster investigation - Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
@@ -479,7 +518,7 @@
       </tr>
       <tr>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag commission_usd null on rep.new_platform_dashboard to Mark/BI — blocks RPV cross-check.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag commission_usd null on rep.new_platform_dashboard to Mark/BI - blocks RPV cross-check.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
@@ -551,11 +590,11 @@
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
 <div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
-  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13–27 · 50/50 cohort · new platform only · external to auto-pipeline</span></h2>
-  <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Three findings reframe the auto-detected "broken merchants":</strong> (1) the rule fires heavily on email-blast days — 5 of 6 flagged merchants have healthy 45-79% direct-traffic CTR; (2) email-Desktop $direct is dominated by bot/email-security-gateway URL scanners that inflate pageviews with zero clicks (3,379 sessions, 35s avg, 0.07 CTAs each); (3) keeper-security is the one merchant that may have a real page issue — zero offer-engagement CTAs captured in 14 days, only modal-close + outbound clicks. Possibly the new-platform page has no offer data for that merchant.</div>
+  <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13-27 · 50/50 cohort · new platform only · external to auto-pipeline</span></h2>
+  <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Three findings reframe the auto-detected "broken merchants":</strong> (1) the rule fires heavily on email-blast days - 5 of 6 flagged merchants have healthy 45-79% direct-traffic CTR; (2) email-Desktop $direct is dominated by bot/email-security-gateway URL scanners that inflate pageviews with zero clicks (3,379 sessions, 35s avg, 0.07 CTAs each); (3) keeper-security is the one merchant that may have a real page issue - zero offer-engagement CTAs captured in 14 days, only modal-close + outbound clicks. Possibly the new-platform page has no offer data for that merchant.</div>
 
   <div style="background:#fff8e1;border-left:3px solid #ff9500;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.55;color:#424245">
-    <strong style="color:#0d47a1">📊 Cohort-wide validation</strong> — 30 50/50 merchants, last 14 days, by source × device:
+    <strong style="color:#0d47a1">📊 Cohort-wide validation</strong> - 30 50/50 merchants, last 14 days, by source × device:
     <table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:12px">
       <tr style="background:#fef3c7;color:#1d1d1f">
         <th style="text-align:left;padding:5px 8px;border-bottom:1px solid #fde68a">Source</th>
@@ -571,23 +610,23 @@
       <tr style="background:#f0faf3"><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">non-email</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7">Desktop</td><td style="padding:4px 8px;border-bottom:1px solid #fef3c7;font-family:monospace">www.groupon.com</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">35,001</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7">94s</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid #fef3c7;color:#1a7f37"><strong>48.2%</strong> ✅</td></tr>
       <tr style="background:#f0faf3"><td style="padding:4px 8px">non-email</td><td style="padding:4px 8px">Mobile</td><td style="padding:4px 8px;font-family:monospace">www.groupon.com</td><td style="text-align:right;padding:4px 8px">67,930</td><td style="text-align:right;padding:4px 8px">54s</td><td style="text-align:right;padding:4px 8px;color:#1a7f37">41.7%</td></tr>
     </table>
-    <div style="margin-top:8px;font-size:12px;color:#636366">The email-Desktop $direct row (3,379 sessions, 35s, 5.7% CTA) is the textbook fingerprint of email-security-gateway URL scanners (Microsoft Defender / Proofpoint / Mimecast). They land with utm_medium=email but don't render the email — referrer is $direct, no clicks, ~30s timeout. When email-Desktop has a real <code>www.groupon.com</code> referrer (real human clicks from webmail context), CTR jumps to 27.6% — much closer to a normal cohort.</div>
+    <div style="margin-top:8px;font-size:12px;color:#636366">The email-Desktop $direct row (3,379 sessions, 35s, 5.7% CTA) is the textbook fingerprint of email-security-gateway URL scanners (Microsoft Defender / Proofpoint / Mimecast). They land with utm_medium=email but don't render the email - referrer is $direct, no clicks, ~30s timeout. When email-Desktop has a real <code>www.groupon.com</code> referrer (real human clicks from webmail context), CTR jumps to 27.6% - much closer to a normal cohort.</div>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;line-height:1.6;color:#424245">
     <div>
       <div style="font-weight:600;color:#cf222e;margin-bottom:6px">🔴 5 of 6 chronic merchants are likely false positives</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li>1-800 Contacts, Kay Jewelers, Chime, Zales, Sixt Car Rental: <strong>direct-traffic CTR 45-79%</strong> on new platform — pages work fine for non-email visitors. Aggregate dragged down by email-blast cohorts (CTR 0-20%).</li>
+        <li>1-800 Contacts, Kay Jewelers, Chime, Zales, Sixt Car Rental: <strong>direct-traffic CTR 45-79%</strong> on new platform - pages work fine for non-email visitors. Aggregate dragged down by email-blast cohorts (CTR 0-20%).</li>
         <li>Pattern across all 5: a single-day or recurring email blast (60-185 pv) drove most of the 7-day volume; CTAs and modal flows function correctly on direct/google/chatgpt traffic.</li>
-        <li><strong>keeper-security is the one possible real bug</strong> — over 14 days / 162 PVs, only modal-close + outbound clicks captured. Zero offer-engagement CTAs (Get Code/Get Deal/Get Reward) in the event stream. Could be: empty offer state for new-platform routing, blocking modal, or page template mismatch. Worth eng look.</li>
+        <li><strong>keeper-security is the one possible real bug</strong> - over 14 days / 162 PVs, only modal-close + outbound clicks captured. Zero offer-engagement CTAs (Get Code/Get Deal/Get Reward) in the event stream. Could be: empty offer state for new-platform routing, blocking modal, or page template mismatch. Worth eng look.</li>
         <li><strong>Action:</strong> file 1 keeper-security bug + 1 spike (email-flow / bot-traffic measurement). Don't file 5 P0 tickets for the false positives.</li>
       </ul>
 
       <div style="font-weight:600;color:#5856d6;margin-bottom:6px">🤖 Email-Desktop $direct is bot/scanner traffic</div>
       <ul style="margin:0 0 12px 18px;padding:0">
         <li>3,379 sessions over 14 days, 35s avg duration, 0.07 CTAs each, $direct referrer.</li>
-        <li>Profile matches enterprise email-security URL scanners — they pre-scan all links before delivery to detect phishing.</li>
+        <li>Profile matches enterprise email-security URL scanners - they pre-scan all links before delivery to detect phishing.</li>
         <li>Inflates "email" pageview volume materially while contributing zero engagement. Pulls aggregate email CTR down even when real-human email CTR is healthy.</li>
         <li><strong>Action:</strong> add bot-filtering to PostHog (sessions with $direct + Desktop + utm_medium=email + 0 clicks + &lt;60s should be flagged); ask Veronika to consider similar filter on Tableau.</li>
       </ul>
@@ -596,8 +635,8 @@
     <div>
       <div style="font-weight:600;color:#0d47a1;margin-bottom:6px">📧 Real-email CTR is still lower than direct (but not catastrophically)</div>
       <ul style="margin:0 0 12px 18px;padding:0">
-        <li>Email-Mobile CTR: 27%; non-email-Mobile: 51% — email is ~half conversion of direct on mobile. Not a bug, but a real cohort intent gap.</li>
-        <li>Email-Desktop with real referrer: 28% vs non-email-Desktop 48% — same ~half ratio.</li>
+        <li>Email-Mobile CTR: 27%; non-email-Mobile: 51% - email is ~half conversion of direct on mobile. Not a bug, but a real cohort intent gap.</li>
+        <li>Email-Desktop with real referrer: 28% vs non-email-Desktop 48% - same ~half ratio.</li>
         <li>Aggregate Tableau CTR is sensitive to email-blast volume. utm-segmented view (Veronika) needed for clean per-merchant signal.</li>
       </ul>
 
@@ -728,7 +767,7 @@
 
 <!-- Current Phase 2 Configuration -->
 <div class="card" style="border-left:4px solid #34c759">
-  <h2 style="margin-bottom:4px">Current Configuration <span style="font-size:12px; font-weight:400; color:#34c759; margin-left:8px;">Phase 2 — LIVE since April 1</span></h2>
+  <h2 style="margin-bottom:4px">Current Configuration <span style="font-size:12px; font-weight:400; color:#34c759; margin-left:8px;">Phase 2 - LIVE since April 1</span></h2>
   <p style="font-size:13px; color:#86868b; margin-bottom:16px;">3,524 US merchants &mdash; traffic split across 4 buckets. Net result: <strong style="color:#1d1d1f">~65% revenue / ~60% traffic on legacy</strong>, <strong style="color:#007aff">~35% revenue / ~40% traffic on new platform</strong>.</p>
 
   <div style="display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start;">
@@ -827,9 +866,9 @@
   </div>
 </div>
 
-<!-- Phase 2 Live Status — first for launch day urgency -->
+<!-- Phase 2 Live Status - first for launch day urgency -->
 <div class="card" style="border-left: 4px solid #ff3b30;">
-  <h2>Phase 2 Live Status — April 1</h2>
+  <h2>Phase 2 Live Status - April 1</h2>
   <p class="subtitle" style="margin-bottom:16px">3,524 US merchants deployed. Issues being resolved. Updated 11:20 CET.</p>
   <table style="width:100%; border-collapse:collapse; font-size:13px;">
     <thead>
@@ -839,14 +878,14 @@
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 split not working</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Related to Akamai → Cloudflare migration. Fix deployed, 50/50 now working.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards: 50/50 backtab redirect to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#5856d6;font-weight:600">&#x1F7E3; QA</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Fix deployed. Backtab on 50/50 merchants was redirecting to legacy. Non-offer tile CTAs verified working (shein). Needs QA confirmation.</td></tr>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rewards CTA not redirecting to merchant</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Fixed</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">"Yes I understand" CTA now redirects correctly.</td></tr>
-      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">SEO test pages reverting to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; Monitoring</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard / Routing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">ATT, AliExpress + others. May be related to 50/50 fix — verifying.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">SEO test pages reverting to legacy</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; Monitoring</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Richard / Routing</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">ATT, AliExpress + others. May be related to 50/50 fix - verifying.</td></tr>
       <tr style="background:#f0fff0"><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">50/50 experiment_impression tracking</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#34c759;font-weight:600">&#x2705; Done</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Marcos</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">GTM updated for all 41 merchants. <a href="https://groupondev.atlassian.net/wiki/spaces/COUP/pages/82711478404" style="color:#007aff" target="_blank">Documented</a>. Awaiting BI validation.</td></tr>
-      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rich content / backend data update</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress — ~1.5h remaining</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Jakub</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">1,500 / 3,450 merchants updated. ~105 merchants per 5 min. Remaining ~1,950 merchants ETA ~13:00 CET.</td></tr>
+      <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Rich content / backend data update</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#ff9500;font-weight:600">&#x1F7E0; In Progress - ~1.5h remaining</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Jakub</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">1,500 / 3,450 merchants updated. ~105 merchants per 5 min. Remaining ~1,950 merchants ETA ~13:00 CET.</td></tr>
       <tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">BI database switchover</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><span style="color:#86868b;font-weight:600">&#x26A0;&#xFE0F; Caution</span></td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Mark / BI</td><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">Dashboards/reports may fail intermittently this week.</td></tr>
     </tbody>
   </table>
   <div style="margin-top:16px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:13px; line-height:1.6;">
-    <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1–2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
+    <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1-2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
   </div>
 </div>
 
@@ -862,7 +901,7 @@
     <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px">
       <span style="font-size:10px;color:#ff9500">&#9658;</span>
       <h2 style="display:inline;font-size:17px;font-weight:600">UX Quality &#8212; PostHog (new platform only)</h2>
-      <span style="font-size:11px;color:#86868b;margin-left:auto">— pageviews · last 7 days</span>
+      <span style="font-size:11px;color:#86868b;margin-left:auto">- pageviews · last 7 days</span>
     </summary>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px">
       <div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">LCP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">672.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">FCP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">556.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">INP</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">80.0</div><div style="font-size:11px;color:#86868b">p75 · good</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">CLS</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">0.0225</div><div style="font-size:11px;color:#86868b">p75 · good</div></div>
@@ -870,7 +909,7 @@
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
       <div style="background:#fff3e0;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Dead Click Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">5.75</div><div style="font-size:11px;color:#86868b">last 7 days</div></div><div style="background:#d1f5d9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Rage Click Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">0.45</div><div style="font-size:11px;color:#86868b">last 7 days</div></div><div style="background:#f2f2f7;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:4px">Bounce Rate</div><div style="font-size:22px;font-weight:700;color:#1d1d1f">68.16</div><div style="font-size:11px;color:#86868b">last 7 days</div></div>
     </div>
-    <div style="margin-top:16px"><h3 style="font-size:14px;font-weight:600;margin-bottom:8px">Top Dead Clicks — elements users click with no response</h3><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">#</th><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">Element</th><th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">Count</th></tr></thead><tbody><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">1</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 8494}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">8494</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">2</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;NO CODE NEEDED&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 321}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">321</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">3</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Up To 45% Off The Home Depot Kitchen&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 202}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">202</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">4</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Deals&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 172}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">172</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">5</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;$20-$40 Digital Costco Shop Card w/ Code&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 163}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">163</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">6</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;All Offers&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 93}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">93</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">7</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &quot;FromYouFlowers: 20%-50% Off Mother&#x27;s Day&quot;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 83}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">83</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">8</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Great Clips Coupon &amp; Promo Code May 2026&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 82}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">82</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">9</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Amazon Promo Code &amp; Coupons: Up to 80% Off - May 2026&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 77}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">77</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">10</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Code&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 58}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">58</td></tr></tbody></table></div>
+    <div style="margin-top:16px"><h3 style="font-size:14px;font-weight:600;margin-bottom:8px">Top Dead Clicks - elements users click with no response</h3><table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">#</th><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e5e5ea">Element</th><th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">Count</th></tr></thead><tbody><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">1</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 8494}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">8494</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">2</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;NO CODE NEEDED&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 321}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">321</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">3</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Up To 45% Off The Home Depot Kitchen&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 202}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">202</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">4</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Deals&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 172}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">172</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">5</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;$20-$40 Digital Costco Shop Card w/ Code&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 163}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">163</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">6</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;All Offers&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 93}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">93</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">7</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &quot;FromYouFlowers: 20%-50% Off Mother&#x27;s Day&quot;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 83}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">83</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">8</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Great Clips Coupon &amp; Promo Code May 2026&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 82}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">82</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">9</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Amazon Promo Code &amp; Coupons: Up to 80% Off - May 2026&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 77}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">77</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">10</td><td style="padding:6px 8px;border-bottom:1px solid #e5e5ea">{&#x27;text&#x27;: &#x27;Code&#x27;, &#x27;tag&#x27;: &#x27;unknown&#x27;, &#x27;count&#x27;: 58}</td><td style="text-align:right;padding:6px 8px;border-bottom:1px solid #e5e5ea">58</td></tr></tbody></table></div>
   </details>
 </div>
 <!-- END POSTHOG_UX -->
@@ -918,9 +957,9 @@
 
 
 
-<!-- Stat cards — relative change vs baseline -->
+<!-- Stat cards - relative change vs baseline -->
 <div class="card" style="border-left: 4px solid #007aff;">
-  <h2>Performance vs Baseline <span style="font-size:12px; font-weight:400; color:#86868b; margin-left:8px;">Baseline: Mar 10–17 · Post: Mar 18–28</span></h2>
+  <h2>Performance vs Baseline <span style="font-size:12px; font-weight:400; color:#86868b; margin-left:8px;">Baseline: Mar 10-17 · Post: Mar 18-28</span></h2>
   <p class="subtitle" style="margin-bottom:16px">Relative change from each cohort's own pre-rollout average. Source: BQ <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">rep.12_offer_dashboard</code>. Phase 2 data (Apr 1+) will appear in next refresh.</p>
   <div id="p2StatCards" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:8px;"></div>
   <div style="font-size:11px; color:#86868b; margin-top:4px;">CTR = Clicks / Unique Views · RPV = Commission / Unique Views (cents) · Traffic = Unique Views change. Phase 1 RPV n/a (no commission tracked for those merchants in this table).</div>
@@ -928,7 +967,7 @@
 
 <!-- Chart 1: CTR by 4 cohorts -->
 <div class="card">
-  <h2>CTR by Cohort — Daily Trend</h2>
+  <h2>CTR by Cohort - Daily Trend</h2>
   <p class="subtitle" style="margin-bottom:12px">4 cohorts: Legacy Protected (control), 50/50 A/B, 33% Split, Phase 1. Red dashed line = Phase 1 rollout (Mar 18). Phase 2 data (Apr 1+) in next refresh.</p>
   <div class="chart-container"><canvas id="phase2CtrChart"></canvas></div>
 </div>
@@ -955,8 +994,8 @@
 </div>
 
 <div style="margin-top:12px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:12px; color:#636366; line-height:1.5;">
-  <strong>Cross-check:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">Tableau — New Platform Dashboard</a><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#ff9500;color:#fff;margin-left:8px">Minor discrepancy</span><br>
-  <strong>Data note:</strong> This data shows blended CTR (new + legacy traffic combined per merchant). The dev BQ table (<code style="font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code>) separates platform traffic — chase access for true A/B comparison.<br>
+  <strong>Cross-check:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff" target="_blank">Tableau - New Platform Dashboard</a><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#ff9500;color:#fff;margin-left:8px">Minor discrepancy</span><br>
+  <strong>Data note:</strong> This data shows blended CTR (new + legacy traffic combined per merchant). The dev BQ table (<code style="font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code>) separates platform traffic - chase access for true A/B comparison.<br>
   <strong>Decision point:</strong> Apr 8-9 after one full week of Phase 2 data. Soft monitoring until then.
 </div>
 
@@ -976,10 +1015,10 @@
       <option value="all">All buckets (3,524)</option>
       <option value="legacy">Legacy Protected (407)</option>
       <option value="5050">50/50 A/B (41)</option>
-      <option value="phase1_100">Phase 1 — 100% new (42)</option>
+      <option value="phase1_100">Phase 1 - 100% new (42)</option>
       <option value="33pct">33% new / 67% legacy (~3,033)</option>
     </select>
-    <span id="merchantCount" style="font-size:12px; color:#6e6e73; margin-left:8px;">—</span>
+    <span id="merchantCount" style="font-size:12px; color:#6e6e73; margin-left:8px;">-</span>
   </div>
   <div style="max-height:600px; overflow-y:auto; border:1px solid #e5e5ea; border-radius:8px;">
     <table id="merchantLookupTable" style="width:100%; border-collapse:collapse; font-size:13px;">
@@ -1010,21 +1049,21 @@
 <div id="tab-phase1" class="tab-panel">
 
 <div style="padding:12px 16px; background:#fff3e0; border-radius:8px; border:1px solid #ffe0b2; margin-bottom:16px; font-size:13px; color:#e65100; font-weight:600;">
-  Historical reference — charts below show Phase 1 data only (48 merchants, Mar 18–24).
+  Historical reference - charts below show Phase 1 data only (48 merchants, Mar 18-24).
 </div>
 
 <div class="stats">
   <div class="stat">
     <div class="label">All 48 Merchants Aggregate CTR (WoW)</div>
-    <div class="value" id="stat-aggregate">—</div>
+    <div class="value" id="stat-aggregate">-</div>
   </div>
   <div class="stat">
-    <div class="label">50/50 Split — Platform Test (WoW)</div>
-    <div class="value" id="stat-5050">—</div>
+    <div class="label">50/50 Split - Platform Test (WoW)</div>
+    <div class="value" id="stat-5050">-</div>
   </div>
   <div class="stat">
-    <div class="label">100% New — SEO Test (WoW)</div>
-    <div class="value" id="stat-100">—</div>
+    <div class="label">100% New - SEO Test (WoW)</div>
+    <div class="value" id="stat-100">-</div>
   </div>
   <div class="stat">
     <div class="label">Site-Wide US CTR (WoW)</div>
@@ -1032,7 +1071,7 @@
   </div>
   <div class="stat">
     <div class="label">Improved / Declined</div>
-    <div class="value neutral" id="stat-ratio">—</div>
+    <div class="value neutral" id="stat-ratio">-</div>
   </div>
 </div>
 
@@ -1043,19 +1082,19 @@
 </div>
 
 <div class="card">
-  <h2>Overall US CTR — Daily Trend</h2>
+  <h2>Overall US CTR - Daily Trend</h2>
   <p class="subtitle" style="margin-bottom:12px">All US merchants combined. Red dashed line = rollout date (Mar 18).</p>
   <div class="chart-container"><canvas id="headlineChart"></canvas></div>
 </div>
 
 <details class="card">
-  <summary><h2 style="display:inline">Per-Merchant WoW CTR Change</h2> <span style="font-size:12px;color:#86868b">— individual merchant comparisons (use with caution)</span></summary>
-  <p class="subtitle" style="margin:12px 0">Mar 18–24 vs Mar 11–17. Sorted by change. Note: individual before/after is not reliable without controlling for offer quality and seasonality.</p>
+  <summary><h2 style="display:inline">Per-Merchant WoW CTR Change</h2> <span style="font-size:12px;color:#86868b">- individual merchant comparisons (use with caution)</span></summary>
+  <p class="subtitle" style="margin:12px 0">Mar 18-24 vs Mar 11-17. Sorted by change. Note: individual before/after is not reliable without controlling for offer quality and seasonality.</p>
   <div class="chart-container tall"><canvas id="barChart"></canvas></div>
 </details>
 
 <details class="card">
-  <summary><h2 style="display:inline">Individual Merchant CTR — Daily Sparklines</h2></summary>
+  <summary><h2 style="display:inline">Individual Merchant CTR - Daily Sparklines</h2></summary>
   <div class="controls">
     <label>Search:</label>
     <input type="text" id="search" placeholder="Filter merchants...">
@@ -1097,7 +1136,7 @@
 <script>
 const DATA = {"updated":"2026-05-12T09:28:09","dates":["Mar 01","Mar 02","Mar 03","Mar 04","Mar 05","Mar 06","Mar 07","Mar 08","Mar 09","Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 01","Apr 02","Apr 03","Apr 04","Apr 05","Apr 06","Apr 07","Apr 08","Apr 09","Apr 10","Apr 11","Apr 12","Apr 13","Apr 14","Apr 15","Apr 16","Apr 17","Apr 18","Apr 19","Apr 20","Apr 21","Apr 22","Apr 23","Apr 24","Apr 25","Apr 26","Apr 27","Apr 28","Apr 29","Apr 30","May 01","May 02","May 03","May 04","May 05","May 06","May 07","May 08","May 09","May 10","May 11"],"headline":[36.867,37.961,38.966,38.624,39.543,40.973,40.356,40.378,40.369,39.476,38.385,39.045,39.0,39.171,39.352,39.472,41.634,41.702,41.742,41.598,42.522,42.232,42.994,40.052,36.622,36.604,37.225,37.268,38.324,38.921,38.852,36.111,36.324,35.185,35.355,36.263,34.907,34.54,33.938,32.584,35.059,35.836,35.672,36.675,38.547,43.436,44.982,44.619,44.526,45.849,45.059,43.723,42.091,43.232,43.276,43.61,43.078,44.236,44.852,43.09,44.021,44.288,44.007,44.704,45.682,44.222,43.807,46.617,50.289,50.312,52.537,49.1],"merchants":{"1-800 Contacts":[63.793,55.446,65.891,57.895,58.333,63.265,53.623,25.455,57.895,63.492,58.779,56.291,56.738,61.905,70.29,65.385,56.098,58.333,47.917,53.719,55.294,60.748,57.48,70.833,57.851,60.563,57.576,57.944,61.364,61.326,67.883,56.051,55.09,48.252,46.939,46.226,37.87,34.932,33.607,30.081,26.437,42.105,39.726,37.755,41.406,49.515,28.111,41.667,57.5,47.368,49.0,29.798,47.917,10.966,34.146,40.0,51.22,50.588,46.591,38.667,60.606,45.882,55.0,57.447,56.061,60.0,44.944,44.595,50.704,48.78,60.0,54.93],"Amazon":[44.08,43.516,43.272,45.146,44.199,45.179,43.954,43.217,42.149,42.188,42.217,43.649,41.899,42.032,42.076,42.692,43.108,44.516,41.991,43.304,43.254,40.975,42.919,42.964,38.964,38.32,39.481,38.642,40.812,38.531,38.254,38.774,40.645,39.493,42.688,42.159,40.402,39.991,42.31,41.181,39.26,40.176,39.311,40.233,40.348,47.48,47.925,52.517,47.155,52.16,50.959,53.56,52.13,50.291,53.748,55.539,56.038,53.843,54.131,55.04,50.209,54.815,53.536,53.5,53.712,52.853,48.147,51.374,54.778,54.966,55.138,55.227],"Avis":[72.993,65.094,69.753,72.414,72.281,70.064,77.914,61.383,67.674,74.212,71.507,63.944,63.492,68.905,69.108,64.451,52.126,70.557,63.081,70.408,64.495,38.728,59.534,65.757,63.409,61.741,66.837,65.147,67.568,66.176,67.337,58.065,61.328,49.841,48.649,56.911,49.541,52.5,56.676,48.276,47.737,60.476,44.845,53.6,57.371,65.902,72.0,67.34,66.284,73.494,69.176,69.048,58.663,66.99,72.148,73.684,70.046,75.758,69.307,71.176,68.71,67.474,64.493,68.727,64.263,67.267,70.635,64.921,67.491,72.642,69.725,75.08],"Booking.com":[57.055,60.515,62.5,64.679,55.738,58.519,57.576,48.364,55.459,66.48,57.255,53.571,60.177,59.794,58.291,61.811,61.667,64.207,64.189,60.687,66.094,63.942,62.963,60.581,58.73,64.115,60.0,54.733,58.216,56.444,63.478,54.701,50.228,45.902,47.032,46.23,45.254,48.469,47.12,46.125,50.559,56.089,51.004,51.955,45.735,55.67,62.195,63.265,65.46,66.667,59.472,63.527,65.63,61.478,64.35,64.47,65.385,62.842,58.389,67.723,66.206,67.211,65.604,61.13,63.624,63.973,60.679,61.477,68.203,69.291,60.606,68.632],"Budget":[67.105,68.901,73.016,52.727,67.599,70.951,70.725,67.209,65.412,65.668,70.443,69.289,71.171,71.753,71.383,71.053,68.267,73.259,69.018,75.714,71.378,39.006,58.974,66.594,63.47,64.191,62.772,65.559,65.584,68.883,69.139,59.524,51.156,50.323,51.119,54.704,54.221,55.556,60.484,52.094,54.438,57.5,52.852,50.588,48.113,66.841,66.761,70.161,65.132,71.569,66.842,69.193,72.727,71.883,70.122,70.588,70.447,71.139,69.841,70.913,68.112,68.912,68.421,63.978,71.875,74.048,71.359,74.304,71.564,67.46,71.34,72.644],"Dell":[57.143,53.125,43.243,47.273,45.652,43.182,56.667,60.465,40.0,56.098,57.692,63.415,63.415,58.929,63.83,51.111,74.0,66.071,71.698,71.698,66.038,80.0,84.314,53.125,55.814,48.649,51.852,75.0,58.333,44.118,61.765,60.0,53.659,40.625,33.333,48.0,58.824,37.209,41.176,17.544,57.895,53.333,27.586,48.0,57.778,61.905,57.576,67.568,54.839,62.5,53.659,64.103,64.103,59.524,64.865,30.0,41.176,47.222,71.429,66.667,68.293,62.5,68.75,64.706,56.522,41.304,55.882,65.0,50.0,51.613,45.161,51.064],"Disney+":[63.533,62.302,56.682,43.895,53.202,32.776,33.333,47.391,39.655,29.513,27.926,32.019,31.224,40.116,41.935,45.37,46.541,31.877,33.191,31.512,37.609,40.523,45.213,53.221,50.98,52.769,49.86,47.981,54.663,60.625,52.632,48.943,50.898,50.342,46.221,51.099,44.913,46.31,36.081,34.625,48.354,47.222,44.064,45.64,39.709,51.247,59.942,60.92,67.031,59.879,57.487,60.36,68.254,46.849,59.783,63.128,64.25,57.979,56.667,54.489,41.616,51.471,54.25,55.062,60.976,60.218,62.951,61.993,63.514,64.596,52.596,65.714],"eBay":[56.323,60.019,66.117,59.87,66.739,65.529,65.721,60.458,62.113,61.064,33.161,43.94,57.746,61.308,63.938,60.524,62.526,60.97,56.576,64.594,60.725,60.437,60.244,60.569,52.095,62.7,66.335,60.462,65.997,63.698,59.361,52.904,49.02,49.79,53.892,52.311,53.308,53.67,42.857,47.231,56.902,56.529,55.823,56.612,64.197,58.561,56.058,62.187,63.679,53.944,54.074,50.323,51.607,60.672,64.301,62.219,67.338,63.911,70.117,69.556,69.286,69.641,68.74,68.0,68.038,60.331,59.951,64.642,64.72,68.634,64.841,65.476],"Expedia":[46.555,53.906,48.969,40.8,46.094,54.157,38.415,38.178,48.875,38.626,38.566,44.068,43.655,50.301,48.276,59.783,54.657,53.827,40.315,40.94,53.964,53.151,51.792,47.222,49.367,49.138,50.0,48.669,46.014,58.033,56.331,35.66,43.257,44.191,31.068,34.483,38.92,35.345,39.623,37.127,42.297,42.16,34.155,42.718,38.61,39.304,44.104,44.697,41.561,38.312,46.135,46.171,40.789,41.463,44.225,42.806,44.606,50.513,51.235,29.509,48.042,53.903,51.057,44.837,46.17,41.253,44.444,42.271,43.018,33.716,50.625,53.589],"Hotels.com":[42.484,49.733,46.857,44.819,43.827,36.795,31.94,31.777,34.579,46.25,46.429,49.583,50.0,37.432,51.786,47.26,48.667,52.0,48.372,51.415,46.309,52.941,59.459,47.727,43.75,55.208,55.056,53.299,50.943,48.795,47.674,44.512,36.559,41.706,40.426,36.31,49.187,29.153,36.658,37.923,35.589,35.789,48.018,40.5,41.176,40.86,38.191,39.362,50.0,39.286,47.98,56.186,40.388,27.206,33.938,49.446,39.764,46.703,45.745,47.805,45.304,47.196,47.297,46.701,60.209,39.261,36.748,47.598,42.342,63.035,46.0,43.694],"LegalZoom":[40.0,50.0,58.14,56.897,40.909,68.421,37.5,33.333,61.111,18.182,17.273,52.632,53.488,66.667,54.167,56.25,60.606,23.469,57.143,64.516,62.857,80.556,64.815,56.667,47.222,47.368,52.632,59.459,75.0,77.778,62.745,71.795,57.143,66.667,45.833,63.333,46.377,35.714,50.0,46.667,46.667,54.348,59.091,48.333,51.351,85.714,78.378,8.365,51.613,60.526,64.444,70.886,66.667,41.304,49.02,57.692,50.0,46.512,62.222,84.314,80.556,65.217,75.0,78.571,68.75,64.516,42.105,29.565,40.0,48.276,53.846,76.667],"Lowe's":[60.0,53.333,61.765,53.077,60.294,52.5,58.282,60.39,58.333,52.941,52.326,54.45,58.621,56.949,55.439,55.191,53.889,62.376,53.889,62.162,59.483,58.555,59.624,64.22,52.713,55.789,61.905,51.37,53.767,56.537,51.799,46.996,37.959,38.058,39.216,44.59,40.588,39.279,38.356,30.333,39.183,38.117,41.294,38.406,56.333,60.907,66.489,66.277,66.451,63.759,52.848,52.632,50.43,49.306,51.464,52.431,51.775,50.628,44.669,31.64,47.979,53.091,53.822,52.104,54.826,55.039,51.624,45.152,53.019,57.081,56.33,55.083],"Macy's":[55.556,57.729,59.31,59.673,57.71,59.564,58.77,53.922,57.484,44.716,52.211,40.252,43.548,43.779,50.84,51.756,54.179,52.632,46.809,48.571,53.237,47.552,62.774,54.717,57.377,49.153,50.0,51.744,58.385,51.613,54.676,47.814,46.749,41.398,40.849,39.754,45.343,40.952,43.552,37.723,45.226,41.282,41.379,40.141,42.208,38.156,46.304,54.808,54.017,56.0,55.467,57.184,51.984,46.25,48.765,47.887,54.867,46.218,52.778,52.349,60.741,54.651,53.448,37.669,57.98,61.692,62.632,63.029,66.772,61.421,64.059,61.647],"Nike":[43.357,46.106,48.923,49.806,49.691,49.844,49.394,49.342,50.426,47.598,51.254,53.019,50.291,53.687,54.0,58.0,61.856,62.61,64.064,62.332,57.806,60.463,61.009,54.461,51.435,49.815,47.418,47.065,49.047,51.788,57.274,56.964,61.65,56.381,55.856,62.645,45.086,38.06,39.755,41.598,41.226,39.04,37.383,36.888,38.047,51.072,57.332,54.371,54.969,56.182,59.055,57.061,59.873,60.163,57.201,58.115,58.625,55.36,58.797,54.026,57.337,59.371,59.896,58.495,56.41,59.396,57.698,61.73,63.391,60.544,64.448,67.162],"Noom":[60.843,71.023,60.215,65.054,64.626,68.571,65.649,62.573,68.085,63.871,68.254,60.656,67.368,65.347,63.846,65.132,64.384,66.667,67.361,67.0,66.667,61.538,63.83,69.444,55.238,61.053,48.571,65.169,64.0,64.062,56.566,53.398,60.638,49.296,52.564,56.19,45.192,52.294,51.923,51.02,43.82,58.14,56.436,57.143,56.79,66.327,53.012,64.286,67.123,61.364,66.019,53.684,70.093,62.791,63.636,67.708,68.807,72.632,64.762,62.222,64.103,59.459,62.366,63.077,67.347,62.353,70.37,60.274,60.606,54.286,66.667,60.656],"Palmetto State Armory":[63.333,68.627,71.014,63.571,65.741,73.188,70.345,65.574,69.6,65.833,62.698,74.757,68.783,74.375,70.879,64.935,67.347,77.698,77.381,74.051,76.687,78.571,75.658,78.74,68.067,55.882,59.542,55.294,56.944,54.422,51.724,59.231,55.932,58.621,57.317,63.975,60.417,58.462,59.574,59.211,59.829,66.972,61.0,62.162,65.625,72.358,72.794,82.895,82.946,78.358,73.585,80.263,87.591,78.195,86.441,79.245,81.905,75.172,79.528,80.952,74.82,84.302,77.326,81.884,76.974,76.364,82.84,78.205,81.56,85.235,85.616,82.243],"Priceline":[59.95,52.219,63.344,54.869,58.647,46.027,58.252,44.755,57.143,54.952,61.582,56.364,56.175,65.169,55.34,56.992,65.385,60.699,54.004,59.84,57.925,61.131,60.616,59.942,53.452,61.754,60.584,59.459,64.684,56.748,62.162,53.377,59.819,54.737,38.624,46.615,50.909,48.703,48.921,39.698,42.857,55.135,50.0,49.519,56.122,59.91,55.263,58.228,56.477,65.366,58.547,65.152,59.744,60.822,61.782,60.806,61.468,63.529,63.694,66.09,66.429,71.429,71.111,65.744,67.568,66.981,34.312,68.121,70.256,66.372,55.634,70.098],"SHEIN":[57.798,56.781,60.42,47.204,57.301,60.296,61.899,48.768,55.143,60.241,58.582,56.414,57.686,60.105,59.14,60.14,62.259,58.48,61.522,53.206,56.861,58.275,57.86,60.275,61.663,66.204,61.387,61.009,59.078,59.93,60.172,54.968,54.572,52.559,54.387,54.878,54.863,48.449,45.141,50.264,53.708,47.204,53.525,53.028,56.056,59.643,68.25,67.485,68.38,64.379,65.755,65.462,66.763,67.86,66.266,67.105,66.253,64.815,60.399,62.773,69.114,70.108,61.349,69.644,65.987,64.865,64.04,62.337,68.498,69.933,71.457,69.541],"Shutterfly":[51.02,50.0,44.262,33.484,48.438,53.107,49.153,50.0,45.349,34.81,36.508,39.007,47.863,52.778,47.273,56.863,51.825,46.094,50.538,34.579,35.714,46.753,46.721,53.659,51.639,57.265,49.02,47.748,17.528,38.298,41.875,37.097,39.264,44.898,40.152,52.258,44.059,42.784,37.168,29.167,45.714,21.827,40.385,54.717,48.299,50.857,45.876,57.931,26.613,62.36,56.164,59.322,55.435,48.0,56.442,42.286,42.915,55.502,59.441,64.286,63.369,61.538,62.408,63.675,68.505,63.825,62.017,58.897,66.962,63.095,62.185,59.93],"Temu":[58.978,59.175,57.611,59.255,56.464,59.71,59.086,57.692,57.075,58.312,58.792,57.844,57.305,60.012,57.417,58.481,58.329,58.282,58.339,58.761,57.576,56.855,57.46,58.869,53.272,53.708,53.919,52.675,53.485,55.213,52.285,50.768,53.504,50.994,52.593,48.875,49.618,52.795,52.207,52.246,53.715,54.352,54.556,53.719,55.808,62.722,64.747,65.606,65.967,67.75,64.995,64.819,66.1,64.334,65.663,64.553,64.151,64.078,65.836,67.064,66.595,67.588,67.967,65.086,63.189,63.627,64.857,65.056,67.264,69.313,66.23,67.704],"The Home Depot":[26.928,39.642,44.743,43.393,30.318,46.624,42.456,37.325,41.48,43.392,43.351,31.369,45.267,37.993,46.833,46.893,46.06,46.435,44.714,37.668,46.004,40.594,45.525,39.226,42.424,42.857,36.375,34.298,41.351,44.544,50.252,55.619,48.612,38.945,41.698,41.498,34.459,31.66,27.898,26.108,31.407,30.942,38.926,36.946,43.796,56.312,31.485,29.161,31.448,43.593,51.572,46.502,44.335,42.873,46.988,30.476,23.089,36.523,52.16,40.92,61.98,47.405,55.054,65.936,54.181,45.042,55.224,42.942,49.55,50.477,54.231,53.747],"Tripadvisor":[59.846,60.849,65.487,51.795,60.119,64.088,62.778,63.415,64.607,56.897,54.118,60.39,65.068,62.275,60.221,57.862,54.375,50.676,56.25,57.391,68.79,58.042,54.225,54.688,52.8,55.725,58.14,61.475,58.065,52.137,57.237,29.126,21.519,26.582,17.333,25.0,18.75,10.112,20.312,10.0,8.824,31.132,34.286,29.358,29.771,48.515,51.639,46.0,45.714,56.303,53.279,56.25,50.427,56.757,61.818,50.877,61.983,63.248,57.143,56.667,66.087,58.407,64.894,68.345,66.429,64.035,61.905,66.154,73.636,67.213,73.438,59.701],"TurboTax":[48.311,46.224,54.261,51.085,47.088,45.11,42.145,44.092,46.271,50.877,47.6,46.4,34.414,41.667,41.156,46.307,50.825,41.232,45.77,49.176,46.429,47.563,45.946,38.6,41.309,41.313,37.67,43.581,45.364,49.111,48.771,36.435,42.043,35.059,35.91,40.78,42.41,41.21,36.879,40.082,42.817,35.532,30.34,41.311,39.921,47.174,54.133,51.22,52.143,55.49,54.492,56.905,58.795,65.914,64.317,58.249,66.892,60.314,64.108,61.68,62.573,55.396,46.154,51.572,54.444,56.805,52.318,55.833,52.128,50.0,50.667,58.416],"Udemy":[61.441,48.768,60.317,62.733,44.608,52.444,56.25,55.986,55.849,56.548,41.824,53.11,44.13,58.454,53.097,58.442,45.758,60.274,44.332,51.681,53.086,57.009,53.311,46.965,52.381,41.137,58.051,54.741,45.344,51.987,48.649,42.069,43.13,49.495,47.552,52.045,47.67,40.21,40.952,38.333,51.092,50.0,52.752,48.173,43.648,56.536,57.6,62.5,69.0,58.605,59.231,63.404,63.063,62.871,59.649,67.453,65.644,64.017,57.563,67.273,62.044,68.977,67.23,67.79,61.838,57.778,60.236,67.041,50.394,66.929,69.167,67.492],"Valvoline Instant Oil Change\u2120":[31.476,36.047,34.302,36.193,41.034,37.674,35.714,27.806,32.258,33.761,35.616,33.725,32.521,29.506,33.232,30.108,35.742,33.415,37.53,32.594,31.707,37.203,31.34,35.584,36.944,36.102,31.2,32.174,31.138,34.987,44.972,44.591,42.391,42.699,46.715,28.571,28.691,32.481,30.26,37.011,31.302,31.156,36.364,35.328,36.034,45.378,39.873,40.686,44.205,44.068,47.901,45.075,38.569,46.133,51.622,50.847,52.521,51.852,31.937,47.135,52.706,49.176,44.82,45.513,45.122,46.933,44.501,36.528,42.382,39.697,42.246,37.821],"Verizon Wireless":[17.857,36.538,37.179,31.25,22.703,24.786,26.891,32.632,24.211,29.153,30.435,39.759,40.87,30.189,34.694,41.333,42.857,42.857,47.253,45.055,42.667,44.33,40.449,44.928,33.75,38.462,39.13,39.048,38.554,47.222,37.363,36.585,31.148,32.653,33.663,29.091,27.679,31.667,41.071,34.722,29.412,45.205,31.343,38.889,30.657,40.945,40.909,41.322,43.511,53.704,47.748,45.902,43.537,46.212,46.259,40.594,40.506,41.284,45.714,69.474,30.286,53.846,53.571,50.0,43.357,57.143,37.551,46.111,37.5,46.0,53.608,43.511],"Viator":[59.031,53.56,29.44,33.996,37.745,51.351,56.42,52.226,35.911,33.239,34.531,55.725,38.0,48.936,58.703,46.809,40.625,39.08,34.359,44.92,51.269,55.157,56.881,60.0,44.839,59.434,58.651,39.442,56.229,62.079,55.37,41.971,32.843,34.135,39.623,41.848,42.083,35.945,34.857,28.068,43.218,29.275,49.379,39.453,45.641,43.936,37.275,46.483,33.333,36.926,63.838,43.457,35.821,44.417,42.342,39.381,41.036,35.814,29.734,27.677,35.797,30.085,44.828,42.424,50.943,42.817,40.104,55.794,61.692,65.455,46.684,43.165],"Walmart":[44.869,48.328,50.152,50.487,49.189,48.385,50.465,47.641,50.838,49.132,49.812,47.494,50.187,51.689,50.498,51.745,59.451,61.292,58.627,43.372,55.343,58.926,56.834,36.993,47.21,49.357,48.832,49.439,47.477,48.396,46.176,36.978,38.649,35.775,39.654,38.599,38.473,38.253,37.229,36.142,36.145,35.362,35.899,42.557,63.869,67.111,70.071,70.325,68.005,68.867,52.277,48.101,49.725,50.636,50.032,47.525,47.836,48.929,48.326,48.246,47.633,41.888,44.854,48.86,48.831,45.485,48.109,48.109,52.202,51.225,50.311,52.918],"Wayfair":[38.764,38.0,44.086,40.714,42.857,48.718,40.854,50.935,50.355,54.615,54.545,51.934,52.88,52.804,51.064,51.572,47.436,48.315,59.195,55.405,53.75,55.587,54.286,50.303,44.221,40.876,39.416,44.099,44.811,43.169,49.351,40.782,32.124,37.968,37.949,34.296,37.674,31.387,35.897,34.555,44.094,40.127,38.547,46.821,50.0,45.699,53.459,57.252,61.905,57.377,51.351,51.634,42.683,49.721,43.885,46.512,49.538,42.908,50.472,47.761,44.295,48.99,46.277,53.086,54.299,43.046,45.109,43.195,39.655,49.231,38.938,45.806],"Zoro":[47.619,40.541,50.0,46.939,51.667,49.057,27.778,40.0,74.118,70.192,43.011,55.0,58.824,14.286,42.857,51.351,45.614,27.007,50.685,62.5,42.857,38.235,43.75,35.185,39.175,53.125,54.0,23.333,45.0,48.0,58.904,28.788,44.898,43.75,19.048,47.059,37.778,43.478,36.957,43.59,59.259,50.0,66.667,46.154,13.793,58.333,46.667,58.824,70.0,60.0,61.29,8.898,18.033,48.0,39.286,37.5,45.0,33.333,37.5,55.882,69.697,63.636,46.154,68.75,59.524,48.78,41.176,53.846,57.576,50.0,40.0,62.963]},"rollout_index":17};
 
-// P1 status for each merchant — default all to "unknown"
+// P1 status for each merchant - default all to "unknown"
 // Values: "stable" | "degraded" | "no_code" | "improved" | "unknown"
 const P1_STATUS = {};
 Object.keys(DATA.merchants).forEach(name => { P1_STATUS[name] = "unknown"; });
@@ -1221,7 +1260,7 @@ new Chart(document.getElementById('headlineChart'), {
   plugins: [rolloutLine]
 });
 
-// 2. Group comparison chart — 100% vs 50/50 vs site-wide
+// 2. Group comparison chart - 100% vs 50/50 vs site-wide
 const avg100Daily = DATA.dates.map((_, i) => {
   const vals = m100.map(m => m.values[i]).filter(v => v > 0);
   return vals.length ? vals.reduce((a,b) => a+b, 0) / vals.length : null;
@@ -1250,7 +1289,7 @@ new Chart(document.getElementById('groupChart'), {
   plugins: [rolloutLine]
 });
 
-// 3. Bar chart — WoW change with allocation color coding and P1 border
+// 3. Bar chart - WoW change with allocation color coding and P1 border
 const barBorderColors = merchantStats.map(m => {
   if (m.p1_status !== 'unknown') return P1_COLORS[m.p1_status];
   if (m.allocation === '50/50') return COLORS.purple;
@@ -1393,33 +1432,33 @@ merchantStats.forEach(m => {
   </p>
   <div style="display:grid; grid-template-columns:120px 1fr; gap:0; font-size:13px;">
     <div style="padding:12px; font-weight:600; color:#86868b; border-bottom:1px solid #e5e5ea; background:#f5f5f7;">
-      <div>POC</div><div style="font-size:11px; font-weight:400;">Jan – Mar 14</div>
+      <div>POC</div><div style="font-size:11px; font-weight:400;">Jan - Mar 14</div>
     </div>
     <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6;">
-      <strong>4 merchants</strong> on 100% new platform. Validated core functionality, page rendering, and caching. Confirmed no critical issues — platform ready for broader testing.
+      <strong>4 merchants</strong> on 100% new platform. Validated core functionality, page rendering, and caching. Confirmed no critical issues - platform ready for broader testing.
     </div>
     <div style="padding:12px; font-weight:600; color:#86868b; border-bottom:1px solid #e5e5ea; background:#f5f5f7;">
       <div>Phase 1</div><div style="font-size:11px; font-weight:400;">Mar 18</div>
     </div>
     <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6;">
-      <strong>48 → 54 merchants</strong> — started with 48 (38 at 100% new, 10 at 50/50 split), expanded to 54. First controlled performance measurement. Results: aggregate CTR stable, site speed improvements confirmed. <span style="color:#34c759; font-weight:600;">&#x2713; Completed</span>
+      <strong>48 → 54 merchants</strong> - started with 48 (38 at 100% new, 10 at 50/50 split), expanded to 54. First controlled performance measurement. Results: aggregate CTR stable, site speed improvements confirmed. <span style="color:#34c759; font-weight:600;">&#x2713; Completed</span>
     </div>
     <div style="padding:12px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #e5e5ea; background:#d1f5d9;">
-      <div>Phase 2</div><div style="font-size:11px; font-weight:400;">Apr 1 — NOW</div>
+      <div>Phase 2</div><div style="font-size:11px; font-weight:400;">Apr 1 - NOW</div>
     </div>
     <div style="padding:12px; border-bottom:1px solid #e5e5ea; line-height:1.6; background:#f0faf3;">
-      <strong>3,524 merchants</strong> — expanded to all US merchants with conservative traffic allocation:<br>
+      <strong>3,524 merchants</strong> - expanded to all US merchants with conservative traffic allocation:<br>
       &bull; <strong>407 merchants</strong> kept on 100% legacy (high-revenue + SEO-critical protection)<br>
-      &bull; <strong>41 merchants</strong> on 50/50 A/B split (top revenue — controlled experiment)<br>
+      &bull; <strong>41 merchants</strong> on 50/50 A/B split (top revenue - controlled experiment)<br>
       &bull; <strong>~3,033 merchants</strong> receive 33% traffic on new platform, 67% on legacy<br>
       &bull; Phase 1 merchants continue unchanged<br>
-      <span style="color:#34c759; font-weight:600;">&#x2713; Deployed</span> — monitoring for CTR, revenue, and error signals.
+      <span style="color:#34c759; font-weight:600;">&#x2713; Deployed</span> - monitoring for CTR, revenue, and error signals.
     </div>
     <div style="padding:12px; font-weight:600; color:#86868b; background:#f5f5f7;">
       <div>Phase 3</div><div style="font-size:11px; font-weight:400;">TBD</div>
     </div>
     <div style="padding:12px; line-height:1.6; color:#636366;">
-      <strong>Increase traffic allocation</strong> — if Phase 2 signals are positive (CTR neutral or better, no revenue impact), increase the 33% split to 66% or 100% for the long-tail merchants. Gradually reduce the legacy-protected bucket. Decision based on 1–2 weeks of Phase 2 data.
+      <strong>Increase traffic allocation</strong> - if Phase 2 signals are positive (CTR neutral or better, no revenue impact), increase the 33% split to 66% or 100% for the long-tail merchants. Gradually reduce the legacy-protected bucket. Decision based on 1-2 weeks of Phase 2 data.
     </div>
   </div>
 </div>
@@ -1427,7 +1466,7 @@ merchantStats.forEach(m => {
 <!-- DMMM Measurement Framework (moved from Phase 1) -->
 <div class="card framework">
   <details>
-    <summary>Measurement Plan — DMMM Framework</summary>
+    <summary>Measurement Plan - DMMM Framework</summary>
     <div class="framework-grid">
       <div class="fk">Goal</div>
       <div class="fv">Validate new platform doesn't degrade CTR before scaling to 100% of US merchants</div>
@@ -1456,7 +1495,7 @@ merchantStats.forEach(m => {
     <div class="test-box primary">
       <h3>Platform Performance Test (50/50 Split)</h3>
       <div class="test-purpose">
-        Top 30 revenue merchants run 50/50 legacy vs new platform. This is the <strong>controlled experiment</strong> — same merchants, same time, same offers. Controls for seasonality and offer quality.
+        Top 30 revenue merchants run 50/50 legacy vs new platform. This is the <strong>controlled experiment</strong> - same merchants, same time, same offers. Controls for seasonality and offer quality.
       </div>
       <div class="test-note">This is the definitive signal for platform impact on CTR and revenue.</div>
     </div>
@@ -1471,7 +1510,7 @@ merchantStats.forEach(m => {
 </div>
 
 <div style="margin-top:16px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:13px; line-height:1.6;">
-  <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1–2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
+  <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1-2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
 </div>
 
 </div><!-- end tab-strategy -->
@@ -1550,7 +1589,7 @@ if (mSearchEl) mSearchEl.addEventListener('input', renderMerchantTable);
 if (mBucketEl) mBucketEl.addEventListener('change', renderMerchantTable);
 
 // ═══════════════════════════════════════
-// Phase 2 Monitoring Charts — 4 cohorts (BQ data)
+// Phase 2 Monitoring Charts - 4 cohorts (BQ data)
 // ═══════════════════════════════════════
 const P2_DATES = ["Mar 10", "Mar 11", "Mar 12", "Mar 13", "Mar 14", "Mar 15", "Mar 16", "Mar 17", "Mar 18", "Mar 19", "Mar 20", "Mar 21", "Mar 22", "Mar 23", "Mar 24", "Mar 25", "Mar 26", "Mar 27", "Mar 28", "Mar 29", "Mar 30", "Mar 31", "Apr 01", "Apr 02", "Apr 03", "Apr 04", "Apr 05", "Apr 06", "Apr 07", "Apr 08", "Apr 09", "Apr 10", "Apr 11", "Apr 12", "Apr 13", "Apr 14", "Apr 15", "Apr 16", "Apr 17", "Apr 18", "Apr 19", "Apr 20", "Apr 21", "Apr 22", "Apr 23", "Apr 24", "Apr 25", "Apr 26", "Apr 27", "Apr 28", "Apr 29", "Apr 30", "May 01", "May 02", "May 03", "May 04", "May 05", "May 06", "May 07", "May 08", "May 09", "May 10", "May 11"];
 const P2_CTR_LEGACY = [46.183, 45.695, 47.864, 49.489, 47.373, 49.194, 46.149, 49.257, 49.473, 50.861, 49.502, 51.681, 52.026, 52.476, 45.014, 42.106, 41.942, 43.04, 44.134, 45.764, 45.287, 44.422, 48.316, 48.827, 47.319, 46.364, 48.403, 44.28, 44.049, 43.579, 42.644, 44.075, 45.424, 44.964, 45.939, 46.485, 45.66, 44.365, 43.484, 42.535, 43.653, 45.607, 44.178, 38.629, 45.8, 44.285, 46.32, 46.381, 49.586, 49.611, 47.515, 47.777, 46.339, 43.998, 46.183, 47.64, 47.355, 45.648, 46.96, 49.352, 49.493, 53.414, 49.648];
@@ -1743,17 +1782,17 @@ function switchTab(tabId, btn) {
 
 <div style="margin-top:32px; padding:16px; font-size:11px; color:#86868b; border-top:1px solid #e5e5ea;">
   <strong>Last updated:</strong> 2026-05-12 09:29 CET (automated refresh) <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_cohorts: 2026-05-12</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">bq_headline: 2026-05-12</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_headline: missing</span><span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:#34c759;color:#fff;margin-left:4px">tableau_trends: missing</span> &middot; 
-  <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views — pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
+  <strong>Data notes:</strong> CTR = clicks / sessions (Tableau Management Dashboard). BI recommends switching to unique views - pending data refresh. Individual merchant before/after comparisons are uncontrolled and confounded by offer quality changes. Aggregate and 50/50 split comparisons are more reliable.<br><br>
   <strong>Data sources:</strong><br>
-  &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard — Summary</a><br>
-  &bull; <strong>BigQuery:</strong> <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code> — traffic splits, revenue, commission, transactions (auto-fed from merchant sheet)<br>
+  &bull; <strong>Tableau:</strong> <a href="https://analytics.groupondev.com/#/views/NewPlatformDashboard/Summary?:iid=1" style="color:#007aff">New Platform Dashboard - Summary</a><br>
+  &bull; <strong>BigQuery:</strong> <code style="background:#f5f5f7;padding:2px 6px;border-radius:3px;font-size:10px">prj-grp-coupons-dev-9996.test.New_platform_metrics</code> - traffic splits, revenue, commission, transactions (auto-fed from merchant sheet)<br>
   &bull; <strong>Legacy Protected (407):</strong> <a href="https://docs.google.com/spreadsheets/d/1bBGxGCvQHsNKQt7NqxMhv-8OHuUeg0uVF42uRNTAR1g/edit?gid=0#gid=0" style="color:#007aff">100% legacy merchants</a><br>
   &bull; <strong>Top 30 Revenue (50/50):</strong> <a href="https://docs.google.com/spreadsheets/d/14d0c7lhnDQAYz3abHvlfffetvI8uKJyn3tx12GWDGrw/edit?gid=0#gid=0" style="color:#007aff">50/50 A/B split merchants</a><br>
-  &bull; <strong>Phase 1 merchants:</strong> <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff">Original rollout merchants</a> — do not rename tab (BQ auto-feed)<br>
+  &bull; <strong>Phase 1 merchants:</strong> <a href="https://docs.google.com/spreadsheets/d/1EUZSKyzawtCryICkSNFUuEZTOmLCeZ_DqN8nXlgADpY/edit?gid=0#gid=0" style="color:#007aff">Original rollout merchants</a> - do not rename tab (BQ auto-feed)<br>
   &bull; <strong>Merchant backend list:</strong> <a href="https://docs.google.com/spreadsheets/d/11SY19MKq9MFwqph48THCQYYDLU_Occpeq91uNIdFi10/edit?usp=sharing" style="color:#007aff">All 3,524 Supported US Merchants</a> (Jakub, Mar 31)<br>
   <br>
   <strong>Phase 2 note:</strong> Charts in Phase 1 section show historical data only (48 merchants, through Mar 24). Phase 2 data (3,524 merchants) will be available from BigQuery and Tableau once data pipeline stabilizes post-deployment. BI database switchover this week may cause intermittent dashboard failures.<br><br>
-  <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana — Coupons New Platform</a>
+  <strong>Project:</strong> <a href="https://app.asana.com/1/8437193015852/project/1211607081597177" style="color:#007aff">Asana - Coupons New Platform</a>
 </div>
 
 
@@ -1864,7 +1903,7 @@ function switchTab(tabId, btn) {
 <!-- END TAB-AI -->
 <!-- BEGIN REFRESH JS -->
 <script>
-async function quickRefresh(){const b=document.getElementById('btnQuick');b.disabled=true;b.textContent='Refreshing...';try{const r=await fetch('http://localhost:8847/api/refresh-rollout');if(r.ok)setTimeout(()=>location.reload(),2000);else alert('Quick refresh failed — is dashboard server running?')}catch(e){alert('Cannot reach localhost:8847')}finally{b.disabled=false;b.textContent='⚡ Quick Refresh'}}
+async function quickRefresh(){const b=document.getElementById('btnQuick');b.disabled=true;b.textContent='Refreshing...';try{const r=await fetch('http://localhost:8847/api/refresh-rollout');if(r.ok)setTimeout(()=>location.reload(),2000);else alert('Quick refresh failed - is dashboard server running?')}catch(e){alert('Cannot reach localhost:8847')}finally{b.disabled=false;b.textContent='⚡ Quick Refresh'}}
 async function fullRefresh(){const b=document.getElementById('btnFull');b.disabled=true;b.textContent='Running pipeline...';document.getElementById('refreshStatus').textContent='Full refresh ~2-3 min...';try{const r=await fetch('http://localhost:8847/api/refresh-rollout-full');if(r.ok)setTimeout(()=>location.reload(),5000);else alert('Full refresh failed')}catch(e){alert('Cannot reach localhost:8847')}finally{b.disabled=false;b.textContent='🤖 Full Refresh (AI)'}}
 </script>
 <!-- END REFRESH JS -->
