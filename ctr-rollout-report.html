@@ -241,11 +241,11 @@
 
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">Bot-routing skew (the real cause)</span>
-        <span style="background:#ff9500;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIX DEPLOYING 12 MAY AM</span>
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">Bot-routing skew - resolved 12 May</span>
+        <span style="background:#34c759;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIX DEPLOYED 12 MAY</span>
       </div>
       <p style="font-size:12px;color:#424245;line-height:1.5;margin-bottom:0">
-        Richard investigated in ELK 11 May and found the <strong>50/50 user split itself is correct</strong> - the apparent 75/25 routing skew came from <strong>all bot traffic routing to control (new platform)</strong>, inflating its <strong>pageview count</strong>. Bots typically don't click (Apr 27 PostHog finding: scanner traffic had 0 clicks across 35s sessions) so the mechanism <strong>depresses</strong> new-platform CTR rather than inflating it - which means the <strong>current +5.0pp lift is likely a lower bound</strong>, and removing bots should hold or grow it, not erase it. Richard also flagged a separate "more requests per user on new" issue - second fix identified. <strong>Deploying both fixes 12 May AM.</strong> Cloudflare cache bypass on May 8 (PostHog <code>$pageview</code> tripled 11k → 30k/day) was helpful but didn't clean the data on its own. <strong>Per Richard: pre-fix data is NOT clean - the "≥ 2 weeks of clean data" clock resets when the bot-routing fix lands.</strong>
+        Richard confirmed in 12 May standup: root cause was <strong>Cloudflare serving cached responses which couldn't set the bcookie</strong>, so unbucketed traffic landed in routing-service and got skewed. Fixes deployed: (1) Cloudflare team disabled caching on coupons paths, (2) bcookie auto-generation stopped on coupons-ui side. <strong>Today shows rough parity between coupons-ui and coupons-itier</strong> (some merchants slight new-platform lean, others legacy lean - within expected noise). Bots typically don't click (Apr 27 PostHog finding: scanner traffic had 0 clicks across 35s sessions), so all-bots-on-new <strong>depresses</strong> new-platform CTR rather than inflating it - the current +5.0pp lift is likely a lower bound. Separate work in flight: Richard adding a <strong>bot flag to GA4</strong> rather than blocking bots, so we have better signal on `experiment_impression`. <strong>Clean data clock starts today, 12 May.</strong> Pre-12-May data should be treated as suspect.
       </p>
     </div>
 
@@ -391,9 +391,9 @@
 <script>
   (function(){
     var GATES = [
-      {id:'g1', label:"Richard's bot-routing fix deployed AND verified clean", meta:'fix deploying 12 May AM - per Richard, pre-fix data (incl. post-Cloudflare May 8) is NOT clean'},
-      {id:'g2', label:'≥ 2 weeks of clean data after the bot-routing fix', meta:'target: 26 May (assuming fix lands 12 May)'},
-      {id:'g3', label:'BQ <code>traffic_allocation</code> cohort labeling fix landed', meta:'reassigned to Sunny Bangh, due 18 May, <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">task</a>'},
+      {id:'g1', label:"Cloudflare caching + bcookie fixes deployed (12 May)", meta:'Richard confirmed in standup: parity restored, clean-data clock starts today'},
+      {id:'g2', label:'≥ 2 weeks of clean data after the 12 May fix', meta:'target: 26 May; verify with PostHog daily click parity in the meantime'},
+      {id:'g3', label:'BQ <code>traffic_allocation</code> cohort labeling fix landed', meta:'on Sunny Bangh, due 18 May, <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">task</a>'},
       {id:'g4', label:'AB test framework signs off on significance/power', meta:'Mark Brinded back from OOO 18 May; earliest meaningful read week of 19 May'},
       {id:'g5', label:'≥7 consecutive days ≥+5pp on 33/66 long-tail post-fix', meta:'pre-fix 18/25 days won is suggestive but requires re-validation on clean data'}
     ];
@@ -750,7 +750,7 @@
 
 <!-- BEGIN ACTION PLAN -->
 <div class="card" id="action-plan" style="border-left:4px solid #1d1d1f;margin-bottom:20px">
-  <h2 style="margin-bottom:8px">Action plan <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">updated 12 May 2026 after Richard's bot-routing finding + Sunny picking up BQ fix</span></h2>
+  <h2 style="margin-bottom:8px">Action plan <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">updated 12 May 2026 after standup: Cloudflare fix deployed, Ian handed over new templates, scope trimmed</span></h2>
 
   <table style="width:100%;border-collapse:collapse;font-size:13px">
     <thead>
@@ -777,39 +777,88 @@
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Due 18 May</td>
       </tr>
 
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Bot-routing fix verification</strong> - Richard found 11 May that the 50/50 split itself is correct, but <strong>all bot traffic was routing to control (new version)</strong>, driving the 75/25 routing skew. Since bots don't click, this <strong>depresses</strong> new-platform CTR rather than inflating it - the current +5.0pp lift is likely a lower bound. Fix deploying 12 May AM. <strong>Per Richard: data pre-fix is NOT clean - Ramp Readiness clock resets when this lands.</strong> <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">Source thread</a>.</td>
+      <tr style="background:#f0fff8">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>Cloudflare caching fix + bcookie generation</s> - Richard confirmed 12 May: Cloudflare disabled caching on coupons paths, bcookie auto-generation stopped on coupons-ui. Parity between coupons-ui and coupons-itier restored. <strong>Clean-data clock starts today.</strong></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Richard Downes</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May AM</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May</td>
       </tr>
 
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>AB test readout</strong> - Mark confirmed 11 May that nothing is readable until the routing fix lands. Once Richard's fix is verified, the clean test starts from that day. Mark back from OOO 18 May; earliest meaningful read is the week of 19 May. <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">Asana</a>.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>GA4 bot flag for experiment_impression</strong> - Richard adding a flag to GA4 to mark bot traffic instead of blocking bots, gives better attribution signal. Carries the Cloudflare-fix story forward to clean experiment readouts.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Richard Downes</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>AB test readout</strong> - Mark back from OOO 18 May; earliest meaningful read is the week of 19 May. With Cloudflare fix landed today, the clean window starts to accumulate from 12 May. <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">Asana</a>.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Mark Brinded</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Wk of 19 May</td>
       </tr>
 
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>PostHog deep-dive on Costco</strong> - biggest absolute-impact merchant. Filter to merchant URL on new platform, watch 10 recordings, identify any UX regressions.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Merchant template - close out remaining scope</strong> (per 12 May standup): Header GraphQL items - <em>Bell notification + User account menu LIVE behind experiment, Cart menu in flight (~1.5 days, Richard)</em>; Groupon Deals dropdown - <em>multi-layer URL fix ready, Ivar releases today/tomorrow</em>; Seasonal Banner - <em>FE ongoing (Ivar), waiting on Akshay BE</em>; Conquest Banner - <em>FE ongoing (Ivar), needs Control Cloud conquest-advert-type enabled for Groupon (~2-3h Ivar)</em>. <strong>Skipped from scope:</strong> Premium Offer Highlight variants (Hot/Freshly/Conquest), Genie Offer Tile, Related Offers, Related Blogs.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Ivar + Richard</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
 
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Trust Signals - finalize logic with Martin + Jakub</strong>. Akshay confirmed 12 May: Redis migration done, now working on Trust Signals partial-update path so important signals can be updated more often. Needs the TS logic decision from Martin + Jakub first.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin + Jakub</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>James to scope Phase 4 timeline</strong> - James walked the team through the new templates in 12 May standup (homepage, category, seasonal, all-brands + index pages). Asked to do a short analysis and propose a delivery timeline for stakeholders.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">James Thurman</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>reCAPTCHA SEO check on User Login</strong> - Minas flagged 12 May: Google reCAPTCHA loads on every page; risk to SEO/CWV if synchronous. Need to confirm it's lazy-loaded; if synchronous, switch to a different approach.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Richard / Minas</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>PostHog deep-dive on Costco</strong> - biggest absolute-impact merchant. Filter to merchant URL on new platform, watch 10 recordings, identify any UX regressions.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Next week</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Travel cluster investigation</strong> - Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component (if any).</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Next week</td>
       </tr>
 
       <tr style="background:#f0fff8">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>Ask Richard about the Apr 17→18 routing drift</s> - answered 11 May: 50/50 user-split is correct in ELK; the 63/37 → 59/41 visible skew was caused by all bot traffic routing to control (new). Same root cause as the broader investigation above.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>Bell notification + User account menu (GraphQL)</s> - Richard confirmed 12 May: both DONE, live on production behind experiment.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Richard Downes</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May</td>
+      </tr>
+
+      <tr style="background:#f0fff8">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>New Redis migration</s> - Akshay confirmed 12 May. Unblocks atomic-update path for Trust Signals.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Akshay Katoch</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May</td>
+      </tr>
+
+      <tr style="background:#f0fff8">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>Ask Richard about the Apr 17→18 routing drift</s> - answered 11 May / confirmed 12 May standup. Same root cause as the broader cache investigation (now resolved).</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">11 May</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">11-12 May</td>
       </tr>
 
       <tr>
@@ -821,7 +870,7 @@
 
       <tr style="background:#f0faf3">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#1a7f37">HOLD</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend ramp from 33/66 → 50/50 (or higher) until:</strong> (a) Richard's bot-routing fix is deployed AND verified clean, (b) ≥7 consecutive days clean data post-fix on 33/66 long-tail showing ≥+5pp, (c) Sunny's BQ schema fix lands, AND (d) Mark signs off on statistical significance via the AB test framework. The Apr 16 → May 10 +5.0pp lift was suggestive but pre-fix - has to be re-validated on post-fix data.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend ramp from 33/66 → 50/50 (or higher) until:</strong> (a) ≥7 consecutive days clean data post-12-May on 33/66 long-tail showing ≥+5pp, (b) Sunny's BQ schema fix lands, AND (c) Mark signs off on statistical significance via the AB test framework. Cloudflare fix landed 12 May (Richard); the +5.0pp lift in Apr 16 → May 10 was pre-fix and needs re-validation on post-12-May data.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Decision: Adam</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">≥7 clean days post-fix</td>
       </tr>
