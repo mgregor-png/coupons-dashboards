@@ -16,7 +16,9 @@ or wire up via GH Actions secret in the daily refresh workflow.
 
 import json
 import os
+import ssl
 import sys
+import urllib.parse
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone, timedelta
@@ -27,17 +29,41 @@ PROJECT_ID = 102186  # Coupons
 REPO_ROOT = Path(__file__).parent.parent
 VALIDATION_FILE = REPO_ROOT / "posthog-validation.json"
 DAILY_FILE = REPO_ROOT / "posthog-daily.json"
+FLAGGED_FILE = REPO_ROOT / "flagged-merchants.json"
 
-# The merchants currently flagged by the BQ anomaly rule. In a fully-
-# automated pipeline these would be passed in from refresh-data.py.
-# For now the list is curated here and synced manually when the rule
-# fires on a new merchant.
-FLAGGED_MERCHANTS = [
+# Build SSL context with certifi if available (macOS Python often missing system certs)
+try:
+    import certifi
+    _SSL_CTX = ssl.create_default_context(cafile=certifi.where())
+except ImportError:
+    _SSL_CTX = ssl.create_default_context()
+
+# Fallback list used only if flagged-merchants.json is missing or empty.
+# The normal pipeline is: refresh-data.py computes flagged-merchants.json
+# from the BQ anomaly rule -> refresh-posthog.py reads it.
+FALLBACK_FLAGGED = [
     {"name": "Athleta",      "cc_merchant_id": 114950, "slug": "athleta",      "bq_new_ctr_pct": 4.3,  "bq_old_ctr_pct": 42.6, "bq_worst_day": "May 9"},
     {"name": "Oakley",       "cc_merchant_id": 144774, "slug": "oakley",       "bq_new_ctr_pct": 9.6,  "bq_old_ctr_pct": 55.7, "bq_worst_day": "May 7"},
     {"name": "Build-A-Bear", "cc_merchant_id": 134954, "slug": "build-a-bear", "bq_new_ctr_pct": 12.8, "bq_old_ctr_pct": 43.2, "bq_worst_day": "May 6"},
     {"name": "Levi's",       "cc_merchant_id": 115806, "slug": "levis",        "bq_new_ctr_pct": 13.9, "bq_old_ctr_pct": 45.2, "bq_worst_day": "May 10"},
 ]
+
+
+def load_flagged_merchants():
+    """Load the chronic-flagged merchant list written by refresh-data.py."""
+    if FLAGGED_FILE.exists():
+        try:
+            payload = json.loads(FLAGGED_FILE.read_text())
+            merchants = payload.get("merchants", [])
+            if merchants:
+                print(f"Loaded {len(merchants)} flagged merchants from {FLAGGED_FILE.name}")
+                return merchants
+            print(f"  {FLAGGED_FILE.name} exists but has 0 merchants - falling back to hardcoded list")
+        except Exception as e:
+            print(f"  Failed to read {FLAGGED_FILE.name}: {e} - falling back", file=sys.stderr)
+    else:
+        print(f"  {FLAGGED_FILE.name} missing - falling back to hardcoded list")
+    return FALLBACK_FLAGGED
 
 
 def hogql(query: str, api_key: str):
@@ -50,7 +76,7 @@ def hogql(query: str, api_key: str):
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=60) as resp:
+    with urllib.request.urlopen(req, timeout=60, context=_SSL_CTX) as resp:
         return json.loads(resp.read())
 
 
@@ -59,22 +85,29 @@ def merchant_validation(api_key: str):
     end = datetime.now(timezone.utc).date()
     start = end - timedelta(days=7)
 
+    def esc(s):
+        # HogQL single-quote string escape: double the quote
+        return s.replace("'", "''")
+
+    merchants = load_flagged_merchants()
     results = []
-    for m in FLAGGED_MERCHANTS:
+    for m in merchants:
+        name_lc = esc(m["name"].lower())
+        slug    = esc(m["slug"])
         # Clicks: outbound_click with merchant_name (case-insensitive)
         clicks_q = f"""
             SELECT count() FROM events
             WHERE event = 'outbound_click'
               AND properties.countryCode = 'US'
               AND properties.x_service = 'coupons-ui'
-              AND lower(properties.merchant_name) = '{m["name"].lower()}'
+              AND lower(properties.merchant_name) = '{name_lc}'
               AND timestamp >= '{start}' AND timestamp < '{end}'
         """
         # Pageviews on the merchant's coupon page
         pv_q = f"""
             SELECT count() FROM events
             WHERE event = '$pageview'
-              AND properties.$pathname = '/coupons/{m["slug"]}'
+              AND properties.$pathname = '/coupons/{slug}'
               AND timestamp >= '{start}' AND timestamp < '{end}'
         """
         try:
@@ -87,12 +120,33 @@ def merchant_validation(api_key: str):
         ctr = (clicks / views * 100) if views > 0 else 0.0
         verdict, label, color, notes = classify(clicks, ctr)
 
+        # PostHog deep-links - filtered to last 7 days, this merchant only
+        # Filter format: PostHog accepts a `properties` JSON URL parameter for event filtering.
+        merchant_filter = urllib.parse.quote(json.dumps([
+            {"key": "merchant_name", "value": [m["name"]], "operator": "exact", "type": "event"}
+        ]))
+        pathname_filter = urllib.parse.quote(json.dumps([
+            {"key": "$pathname", "value": [f'/coupons/{m["slug"]}'], "operator": "exact", "type": "event"}
+        ]))
+        # Session replay search filtered to visitors of this merchant's coupon page
+        replay_url = (
+            f"{POSTHOG_HOST}/project/{PROJECT_ID}/replay/home"
+            f"?date_from=-7d&filters={pathname_filter}"
+        )
+        # Events page filtered to outbound_click for this merchant
+        events_url = (
+            f"{POSTHOG_HOST}/project/{PROJECT_ID}/events"
+            f"?properties={merchant_filter}"
+        )
+
         results.append({
             "name": m["name"],
             "cc_merchant_id": m["cc_merchant_id"],
-            "bq_new_ctr_pct": m["bq_new_ctr_pct"],
-            "bq_old_ctr_pct": m["bq_old_ctr_pct"],
-            "bq_worst_day": m["bq_worst_day"],
+            "bq_new_ctr_pct": m.get("bq_new_ctr_pct"),
+            "bq_old_ctr_pct": m.get("bq_old_ctr_pct"),
+            "bq_worst_day": m.get("bq_worst_day"),
+            "cohort": m.get("cohort"),
+            "days_flagged": m.get("days_flagged"),
             "posthog_clicks_7d": clicks,
             "posthog_pageviews_7d": views,
             "posthog_ctr_pct": round(ctr, 1),
@@ -100,6 +154,8 @@ def merchant_validation(api_key: str):
             "verdict_label": label,
             "verdict_color": color,
             "notes": notes,
+            "posthog_replay_url": replay_url,
+            "posthog_events_url": events_url,
         })
         print(f"  {m['name']:15s} clicks={clicks:>5} views={views:>5} CTR={ctr:>5.1f}% verdict={verdict}")
 
@@ -122,15 +178,19 @@ def merchant_validation(api_key: str):
 
 
 def classify(clicks, ctr):
-    if clicks < 15:
+    """Thresholds aligned with the BQ auto-rule (which fires at new CTR < 15%)
+    and the Apr 27 cohort-wide PostHog cross-check (which found 45-79%
+    direct-traffic CTR was the FALSE_POSITIVE band).
+    """
+    if clicks < 30:
         return ("LOW_VOLUME", f"Low volume - inconclusive", "#86868b",
-                f"{clicks} clicks in 7 days is below the validation threshold. Re-evaluate after more data accumulates.")
-    if ctr >= 70:
+                f"{clicks} clicks in 7 days is below the validation threshold (30+ needed). Often a sign the Cloudflare cache was still active for this merchant pre-May 8 - re-evaluate after more clean data accumulates.")
+    if ctr >= 50:
         return ("FALSE_POSITIVE", f"False positive - PostHog {ctr:.0f}% CTR", "#34c759",
-                f"PostHog shows {clicks} clicks on healthy CTR. Real users are clicking. BQ low CTR is the email/scanner artifact. Do not file a ticket.")
-    if ctr >= 30:
+                f"PostHog shows {clicks} clicks at {ctr:.1f}% CTR - real users are engaging. BQ low CTR is the email/scanner artifact. Do not file a ticket.")
+    if ctr >= 15:
         return ("INCONCLUSIVE", f"Inconclusive - {ctr:.1f}% CTR", "#ff9500",
-                f"PostHog CTR is {ctr:.1f}% on {clicks} clicks - higher than BQ but still below baseline. Watch for another week before filing.")
+                f"PostHog CTR is {ctr:.1f}% on {clicks} clicks - higher than BQ but still below the ~50% baseline. Watch for another week before filing.")
     return ("REAL_ISSUE", f"Real issue - {ctr:.1f}% CTR", "#cf222e",
             f"PostHog CTR is {ctr:.1f}% on {clicks} clicks. Real users on new platform, real low engagement. File Jira, tag Richard, link PostHog session replays.")
 

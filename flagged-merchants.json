@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-05-12 09:11 UTC",
+  "window_start": "2026-05-05",
+  "window_end": "2026-05-12",
+  "rule": {
+    "new_ctr_max": 15.0,
+    "old_ctr_min": 30.0,
+    "new_uv_min": 100,
+    "window_days": 7,
+    "chronic_days_min": 1
+  },
+  "count": 4,
+  "merchants": [
+    {
+      "name": "Athleta",
+      "cc_merchant_id": 114950,
+      "slug": "athleta",
+      "cohort": "33/66",
+      "bq_new_ctr_pct": 4.5,
+      "bq_old_ctr_pct": 44.4,
+      "bq_new_uv": 156,
+      "bq_old_uv": 187,
+      "bq_worst_day": "May 9",
+      "days_flagged": 1,
+      "pattern": "1 days flagged"
+    },
+    {
+      "name": "Oakley",
+      "cc_merchant_id": 144774,
+      "slug": "oakley",
+      "cohort": "33/66",
+      "bq_new_ctr_pct": 9.8,
+      "bq_old_ctr_pct": 55.7,
+      "bq_new_uv": 102,
+      "bq_old_uv": 61,
+      "bq_worst_day": "May 7",
+      "days_flagged": 1,
+      "pattern": "1 days flagged"
+    },
+    {
+      "name": "Build-A-Bear",
+      "cc_merchant_id": 134954,
+      "slug": "build-a-bear",
+      "cohort": "33/66",
+      "bq_new_ctr_pct": 11.4,
+      "bq_old_ctr_pct": 42.5,
+      "bq_new_uv": 114,
+      "bq_old_uv": 80,
+      "bq_worst_day": "May 6",
+      "days_flagged": 1,
+      "pattern": "1 days flagged"
+    },
+    {
+      "name": "Levi's",
+      "cc_merchant_id": 115806,
+      "slug": "levis",
+      "cohort": "33/66",
+      "bq_new_ctr_pct": 13.2,
+      "bq_old_ctr_pct": 44.9,
+      "bq_new_uv": 205,
+      "bq_old_uv": 274,
+      "bq_worst_day": "May 10",
+      "days_flagged": 1,
+      "pattern": "1 days flagged"
+    }
+  ]
+}

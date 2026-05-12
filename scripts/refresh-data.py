@@ -13,6 +13,17 @@ BQ_PROJECT = "prj-grp-coupons-prod-8892"
 MERCHANTS_FILE = REPO_ROOT / "merchants.json"
 DATA_FILE = REPO_ROOT / "phase2-data.json"
 DASHBOARD_FILE = REPO_ROOT / "ctr-rollout-report.html"
+FLAGGED_FILE = REPO_ROOT / "flagged-merchants.json"
+
+# Auto-flag rule: per Apr 27 BI guidance + Apr 27 PostHog cross-check finding
+# Triggers a merchant for PostHog verification, NOT an immediate Jira ticket
+FLAG_RULE = {
+    "new_ctr_max": 15.0,    # New platform CTR below this
+    "old_ctr_min": 30.0,    # ...and legacy CTR above this
+    "new_uv_min": 100,      # ...and enough new-platform UV to be statistically meaningful
+    "window_days": 7,
+    "chronic_days_min": 1,  # Any day triggering within the window is enough to surface the merchant for PostHog validation
+}
 
 
 def run_bq_query(query):
@@ -37,7 +48,7 @@ def run_bq_query(query):
 def load_merchant_buckets():
     """Load cc_merchant_id -> bucket mapping live from rep.new_platform_dashboard.
 
-    Authoritative source — same table Tableau uses. Merchants not present in
+    Authoritative source - same table Tableau uses. Merchants not present in
     new_platform_dashboard are the legacy-protected cohort (~407 merchants).
     """
     print("Loading live bucket mapping from rep.new_platform_dashboard...")
@@ -212,6 +223,101 @@ def update_dashboard_js(data):
     return True
 
 
+def compute_flagged_merchants():
+    """Find merchants triggering the chronic-anomaly rule over the last 7 days.
+
+    Writes a list of {name, cc_merchant_id, slug, bq_new_ctr_pct, bq_old_ctr_pct,
+    bq_worst_day, days_flagged, cohort} so refresh-posthog.py can pick it up
+    and run validation queries without a hardcoded list.
+    """
+    from datetime import datetime, timezone, timedelta
+    end = datetime.now(timezone.utc).date()
+    start = end - timedelta(days=FLAG_RULE['window_days'])
+    print(f"\nComputing flagged merchants ({start} to {end})...")
+
+    # Per-merchant daily CTR for the window. new_platform_dashboard already has
+    # platform=new vs platform=old breakdown per channel - aggregate across channels.
+    raw = run_bq_query(f"""
+        WITH per_merch_day AS (
+          SELECT
+            cc_merchant_id,
+            full_date AS transaction_date,
+            ANY_VALUE(merchant_name) AS merchant_name,
+            ANY_VALUE(traffic_allocation) AS traffic_allocation,
+            SUM(CASE WHEN platform = 'new' THEN total_clicks ELSE 0 END) AS new_clicks,
+            SUM(CASE WHEN platform = 'new' THEN unique_views ELSE 0 END) AS new_uv,
+            SUM(CASE WHEN platform = 'old' THEN total_clicks ELSE 0 END) AS old_clicks,
+            SUM(CASE WHEN platform = 'old' THEN unique_views ELSE 0 END) AS old_uv
+          FROM `prj-grp-coupons-prod-8892.rep.new_platform_dashboard`
+          WHERE country_short = 'US' AND domain = 'Groupon'
+            AND full_date BETWEEN "{start}" AND "{end}"
+          GROUP BY cc_merchant_id, full_date
+        )
+        SELECT
+          cc_merchant_id, merchant_name, traffic_allocation,
+          transaction_date,
+          SAFE_DIVIDE(new_clicks, new_uv) * 100 AS new_ctr_pct,
+          SAFE_DIVIDE(old_clicks, old_uv) * 100 AS old_ctr_pct,
+          new_uv, old_uv
+        FROM per_merch_day
+        WHERE new_uv >= {FLAG_RULE['new_uv_min']}
+          AND SAFE_DIVIDE(new_clicks, new_uv) * 100 < {FLAG_RULE['new_ctr_max']}
+          AND SAFE_DIVIDE(old_clicks, old_uv) * 100 > {FLAG_RULE['old_ctr_min']}
+        ORDER BY cc_merchant_id, transaction_date
+    """)
+
+    # Group by merchant, count flagged days, pick worst
+    by_merch = defaultdict(list)
+    for r in raw:
+        by_merch[int(r['cc_merchant_id'])].append(r)
+
+    flagged = []
+    for mid, rows in by_merch.items():
+        if len(rows) < FLAG_RULE['chronic_days_min']:
+            continue  # not chronic
+        # Worst day = lowest new_ctr_pct
+        worst = min(rows, key=lambda x: float(x['new_ctr_pct']))
+        name = worst['merchant_name']
+        # Slug: strip apostrophes first so "Levi's" -> "levis", then collapse rest to hyphens
+        slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"['’]", "", name.lower())).strip("-")
+        # date in BQ is YYYY-MM-DD - format like "May 9" to match dashboard convention
+        date_parts = worst['transaction_date'].split('-')
+        month_name = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][int(date_parts[1])]
+        worst_day = f"{month_name} {int(date_parts[2])}"
+
+        cohort_map = {'50/50': '50/50', '33/67': '33/66', '100': '100%'}
+        cohort = cohort_map.get(worst['traffic_allocation'], '33/66')
+
+        flagged.append({
+            "name": name,
+            "cc_merchant_id": mid,
+            "slug": slug,
+            "cohort": cohort,
+            "bq_new_ctr_pct": round(float(worst['new_ctr_pct']), 1),
+            "bq_old_ctr_pct": round(float(worst['old_ctr_pct']), 1),
+            "bq_new_uv": int(worst['new_uv']),
+            "bq_old_uv": int(worst['old_uv']),
+            "bq_worst_day": worst_day,
+            "days_flagged": len(rows),
+            "pattern": "Chronic - most days broken" if len(rows) >= 5 else f"{len(rows)} days flagged"
+        })
+
+    flagged.sort(key=lambda m: m['bq_new_ctr_pct'])
+    payload = {
+        "generated_at": datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),
+        "window_start": start.isoformat(),
+        "window_end": end.isoformat(),
+        "rule": FLAG_RULE,
+        "count": len(flagged),
+        "merchants": flagged
+    }
+    FLAGGED_FILE.write_text(json.dumps(payload, indent=2))
+    print(f"  Wrote {FLAGGED_FILE} with {len(flagged)} chronic-flagged merchants")
+    for m in flagged:
+        print(f"    {m['name']:20s} [{m['cohort']}] new CTR {m['bq_new_ctr_pct']:5.1f}%  ({m['days_flagged']} days flagged)")
+    return flagged
+
+
 def main():
     data = pull_cohort_data()
 
@@ -224,6 +330,9 @@ def main():
     for cohort in ['legacy', '5050', 'phase1_100', '33pct']:
         s = data['stats'][cohort]
         print(f"  {cohort:15s} CTR: {s['ctr_delta']:+.1f}%  RPV: {s['rpv_delta']:+.1f}%  UV: {s['uv_delta']:+.1f}%")
+
+    # Compute the chronic-flagged merchant list for PostHog validation
+    compute_flagged_merchants()
 
     # Update dashboard
     update_dashboard_js(data)
