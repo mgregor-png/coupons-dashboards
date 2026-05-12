@@ -135,9 +135,23 @@
 </div>
 <!-- END REFRESH BUTTONS -->
 
+<!-- BEGIN ANCHOR NAV -->
+<nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:8px 0;margin:8px 0 16px;border-bottom:1px solid #e5e5ea;display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+  <span style="font-size:11px;color:#86868b;padding:0 10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">Jump to</span>
+  <a href="#status-headline" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f0faf3;font-weight:500;border:1px solid #d6f0d9">Status</a>
+  <a href="#status-update" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f0f7ff;font-weight:500;border:1px solid #d4e6ff">Today</a>
+  <a href="#ramp-readiness" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#faf9ff;font-weight:500;border:1px solid #e5e0ff">Ramp readiness</a>
+  <a href="#anomalies" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#fff8e1;font-weight:500;border:1px solid #ffe0b2">Anomalies</a>
+  <a href="#trend-5050" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">50/50</a>
+  <a href="#trend-3366" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">33/66</a>
+  <a href="#action-plan" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">Actions</a>
+  <a href="#posthog-deepdive" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">PostHog</a>
+</nav>
+<!-- END ANCHOR NAV -->
+
 <!-- BEGIN ROLLOUT INTELLIGENCE -->
 <!-- BEGIN STATUS HEADLINE -->
-<div class="card" style="border-left:4px solid #34c759;background:#f0faf3;margin-bottom:20px">
+<div class="card" id="status-headline" style="border-left:4px solid #34c759;background:#f0faf3;margin-bottom:20px">
   <h2 style="margin-bottom:8px">Status - Apr 16 → May 10 (Tableau-source)<span class="badge up" style="margin-left:8px">50/50 wins</span></h2>
   <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
     Two attribution fixes (bcookie platform assignment + experiment_impression dedup) make Apr 16+ the first uncontaminated read.
@@ -188,7 +202,7 @@
 <!-- END STATUS HEADLINE -->
 
 <!-- BEGIN MAY 12 STATUS UPDATE -->
-<div class="card" style="border-left:4px solid #007aff;background:#f0f7ff;margin-bottom:20px">
+<div class="card" id="status-update" style="border-left:4px solid #007aff;background:#f0f7ff;margin-bottom:20px">
   <h2 style="margin-bottom:8px">Status update - 12 May 2026<span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">two data-quality fixes in flight; recommend holding ramp decision until end of May</span></h2>
 
   <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
@@ -226,8 +240,70 @@
 </div>
 <!-- END MAY 12 STATUS UPDATE -->
 
+<!-- BEGIN RAMP READINESS -->
+<div class="card" id="ramp-readiness" style="border-left:4px solid #5856d6;background:#faf9ff;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">Ramp readiness checklist <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">gates that need to clear before the next ramp-up decision</span></h2>
+
+  <p style="font-size:13px;color:#424245;margin-bottom:14px;line-height:1.5">
+    Earliest realistic decision window: <strong>end of May</strong>. Tick gates as they land - state persists in your browser. <span id="rampSummary" style="margin-left:8px;font-weight:600"></span>
+  </p>
+
+  <div id="rampGates" style="display:flex;flex-direction:column;gap:8px"></div>
+
+  <div style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea">
+    <strong>Decision rule:</strong> recommend ramp only when ≥ 4 of 5 gates have cleared. Single-gate-blocked = wait one week, re-evaluate. If 2+ gates are blocked by external dependencies (Mark/Artur/Richard), escalate before pushing ramp date.
+  </div>
+</div>
+
+<script>
+  (function(){
+    var GATES = [
+      {id:'g1', label:'≥ 2 weeks of clean post-Cloudflare-fix data', meta:'target: May 22, 2026 (clock started May 8)'},
+      {id:'g2', label:'BQ <code>traffic_allocation</code> cohort labeling fix landed', meta:'Artur Kacprzycki, due May 18, <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">subtask</a>'},
+      {id:'g3', label:"Richard's answer on whether Cloudflare cache also distorted 33/67", meta:'asked on the AB test measurement task'},
+      {id:'g4', label:'7 consecutive days +5pp on 33/66 long-tail', meta:'currently 18/25 days won, recent inversion under watch'},
+      {id:'g5', label:'utm-segmented Tableau view available', meta:"Veronika's last deliverable before departure - at risk"}
+    ];
+    var el = document.getElementById('rampGates');
+    var summary = document.getElementById('rampSummary');
+    function render(){
+      var cleared = {};
+      try { cleared = JSON.parse(localStorage.getItem('rampGatesCleared') || '{}'); } catch(e) { cleared = {}; }
+      var n = 0;
+      var html = '';
+      GATES.forEach(function(g){
+        var done = !!cleared[g.id];
+        if (done) n++;
+        html += '<label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#fff;border-radius:6px;border:1px solid #e5e5ea;cursor:pointer">' +
+          '<input type="checkbox" data-gate="' + g.id + '" ' + (done?'checked':'') + ' style="margin-top:3px;cursor:pointer;flex-shrink:0">' +
+          '<div style="flex:1">' +
+            '<div style="font-size:13px;font-weight:600;color:#1d1d1f' + (done?';text-decoration:line-through;color:#86868b':'') + '">' + g.label + '</div>' +
+            '<div style="font-size:11px;color:#86868b;margin-top:2px">' + g.meta + '</div>' +
+          '</div>' +
+        '</label>';
+      });
+      el.innerHTML = html;
+      var ready = n >= 4;
+      summary.innerHTML = n + ' of ' + GATES.length + ' cleared' + (ready ? ' <span style="background:#34c759;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;margin-left:4px">RAMP CRITERIA MET</span>' : '');
+      summary.style.color = ready ? '#1a7f37' : '#86868b';
+      el.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+        cb.addEventListener('change', function(e){
+          var gate = e.target.getAttribute('data-gate');
+          var c = {};
+          try { c = JSON.parse(localStorage.getItem('rampGatesCleared') || '{}'); } catch(err) { c = {}; }
+          c[gate] = e.target.checked;
+          localStorage.setItem('rampGatesCleared', JSON.stringify(c));
+          render();
+        });
+      });
+    }
+    render();
+  })();
+</script>
+<!-- END RAMP READINESS -->
+
 <!-- BEGIN P0 BROKEN MERCHANTS -->
-<div class="card" style="border-left:4px solid #e65100;background:#fff8e1;margin-bottom:20px">
+<div class="card" id="anomalies" style="border-left:4px solid #e65100;background:#fff8e1;margin-bottom:20px">
   <h2 style="margin-bottom:4px;color:#e65100">⚠️ 4 merchants flagged by auto-rule - needs PostHog confirm <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">auto-detected · last 7 days · downgraded from P0 after Apr 27 PostHog validation</span></h2>
   <div style="padding:10px 12px;background:#fef3c7;border-left:3px solid #ff9500;border-radius:4px;font-size:12px;color:#424245;line-height:1.5;margin-bottom:14px">
     <strong style="color:#cf222e">Apr 27 finding - these are likely false positives.</strong> Cohort-wide PostHog cross-check: 5 of 6 merchants flagged by this rule had healthy 45-79% direct-traffic CTR on new platform. Aggregate CTR was dragged below 15% by email-attributed traffic (mostly bot/email-security-gateway URL scanners with $direct referrer, 35s sessions, 0 clicks). The rule fires on email-blast days, not on real page bugs. <strong>Do NOT file Jira tickets from this list without PostHog direct-traffic confirmation</strong> - see deep-dive card below.
@@ -297,7 +373,7 @@
 <!-- END P0 BROKEN MERCHANTS -->
 
 <!-- BEGIN 50/50 PER-MERCHANT TABLE -->
-<div class="card" style="border-left:4px solid #af52de;margin-bottom:20px">
+<div class="card" id="trend-5050" style="border-left:4px solid #af52de;margin-bottom:20px">
   <h2 style="margin-bottom:4px">Per-merchant 50/50 CTR delta - clean-week vs latest <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 16-May 7 vs May 8-May 10 · 41 merchants</span></h2>
   <p class="subtitle" style="margin-bottom:12px">Each merchant compared in two windows. <strong>Trend column</strong> shows whether the gap improved or widened recently. Sorted worst-first by recent delta. <strong>Investigate</strong> = recent Δ &lt; -3pp AND recent UV ≥ 200.</p>
 
@@ -371,7 +447,7 @@
 <!-- END 50/50 PER-MERCHANT TABLE -->
 
 <!-- BEGIN 33/67 LONG-TAIL TREND -->
-<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
+<div class="card" id="trend-3366" style="border-left:4px solid #ff9500;margin-bottom:20px">
   <h2 style="margin-bottom:4px">33/66 long-tail - daily trend <span class="badge" style="background:#fff3e0;color:#e65100;margin-left:8px">inversion</span></h2>
   <p class="subtitle" style="margin-bottom:12px">2,861 long-tail merchants on 33% new platform / 66% legacy split, page-level CTR (Tableau-source). Daily New − Old delta from Apr 16 through May 10.</p>
 
@@ -467,7 +543,7 @@
 <!-- END INSIGHTS SIGNALS -->
 
 <!-- BEGIN ACTION PLAN -->
-<div class="card" style="border-left:4px solid #1d1d1f;margin-bottom:20px">
+<div class="card" id="action-plan" style="border-left:4px solid #1d1d1f;margin-bottom:20px">
   <h2 style="margin-bottom:8px">✅ Action plan</h2>
 
   <table style="width:100%;border-collapse:collapse;font-size:13px">
@@ -589,7 +665,7 @@
 
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
-<div class="card" style="border-left:4px solid #ff9500;margin-bottom:20px">
+<div class="card" id="posthog-deepdive" style="border-left:4px solid #ff9500;margin-bottom:20px">
   <h2 style="margin-bottom:4px">🔬 PostHog merchant-page deep-dive <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">Apr 13-27 · 50/50 cohort · new platform only · external to auto-pipeline</span></h2>
   <div style="font-size:13px;color:#636366;margin-bottom:14px"><strong>Three findings reframe the auto-detected "broken merchants":</strong> (1) the rule fires heavily on email-blast days - 5 of 6 flagged merchants have healthy 45-79% direct-traffic CTR; (2) email-Desktop $direct is dominated by bot/email-security-gateway URL scanners that inflate pageviews with zero clicks (3,379 sessions, 35s avg, 0.07 CTAs each); (3) keeper-security is the one merchant that may have a real page issue - zero offer-engagement CTAs captured in 14 days, only modal-close + outbound clicks. Possibly the new-platform page has no offer data for that merchant.</div>
 
@@ -699,7 +775,7 @@
   <button class="tab-btn" onclick="switchTab('phase2', this)">Phase 2 Monitoring</button>
   <button class="tab-btn" onclick="switchTab('merchants', this)">Merchant Lookup</button>
   <button class="tab-btn" onclick="switchTab('phase1', this)">Phase 1 Analysis</button>
-  <button class="tab-btn" onclick="switchTab('strategy', this)">Rollout Strategy</button>
+  <button class="tab-btn" onclick="switchTab('strategy', this)">Background</button>
 <button class="tab-btn" onclick="switchTab('ai', this)">AI Analysis</button></nav>
 
 <!-- ═══════════════════════════════════════ -->
@@ -866,8 +942,13 @@
   </div>
 </div>
 
-<!-- Phase 2 Live Status - first for launch day urgency -->
-<div class="card" style="border-left: 4px solid #ff3b30;">
+<!-- Phase 2 Live Status - collapsed by default, this is a snapshot from launch day Apr 1 (kept for reference) -->
+<details style="margin-bottom:20px">
+  <summary style="cursor:pointer;padding:10px 14px;background:#f5f5f7;border-radius:8px;font-size:13px;font-weight:600;color:#424245;border:1px solid #e5e5ea;list-style:none">
+    <span style="display:inline-block;margin-right:6px">&#9658;</span> Reference - Phase 2 Live Status (April 1 launch-day snapshot)
+    <span style="font-size:11px;font-weight:400;color:#86868b;margin-left:8px">stale, click to expand</span>
+  </summary>
+<div class="card" style="border-left: 4px solid #ff3b30;margin-top:8px">
   <h2>Phase 2 Live Status - April 1</h2>
   <p class="subtitle" style="margin-bottom:16px">3,524 US merchants deployed. Issues being resolved. Updated 11:20 CET.</p>
   <table style="width:100%; border-collapse:collapse; font-size:13px;">
@@ -885,9 +966,10 @@
     </tbody>
   </table>
   <div style="margin-top:16px; padding:12px; background:#f5f5f7; border-radius:8px; font-size:13px; line-height:1.6;">
-    <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1-2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts.
+    <strong>Decision criteria for Phase 3:</strong> Increase traffic allocation from 33% to 66%+ if after 1-2 weeks: (1) 50/50 A/B shows CTR neutral or better, (2) aggregate long-tail CTR does not drop &gt;10% vs legacy-protected cohort, (3) no revenue per session degradation. Rollback trigger: significant CTR or revenue drop correlated with platform change across multiple cohorts. <em style="color:#86868b;font-size:12px;display:block;margin-top:6px">Note: superseded by the Ramp readiness checklist at the top of this page (May 12).</em>
   </div>
 </div>
+</details>
 
 </div><!-- end tab-overview -->
 
