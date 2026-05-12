@@ -57,10 +57,11 @@
   },
   "ctr-rollout-report": {
     "id": "006a3be9-fdce-4fed-9ddc-f78a5c4177a2",
-    "last_uploaded_at": "2026-05-12T09:41:22Z",
+    "last_uploaded_at": "2026-05-12T09:51:54Z",
     "source_file": "ctr-rollout-report.html",
     "title": "New Platform Rollout - US Coupons",
-    "url": "https://iq.groupon.com/reports/detail?id=006a3be9-fdce-4fed-9ddc-f78a5c4177a2"
+    "url": "https://iq.groupon.com/reports/detail?id=006a3be9-fdce-4fed-9ddc-f78a5c4177a2",
+    "folder_id": "1bf5a4d4-ddde-4ec3-8a08-e09bf70afba8"
   },
   "ecosystem-recommendation": {
     "id": "9630de6f-08cc-407f-8228-d46798b8c659",
