@@ -120,6 +120,31 @@
     .rollout-table th, .rollout-table td { padding: 6px 8px; }
     body { padding: 12px; }
     .tab-btn { padding: 10px 14px; font-size: 13px; }
+    .card { padding: 16px; }
+    /* Stack inline grids on mobile */
+    [style*="grid-template-columns:repeat(3"],
+    [style*="grid-template-columns: repeat(3"],
+    [style*="grid-template-columns:1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    /* Tab nav becomes scrollable */
+    .tab-nav { overflow-x: auto; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch; }
+    .tab-btn { flex-shrink: 0; }
+    /* Anchor nav: tighter chips, allow horizontal scroll */
+    nav[style*="position:sticky"] { overflow-x: auto; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch; padding: 6px 0 !important; }
+    nav[style*="position:sticky"] a, nav[style*="position:sticky"] span { flex-shrink: 0; font-size: 11px !important; padding: 3px 8px !important; }
+    /* Tables: horizontal scroll wrapper */
+    table { font-size: 11px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px !important; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 8px; }
+    .card { padding: 12px; border-radius: 8px; }
+    /* Hide refresh button text labels on tiny screens to save space */
+    #btnQuick, #btnFull { font-size: 11px !important; padding: 6px 10px !important; }
   }
 </style>
 </head>
@@ -132,6 +157,7 @@
   <button onclick="quickRefresh()" id="btnQuick" style="padding:8px 16px;font-size:12px;font-weight:600;background:#007aff;color:#fff;border:none;border-radius:6px;cursor:pointer">&#9889; Quick Refresh</button>
   <button onclick="fullRefresh()" id="btnFull" style="padding:8px 16px;font-size:12px;font-weight:600;background:#5856d6;color:#fff;border:none;border-radius:6px;cursor:pointer">&#129302; Full Refresh (AI)</button>
   <span id="refreshStatus" style="font-size:11px;color:#86868b;margin-left:8px">Last refresh: 2026-05-12 09:29 CET</span>
+  <span id="staleBadge" style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;margin-left:4px;display:none"></span>
 </div>
 <!-- END REFRESH BUTTONS -->
 
@@ -140,6 +166,7 @@
   <span style="font-size:11px;color:#86868b;padding:0 10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">Jump to</span>
   <a href="#status-headline" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f0faf3;font-weight:500;border:1px solid #d6f0d9">Status</a>
   <a href="#status-update" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f0f7ff;font-weight:500;border:1px solid #d4e6ff">Today</a>
+  <a href="#what-changed" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f0fff8;font-weight:500;border:1px solid #b6e4cc">What changed</a>
   <a href="#ramp-readiness" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#faf9ff;font-weight:500;border:1px solid #e5e0ff">Ramp readiness</a>
   <a href="#anomalies" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#fff8e1;font-weight:500;border:1px solid #ffe0b2">Anomalies</a>
   <a href="#trend-5050" style="padding:4px 10px;font-size:12px;color:#1d1d1f;text-decoration:none;border-radius:6px;background:#f5f5f7;font-weight:500;border:1px solid #e5e5ea">50/50</a>
@@ -239,6 +266,125 @@
   </div>
 </div>
 <!-- END MAY 12 STATUS UPDATE -->
+
+<!-- BEGIN WHAT CHANGED -->
+<div class="card" id="what-changed" style="border-left:4px solid #34c759;background:#f0fff8;margin-bottom:20px">
+  <h2 style="margin-bottom:8px">What changed since yesterday <span id="whatChangedMeta" style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px"></span></h2>
+  <p style="font-size:12px;color:#86868b;margin-bottom:14px;line-height:1.5">
+    Auto-computed day-over-day deltas from <code>phase2-data.json</code>. Single-day moves are noisy - look for cohorts breaking trend, not absolute deltas. Compares last reliable day vs prior; if today's data is incomplete (commission lags), it shifts to the last full day.
+  </p>
+  <div id="whatChangedGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"></div>
+  <div id="whatChangedFooter" style="margin-top:14px;padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea;display:none"></div>
+</div>
+
+<script>
+  (function(){
+    fetch('phase2-data.json?t=' + Date.now()).then(function(r){return r.json();}).then(function(data){
+      // ----- Stale badge -----
+      try {
+        var updated = data.updated || '';
+        var badge = document.getElementById('staleBadge');
+        if (updated && badge) {
+          // updated format: "YYYY-MM-DD HH:MM UTC"
+          var iso = updated.replace(' UTC', 'Z').replace(' ', 'T');
+          var ts = new Date(iso);
+          var ageMs = Date.now() - ts.getTime();
+          var ageH = ageMs / (1000*60*60);
+          var color, label;
+          if (ageH < 12)      { color = '#34c759'; label = 'Fresh (' + Math.round(ageH) + 'h)'; }
+          else if (ageH < 24) { color = '#ff9500'; label = ageH.toFixed(0) + 'h old'; }
+          else if (ageH < 48) { color = '#e65100'; label = Math.round(ageH/24*10)/10 + 'd old'; }
+          else                { color = '#cf222e'; label = 'STALE (' + Math.round(ageH/24) + 'd)'; }
+          badge.style.display = 'inline-block';
+          badge.style.background = color;
+          badge.style.color = '#fff';
+          badge.textContent = label;
+        }
+      } catch(e) { console.warn('stale badge fail', e); }
+
+      // ----- What changed grid -----
+      try {
+        var dates = data.dates || [];
+        var incompleteFrom = data.incomplete_from || null;
+        // Find last complete index
+        var lastIdx = dates.length - 1;
+        if (incompleteFrom) {
+          // dates are formatted like "May 11" while incomplete_from is "2026-05-11"
+          // Get the ordinal day from incomplete_from
+          var ifParts = incompleteFrom.split('-');
+          var ifMonth = parseInt(ifParts[1], 10);
+          var ifDay = parseInt(ifParts[2], 10);
+          var monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var ifLabel = monthNames[ifMonth] + ' ' + ifDay;
+          var ifLabelIdx = dates.indexOf(ifLabel);
+          if (ifLabelIdx > 0) {
+            lastIdx = ifLabelIdx - 1;
+          }
+        }
+        var prevIdx = lastIdx - 1;
+        var meta = document.getElementById('whatChangedMeta');
+        if (meta) meta.textContent = dates[lastIdx] + ' vs ' + dates[prevIdx] + (incompleteFrom ? ' (skipping incomplete ' + dates[dates.length-1] + ')' : '');
+
+        var cohorts = [
+          {key:'5050',       label:'50/50 A/B',         color:'#af52de'},
+          {key:'33pct',      label:'33/66 long-tail',   color:'#ff9500'},
+          {key:'phase1_100', label:'100% New Platform', color:'#86868b', note:'BQ labeling bug - blended, treat with caution'}
+        ];
+        var html = '';
+        cohorts.forEach(function(c){
+          var ctrArr = data.cohorts[c.key].ctr;
+          var uvArr  = data.cohorts[c.key].uv;
+          var commArr = data.cohorts[c.key].comm;
+          var todayCtr = ctrArr[lastIdx], prevCtr = ctrArr[prevIdx];
+          var todayUv = uvArr[lastIdx], prevUv = uvArr[prevIdx];
+          var todayComm = commArr[lastIdx], prevComm = commArr[prevIdx];
+          var ctrPp = todayCtr - prevCtr;
+          var uvPct = prevUv > 0 ? ((todayUv - prevUv) / prevUv * 100) : 0;
+          var commPct = prevComm > 0 ? ((todayComm - prevComm) / prevComm * 100) : 0;
+          function arrow(v, pp){
+            if (Math.abs(v) < (pp ? 0.05 : 0.5)) return '<span style="color:#86868b">flat</span>';
+            var sign = v > 0 ? '+' : '';
+            var color = v > 0 ? '#1a7f37' : '#cf222e';
+            var unit = pp ? 'pp' : '%';
+            return '<span style="color:' + color + ';font-weight:600">' + sign + v.toFixed(pp ? 2 : 1) + unit + '</span>';
+          }
+          html += '<div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">' +
+            '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:' + c.color + ';margin-bottom:8px;font-weight:600">' + c.label + '</div>' +
+            '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">' +
+              '<span style="font-size:11px;color:#6e6e73">CTR</span>' +
+              '<span style="font-size:13px">' + todayCtr.toFixed(2) + '% ' + arrow(ctrPp, true) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">' +
+              '<span style="font-size:11px;color:#6e6e73">UV</span>' +
+              '<span style="font-size:13px">' + todayUv.toLocaleString() + ' ' + arrow(uvPct, false) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;align-items:baseline">' +
+              '<span style="font-size:11px;color:#6e6e73">Commission</span>' +
+              '<span style="font-size:13px">$' + Math.round(todayComm).toLocaleString() + ' ' + arrow(commPct, false) + '</span>' +
+            '</div>' +
+            (c.note ? '<div style="font-size:10px;color:#86868b;margin-top:8px;font-style:italic">' + c.note + '</div>' : '') +
+          '</div>';
+        });
+        document.getElementById('whatChangedGrid').innerHTML = html;
+
+        // Summary footer: any cohort moved meaningfully?
+        var movers = [];
+        cohorts.forEach(function(c){
+          var ctrPp = data.cohorts[c.key].ctr[lastIdx] - data.cohorts[c.key].ctr[prevIdx];
+          if (Math.abs(ctrPp) >= 0.3 && c.key !== 'phase1_100') {
+            movers.push(c.label + ' CTR ' + (ctrPp > 0 ? '+' : '') + ctrPp.toFixed(2) + 'pp');
+          }
+        });
+        var footer = document.getElementById('whatChangedFooter');
+        if (footer && movers.length > 0) {
+          footer.style.display = 'block';
+          footer.innerHTML = '<strong>Worth a look:</strong> ' + movers.join(' &middot; ') + '. Single-day moves >= 0.3pp on 50/50 or 33/66 are worth opening the trend chart to see if they break pattern.';
+        }
+      } catch(e) { console.warn('what changed fail', e); }
+    }).catch(function(e){ console.warn('phase2-data.json fetch failed', e); });
+  })();
+</script>
+<!-- END WHAT CHANGED -->
 
 <!-- BEGIN RAMP READINESS -->
 <div class="card" id="ramp-readiness" style="border-left:4px solid #5856d6;background:#faf9ff;margin-bottom:20px">
