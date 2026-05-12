@@ -241,11 +241,11 @@
 
     <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">Cloudflare cache distortion</span>
-        <span style="background:#34c759;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIXED MAY 8</span>
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73">Bot-routing skew (the real cause)</span>
+        <span style="background:#ff9500;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">FIX DEPLOYING 12 MAY AM</span>
       </div>
       <p style="font-size:12px;color:#424245;line-height:1.5;margin-bottom:0">
-        Cloudflare was serving cached HTML on <code>/coupons/*</code> without a bucketed b-cookie, skewing 50/50 routing to ~75/25 (Richard's finding May 6). Gopinath shipped a cache-bypass rule on May 8; routing is now true 50/50. <strong>Independent confirmation:</strong> PostHog <code>$pageview</code> events on <code>/coupons/*</code> tripled on May 8 (11k → 30k/day) - pre-fix client-side analytics were silently undercounted. <strong>Open:</strong> did the same issue distort 33/67? If yes, 33/67 also needs a clean May 8+ baseline (question pending with Richard).
+        Richard investigated in ELK 11 May and found the <strong>50/50 user split itself is correct</strong> - the apparent 75/25 skew came from <strong>all bot traffic routing to control (new platform)</strong>, inflating its volume and engagement. Excluding bots, he sees more requests per user on new - separate fix also identified. <strong>Deploying both fixes 12 May morning.</strong> The Cloudflare cache bypass on May 8 (PostHog <code>$pageview</code> tripled 11k → 30k/day on that date) was helpful but did NOT clean the data on its own. <strong>Per Richard: pre-fix data is NOT clean - the "≥ 2 weeks of clean data" clock resets when the bot-routing fix lands.</strong>
       </p>
     </div>
 
@@ -391,11 +391,11 @@
 <script>
   (function(){
     var GATES = [
-      {id:'g1', label:'≥ 2 weeks of clean post-Cloudflare-fix data', meta:'target: May 22, 2026 (clock started May 8)'},
-      {id:'g2', label:'BQ <code>traffic_allocation</code> cohort labeling fix landed', meta:'Artur Kacprzycki, due May 18, <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">subtask</a>'},
-      {id:'g3', label:"Richard's answer on whether Cloudflare cache also distorted 33/67", meta:'asked on the AB test measurement task'},
-      {id:'g4', label:'7 consecutive days +5pp on 33/66 long-tail', meta:'currently 18/25 days won, recent inversion under watch'},
-      {id:'g5', label:'utm-segmented Tableau view available', meta:"Veronika's last deliverable before departure - at risk"}
+      {id:'g1', label:"Richard's bot-routing fix deployed AND verified clean", meta:'fix deploying 12 May AM - per Richard, pre-fix data (incl. post-Cloudflare May 8) is NOT clean'},
+      {id:'g2', label:'≥ 2 weeks of clean data after the bot-routing fix', meta:'target: 26 May (assuming fix lands 12 May)'},
+      {id:'g3', label:'BQ <code>traffic_allocation</code> cohort labeling fix landed', meta:'reassigned to Sunny Bangh, due 18 May, <a href="https://app.asana.com/1/8437193015852/project/1208953494718626/task/1214731158114618" target="_blank" style="color:#007aff">task</a>'},
+      {id:'g4', label:'AB test framework signs off on significance/power', meta:'Mark Brinded back from OOO 18 May; earliest meaningful read week of 19 May'},
+      {id:'g5', label:'≥7 consecutive days ≥+5pp on 33/66 long-tail post-fix', meta:'pre-fix 18/25 days won is suggestive but requires re-validation on clean data'}
     ];
     var el = document.getElementById('rampGates');
     var summary = document.getElementById('rampSummary');
@@ -750,65 +750,80 @@
 
 <!-- BEGIN ACTION PLAN -->
 <div class="card" id="action-plan" style="border-left:4px solid #1d1d1f;margin-bottom:20px">
-  <h2 style="margin-bottom:8px">✅ Action plan</h2>
+  <h2 style="margin-bottom:8px">Action plan <span style="font-size:12px;font-weight:400;color:#86868b;margin-left:8px">updated 12 May 2026 after Richard's bot-routing finding + Sunny picking up BQ fix</span></h2>
 
   <table style="width:100%;border-collapse:collapse;font-size:13px">
     <thead>
       <tr style="background:#f5f5f7">
         <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:60px">P</th>
         <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase">Action</th>
-        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:120px">Owner</th>
-        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:80px">By when</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:130px">Owner</th>
+        <th style="text-align:left;padding:8px 10px;border-bottom:2px solid #e5e5ea;color:#6e6e73;font-size:11px;text-transform:uppercase;width:90px">By when</th>
       </tr>
     </thead>
     <tbody>
-      <tr style="background:#fff8e1">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog direct-traffic check on 4 auto-flagged merchants (Athleta, Oakley, Build-A-Bear, Levi&#x27;s) - pull <code>countIf($pageview)</code> and <code>countIf(Get Code/Deal/Reward $autocapture)</code> filtered to <code>utm_medium</code> empty/null on the merchant URL. <strong>If direct CTR ≥ 30%, no Jira ticket</strong> - it's email/scanner traffic dragging aggregate. <em>Apr 27 cohort-wide check: 5 of 6 were false positives.</em></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Today</td>
+
+      <tr style="background:#f0fff8">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>PostHog direct-traffic check on auto-flagged merchants</s> - replaced by the daily auto-validation pipeline (<code>scripts/refresh-posthog.py</code>). Verdicts render in the flagged-merchants table above. Current run: <strong>0 real issues, 2 false positive, 1 inconclusive, 1 low-volume, 0 tickets to file.</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin (auto)</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May</td>
       </tr>
+
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">BQ schema reconcile with Mark Brinded: <code>rep.new_platform_dashboard.traffic_allocation='100'</code> contains 327 merchants from Florence's 0%-protected list (double-tagged). PostHog/logs confirm those merchants don't actually receive new-platform traffic - BQ has a stale Phase 1 planning snapshot. Need reconciled view before trusting 100-cohort numbers.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>BQ schema fix</strong> - <code>rep.new_platform_dashboard.traffic_allocation='100'</code> SP mis-labels the 327 legacy-protected merchants as fully migrated. Artur confirmed the bug 12 May, Martin reassigned to Sunny. <a href="https://app.asana.com/1/8437193015852/task/1214731158114618" target="_blank" style="color:#007aff">Asana task</a>. Waiting on Sunny's ETA.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Sunny Bangh</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Due 18 May</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Bot-routing fix verification</strong> - Richard found 11 May that the 50/50 split itself is correct, but <strong>all bot traffic was routing to control (new version)</strong>, driving the apparent 75/25 skew + inflated new-platform engagement. Fix identified, deploying 12 May AM. <strong>Per Richard: data pre-fix is NOT clean - Ramp Readiness clock resets when this lands.</strong> <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">Source thread</a>.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Richard Downes</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">12 May AM</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>AB test readout</strong> - Mark confirmed 11 May that nothing is readable until the routing fix lands. Once Richard's fix is verified, the clean test starts from that day. Mark back from OOO 18 May; earliest meaningful read is the week of 19 May. <a href="https://app.asana.com/1/8437193015852/task/1214349388317171" target="_blank" style="color:#007aff">Asana</a>.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Mark Brinded</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Wk of 19 May</td>
+      </tr>
+
+      <tr style="background:#fff3e0">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>PostHog deep-dive on Costco</strong> - biggest absolute-impact merchant. Filter to merchant URL on new platform, watch 10 recordings, identify any UX regressions.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
+
       <tr style="background:#fff3e0">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Email-flow / bot-traffic spike: investigate why email-Desktop $direct (3,379 sessions, 35s, ~0.07 CTAs) dominates email volume on new platform. Add bot filter to PostHog + Tableau; audit email-link landing experience vs legacy.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard / BI</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
-      </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">PostHog deep-dive on biggest absolute-impact merchant (Costco). Filter to merchant URL on new platform, watch 10 recordings.</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Tomorrow</td>
-      </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Travel cluster investigation - Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Travel cluster investigation</strong> - Hotels.com / Expedia / Viator vs Booking.com / Priceline. Compare element-click distributions to find the shared broken component (if any).</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
-      <tr style="background:#fff3e0">
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#e65100">P1</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Ask Richard about the Apr 17→18 routing drift (33/66 cohort actual split shifted 63/37 → 59/41 new-vs-legacy and held).</td>
+
+      <tr style="background:#f0fff8">
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#34c759">DONE</strong></td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><s>Ask Richard about the Apr 17→18 routing drift</s> - answered 11 May: 50/50 user-split is correct in ELK; the 63/37 → 59/41 visible skew was caused by all bot traffic routing to control (new). Same root cause as the broader investigation above.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Richard</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Daily standup</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">11 May</td>
       </tr>
+
       <tr>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#5856d6">P2</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag commission_usd null on rep.new_platform_dashboard to Mark/BI - blocks RPV cross-check.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Flag <code>commission_usd</code> null on <code>rep.new_platform_dashboard</code> to Mark/BI - blocks RPV cross-check.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Martin → Mark</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">This week</td>
       </tr>
+
       <tr style="background:#f0faf3">
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong style="color:#1a7f37">HOLD</strong></td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend ramp from 33/66 → 50/50 (or higher) until:</strong> (a) chronic flagged merchants triaged + fixed, (b) 7 consecutive days ≥+5pp on 33/66 long-tail, (c) utm-segmented Tableau view confirms platform signal isn't traffic-mix / scanner-bot artifact, AND (d) BQ <code>traffic_allocation</code> reconciled against Florence's 0%-protected list.</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7"><strong>Do NOT recommend ramp from 33/66 → 50/50 (or higher) until:</strong> (a) Richard's bot-routing fix is deployed AND verified clean, (b) ≥7 consecutive days clean data post-fix on 33/66 long-tail showing ≥+5pp, (c) Sunny's BQ schema fix lands, AND (d) Mark signs off on statistical significance via the AB test framework. The Apr 16 → May 10 +5.0pp lift was suggestive but pre-fix - has to be re-validated on post-fix data.</td>
         <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">Decision: Adam</td>
-        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">≥7 clean days</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #f5f5f7">≥7 clean days post-fix</td>
       </tr>
     </tbody>
   </table>
