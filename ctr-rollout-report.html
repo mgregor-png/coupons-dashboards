@@ -1005,8 +1005,66 @@
 </script>
 <!-- END POSTHOG DAILY -->
 
+  <div id="phDailyFooter" style="padding:10px 12px;background:#fff;border-radius:6px;font-size:12px;color:#424245;line-height:1.5;border:1px solid #e5e5ea"></div>
+</div>
 
+<script>
+  (function(){
+    fetch('posthog-daily.json?t=' + Date.now()).then(function(r){return r.json();}).then(function(data){
+      var dates = data.dates || [];
+      var m = data.metrics || {};
+      var fixIdx = data.cloudflare_fix_index;
+      // Last complete day (skip today if incomplete - last entry is today)
+      var lastIdx = dates.length - 2;  // assume last entry is partial
+      var prevIdx = lastIdx - 1;
 
+      function fmt(n){ return (typeof n === 'number') ? n.toLocaleString() : '-'; }
+      function delta(curr, prev){
+        if (typeof curr !== 'number' || typeof prev !== 'number' || prev === 0) return '';
+        var pct = (curr - prev) / prev * 100;
+        var sign = pct > 0 ? '+' : '';
+        var color = pct > 0 ? '#1a7f37' : (pct < 0 ? '#cf222e' : '#86868b');
+        return '<span style="color:' + color + ';font-size:11px;font-weight:600;margin-left:4px">' + sign + pct.toFixed(0) + '%</span>';
+      }
+
+      var cards = [
+        {label:'Outbound clicks (US new)',  key:'outbound_click_us_new', kind:'count'},
+        {label:'Pageviews on /coupons/* (US)', key:'pageview_coupons_us', kind:'count'},
+        {label:'Rage clicks (/coupons/*)',  key:'rageclick', kind:'count'},
+        {label:'Dead clicks (/coupons/*)',  key:'dead_click', kind:'count'}
+      ];
+      var html = '';
+      cards.forEach(function(c){
+        var arr = m[c.key] || [];
+        var curr = arr[lastIdx];
+        var prev = arr[prevIdx];
+        html += '<div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #e5e5ea">' +
+          '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6e6e73;margin-bottom:6px;font-weight:600">' + c.label + '</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1d1d1f">' + fmt(curr) + delta(curr, prev) + '</div>' +
+          '<div style="font-size:11px;color:#86868b;margin-top:2px">' + dates[lastIdx] + ' vs ' + dates[prevIdx] + '</div>' +
+        '</div>';
+      });
+      document.getElementById('phDailyGrid').innerHTML = html;
+
+      // Footer with headline cross-check + rate interpretation
+      var head = data.headline_today || {};
+      var rates = data.rates || {};
+      var footer = '';
+      if (head.us_new_platform_clicks) {
+        footer += '<strong>BQ cross-check:</strong> PostHog records <strong>' + head.us_new_platform_clicks.toLocaleString() + '</strong> US new-platform clicks today vs BQ\'s implied <strong>~' + head.bq_implied_clicks.toLocaleString() + '</strong> from cohort labels (' + head.delta_pct.toFixed(0) + '% gap). ' + head.interpretation + '<br>';
+      }
+      if (rates.interpretation) {
+        footer += '<strong>UX rates (flat across cache fix):</strong> rage ' + rates.rageclick_pct_pre_fix + '% &rarr; ' + rates.rageclick_pct_post_fix + '%, dead ' + rates.dead_click_pct_pre_fix + '% &rarr; ' + rates.dead_click_pct_post_fix + '% per pageview. ' + rates.interpretation;
+      }
+      document.getElementById('phDailyFooter').innerHTML = footer;
+    }).catch(function(e){
+      console.warn('posthog-daily.json fetch failed', e);
+      var grid = document.getElementById('phDailyGrid');
+      if (grid) grid.innerHTML = '<em style="color:#86868b">PostHog daily data not available - run <code>scripts/refresh-posthog.py</code></em>';
+    });
+  })();
+</script>
+<!-- END POSTHOG DAILY -->
 
 <!-- BEGIN POSTHOG DEEPDIVE -->
 <div class="card" id="posthog-deepdive" style="border-left:4px solid #ff9500;margin-bottom:20px">
@@ -2036,8 +2094,6 @@ const P2_UV_33PCT = [274467, 321304, 279372, 351320, 399871, 516368, 411767, 473
 const P2_COMM_33PCT = [2230.87, 3409.07, 2578.82, 2597.13, 3864.95, 3546.97, 3805.64, 3721.06, 5079.07, 4222.63, 4248.85, 3524.46, 3498.27, 4079.09, 4200.23, 8328.14, 7947.88, 4296.37, 3240.6, 1276.67, 2806.18, 5983.16, 7753.45, 2331.17, 3045.1, 2789.29, 2032.42, 2213.79, 2699.76, 2403.56, 2057.46, 2231.11, 2581.23, 2415.6, 2561.25, 3782.09, 3609.86, 4328.04, 4228.88, 2771.37, 3287.4, 2972.75, 3051.1, 2825.27, 3346.52, 2594.52, 2299.0, 2432.16, 2796.25, 2871.38, 3615.91, 4857.65, 3261.84, 2853.6, 2834.23, 3422.79, 4386.4, 6273.45, 4544.72, 4457.34, 2882.32, 3087.35, 1081.88];
 const P2_ROLLOUT_IDX = 8;
 const P2_CTR_HEADLINE = [39.476, 38.385, 39.045, 39.0, 39.171, 39.352, 39.472, 41.634, 41.702, 41.742, 41.598, 42.522, 42.232, 42.994, 40.052, 36.622, 36.604, 37.225, 37.268, 38.324, 38.921, 38.852, 36.111, 36.324, 35.185, 35.355, 36.263, 34.907, 34.54, 33.938, 32.584, 35.059, 35.836, 35.672, 36.675, 38.547, 43.436, 44.982, 44.619, 44.526, 45.849, 45.059, 43.723, 42.091, 43.232, 43.276, 43.61, 43.078, 44.236, 44.852, 43.09, 44.021, 44.288, 44.007, 44.704, 45.682, 44.222, 43.807, 46.617, 50.289, 50.312, 52.537, 49.1];
-
-
 
 
 
