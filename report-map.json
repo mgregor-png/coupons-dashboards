@@ -57,11 +57,10 @@
   },
   "ctr-rollout-report": {
     "id": "006a3be9-fdce-4fed-9ddc-f78a5c4177a2",
-    "last_uploaded_at": "2026-05-12T13:22:27Z",
-    "source_file": "ctr-rollout-report.html",
-    "title": "New Platform Rollout - US Coupons",
-    "url": "https://iq.groupon.com/reports/detail?id=006a3be9-fdce-4fed-9ddc-f78a5c4177a2",
-    "folder_id": "1bf5a4d4-ddde-4ec3-8a08-e09bf70afba8"
+    "last_uploaded_at": "2026-05-15T08:14:48Z",
+    "source_file": "private/var/folders/fb/bzfg3_v96z5c_w0sn913bkkh0000gp/T/giq-publish.XXXXXX.7Bl8077c6u/ctr-rollout-report.html",
+    "title": "CTR Rollout Report - New Platform",
+    "url": "https://iq.groupon.com/reports/detail?id=006a3be9-fdce-4fed-9ddc-f78a5c4177a2"
   },
   "ecosystem-recommendation": {
     "id": "9630de6f-08cc-407f-8228-d46798b8c659",
